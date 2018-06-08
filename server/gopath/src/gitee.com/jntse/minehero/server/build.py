@@ -4,6 +4,7 @@
 import os
 import sys
 import shutil
+import subprocess
 
 #获取系统变量
 env_dict = os.environ
@@ -16,19 +17,11 @@ for arg in sys.argv:
     if arg == 'svn':
         curdir = os.getcwd()
         os.chdir(env_dict['JUMPGAME_ROOT'])
-        print os.popen('svn up', 'r').read()
+        print subprocess.check_output('svn up', shell=True)
         os.chdir(env_dict['JUMPGAME_TOOLKIT'])
-        print os.popen('svn up', 'r').read()
+        print subprocess.check_output('svn up', shell=True)
         os.chdir(curdir)
-    if arg == 'git':
-        print os.popen('git pull', 'r').read()
-        #curdir = os.getcwd()
-        #os.chdir(env_dict['JUMPGAME_ROOT'])
-        #print os.popen('git pull', 'r').read()
-        #os.chdir(env_dict['JUMPGAME_TOOLKIT'])
-        #print os.popen('git pull', 'r').read()
-        #os.chdir(curdir)
-
+        print subprocess.check_output('svn up', shell=True)
     if arg == 'match':  quick[arg] = True
     if arg == 'login':  quick[arg] = True
     if arg == 'gate':   quick[arg] = True
@@ -41,7 +34,7 @@ if os.path.exists('./bin') == False:
 # 编译函数
 def compile(server):
     os.chdir(server)
-    print os.popen('gob', 'r').read(),
+    print subprocess.check_output('gob', shell=True)
     print "copy %s -> ../bin/ " % server
     dstfile = '../bin/' + server
     if os.path.isfile(dstfile) == True: os.remove(dstfile)
@@ -55,8 +48,8 @@ if len(quick) == 0:
         if f != ".gitignore": os.remove('./bin/'+f)
 
     # 打表
-    print os.popen('git log > version.txt', 'r').read()
-    print os.popen('./maketbl.py', 'r').read()
+    print subprocess.check_output('svn info > version.txt', shell=True)
+    print subprocess.check_output('./maketbl.py', shell=True)
 
     # 编译
     compile('gateserver')

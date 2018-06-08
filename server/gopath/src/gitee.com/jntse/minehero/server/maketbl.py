@@ -6,9 +6,23 @@ import sys
 import datetime
 import string
 import shutil
+import subprocess
 
 #获取系统变量
 env_dict = os.environ
+
+
+# 解析输入参数
+g_GlobalSet = {}
+for arg in sys.argv:
+    if arg == '-v' or arg == '-verbose':    # 显示详细信息
+        g_GlobalSet['verbose'] = True
+
+def ExecShellCmd(cmd, check_call=False):
+    if check_call or g_GlobalSet.has_key('verbose'):
+        subprocess.check_call(cmd, shell=True)
+    else:
+        subprocess.check_output(cmd, shell=True)
 
 
 #配置路径
@@ -19,14 +33,16 @@ PROTOCOL_PATH=env_dict['JUMPGAME_ROOT']+'/protocol'
 
 curdir = os.getcwd()
 os.chdir(env_dict['JUMPGAME_ROOT']+'/protocol')
-print os.popen('./gen_protogo.sh','r').read()
+#print os.popen('./gen_protogo.sh','r').read()
+ExecShellCmd('./gen_protogo.sh',True)
 os.chdir(curdir)
 
 
 # 工具生成protobuf协议index配置
 os.chdir(env_dict['JUMPGAME_SERVER'])
 cmd_genpb = './tools/gen_pbindex/gen_pbindex -root=%s -output=%s/proto_index.xlsx' % (PROTOCOL_PATH,TBL_EXCEL)
-print os.popen(cmd_genpb,'r').read()
+#print os.popen(cmd_genpb,'r').read()
+ExecShellCmd(cmd_genpb,True)
 os.chdir(curdir)
 
 
@@ -67,10 +83,19 @@ class TblGenerator:
         cmd += "-go_out=%s/%s.go -json_out=%s/%s.json " % (self.out_tbl_excel, outfile, self.out_tbl_excel, outfile)
         cmd += "-lua_out=%s/%s.lua -proto_out=%s/%s.proto " % (self.out_tbl_client, outfile, self.out_tbl_client, outfile)
         cmd += "%s/%s" % (self.in_excel, infile)
-        print os.popen(cmd,'r').read(),
+        ExecShellCmd(cmd)
         self.excels[combname] = outfile + ".json"
         print "make excel config ", infile
-        print ""
+        self.maketbl_excel_client(combname, outfile, infile)
+
+    def maketbl_excel_client(self, combname, outfile, infile):
+        cmd = ""
+        cmd += "tabtoy -mode=exportorv2 -protover=%d --combinename=%s " % (PROTOBUF_VER, combname)
+        cmd += "-json_out=%s/%s.json " % (self.out_tbl_client, outfile)
+        cmd += "%s/%s" % (self.in_excel, infile)
+        ExecShellCmd(cmd)
+        self.excels[combname] = outfile + ".json"
+        print "make client config ", infile
 
     #// --------------------------------------------------------------------------
     #/// @brief 参数1 包名
@@ -84,7 +109,7 @@ class TblGenerator:
 
         cmd = "gojson -fmt=json -pkg=%s -name=%s -subStruct=true " % (pkgName, tableIns)
         cmd += "-input=%s/%s -o=%s/%s.go" % (self.in_json, infile, self.out_tbl_json, infile)
-        print os.popen(cmd,'r').read(),
+        ExecShellCmd(cmd)
         self.jsons[tableIns] = infile
         print "\bmake json config ", infile 
         print ""
