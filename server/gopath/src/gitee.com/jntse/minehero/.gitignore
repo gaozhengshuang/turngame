@@ -33,3 +33,6 @@ tools/gen_pbindex/proto_index.xlsx
 # files
 *.log
 protocol.20170915.tar.gz
+
+# dir
+git
