@@ -1,0 +1,2 @@
+#!/bin/bash
+./gen_pbindex -root=/home/ecs-user/minehero/protocol -excel=proto_index.xlsx

@@ -1,0 +1,6 @@
+scvg0: inuse: 1, idle: 0, sys: 2, released: 0, consumed: 2 (MB)
+scvg1: inuse: 1, idle: 0, sys: 2, released: 0, consumed: 2 (MB)
+scvg2: inuse: 2, idle: 0, sys: 3, released: 0, consumed: 3 (MB)
+scvg3: inuse: 2, idle: 0, sys: 3, released: 0, consumed: 3 (MB)
+scvg4: inuse: 3, idle: 0, sys: 4, released: 0, consumed: 4 (MB)
+scvg5: inuse: 3, idle: 0, sys: 4, released: 0, consumed: 4 (MB)

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#暴力关闭进程
+echo "暴力关闭进程 gateserver..."
+killall gateserver
+sleep 0.3
+echo "."
+sleep 0.3
+echo ".."
+sleep 0.3
+echo "..."
+
+
+#输出屏幕日志
+mkdir -p ./daemon
+./gateserver -conf=../conf/conf_gate.json        -logname=gateserver.log  -logpath=../../log/gateserver/  -daemon=true > ./daemon/daemon.log 2>&1 &
+./gateserver -conf=../conf/gate/conf_gate.1.json -logname=gateserver1.log -logpath=../../log/gateserver1/ -daemon=true > ./daemon/daemon1.log 2>&1 &
+./gateserver -conf=../conf/gate/conf_gate.2.json -logname=gateserver2.log -logpath=../../log/gateserver2/ -daemon=true > ./daemon/daemon2.log 2>&1 &
+./gateserver -conf=../conf/gate/conf_gate.3.json -logname=gateserver3.log -logpath=../../log/gateserver3/ -daemon=true > ./daemon/daemon3.log 2>&1 &
+
+
+#不输出屏幕日志
+#./gateserver -conf=../conf/conf_gate.json   -logname=gateserver.log  -logpath=../../log/gateserver/  -daemon=true > /dev/null 2>&1 &
+#./gateserver -conf=../conf/gate/conf_gate.1.json -logname=gateserver1.log -logpath=../../log/gateserver1/ -daemon=true > /dev/null 2>&1 &
+#./gateserver -conf=../conf/gate/conf_gate.2.json -logname=gateserver2.log -logpath=../../log/gateserver2/ -daemon=true > /dev/null 2>&1 &
+#./gateserver -conf=../conf/gate/conf_gate.3.json -logname=gateserver3.log -logpath=../../log/gateserver3/ -daemon=true > /dev/null 2>&1 &
+echo "启动gateserver完毕"

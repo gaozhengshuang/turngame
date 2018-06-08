@@ -1,0 +1,35 @@
+{
+	"name": "Robot",
+    "tblpath": {
+        "excel":"../tbl/excel/",
+        "json":"../tbl/json/",
+        "xml":"../tbl/xml/"
+    },
+    "event_queuesize":1000,
+	"wsconnects": [
+		{
+			"name": "LoginConnector",
+			"parser": "LS2C_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 7020
+			},
+            "interval": 1,
+            "svrchannel":false,
+            "disable": 1,
+            "disreconnect":1
+		},
+		{
+			"name": "GateConnector",
+			"parser": "GW2C_MsgParser",
+			"host": {
+				"ip": "",
+				"port": 0
+            },
+            "interval": 1,
+            "svrchannel":false,
+            "disable": 1,
+            "disreconnect":1
+		}
+	]
+}

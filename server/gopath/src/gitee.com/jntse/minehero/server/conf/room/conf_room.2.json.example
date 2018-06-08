@@ -1,0 +1,44 @@
+{
+	"name": "RoomServer002",
+    "tblpath": {
+        "excel":"../tbl/excel/",
+        "json":"../tbl/json/",
+        "xml":"../tbl/xml/"
+    },
+    "event_queuesize":100000,
+    "isserver": true,
+	"connects": [
+		{
+			"name": "MatchConnector",
+			"parser": "MS2RS_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 7120
+			},
+            "interval": 3,
+            "svrchannel":true,
+            "disable": 0
+		},
+		{
+			"name": "GateConnector",
+			"parser": "GW2RS_MsgParser",
+			"host": {
+				"ip": "",
+				"port": 0
+            },
+            "interval": 1,
+            "svrchannel":true,
+            "disable": 1,
+            "disreconnect":1
+		}
+	],
+    "redis": {
+        "passwd": "",
+        "db": 0,
+        "host": {
+            "ip": "192.168.30.203",
+            "port": 6379
+        }
+    }
+}
+

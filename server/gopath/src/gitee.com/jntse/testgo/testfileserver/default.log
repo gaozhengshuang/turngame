@@ -1,0 +1,13 @@
+2017-10-10 12:05:26 [INF] [main.go:12] start httpserver ok
+2017-10-10 12:08:20 [INF] [main.go:13] start httpserver ok
+2017-10-10 12:09:15 [INF] [main.go:13] start httpserver ok
+2017-10-10 12:15:27 [INF] [main.go:14] start httpserver ok
+2017-10-10 12:15:27 [CRT] [main.go:23] err=listen tcp :80: bind: permission denied
+2017-10-10 12:15:54 [INF] [main.go:14] start httpserver ok
+2017-10-10 12:15:54 [CRT] [main.go:23] err=listen tcp: address 27015: missing port in address
+2017-10-10 12:16:00 [INF] [main.go:14] start httpserver ok
+2017-10-10 12:16:00 [CRT] [main.go:23] err=listen tcp: address 27015: missing port in address
+2017-10-10 12:16:14 [INF] [main.go:14] start httpserver ok
+2017-10-10 12:18:33 [INF] [main.go:14] start httpserver ok
+2017-10-10 12:20:37 [INF] [main.go:14] start httpserver ok
+2018-03-19 00:16:31 [INF] [main.go:12] start httpserver ok

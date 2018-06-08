@@ -1,0 +1,48 @@
+{
+	"name": "MatchServer",
+    "tblpath": {
+        "excel":"../tbl/excel/",
+        "json":"../tbl/json/",
+        "xml":"../tbl/xml/"
+    },
+    "event_queuesize":100000,
+	"listens": [
+		{
+			"name": "GateListener",
+			"parser": "GW2MS_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 7110
+			},
+            "verify": 0,
+            "svrchannel":true
+		},
+		{
+			"name": "RoomListener",
+			"parser": "RS2MS_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 7120
+			},
+            "verify": 0,
+            "svrchannel":true
+		}
+	],
+    "httplistens": [
+		{
+			"name": "GmCmdListener",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 19000
+			}
+		}
+    ],
+    "redis": {
+        "passwd": "",
+        "db": 0,
+        "host": {
+            "ip": "192.168.30.204",
+            "port": 6379
+        }
+    }
+}

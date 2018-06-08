@@ -1,0 +1,4 @@
+#!/bin/bash
+GODEBUG=gctrace=1 ./loginserver -conf=../conf/conf_login.json -logname=loginserver.log -logpath=../../log/loginserver/
+#GODEBUG=gctrace=1 GOGC=off ./loginserver -conf=../conf/conf_login.json -logname=loginserver.log -logpath=../../log/loginserver/
+#GODEBUG=gctrace=1 ./loginserver -conf=../conf/conf_login.json -logname=loginserver.log -logpath=../../log/loginserver/ 2> gctrace.log

@@ -1,0 +1,38 @@
+#!/bin/bash
+appid=0
+appname=match
+logroot=~/log
+fileconf=../conf/conf_${appname}.json
+servername=${appname}server
+logname=${servername}.log
+logpath=$logroot/${servername}
+daemonlog=$logroot/daemon.${servername}.log
+
+if [[ -n ${1} && ${1} -ne 0 ]]    #参数非空且不等于0
+then
+    appid=$1
+    fileconf=../conf/${appname}/conf_${appname}.$appid.json
+    logname=${servername}${appid}.log
+    logpath=$logroot/${servername}${appid}/
+    daemonlog=$logroot/daemon.${servername}${appid}.log
+    mkdir -p $logpath
+fi
+
+cmd=$2
+case $cmd in
+daemon)
+    ./${servername} -conf=${fileconf} -logname=${logname} -logpath=${logpath} -loglvl="trace" -daemon=true -pprof=27210 > $daemonlog 2>&1 &
+;;
+gc)    
+    GODEBUG=gctrace=1 ./run 0
+    #GODEBUG=gctrace=1 ./run 0 deamon
+    #GODEBUG=gctrace=1 ./loginserver -conf=../conf/conf_login.json -logname=loginserver.log -logpath=../../log/loginserver/
+    #GODEBUG=gctrace=1 GOGC=off ./loginserver -conf=../conf/conf_login.json -logname=loginserver.log -logpath=../../log/loginserver/
+    #GODEBUG=gctrace=1 ./loginserver -conf=../conf/conf_login.json -logname=loginserver.log -logpath=../../log/loginserver/ 2> gctrace.log
+;;
+*)
+    ./${servername} -conf=${fileconf} -logname=${logname} -logpath=${logpath} -loglvl="trace" -pprof=27210
+;;
+esac
+
+

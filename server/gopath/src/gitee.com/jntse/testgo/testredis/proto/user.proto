@@ -1,0 +1,22 @@
+package user;
+
+message EntityBase {
+    optional uint64 id      = 1;
+    optional string name    = 2;
+}
+
+
+message UserData {
+    optional EntityBase base = 1;
+    optional int32  level   = 2;
+    optional int32  exp     = 3;
+    optional ItemData items = 4;
+}
+
+
+message ItemData {
+    optional int32 id = 1;
+    optional int32 num = 2;
+}
+
+

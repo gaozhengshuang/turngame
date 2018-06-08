@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#配置路径
+TBL_JSON=./
+OUT_JSON_GO=./gojson
+rm -rf $OUT_JSON_GO
+mkdir -p $OUT_JSON_GO
+
+#// --------------------------------------------------------------------------
+#/// @brief 参数1 包名
+#/// @brief 参数2 主结构名称
+#/// @brief 参数3 文件名
+#// --------------------------------------------------------------------------
+make_json() { 
+    gojson -fmt=json -pkg=$1 -name=$2 -subStruct=true -input=$3 -o=$OUT_JSON_GO/$3.go
+    echo "make json $2" 
+}
+
+make_json tbl ConfGate conf_gate.json
+make_json tbl Global global.json

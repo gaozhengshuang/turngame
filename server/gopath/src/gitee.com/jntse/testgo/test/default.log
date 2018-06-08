@@ -1,0 +1,572 @@
+2018-05-28 17:42:07 [INF] [main.go:31] 初始日志完成
+2018-05-28 17:42:07 [INF] [main.go:38] &{1}
+2018-05-28 17:42:07 [INF] [main.go:38] &{1}
+2018-05-28 17:42:30 [INF] [main.go:31] 初始日志完成
+2018-05-28 17:42:30 [INF] [main.go:39] &{2}
+2018-05-28 17:42:30 [INF] [main.go:39] &{2}
+2018-05-28 17:43:23 [INF] [main.go:31] 初始日志完成
+2018-05-28 17:43:23 [INF] [main.go:39] &{2}
+2018-05-28 17:43:23 [INF] [main.go:39] &{2}
+2018-05-28 17:43:25 [INF] [main.go:31] 初始日志完成
+2018-05-28 17:43:25 [INF] [main.go:39] &{2}
+2018-05-28 17:43:25 [INF] [main.go:39] &{2}
+2018-05-28 17:43:30 [INF] [main.go:31] 初始日志完成
+2018-05-28 17:43:30 [INF] [main.go:39] &{2}
+2018-05-28 17:43:30 [INF] [main.go:39] &{2}
+2018-05-28 17:53:33 [INF] [main.go:32] 初始日志完成
+2018-05-28 17:53:33 [CRT] [paniclog.go:31] ====================
+2018-05-28 17:53:33 [CRT] [paniclog.go:31] 宕机了
+2018-05-28 17:53:33 [CRT] [paniclog.go:33] catch panic:'0'
+
+2018-05-28 17:53:33 [CRT] [paniclog.go:34] goroutine 1 [running]:
+runtime/debug.Stack(0x85e585, 0x11, 0xc42016a3c0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fa0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:33 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x0, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:17 +0x58
+panic(0x7c1560, 0x8a4fa0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:33 +0x13b
+
+2018-05-28 17:53:33 [CRT] [paniclog.go:35] ====================
+2018-05-28 17:54:17 [INF] [main.go:32] 初始日志完成
+2018-05-28 17:55:11 [CRT] [paniclog.go:31] ====================
+2018-05-28 17:55:11 [CRT] [paniclog.go:31] 宕机了
+2018-05-28 17:55:17 [CRT] [paniclog.go:33] catch panic:'0'
+
+2018-05-28 17:55:17 [CRT] [paniclog.go:34] goroutine 1 [running]:
+runtime/debug.Stack(0x0, 0x0, 0x0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xbe
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x907e80, 0x9e1f00)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:33 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x0, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:17 +0x58
+panic(0x907e80, 0x9e1f00)
+	/usr/local/go/src/runtime/panic.go:491 +0x2a2
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:33 +0x13b
+
+2018-05-28 17:55:17 [CRT] [paniclog.go:35] ====================
+2018-05-28 17:58:24 [INF] [main.go:32] 初始日志完成
+2018-05-28 17:58:24 [CRT] [paniclog.go:31] ====================
+2018-05-28 17:58:24 [CRT] [paniclog.go:31] 宕机了
+2018-05-28 17:58:24 [CRT] [paniclog.go:33] catch panic:'0'
+
+2018-05-28 17:58:24 [CRT] [paniclog.go:34] goroutine 1 [running]:
+runtime/debug.Stack(0x85e594, 0x11, 0xc42017c360)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fc0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:33 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:17 +0x58
+panic(0x7c1560, 0x8a4fc0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x13e
+
+2018-05-28 17:58:24 [CRT] [paniclog.go:35] ====================
+2018-05-28 17:58:37 [INF] [main.go:32] 初始日志完成
+2018-05-28 17:58:37 [CRT] [paniclog.go:31] ====================
+2018-05-28 17:58:37 [CRT] [paniclog.go:31] 宕机了
+2018-05-28 17:58:37 [CRT] [paniclog.go:33] catch panic:'0'
+
+2018-05-28 17:58:37 [CRT] [paniclog.go:34] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59a, 0x11, 0xc4200110e0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fc0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:33 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x7c1fa0, 0x8a60d0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:17 +0x58
+panic(0x7c1560, 0x8a4fc0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 17:58:37 [CRT] [paniclog.go:35] ====================
+2018-05-28 17:58:49 [INF] [main.go:32] 初始日志完成
+2018-05-28 17:58:49 [CRT] [paniclog.go:31] ====================
+2018-05-28 17:58:49 [CRT] [paniclog.go:31] 宕机了
+2018-05-28 17:58:49 [CRT] [paniclog.go:33] catch panic:'0'
+
+2018-05-28 17:58:49 [CRT] [paniclog.go:34] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59a, 0x11, 0xc420011130)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fc0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:33 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x7c1fa0, 0x8a60d0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:17 +0x58
+panic(0x7c1560, 0x8a4fc0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 17:58:49 [CRT] [paniclog.go:35] ====================
+2018-05-28 17:59:09 [INF] [main.go:32] 初始日志完成
+2018-05-28 17:59:12 [CRT] [paniclog.go:31] ====================
+2018-05-28 17:59:12 [CRT] [paniclog.go:31] 宕机了
+2018-05-28 17:59:12 [CRT] [paniclog.go:33] catch panic:'0'
+
+2018-05-28 17:59:12 [CRT] [paniclog.go:34] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59a, 0x11, 0xc420011050)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fc0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:33 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x7c1fa0, 0x8a60d0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:17 +0x58
+panic(0x7c1560, 0x8a4fc0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 17:59:12 [CRT] [paniclog.go:35] ====================
+2018-05-28 18:00:33 [INF] [main.go:32] 初始日志完成
+2018-05-28 18:00:33 [CRT] [paniclog.go:36] ====================
+2018-05-28 18:00:33 [CRT] [paniclog.go:36] 宕机了
+2018-05-28 18:00:33 [CRT] [paniclog.go:38] catch panic:'0'
+
+2018-05-28 18:00:33 [CRT] [paniclog.go:39] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59a, 0x11, 0xc42016a3a0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fc0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:38 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x7c1fa0, 0x8a60d0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:17 +0x58
+panic(0x7c1560, 0x8a4fc0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 18:00:33 [CRT] [paniclog.go:40] ====================
+2018-05-28 18:00:33 [INF] [main.go:26] ProcessPanic 123123
+2018-05-28 18:02:16 [INF] [main.go:32] 初始日志完成
+2018-05-28 18:02:16 [CRT] [paniclog.go:18] ====================
+2018-05-28 18:02:16 [CRT] [paniclog.go:18] 宕机了
+2018-05-28 18:02:16 [CRT] [paniclog.go:20] catch panic:'0'
+
+2018-05-28 18:02:16 [CRT] [paniclog.go:21] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59a, 0x11, 0xc420011130)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x7c1fa0, 0x8a60f0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:20 +0x17a
+panic(0x7c1560, 0x8a4fe0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 18:02:16 [INF] [main.go:26] ProcessPanic 123123
+2018-05-28 18:02:16 [CRT] [paniclog.go:24] ====================
+2018-05-28 18:03:57 [INF] [main.go:32] 初始日志完成
+2018-05-28 18:03:57 [CRT] [paniclog.go:39] ====================
+2018-05-28 18:03:57 [CRT] [paniclog.go:39] 宕机了
+2018-05-28 18:03:57 [CRT] [paniclog.go:41] catch panic:'0'
+
+2018-05-28 18:03:57 [CRT] [paniclog.go:42] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59a, 0x11, 0xc4200110d0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fc0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:41 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x7c1fa0, 0x8a60d0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c1560, 0x8a4fc0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 18:03:57 [CRT] [paniclog.go:43] ====================
+2018-05-28 18:03:57 [CRT] [paniclog.go:24] ====================
+2018-05-28 18:03:57 [INF] [main.go:26] ProcessPanic 123123
+2018-05-28 18:03:57 [CRT] [paniclog.go:22] ====================
+2018-05-28 18:04:30 [INF] [main.go:32] 初始日志完成
+2018-05-28 18:04:30 [CRT] [paniclog.go:39] ====================
+2018-05-28 18:04:30 [CRT] [paniclog.go:39] 宕机了
+2018-05-28 18:04:30 [CRT] [paniclog.go:41] catch panic:'0'
+
+2018-05-28 18:04:30 [CRT] [paniclog.go:42] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59a, 0x11, 0xc4201643c0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fc0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:41 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x7c1fa0, 0x8a60d0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c1560, 0x8a4fc0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 18:04:30 [CRT] [paniclog.go:43] ====================
+2018-05-28 18:04:30 [CRT] [paniclog.go:24] ====================
+2018-05-28 18:04:30 [INF] [main.go:26] ProcessPanic 123123
+2018-05-28 18:04:30 [CRT] [paniclog.go:22] ====================
+2018-05-28 18:04:31 [INF] [main.go:32] 初始日志完成
+2018-05-28 18:04:31 [CRT] [paniclog.go:39] ====================
+2018-05-28 18:04:31 [CRT] [paniclog.go:39] 宕机了
+2018-05-28 18:04:31 [CRT] [paniclog.go:41] catch panic:'0'
+
+2018-05-28 18:04:31 [CRT] [paniclog.go:42] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59a, 0x11, 0xc420011130)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fc0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:41 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874378, 0x7c1fa0, 0x8a60d0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c1560, 0x8a4fc0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 18:04:31 [CRT] [paniclog.go:43] ====================
+2018-05-28 18:04:31 [CRT] [paniclog.go:24] ====================
+2018-05-28 18:04:31 [INF] [main.go:26] ProcessPanic 123123
+2018-05-28 18:04:31 [CRT] [paniclog.go:22] ====================
+2018-05-28 18:05:15 [INF] [main.go:32] 初始日志完成
+2018-05-28 18:05:15 [CRT] [paniclog.go:40] ====================
+2018-05-28 18:05:15 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-28 18:05:15 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-28 18:05:15 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85e59d, 0x11, 0xc42016a3c0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c1560, 0x8a4fe0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x874390, 0x7c1fa0, 0x8a60f0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c1560, 0x8a4fe0)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:34 +0x144
+
+2018-05-28 18:05:15 [CRT] [paniclog.go:44] ====================
+2018-05-28 18:05:15 [CRT] [paniclog.go:24] ====================
+2018-05-28 18:05:15 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-28 18:05:15 [INF] [main.go:26] ProcessPanic 123123
+2018-05-28 18:05:15 [CRT] [paniclog.go:22] ====================
+2018-05-28 18:06:06 [INF] [main.go:28] 初始日志完成
+2018-05-28 18:06:06 [INF] [keyboardinput.go:21] starting keyboard controler...
+2018-05-28 18:06:06 [INF] [main.go:38] 初始键盘输入完成
+2018-05-28 18:06:07 [INF] [keyboardinput.go:44] keyboard input cmd=exiut
+
+2018-05-28 18:13:57 [INF] [main.go:39] 初始日志完成
+2018-05-28 18:13:57 [CRT] [paniclog.go:40] ====================
+2018-05-28 18:13:57 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-28 18:13:57 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-28 18:13:57 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5ac, 0x11, 0xc42016a3f0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x8753a0, 0x7c2fa0, 0x8a7120)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x1c2
+
+2018-05-28 18:13:57 [CRT] [paniclog.go:44] ====================
+2018-05-28 18:13:57 [CRT] [paniclog.go:24] ====================
+2018-05-28 18:13:57 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-28 18:13:57 [INF] [main.go:26] ProcessPanic 123123
+2018-05-28 18:13:57 [CRT] [paniclog.go:22] ====================
+2018-05-28 18:14:40 [INF] [main.go:39] 初始日志完成
+2018-05-28 18:14:40 [CRT] [paniclog.go:40] ====================
+2018-05-28 18:14:40 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-28 18:14:40 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-28 18:14:40 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5b0, 0x11, 0xc420011180)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x8753a0, 0x7c2fa0, 0x8a7120)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:42 +0x238
+
+2018-05-28 18:14:40 [CRT] [paniclog.go:44] ====================
+2018-05-28 18:14:40 [CRT] [paniclog.go:24] ====================
+2018-05-28 18:14:40 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-28 18:14:40 [INF] [main.go:26] ProcessPanic 123123
+2018-05-28 18:14:40 [CRT] [paniclog.go:22] ====================
+2018-05-28 19:07:04 [INF] [main.go:39] 初始日志完成
+2018-05-28 19:07:04 [CRT] [paniclog.go:40] ====================
+2018-05-28 19:07:04 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-28 19:07:04 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-28 19:07:04 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5aa, 0x11, 0xc4201823c0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x8753a0, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:42 +0x232
+
+2018-05-28 19:07:04 [CRT] [paniclog.go:44] ====================
+2018-05-28 19:07:04 [CRT] [paniclog.go:24] ====================
+2018-05-28 19:07:04 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-28 19:07:23 [INF] [main.go:38] 初始日志完成
+2018-05-28 19:07:23 [CRT] [paniclog.go:40] ====================
+2018-05-28 19:07:23 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-28 19:07:23 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-28 19:07:23 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc42016e3c0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-28 19:07:23 [CRT] [paniclog.go:44] ====================
+2018-05-28 19:07:23 [CRT] [paniclog.go:24] ====================
+2018-05-28 19:07:23 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-28 19:07:23 [INF] [main.go:25] ProcessPanic
+2018-05-28 19:07:23 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:41:34 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:41:34 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:41:34 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:41:34 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:41:34 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc420011190)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:41:34 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:41:34 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:41:34 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:41:34 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:41:34 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:41:38 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:41:38 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:41:38 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:41:38 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:41:38 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc420011190)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:41:38 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:41:38 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:41:38 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:41:38 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:41:38 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:42:00 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:42:00 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:42:00 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:42:00 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:42:00 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc420184290)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:42:00 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:42:00 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:42:00 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:42:00 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:42:00 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:42:03 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:42:03 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:42:03 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:42:03 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:42:03 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc420164440)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:42:03 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:42:03 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:42:03 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:42:03 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:42:03 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:42:27 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:42:27 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:42:27 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:42:27 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:42:27 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc420184290)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:42:27 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:42:27 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:42:27 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:42:27 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:42:27 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:42:39 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:42:39 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:42:39 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:42:39 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:42:39 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc420164440)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:42:39 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:42:39 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:42:39 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:42:39 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:42:39 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:42:56 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:42:56 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:42:56 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:42:56 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:42:56 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc420011120)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:42:56 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:42:56 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:42:56 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:42:56 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:42:56 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:43:01 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:43:01 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:43:01 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:43:01 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:43:01 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc42016c120)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:43:01 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:43:01 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:43:01 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:43:01 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:43:01 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:43:05 [INF] [main.go:38] 初始日志完成
+2018-05-29 14:43:05 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:43:05 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:43:05 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:43:05 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x85f5a7, 0x11, 0xc420011050)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c2560, 0x8a6000)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x875398, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c2560, 0x8a6000)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:41 +0x232
+
+2018-05-29 14:43:05 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:43:05 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:43:05 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:43:05 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:43:05 [CRT] [paniclog.go:22] ====================
+2018-05-29 14:43:15 [INF] [main.go:39] 初始日志完成
+2018-05-29 14:43:15 [INF] [keyboardinput.go:21] starting keyboard controler...
+2018-05-29 14:43:15 [INF] [main.go:50] 初始键盘输入完成
+2018-05-29 14:43:21 [INF] [main.go:40] 初始日志完成
+2018-05-29 14:43:21 [CRT] [paniclog.go:40] ====================
+2018-05-29 14:43:21 [CRT] [paniclog.go:40] 宕机堆栈
+2018-05-29 14:43:21 [CRT] [paniclog.go:42] catch panic:'0'
+
+2018-05-29 14:43:21 [CRT] [paniclog.go:43] goroutine 1 [running]:
+runtime/debug.Stack(0x8608f6, 0x11, 0xc4201b00e0)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitee.com/jntse/gotoolkit/util.logPanicStack(0x7c3700, 0x8a7540)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:42 +0x146
+gitee.com/jntse/gotoolkit/util.RecoverPanic(0x8767a8, 0x0, 0x0)
+	/home/webgame/gopath/src/gitee.com/jntse/gotoolkit/util/paniclog.go:19 +0x5b
+panic(0x7c3700, 0x8a7540)
+	/usr/local/go/src/runtime/panic.go:491 +0x283
+main.tests(0xc420071f40, 0x3, 0x3)
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:31 +0x2c9
+main.main()
+	/home/webgame/gopath/src/gitee.com/jntse/testgo/test/main.go:40 +0x1cb
+
+2018-05-29 14:43:21 [CRT] [paniclog.go:44] ====================
+2018-05-29 14:43:21 [CRT] [paniclog.go:24] ====================
+2018-05-29 14:43:21 [CRT] [paniclog.go:25] 宕机额外信息
+2018-05-29 14:43:21 [INF] [main.go:25] ProcessPanic
+2018-05-29 14:43:21 [CRT] [paniclog.go:22] ====================
+2018-05-29 19:59:11 [INF] [main.go:39] 初始日志完成
+2018-05-29 19:59:11 [INF] [keyboardinput.go:21] starting keyboard controler...
+2018-05-29 19:59:11 [INF] [main.go:48] 初始键盘输入完成
+2018-05-29 19:59:56 [INF] [main.go:39] 初始日志完成
+2018-05-29 19:59:56 [INF] [keyboardinput.go:21] starting keyboard controler...
+2018-05-29 19:59:56 [INF] [main.go:50] 初始键盘输入完成
+2018-05-29 20:00:07 [INF] [main.go:39] 初始日志完成
+2018-05-29 20:00:07 [INF] [keyboardinput.go:21] starting keyboard controler...
+2018-05-29 20:00:07 [INF] [main.go:50] 初始键盘输入完成
+2018-05-29 20:00:32 [INF] [main.go:39] 初始日志完成
+2018-05-29 20:00:32 [INF] [keyboardinput.go:21] starting keyboard controler...
+2018-05-29 20:00:32 [INF] [main.go:50] 初始键盘输入完成

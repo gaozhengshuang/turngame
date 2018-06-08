@@ -1,0 +1,35 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+server/client/client
+server/robot/robot
+server/gateserver/gateserver
+server/loginserver/loginserver
+server/matchserver/matchserver
+server/roomserver/roomserver
+server/tbl/excel
+server/tbl/json
+server/pack
+server/release
+server/version.txt
+pbmsg
+tools/gen_pbindex/gen_pbindex
+tools/gen_pbindex/proto_index.xlsx
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
+.glide/
+
+# Vim swap file
+*.swp
+
+# files
+*.log
+protocol.20170915.tar.gz

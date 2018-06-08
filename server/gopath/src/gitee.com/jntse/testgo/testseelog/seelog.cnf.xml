@@ -1,0 +1,15 @@
+<seelog minlevel="info">
+    <outputs formatid="gamelog">
+        <buffered size="10000" flushperiod="1000">
+            <rollingfile type="date" filename="/home/ecs-user/gopath/src/testseelog/game.log" datepattern="20060102-15"/>
+        </buffered>
+        <!--哪些等级日志可以输出在屏幕-->
+        <filter levels="trace,debug,info,warn,error,critical">
+            <console />
+        </filter>
+    </outputs>
+
+    <formats>
+        <format id="gamelog" format="%Date %Time [%LEV] [%Func] [%File:%Line] %Msg%n"/>
+    </formats>
+</seelog>

@@ -1,0 +1,32 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+tcpclient/tcpclient
+tcpserver/tcpserver
+test/test
+webserver/webserver
+testcontainer/testcontainer
+testchannel/testchannel
+helloworld/helloworld
+testfiles/testfiles
+testinterface/testinterface
+testreflect/testreflect
+testroutines/testroutines
+testhttp/testhttp
+gen_pbindex/gen_pbindex
+testfileserver/testfileserver
+testpanic/testpanic
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
+.glide/
+
+# vim swap file
+*.swp

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#配置路径
+TBL_EXCEL=./tblexcel
+TBL_XML=./tblxml
+
+
+# 输出路径
+OUT_META=./tblout
+OUT_PROTO=./tblout
+rm -rf $OUT_META $OUT_PROTO
+mkdir -p $OUT_META
+mkdir -p $OUT_PROTO
+
+# protobuf版本 2.0/3.0
+PROTOBUF_VER=2
+
+
+#// --------------------------------------------------------------------------
+#/// @brief 定义生成函数
+#/// @param 表格归属的结构体所在的结构的名称
+#/// @param 生成文件名
+#/// @param 表格文件名
+#// --------------------------------------------------------------------------
+make_tbl() {
+    tabtoy -mode=exportorv2 -protover=$PROTOBUF_VER --combinename=$1 -proto_out=$OUT_PROTO/$2.proto -go_out=$OUT_PROTO/$2.go -csharp_out=$OUT_PROTO/$2.cs $TBL_EXCEL/$3
+    tabtoy -mode=exportorv2 -protover=$PROTOBUF_VER --combinename=$1 -pbt_out=$OUT_META/$2.pbt -json_out=$OUT_META/$2.json  -lua_out=$OUT_META/$2.lua $TBL_EXCEL/$3
+    #protoc -I=$OUT_PROTO/ --cpp_out=$OUT_PROTO/ $OUT_PROTO/$2.proto
+}
+
+#// --------------------------------------------------------------------------
+#/// @brief  
+#// --------------------------------------------------------------------------
+#make_tbl Globals globals Globals.xlsx
+#make_tbl DailyTask dailytask 每日任务.xlsx
+#make_tbl DailyTask dailytask 每日任务.xlsx
+#make_tbl ItemBase itembase 道具.xlsx
+make_tbl ProtoMsgIndex proto_id proto_id.xlsx
+

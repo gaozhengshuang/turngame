@@ -1,0 +1,34 @@
+#!/bin/bash
+roomid=0
+appname=match
+logroot=~/log
+fileconf=../conf/conf_${appname}.json
+servername=${appname}server
+logname=${servername}.log
+logpath=$logroot/${servername}
+daemonlog=$logroot/daemon.${servername}.log
+
+if [[ -n ${1} && ${1} -ne 0 ]]    #参数非空且不等于0
+then
+    roomid=$1
+    fileconf=../conf/${appname}/conf_${appname}.$roomid.json
+    logname=${servername}${roomid}.log
+    logpath=$logroot/${servername}${roomid}/
+    daemonlog=$logroot/daemon.${servername}${roomid}.log
+    mkdir -p $logpath
+fi
+
+cmd=$2
+case $cmd in
+daemon)
+    ./${servername} -conf=${fileconf} -logname=${logname} -logpath=${logpath} -loglvl="trace" -daemon=true -pprof=27210 > $daemonlog 2>&1 &
+;;
+gc)    
+    GODEBUG=gctrace=1 ./dlvrun
+;;
+*)
+    dlv exec ./${servername} -- -conf=${fileconf} -logname=${logname} -logpath=${logpath} -loglvl="trace" -daemon=true -pprof=27210
+;;
+esac
+
+

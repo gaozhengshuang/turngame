@@ -1,0 +1,57 @@
+{
+	"name": "GateServer000",
+    "config": {
+        "excel":"../tbl/excel/",
+        "json":"../tbl/json/",
+        "xml":"../tbl/xml/"
+    },
+	"connects": [
+		{
+			"name": "LoginConnector",
+			"parser": "LS2GW_MsgParser",
+			"host": {
+				"ip": "127.0.0.1",
+				"port": 7010
+			},
+            "interval": 3,
+            "disable": 0
+		},
+		{
+			"name": "MatchConnector",
+			"parser": "MS2GW_MsgParser",
+			"host": {
+				"ip": "127.0.0.1",
+				"port": 7110
+			},
+            "interval": 3,
+            "disable": 0
+		}
+	],
+	"listens": [
+		{
+			"name": "ClientListener",
+			"parser": "C2GW_MsgParser",
+			"host": {
+				"ip": "127.0.0.1",
+				"port": 8010
+			}
+		},
+		{
+			"name": "RoomListener",
+			"parser": "RS2GW_MsgParser",
+			"host": {
+				"ip": "127.0.0.1",
+				"port": 8110
+			}
+		}
+    ],
+    "redis": {
+        "passwd": "",
+        "db": 0,
+        "host": {
+            "ip": "127.0.0.1",
+            "port": 6379
+        }
+    }
+}
+

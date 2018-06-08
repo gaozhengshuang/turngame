@@ -1,0 +1,11 @@
+#!/bin/bash
+gateid=0
+fileconf="../conf/conf_gate.json"
+if [ -n "$1" ]    #如果参数不是空
+then
+    gateid=$1
+    fileconf="../conf/gate/conf_gate."$gateid".json"
+fi
+
+GODEBUG=gctrace=1 ./gateserver -conf=$fileconf -logname=gateserver.log -logpath=../../log/gateserver/
+#GODEBUG=gctrace=1 ./gateserver -conf=$fileconf -logname=gateserver.log -logpath=../../log/gateserver/ 2> gctrace.log

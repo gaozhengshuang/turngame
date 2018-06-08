@@ -1,0 +1,10 @@
+#!/bin/bash
+roomid=0
+fileconf="../conf/conf_room.json"
+if [ -n "$1" ]    #如果参数不是空
+then
+    roomid=$1
+    fileconf="../conf/room/conf_room."$roomid".json"
+fi
+
+./roomserver -conf=$fileconf -logname=roomserver.log -logpath=../../log/roomserver/ 2> gctrace.log

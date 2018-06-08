@@ -1,0 +1,24 @@
+#!/bin/bash
+robotnum=1
+robotstart=0
+appname=robot
+logroot=~/log
+fileconf=../conf/conf_${appname}.json
+servername=${appname}
+logname=${servername}.log
+logpath=${logroot}/${servername}
+daemonlog=$logroot/daemon.${servername}.log
+
+
+if [ -n "$1" ]    #如果参数不是空
+then
+    robotnum=$1
+fi
+
+if [ -n "$2" ]
+then
+    robotstart=$2
+fi
+
+#dlv exec ./robot -- -conf=../conf/conf_robot.json -logname=robot.log -logpath=~/log/robot/ -num=1 -daemon=true
+dlv exec ./${servername} -- -conf=${fileconf} -logname=${logname} -logpath=${logpath} -num=$robotnum -start=$robotstart -daemon=true

@@ -1,0 +1,20 @@
+[Debug]2017/09/11 17:57:12 A debug message here
+[Info]2017/09/11 17:57:12 A Info Message here 
+[Info]2017/09/11 17:57:12 /home/ecs-user/gopath/src/testfiles/log.go:44: A full file name and line number prefix
+[Info]2017/09/11 17:57:12 A remove flag 'Llongfile'
+[Info]2017/09/11 17:57:12 log.go:52: A final file name element and line number prefix
+[Debug]2017/09/11 17:57:27 A debug message here
+[Info]2017/09/11 17:57:27 A Info Message here 
+[Info]2017/09/11 17:57:27 /home/ecs-user/gopath/src/testfiles/log.go:44: A full file name and line number prefix
+[Info]2017/09/11 17:57:27 A remove flag 'Llongfile'
+[Info]2017/09/11 17:57:27 log.go:52: A final file name element and line number prefix
+[Debug]2017/09/11 17:58:28 A debug message here
+[Info]2017/09/11 17:58:28 A Info Message here 
+[Info]2017/09/11 17:58:28 /home/ecs-user/gopath/src/testfiles/log.go:48: A full file name and line number prefix
+[Info]2017/09/11 17:58:28 A remove flag 'Llongfile'
+[Info]2017/09/11 17:58:28 log.go:56: A final file name element and line number prefix
+[Debug]2017/09/11 18:00:30 A debug message here
+[Info]2017/09/11 18:00:30 A Info Message here 
+[Info]2017/09/11 18:00:30 /home/ecs-user/gopath/src/testfiles/log.go:48: A full file name and line number prefix
+[Info]2017/09/11 18:00:30 A remove flag 'Llongfile'
+[Info]2017/09/11 18:00:30 log.go:56: A final file name element and line number prefix

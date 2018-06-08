@@ -1,0 +1,5 @@
+2017-08-24 22:40:43 [INF] [logwapper.go:45] seelog info log 日志 2017-08-24 22:40:43.108179142 +0800 CST
+2017-08-24 22:40:43 [ERR] [logwapper.go:57] seelog error log 日志 2017-08-24 22:40:43.108193461 +0800 CST
+2017-08-24 22:40:43 [TRC] [logwapper.go:49] seelog trace log 日志 2017-08-24 22:40:43.10820579 +0800 CST
+2017-08-24 22:40:43 [DBG] [logwapper.go:41] seelog debug log 日志 2017-08-24 22:40:43.108213241 +0800 CST
+2017-08-24 22:40:43 [CRT] [logwapper.go:61] seelog critical log 日志 2017-08-24 22:40:43.108223527 +0800 CST

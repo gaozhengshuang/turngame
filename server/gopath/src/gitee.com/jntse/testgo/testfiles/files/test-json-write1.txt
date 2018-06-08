@@ -1,0 +1,39 @@
+{
+	"name": "LoginServer",
+	"listens": [
+		{
+			"name": "ListenClient",
+			"parser": "Client2LoginParser",
+			"host": {
+				"ip": "127.0.0.1",
+				"port": 9010
+			}
+		},
+		{
+			"name": "ListenGate",
+			"parser": "Gate2LoginParser",
+			"host": {
+				"ip": "127.0.0.1",
+				"port": 9020
+			}
+		}
+	],
+	"connects": [
+		{
+			"name": "ConnectGame",
+			"parser": "Login2GameParser",
+			"host": {
+				"ip": "127.0.0.1",
+				"port": 9030
+			}
+		},
+		{
+			"name": "ConnectDB",
+			"parser": "Login2DBParser",
+			"host": {
+				"ip": "",
+				"port": 0
+			}
+		}
+	]
+}

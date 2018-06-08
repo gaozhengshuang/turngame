@@ -1,0 +1,4 @@
+#!/bin/bash
+GODEBUG=gctrace=1 ./matchserver -conf=../conf/conf_match.json -logname=matchserver.log -logpath=../../log/matchserver/
+#GODEBUG=gctrace=1 ./matchserver -conf=../conf/conf_match.json -logname=matchserver.log -logpath=../../log/matchserver/ 2> gctrace.log
+

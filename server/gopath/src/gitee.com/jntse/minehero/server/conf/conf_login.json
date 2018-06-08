@@ -1,0 +1,50 @@
+{
+	"name": "LoginServer",
+    "tblpath": {
+        "excel":"../tbl/excel/",
+        "json":"../tbl/json/",
+        "xml":"../tbl/xml/"
+    },
+    "event_queuesize":100000,
+	"listens": [
+		{
+			"name": "GateListener",
+			"parser": "GW2LS_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 7010
+			},
+            "verify": 0,
+            "svrchannel":true
+		}
+	],
+	"wslistens": [
+		{
+			"name": "ClientListener",
+			"parser": "C2LS_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 7020
+			},
+            "verify": 1,
+            "svrchannel":false
+		}
+	],
+    "httplistens": [
+		{
+			"name": "TestHttpListener1",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 18000
+			}
+		}
+    ],
+    "redis": {
+        "passwd": "",
+        "db": 0,
+        "host": {
+            "ip": "192.168.30.204",
+            "port": 6379
+        }
+    }
+}

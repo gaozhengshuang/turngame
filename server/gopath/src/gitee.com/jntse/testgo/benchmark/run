@@ -1,0 +1,18 @@
+#!/bin/bash
+if [ -n "$3" ]  #如果参数3不是空
+then
+    echo "########bench $1|$2 ########"
+    go test -v -bench=$1'|'$2'|'$3 -benchmem
+elif [ -n "$2" ]  #如果参数2不是空
+then
+    echo "########bench $1|$2 ########"
+    go test -v -bench=$1'|'$2 -benchmem
+elif [ -n "$1" ]
+then
+    echo "########bench $1########"
+    go test -v -bench=$1 -benchmem
+else
+    echo "########bench all########"
+    go test -v -bench . -benchmem
+fi
+

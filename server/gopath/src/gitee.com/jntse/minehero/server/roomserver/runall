@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#暴力关闭进程
+#暴力关闭进程
+echo "暴力关闭进程 roomserver..."
+killall roomserver
+sleep 0.3
+echo "."
+sleep 0.3
+echo ".."
+sleep 0.3
+echo "..."
+
+
+#输出屏幕日志
+mkdir -p ./daemon
+./roomserver -conf=../conf/conf_room.json        -logname=roomserver.log  -logpath=../../log/roomserver/  -daemon=true > ./daemon/daemon.log  2>&1 &
+./roomserver -conf=../conf/room/conf_room.1.json -logname=roomserver1.log -logpath=../../log/roomserver1/ -daemon=true > ./daemon/daemon1.log 2>&1 &
+./roomserver -conf=../conf/room/conf_room.2.json -logname=roomserver2.log -logpath=../../log/roomserver2/ -daemon=true > ./daemon/daemon2.log 2>&1 &
+#./roomserver -conf=../conf/room/conf_room.3.json -logname=roomserver3.log -logpath=../../log/roomserver3/ -daemon=true > ./daemon/daemon3.log 2>&1 &
+
+
+#不输出屏幕日志
+#./roomserver -conf=../conf/conf_room.json   -logname=roomserver.log  -logpath=../../log/roomserver/  -daemon=true > /dev/null 2>&1 &
+#./roomserver -conf=../conf/conf_room.1.json -logname=roomserver1.log -logpath=../../log/roomserver1/ -daemon=true > /dev/null 2>&1 &
+#./roomserver -conf=../conf/conf_room.2.json -logname=roomserver2.log -logpath=../../log/roomserver2/ -daemon=true > /dev/null 2>&1 &
+#./roomserver -conf=../conf/conf_room.3.json -logname=roomserver3.log -logpath=../../log/roomserver3/ -daemon=true > /dev/null 2>&1 &
+echo "启动roomserver完毕"

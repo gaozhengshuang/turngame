@@ -1,0 +1,17 @@
+{
+    "string": "string field",
+    "int": 20170927,
+    "float": 2017.0927,
+    "bool": true,
+    "objArray" : [
+        { "item":1001, "name":"新手礼包1" },
+        { "item":1002, "name":"新手礼包2" },
+        { "item":1003, "name":"新手礼包3" }
+    ],
+    "strArray" : [
+        "hello1","hello2","hello3"
+    ],
+    "intArray":[
+        8001,8002,8003,8004
+    ]
+}

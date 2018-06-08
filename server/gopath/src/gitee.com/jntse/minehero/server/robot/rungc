@@ -1,0 +1,16 @@
+#!/bin/bash
+robotnum=1
+robotstart=0
+
+if [ -n "$1" ]    #如果参数不是空
+then
+    robotnum=$1
+fi
+
+if [ -n "$2" ]
+then
+    robotstart=$2
+fi
+
+GODEBUG=gctrace=1 ./robot -conf=../conf/conf_robot.json -logname=robot.log -logpath=../../log/robot/ -num=$robotnum -start=$robotstart
+#GODEBUG=gctrace=1 ./robot -conf=../conf/conf_robot.json -logname=robot.log -logpath=../../log/robot/ -num=$robotnum -start=$robotstart 2> gctrace.log

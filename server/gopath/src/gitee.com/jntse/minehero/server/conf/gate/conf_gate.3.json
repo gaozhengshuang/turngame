@@ -1,0 +1,66 @@
+{
+	"name": "GateServer003",
+    "tblpath": {
+        "excel":"../tbl/excel/",
+        "json":"../tbl/json/",
+        "xml":"../tbl/xml/"
+    },
+    "event_queuesize":100000,
+	"connects": [
+		{
+			"name": "LoginConnector",
+			"parser": "LS2GW_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 7010
+			},
+            "interval": 3,
+            "svrchannel":true,
+            "disable": 0
+		},
+		{
+			"name": "MatchConnector",
+			"parser": "MS2GW_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 7110
+			},
+            "interval": 3,
+            "svrchannel":true,
+            "disable": 0
+		}
+	],
+	"listens": [
+		{
+			"name": "RoomListener",
+			"parser": "RS2GW_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 8113
+			},
+            "verify": 0,
+            "svrchannel":true
+		}
+    ],
+	"wslistens": [
+		{
+			"name": "ClientListener",
+			"parser": "C2GW_MsgParser",
+			"host": {
+				"ip": "192.168.30.203",
+				"port": 8013
+			},
+            "verify": 1,
+            "svrchannel":false
+		}
+    ],
+    "redis": {
+        "passwd": "",
+        "db": 0,
+        "host": {
+            "ip": "192.168.30.204",
+            "port": 6379
+        }
+    }
+}
+

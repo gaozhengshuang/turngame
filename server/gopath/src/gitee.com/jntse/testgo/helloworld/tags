@@ -1,0 +1,233 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+All_Of	container-range-exec.go	/^func All_Of(vs []string, f func(string) bool) bool {$/;"	d
+Any_Of	container-range-exec.go	/^func Any_Of(vs []string, f func(string) bool) bool {$/;"	d
+Append	slice.go	/^func (slice *ByteSlice)	Append(data []int)	(n int, err error)	{$/;"	d
+Append2	slice.go	/^func (slice ByteSlice)	Append2(data []int)	(n int, err error)	{$/;"	d
+ArgError	error.go	/^type ArgError struct {$/;"	d
+ArrryAverage	array.go	/^func ArrryAverage(arr [5]int32, size int32) int32 {$/;"	d
+Audi_A4	interface-car.go	/^type Audi_A4 struct	{$/;"	d
+BMW_3_Series	interface-car.go	/^type BMW_3_Series struct {$/;"	d
+Benz_C_Class	interface-car.go	/^type Benz_C_Class struct {$/;"	d
+Book1	struct.go	/^	var Book1 Books \/* 声明 Book1 为 Books 类型 *\/$/;"	d
+Book2	struct.go	/^	var Book2 Books = Books{title: "C++ Primer", author: "Stanley B. Lippman"}$/;"	d
+Book3	struct.go	/^	var Book3 Books = Books{"Effective C++", "Scott Meyers", "55 Specific Ways", 000002}$/;"	d
+Book4	struct.go	/^	var Book4 *Books = new(Books)$/;"	d
+Books	struct.go	/^type Books struct {$/;"	d
+ByLength	sort.go	/^type ByLength []string$/;"	d
+ByteSlice	slice.go	/^type ByteSlice []int$/;"	d
+ConditionTrunk	condition.go	/^func ConditionTrunk() {$/;"	d
+DeclareVariable	declare.go	/^func DeclareVariable() bool {$/;"	d
+Error	error.go	/^func (e *ArgError) Error() string {$/;"	d
+Error	interface-car.go	/^func (car* SliceStr) Error() string {$/;"	d
+Error	interface-car.go	/^func (err* Forever_Bicycle) Error() string {$/;"	d
+Exist	container-range-exec.go	/^func Exist(vs []string, t string) bool {$/;"	d
+Factorial	function.go	/^func Factorial(n uint32) uint32 {$/;"	d
+Find	container-range-exec.go	/^func Find(vs []string, t string) int {$/;"	d
+Find_If	container-range-exec.go	/^func Find_If(vs []string, f func(string) bool) []string {$/;"	d
+Foreach_Exec	container-range-exec.go	/^func Foreach_Exec(vs []string, f func(string) string) []string {$/;"	d
+Forever_Bicycle	interface-car.go	/^type Forever_Bicycle struct	{$/;"	d
+ICar	interface-car.go	/^type ICar interface {$/;"	d
+IPhone	interface.go	/^type IPhone struct{}$/;"	d
+Len	sort.go	/^func (s ByLength) Len() int {$/;"	d
+Less	sort.go	/^func (s ByLength) Less(i, j int) bool {$/;"	d
+MakeClosure	closure.go	/^func MakeClosure(i int) func() int {$/;"	d
+Map_Foreach_Exec	container-range-exec.go	/^func Map_Foreach_Exec(vs map[int]string, f func(string)) {$/;"	d
+MsgChannelData	channels.go	/^type MsgChannelData struct {$/;"	d
+NokiaPhone	interface.go	/^type NokiaPhone struct{}$/;"	d
+Phone	interface.go	/^type Phone interface {$/;"	d
+Print	struct.go	/^func (b *Books) Print() {$/;"	d
+Print2	struct.go	/^func (b Books) Print2() {$/;"	d
+common.PrintSeparateLine	main.go	/^func common.PrintSeparateLine(str string) {$/;"	d
+ReadOp	routines-stateful.go	/^type ReadOp struct {$/;"	d
+Response1	json.go	/^type Response1 struct {$/;"	d
+Response2	json.go	/^type Response2 struct {$/;"	d
+SDWORD	declare.go	/^type SDWORD int32$/;"	d
+ShowCarInfo	interface-car.go	/^func ShowCarInfo(car ICar )	{$/;"	d
+SliceAnyType	interface-generics.go	/^type SliceAnyType []interface{}$/;"	d
+SliceAppendCopy	slice.go	/^func SliceAppendCopy() {$/;"	d
+SliceCut	slice.go	/^func SliceCut() {$/;"	d
+SliceStr	interface-car.go	/^type SliceStr []string$/;"	d
+Swap	sort.go	/^func (s ByLength) Swap(i, j int) {$/;"	d
+SwapString	function.go	/^func SwapString(s1, s2 string) (string, string) {$/;"	d
+SwapStringByPtr	function.go	/^func SwapStringByPtr(s1, s2 *string) {$/;"	d
+TestArray	array.go	/^func TestArray() {$/;"	d
+TestAtomic	atomic.go	/^func TestAtomic() {$/;"	d
+TestBase64Encoding	base64-encoding.go	/^func TestBase64Encoding() {$/;"	d
+TestChannelClose	channels-close.go	/^func TestChannelClose() {$/;"	d
+TestChannelSelect	channels-select.go	/^func TestChannelSelect() {$/;"	d
+TestChannelTimeOut	channels-timeout.go	/^func TestChannelTimeOut() {$/;"	d
+TestChannelWorkPool	channels-pool.go	/^func TestChannelWorkPool() {$/;"	d
+TestChannels	channels.go	/^func TestChannels() {$/;"	d
+TestChannelsSync	channels-sync.go	/^func TestChannelsSync() {$/;"	d
+TestClosure	closure.go	/^func TestClosure() {$/;"	d
+TestDefer	defer.go	/^func TestDefer() {$/;"	d
+TestError	error.go	/^func TestError() {$/;"	d
+TestExecProcess	execing-processes.go	/^func TestExecProcess() {$/;"	d
+TestFileReadwrite	files.go	/^func TestFileReadwrite() {$/;"	d
+TestFunction	function.go	/^func TestFunction() {$/;"	d
+TestInterface	interface.go	/^func TestInterface() {$/;"	d
+TestInterfaceCar	interface-car.go	/^func TestInterfaceCar()	{$/;"	d
+TestInterfaceGenerics	interface-generics.go	/^func TestInterfaceGenerics() {$/;"	d
+TestJson	json.go	/^func TestJson() {$/;"	d
+TestMap	map.go	/^func TestMap() {$/;"	d
+TestMapCollection	container-range-exec.go	/^func TestMapCollection() {$/;"	d
+TestMutex	mutex.go	/^func TestMutex() {$/;"	d
+TestNumberParse	number-parsing.go	/^func TestNumberParse() {$/;"	d
+TestOneWayChannels	channels-oneway.go	/^func TestOneWayChannels() {$/;"	d
+TestPrintLog	files.go	/^func TestPrintLog()	{$/;"	d
+TestRange	range.go	/^func TestRange() {$/;"	d
+TestReadFile	files.go	/^func TestReadFile() {$/;"	d
+TestRegexp	regexp.go	/^func TestRegexp() {$/;"	d
+TestRoutineStateful	routines-stateful.go	/^func TestRoutineStateful() {$/;"	d
+TestRoutines	routines.go	/^func TestRoutines() {$/;"	d
+TestSha1Hash	sha1-hashes.go	/^func TestSha1Hash() {$/;"	d
+TestSignal	signal.go	/^func TestSignal() {$/;"	d
+TestSlice	slice.go	/^func TestSlice() {$/;"	d
+TestSliceCollection	container-range-exec.go	/^func TestSliceCollection() {$/;"	d
+TestSort	sort.go	/^func TestSort() {$/;"	d
+TestStringFormat	string-formatting.go	/^func TestStringFormat() {$/;"	d
+TestStruct	struct.go	/^func TestStruct() {$/;"	d
+TestTicker	timer.go	/^func TestTicker() {$/;"	d
+TestTime	time.go	/^func TestTime() {$/;"	d
+TestTimeFormat	time.go	/^func TestTimeFormat() {$/;"	d
+TestTimer	timer.go	/^func TestTimer() {$/;"	d
+TestTimerTick	timer.go	/^func TestTimerTick() {$/;"	d
+TestUrlParsing	url-parsing.go	/^func TestUrlParsing() {$/;"	d
+TestWriteFile	files.go	/^func TestWriteFile() {$/;"	d
+UserDefineSort	sort.go	/^func UserDefineSort() {$/;"	d
+Vertex	map.go	/^	type Vertex struct {$/;"	d
+WriteOp	routines-stateful.go	/^type WriteOp struct {$/;"	d
+a1	array.go	/^	var a1 = [3]int32{1, 2, 3}$/;"	d
+a1	declare.go	/^	var a1, a2, a3 SDWORD$/;"	d
+a1	slice.go	/^	var a1 = [5]int{5, 4, 3, 2, 1}$/;"	d
+a2	array.go	/^	\/\/var a2 [5]int32 = {1,2,3,4,5}	\/\/ 错误语法$/;"	d
+a2	array.go	/^	var a2 = [5]int32{10, 20, 30} \/\/ 5个size的数组，未填充的索引值是0$/;"	d
+a3	array.go	/^	var a3 = [...]string{"a", "b", "c"} \/\/ 如果忽略[]中的数字，会根据元素的个数来自动设置数组的大小$/;"	d
+a4	array.go	/^	var a4 = a3$/;"	d
+abs	interface.go	/^func (p myInteger) abs() int {$/;"	d
+addfun	closure.go	/^	var addfun = func(a int, b int) int {$/;"	d
+assertions	json.go	/^	\/\/ need for type assertions when accessing the decoded$/;"	d
+auto1	declare.go	/^	var auto1, auto2 = 1, "this is string"$/;"	d
+avg	array.go	/^	var avg = ArrryAverage(a2, int32(len(a2)))$/;"	d
+call	interface.go	/^func (apple IPhone) call() {$/;"	d
+call	interface.go	/^func (nokia NokiaPhone) call() {$/;"	d
+check	files.go	/^func check(e error) {$/;"	d
+cl1	closure.go	/^	var cl1 = MakeClosure(100)$/;"	d
+cl2	closure.go	/^	var cl2 = MakeClosure(200)$/;"	d
+closeFile	defer.go	/^func closeFile(f *os.File) {$/;"	d
+color	interface-car.go	/^func (car* Audi_A4) color() string {$/;"	d
+color	interface-car.go	/^func (car* BMW_3_Series) color() string {$/;"	d
+color	interface-car.go	/^func (car* Benz_C_Class) color() string {$/;"	d
+color	interface-car.go	/^func (car* Forever_Bicycle) color() string {$/;"	d
+color	interface-car.go	/^func (car* SliceStr) color() string {$/;"	d
+copyArray	array.go	/^func copyArray(a [3]int32, b [3]int32) bool {$/;"	d
+copySlice	slice.go	/^func copySlice(a []int32, b []int32) bool {$/;"	d
+countrySet	map.go	/^	var countrySet map[string]string$/;"	d
+createFile	defer.go	/^func createFile(p string) *os.File {$/;"	d
+dat	json.go	/^	var dat map[string]interface{}$/;"	d
+data	channels.go	/^		var data MsgChannelData$/;"	d
+dstArray	array.go	/^	var dstArray [3]int32$/;"	d
+f	routines.go	/^func f(from string) {$/;"	d
+f1	error.go	/^func f1(arg int) (int, error) {$/;"	d
+f2	error.go	/^func f2(arg int) (int, error) {$/;"	d
+funworker	channels-sync.go	/^func funworker(done chan bool) {$/;"	d
+grade	condition.go	/^	var grade string = "B"$/;"	d
+init	condition.go	/^func init()	{$/;"	d
+init	declare.go	/^func init()	{$/;"	d
+init	main.go	/^func init() {$/;"	d
+input	routines.go	/^	\/\/var input string$/;"	d
+kSwitchConditionTrunk	main.go	/^var kSwitchConditionTrunk bool = false$/;"	d
+kSwitchDeclareVariable	main.go	/^var kSwitchDeclareVariable bool = false$/;"	d
+kSwitchTestArray	main.go	/^var kSwitchTestArray bool = false$/;"	d
+kSwitchTestAtomic	main.go	/^var kSwitchTestAtomic bool = false$/;"	d
+kSwitchTestBase64Encoding	main.go	/^var kSwitchTestBase64Encoding bool = false$/;"	d
+kSwitchTestChannels	main.go	/^var kSwitchTestChannels bool = false$/;"	d
+kSwitchTestClosure	main.go	/^var kSwitchTestClosure bool = false$/;"	d
+kSwitchTestDefer	main.go	/^var kSwitchTestDefer bool = false$/;"	d
+kSwitchTestError	main.go	/^var kSwitchTestError bool = false$/;"	d
+kSwitchTestExecProcess	main.go	/^var kSwitchTestExecProcess bool = false$/;"	d
+kSwitchTestFileReadwrite	main.go	/^var kSwitchTestFileReadwrite bool = false$/;"	d
+kSwitchTestFunction	main.go	/^var kSwitchTestFunction bool = false$/;"	d
+kSwitchTestInterface	main.go	/^var kSwitchTestInterface bool = true$/;"	d
+kSwitchTestJson	main.go	/^var kSwitchTestJson bool = false$/;"	d
+kSwitchTestMap	main.go	/^var kSwitchTestMap bool = false$/;"	d
+kSwitchTestMutex	main.go	/^var kSwitchTestMutex bool = false$/;"	d
+kSwitchTestNumberParse	main.go	/^var kSwitchTestNumberParse bool = false$/;"	d
+kSwitchTestRange	main.go	/^var kSwitchTestRange bool = false$/;"	d
+kSwitchTestRegexp	main.go	/^var kSwitchTestRegexp bool = false$/;"	d
+kSwitchTestRoutineStateful	main.go	/^var kSwitchTestRoutineStateful bool = false$/;"	d
+kSwitchTestRoutines	main.go	/^var kSwitchTestRoutines bool = false$/;"	d
+kSwitchTestSha1Hash	main.go	/^var kSwitchTestSha1Hash bool = false$/;"	d
+kSwitchTestSignal	main.go	/^var kSwitchTestSignal bool = false$/;"	d
+kSwitchTestSlice	main.go	/^var kSwitchTestSlice bool = false$/;"	d
+kSwitchTestSliceCollection	main.go	/^var kSwitchTestSliceCollection bool = false$/;"	d
+kSwitchTestSort	main.go	/^var kSwitchTestSort bool = false$/;"	d
+kSwitchTestStringFormat	main.go	/^var kSwitchTestStringFormat bool = false$/;"	d
+kSwitchTestStruct	main.go	/^var kSwitchTestStruct bool = false$/;"	d
+kSwitchTestTime	main.go	/^var kSwitchTestTime bool = false$/;"	d
+kSwitchTestTimerTick	main.go	/^var kSwitchTestTimerTick bool = false$/;"	d
+kSwitchTestUrlParsing	main.go	/^var kSwitchTestUrlParsing bool = false$/;"	d
+m1	container-range-exec.go	/^	var m1 = map[int]string{10: "aa", 20: "bb", 30: "cc"}$/;"	d
+m1	interface.go	/^	var m1 myInteger = myInteger(-10)$/;"	d
+m1	map.go	/^	var m1 = map[int]string{10: "aa", 20: "bb", 30: "cc"}$/;"	d
+m2	map.go	/^	var m2 = map[string]Vertex{$/;"	d
+ma	array.go	/^	var ma = [3][4]int{$/;"	d
+main	main.go	/^func main() {$/;"	d
+marks	condition.go	/^	var marks int = 90$/;"	d
+modifyVariable	closure.go	/^	var modifyVariable = func() bool {$/;"	d
+msg	channels.go	/^	var msg, ret = <-messages \/\/ block until receive a notify$/;"	d
+mutex	mutex.go	/^	var mutex = &sync.Mutex{}$/;"	d
+myInteger	interface.go	/^type myInteger int$/;"	d
+name	interface-car.go	/^func (car* Audi_A4) name()	string {$/;"	d
+name	interface-car.go	/^func (car* BMW_3_Series) name()	string {$/;"	d
+name	interface-car.go	/^func (car* Benz_C_Class) name()	string {$/;"	d
+name	interface-car.go	/^func (car* Forever_Bicycle) name() string {$/;"	d
+name	interface-car.go	/^func (car* SliceStr) name() string {$/;"	d
+numbers	slice.go	/^	var numbers []int$/;"	d
+of	string-formatting.go	/^	\/\/ To print the type of a value, use `%T`.$/;"	d
+ops	atomic.go	/^	var ops uint64 = 0$/;"	d
+p1	declare.go	/^	var p1 *SDWORD = &a1$/;"	d
+p2	declare.go	/^	var p2 **SDWORD = &p1$/;"	d
+phone	interface.go	/^	var phone Phone$/;"	d
+ping	channels-oneway.go	/^func ping(pings chan<- string, msg string) {$/;"	d
+point	string-formatting.go	/^type point struct {$/;"	d
+pong	channels-oneway.go	/^func pong(pings <-chan string, pongs chan<- string) {$/;"	d
+power	interface-car.go	/^func (car* Audi_A4) power() (string ,error) {$/;"	d
+power	interface-car.go	/^func (car* BMW_3_Series) power() (string , error) {$/;"	d
+power	interface-car.go	/^func (car* Benz_C_Class) power() (string ,error) {$/;"	d
+power	interface-car.go	/^func (car* Forever_Bicycle) power() (string, error) {$/;"	d
+power	interface-car.go	/^func (car* SliceStr) power() (string ,error) {$/;"	d
+price	interface-car.go	/^func (car* Audi_A4) price() int {$/;"	d
+price	interface-car.go	/^func (car* BMW_3_Series) price() int {$/;"	d
+price	interface-car.go	/^func (car* Benz_C_Class) price() int {$/;"	d
+price	interface-car.go	/^func (car* Forever_Bicycle) price() int {$/;"	d
+price	interface-car.go	/^func (car* SliceStr) price() int {$/;"	d
+printAutoArray	array.go	/^func printAutoArray(arr [3]string) {$/;"	d
+printBoard	slice.go	/^func printBoard(s [][]string) {$/;"	d
+printSlice	slice.go	/^func printSlice(x []int) {$/;"	d
+printf	declare.go	/^var printf = fmt.Printf$/;"	d
+println	declare.go	/^var println = fmt.Println$/;"	d
+readOps	mutex.go	/^	var readOps uint64 = 0$/;"	d
+readOps	routines-stateful.go	/^	var readOps uint64 = 0$/;"	d
+s1	slice.go	/^	var s1 []int$/;"	d
+s3	slice.go	/^	\/\/var s3 []int = []int {1,2,3}		\/\/ 可以省去变量类型$/;"	d
+s3	slice.go	/^	var s3 = []int{1, 2, 3}$/;"	d
+s5	slice.go	/^	var s5 = a1[:] \/\/ 整个数组$/;"	d
+so	sort.go	/^\/\/ `Swap` - on our type so we can use the `sort` package's$/;"	d
+state	mutex.go	/^	var state = make(map[int]int)$/;"	d
+state	routines-stateful.go	/^		var state = make(map[int]int)$/;"	d
+str	declare.go	/^	var str string = `{"id":1, "name":"xiejian"}`$/;"	d
+strs	container-range-exec.go	/^	var strs = []string{"peach", "apple", "pear", "plum"}$/;"	d
+sum	closure.go	/^	var sum int = 0$/;"	d
+temp	function.go	/^	var temp string$/;"	d
+that	sort.go	/^\/\/ type that is just an alias for the builtin `[]string`$/;"	d
+total	array.go	/^	var total int32$/;"	d
+worker	channels-pool.go	/^func worker(id int, jobs <-chan int, results chan<- int) {$/;"	d
+writeFile	defer.go	/^func writeFile(f *os.File) {$/;"	d
+writeOps	mutex.go	/^	var writeOps uint64 = 0$/;"	d
+writeOps	routines-stateful.go	/^	var writeOps uint64 = 0$/;"	d

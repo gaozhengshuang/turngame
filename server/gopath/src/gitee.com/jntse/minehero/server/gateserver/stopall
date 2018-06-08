@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#暴力关闭进程
+killall gateserver
+

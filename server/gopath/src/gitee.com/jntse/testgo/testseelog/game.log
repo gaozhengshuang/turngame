@@ -1,0 +1,332 @@
+2017-08-24 21:00:26 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 21:00:26.737199007 +0800 CST
+2017-08-24 22:00:00 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:00.31099949 +0800 CST
+2017-08-24 22:00:01 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:01.311253676 +0800 CST
+2017-08-24 22:00:02 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:02.311445218 +0800 CST
+2017-08-24 22:00:03 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:03.311592301 +0800 CST
+2017-08-24 22:00:04 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:04.311768082 +0800 CST
+2017-08-24 22:00:05 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:05.311937443 +0800 CST
+2017-08-24 22:00:06 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:06.31210306 +0800 CST
+2017-08-24 22:00:07 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:07.312281392 +0800 CST
+2017-08-24 22:00:08 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:08.312443644 +0800 CST
+2017-08-24 22:00:09 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:09.312592007 +0800 CST
+2017-08-24 22:00:10 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:10.312778872 +0800 CST
+2017-08-24 22:00:11 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:11.312971615 +0800 CST
+2017-08-24 22:00:12 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:12.313139265 +0800 CST
+2017-08-24 22:00:13 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:13.313428028 +0800 CST
+2017-08-24 22:00:14 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:14.313647087 +0800 CST
+2017-08-24 22:00:15 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:15.31382095 +0800 CST
+2017-08-24 22:00:16 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:16.314963467 +0800 CST
+2017-08-24 22:00:17 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:17.31523609 +0800 CST
+2017-08-24 22:00:18 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:18.31539437 +0800 CST
+2017-08-24 22:00:19 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:19.315558768 +0800 CST
+2017-08-24 22:00:20 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:20.315744403 +0800 CST
+2017-08-24 22:00:21 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:21.316030539 +0800 CST
+2017-08-24 22:00:22 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:22.316199531 +0800 CST
+2017-08-24 22:00:23 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:23.316386428 +0800 CST
+2017-08-24 22:00:24 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 22:00:24.316582023 +0800 CST
+1503582619920710462 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 21:50:19.920685438 +0800 CST
+1503582620920945580 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 21:50:20.920940211 +0800 CST
+1503582621921109317 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 21:50:21.921101462 +0800 CST
+1503582622921277752 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 21:50:22.92126896 +0800 CST
+1503582623921430682 [INF] [main.go:28] [main.main.func1] logger info log 日志2017-08-24 21:50:23.921423932 +0800 CST
+2017-08-24 21:50:54 [INF] [main.go:28] logger info log 日志2017-08-24 21:50:54.93469009 +0800 CST
+2017-08-24 21:50:55 [INF] [main.go:28] logger info log 日志2017-08-24 21:50:55.935847956 +0800 CST
+2017-08-24 21:50:56 [INF] [main.go:28] logger info log 日志2017-08-24 21:50:56.936023157 +0800 CST
+2017-08-24 21:50:57 [INF] [main.go:28] logger info log 日志2017-08-24 21:50:57.936191239 +0800 CST
+2017-08-24 21:50:58 [INF] [main.go:28] logger info log 日志2017-08-24 21:50:58.936339347 +0800 CST
+2017-08-24 21:50:59 [INF] [main.go:28] logger info log 日志2017-08-24 21:50:59.936489396 +0800 CST
+2017-08-24 21:51:00 [INF] [main.go:28] logger info log 日志2017-08-24 21:51:00.936635798 +0800 CST
+2017-08-24 21:51:01 [INF] [main.go:28] logger info log 日志2017-08-24 21:51:01.936821388 +0800 CST
+2017-08-24 21:51:02 [INF] [main.go:28] logger info log 日志2017-08-24 21:51:02.936990072 +0800 CST
+2017-08-24 21:51:03 [INF] [main.go:28] logger info log 日志2017-08-24 21:51:03.937185641 +0800 CST
+2017-08-24 21:51:04 [INF] [main.go:28] logger info log 日志2017-08-24 21:51:04.937346336 +0800 CST
+2017-08-24 22:40:43 [INF] [main.go:28] logger info log 日志2017-08-24 22:40:43.10678473 +0800 CST
+2017-08-24 22:40:43 [ERR] [main.go:29] logger error log 日志2017-08-24 22:40:43.106812003 +0800 CST
+2017-08-24 22:40:43 [TRC] [main.go:30] logger trace log 日志2017-08-24 22:40:43.106999523 +0800 CST
+2017-08-24 22:40:43 [DBG] [main.go:31] logger debug log 日志2017-08-24 22:40:43.107010682 +0800 CST
+2017-08-24 22:40:43 [CRT] [main.go:33] logger critical log 日志2017-08-24 22:40:43.107017939 +0800 CST
+2017-08-24 22:40:43 [INF] [main.go:34] seelog info log 日志 2017-08-24 22:40:43.107474029 +0800 CST
+2017-08-24 22:40:43 [ERR] [main.go:35] seelog error log 日志 2017-08-24 22:40:43.107488603 +0800 CST
+2017-08-24 22:40:43 [TRC] [main.go:36] seelog trace log 日志 2017-08-24 22:40:43.107499678 +0800 CST
+2017-08-24 22:40:43 [DBG] [main.go:37] seelog debug log 日志 2017-08-24 22:40:43.107507627 +0800 CST
+2017-08-24 22:40:43 [CRT] [main.go:41] seelog critical log 日志 2017-08-24 22:40:43.10751771 +0800 CST
+2017-08-24 22:42:08 [INF] [main.go:28] logger info log 日志2017-08-24 22:42:08.642561835 +0800 CST
+2017-08-24 22:42:08 [ERR] [main.go:29] logger error log 日志2017-08-24 22:42:08.642596478 +0800 CST
+2017-08-24 22:42:08 [TRC] [main.go:30] logger trace log 日志2017-08-24 22:42:08.642765251 +0800 CST
+2017-08-24 22:42:08 [DBG] [main.go:31] logger debug log 日志2017-08-24 22:42:08.642775689 +0800 CST
+2017-08-24 22:42:08 [CRT] [main.go:33] logger critical log 日志2017-08-24 22:42:08.642782859 +0800 CST
+2017-08-24 22:42:08 [INF] [main.go:34] seelog info log 日志 2017-08-24 22:42:08.643371278 +0800 CST
+2017-08-24 22:42:08 [ERR] [main.go:35] seelog error log 日志 2017-08-24 22:42:08.643392464 +0800 CST
+2017-08-24 22:42:08 [TRC] [main.go:36] seelog trace log 日志 2017-08-24 22:42:08.643410896 +0800 CST
+2017-08-24 22:42:08 [DBG] [main.go:37] seelog debug log 日志 2017-08-24 22:42:08.64342421 +0800 CST
+2017-08-24 22:42:08 [CRT] [main.go:41] seelog critical log 日志 2017-08-24 22:42:08.643439476 +0800 CST
+2017-08-24 22:45:04 [INF] [main.go:28] logger info log 日志2017-08-24 22:45:04.011779932 +0800 CST
+2017-08-24 22:45:04 [ERR] [main.go:29] logger error log 日志2017-08-24 22:45:04.011807633 +0800 CST
+2017-08-24 22:45:04 [TRC] [main.go:30] logger trace log 日志2017-08-24 22:45:04.011998059 +0800 CST
+2017-08-24 22:45:04 [DBG] [main.go:31] logger debug log 日志2017-08-24 22:45:04.012009352 +0800 CST
+2017-08-24 22:45:04 [CRT] [main.go:34] logger critical log 日志2017-08-24 22:45:04.012016382 +0800 CST
+2017-08-24 22:45:04 [INF] [main.go:35] seelog info log 日志 2017-08-24 22:45:04.012318768 +0800 CST
+2017-08-24 22:45:04 [ERR] [main.go:36] seelog error log 日志 2017-08-24 22:45:04.012326649 +0800 CST
+2017-08-24 22:45:04 [TRC] [main.go:37] seelog trace log 日志 2017-08-24 22:45:04.012332114 +0800 CST
+2017-08-24 22:45:04 [DBG] [main.go:38] seelog debug log 日志 2017-08-24 22:45:04.012336196 +0800 CST
+2017-08-24 22:45:04 [CRT] [main.go:41] seelog critical log 日志 2017-08-24 22:45:04.012341175 +0800 CST
+2017-08-24 22:45:36 [INF] [main.go:29] logger info log 日志2017-08-24 22:45:36.821346453 +0800 CST
+2017-08-24 22:45:36 [ERR] [main.go:30] logger error log 日志2017-08-24 22:45:36.821382727 +0800 CST
+2017-08-24 22:45:36 [TRC] [main.go:31] logger trace log 日志2017-08-24 22:45:36.821559064 +0800 CST
+2017-08-24 22:45:36 [DBG] [main.go:32] logger debug log 日志2017-08-24 22:45:36.821570628 +0800 CST
+2017-08-24 22:45:36 [CRT] [main.go:35] logger critical log 日志2017-08-24 22:45:36.821577681 +0800 CST
+2017-08-24 22:45:36 [INF] [main.go:36] seelog info log 日志 2017-08-24 22:45:36.823219383 +0800 CST
+2017-08-24 22:45:36 [ERR] [main.go:37] seelog error log 日志 2017-08-24 22:45:36.823242513 +0800 CST
+2017-08-24 22:45:36 [TRC] [main.go:38] seelog trace log 日志 2017-08-24 22:45:36.823261691 +0800 CST
+2017-08-24 22:45:36 [DBG] [main.go:39] seelog debug log 日志 2017-08-24 22:45:36.823273972 +0800 CST
+2017-08-24 22:45:36 [CRT] [main.go:42] seelog critical log 日志 2017-08-24 22:45:36.823298098 +0800 CST
+2017-08-24 22:46:42 [INF] [main.go:30] logger info log 日志2017-08-24 22:46:42.549686633 +0800 CST
+2017-08-24 22:46:42 [ERR] [main.go:31] logger error log 日志2017-08-24 22:46:42.549723622 +0800 CST
+2017-08-24 22:46:42 [TRC] [main.go:32] logger trace log 日志2017-08-24 22:46:42.549870858 +0800 CST
+2017-08-24 22:46:42 [DBG] [main.go:33] logger debug log 日志2017-08-24 22:46:42.549881172 +0800 CST
+2017-08-24 22:46:42 [CRT] [main.go:36] logger critical log 日志2017-08-24 22:46:42.549888122 +0800 CST
+2017-08-24 22:46:42 [INF] [main.go:37] seelog info log 日志 2017-08-24 22:46:42.550467844 +0800 CST
+2017-08-24 22:46:42 [ERR] [main.go:38] seelog error log 日志 2017-08-24 22:46:42.550485672 +0800 CST
+2017-08-24 22:46:42 [TRC] [main.go:39] seelog trace log 日志 2017-08-24 22:46:42.550504373 +0800 CST
+2017-08-24 22:46:42 [DBG] [main.go:40] seelog debug log 日志 2017-08-24 22:46:42.55051715 +0800 CST
+2017-08-24 22:46:42 [CRT] [main.go:43] seelog critical log 日志 2017-08-24 22:46:42.550533701 +0800 CST
+2017-08-25 11:29:24 [INF] [main.go:30] logger info log 日志2017-08-25 11:29:24.28728115 +0800 CST
+2017-08-25 11:29:24 [ERR] [main.go:31] logger error log 日志2017-08-25 11:29:24.287317768 +0800 CST
+2017-08-25 11:29:24 [TRC] [main.go:32] logger trace log 日志2017-08-25 11:29:24.287474162 +0800 CST
+2017-08-25 11:29:24 [DBG] [main.go:33] logger debug log 日志2017-08-25 11:29:24.287489014 +0800 CST
+2017-08-25 11:29:24 [CRT] [main.go:36] logger critical log 日志2017-08-25 11:29:24.287500343 +0800 CST
+2017-08-25 11:29:24 [INF] [main.go:37] seelog info log 日志 2017-08-25 11:29:24.28809841 +0800 CST
+2017-08-25 11:29:24 [ERR] [main.go:38] seelog error log 日志 2017-08-25 11:29:24.28811407 +0800 CST
+2017-08-25 11:29:24 [TRC] [main.go:39] seelog trace log 日志 2017-08-25 11:29:24.288125189 +0800 CST
+2017-08-25 11:29:24 [DBG] [main.go:40] seelog debug log 日志 2017-08-25 11:29:24.288133034 +0800 CST
+2017-08-25 11:29:24 [CRT] [main.go:43] seelog critical log 日志 2017-08-25 11:29:24.288143575 +0800 CST
+2017-09-01 11:00:06 [INF] [main.main] [main.go:30] logger info log 日志2017-09-01 11:00:06.270635699 +0800 CST
+2017-09-01 11:00:06 [ERR] [main.main] [main.go:31] logger error log 日志2017-09-01 11:00:06.272141535 +0800 CST
+2017-09-01 11:00:06 [TRC] [main.main] [main.go:32] logger trace log 日志2017-09-01 11:00:06.273315674 +0800 CST
+2017-09-01 11:00:06 [DBG] [main.main] [main.go:33] logger debug log 日志2017-09-01 11:00:06.273331658 +0800 CST
+2017-09-01 11:00:06 [CRT] [main.main] [main.go:36] logger critical log 日志2017-09-01 11:00:06.273339449 +0800 CST
+2017-09-01 11:00:06 [INF] [main.main] [main.go:37] seelog info log 日志 2017-09-01 11:00:06.289993366 +0800 CST
+2017-09-01 11:00:06 [ERR] [main.main] [main.go:38] seelog error log 日志 2017-09-01 11:00:06.290070647 +0800 CST
+2017-09-01 11:00:06 [TRC] [main.main] [main.go:39] seelog trace log 日志 2017-09-01 11:00:06.290094859 +0800 CST
+2017-09-01 11:00:06 [DBG] [main.main] [main.go:40] seelog debug log 日志 2017-09-01 11:00:06.290118554 +0800 CST
+2017-09-01 11:00:06 [CRT] [main.main] [main.go:43] seelog critical log 日志 2017-09-01 11:00:06.290168045 +0800 CST
+2017-09-01 11:01:17 [INF] [main] [main.go:30] logger info log 日志2017-09-01 11:01:17.427276632 +0800 CST
+2017-09-01 11:01:17 [ERR] [main] [main.go:31] logger error log 日志2017-09-01 11:01:17.427327774 +0800 CST
+2017-09-01 11:01:17 [TRC] [main] [main.go:32] logger trace log 日志2017-09-01 11:01:17.427648551 +0800 CST
+2017-09-01 11:01:17 [DBG] [main] [main.go:33] logger debug log 日志2017-09-01 11:01:17.427665332 +0800 CST
+2017-09-01 11:01:17 [CRT] [main] [main.go:36] logger critical log 日志2017-09-01 11:01:17.427676853 +0800 CST
+2017-09-01 11:01:17 [INF] [main] [main.go:37] seelog info log 日志 2017-09-01 11:01:17.429206496 +0800 CST
+2017-09-01 11:01:17 [ERR] [main] [main.go:38] seelog error log 日志 2017-09-01 11:01:17.42923153 +0800 CST
+2017-09-01 11:01:17 [TRC] [main] [main.go:39] seelog trace log 日志 2017-09-01 11:01:17.429283294 +0800 CST
+2017-09-01 11:01:17 [DBG] [main] [main.go:40] seelog debug log 日志 2017-09-01 11:01:17.429298659 +0800 CST
+2017-09-01 11:01:17 [CRT] [main] [main.go:43] seelog critical log 日志 2017-09-01 11:01:17.42931649 +0800 CST
+2017-09-01 11:01:25 [INF] [main.main] [main.go:30] logger info log 日志2017-09-01 11:01:25.307308832 +0800 CST
+2017-09-01 11:01:25 [ERR] [main.main] [main.go:31] logger error log 日志2017-09-01 11:01:25.307337201 +0800 CST
+2017-09-01 11:01:25 [TRC] [main.main] [main.go:32] logger trace log 日志2017-09-01 11:01:25.307426789 +0800 CST
+2017-09-01 11:01:25 [DBG] [main.main] [main.go:33] logger debug log 日志2017-09-01 11:01:25.307432543 +0800 CST
+2017-09-01 11:01:25 [CRT] [main.main] [main.go:36] logger critical log 日志2017-09-01 11:01:25.307435887 +0800 CST
+2017-09-01 11:01:25 [INF] [main.main] [main.go:37] seelog info log 日志 2017-09-01 11:01:25.307833436 +0800 CST
+2017-09-01 11:01:25 [ERR] [main.main] [main.go:38] seelog error log 日志 2017-09-01 11:01:25.307842542 +0800 CST
+2017-09-01 11:01:25 [TRC] [main.main] [main.go:39] seelog trace log 日志 2017-09-01 11:01:25.307848267 +0800 CST
+2017-09-01 11:01:25 [DBG] [main.main] [main.go:40] seelog debug log 日志 2017-09-01 11:01:25.307855623 +0800 CST
+2017-09-01 11:01:25 [CRT] [main.main] [main.go:43] seelog critical log 日志 2017-09-01 11:01:25.307861136 +0800 CST
+2017-09-20 16:02:51 [INF] [main.main] [main.go:30] logger info log 日志2017-09-20 16:02:51.085866457 +0800 CST
+2017-09-20 16:02:51 [ERR] [main.main] [main.go:31] logger error log 日志2017-09-20 16:02:51.087952497 +0800 CST
+2017-09-20 16:02:51 [TRC] [main.main] [main.go:32] logger trace log 日志2017-09-20 16:02:51.090487233 +0800 CST
+2017-09-20 16:02:51 [DBG] [main.main] [main.go:33] logger debug log 日志2017-09-20 16:02:51.090502341 +0800 CST
+2017-09-20 16:02:51 [CRT] [main.main] [main.go:36] logger critical log 日志2017-09-20 16:02:51.090551962 +0800 CST
+2017-09-20 16:02:51 [INF] [main.main] [main.go:37] seelog info log 日志 2017-09-20 16:02:51.10199135 +0800 CST
+2017-09-20 16:02:51 [ERR] [main.main] [main.go:38] seelog error log 日志 2017-09-20 16:02:51.102013004 +0800 CST
+2017-09-20 16:02:51 [TRC] [main.main] [main.go:39] seelog trace log 日志 2017-09-20 16:02:51.102026652 +0800 CST
+2017-09-20 16:02:51 [DBG] [main.main] [main.go:40] seelog debug log 日志 2017-09-20 16:02:51.102040167 +0800 CST
+2017-09-20 16:02:51 [CRT] [main.main] [main.go:43] seelog critical log 日志 2017-09-20 16:02:51.102051032 +0800 CST
+2017-09-20 16:03:51 [INF] [main.main] [main.go:30] logger info log 日志2017-09-20 16:03:51.328787567 +0800 CST
+2017-09-20 16:03:51 [ERR] [main.main] [main.go:31] logger error log 日志2017-09-20 16:03:51.32891116 +0800 CST
+2017-09-20 16:03:51 [TRC] [main.main] [main.go:32] logger trace log 日志2017-09-20 16:03:51.32911615 +0800 CST
+2017-09-20 16:03:51 [DBG] [main.main] [main.go:33] logger debug log 日志2017-09-20 16:03:51.329128234 +0800 CST
+2017-09-20 16:03:51 [CRT] [main.main] [main.go:36] logger critical log 日志2017-09-20 16:03:51.329135662 +0800 CST
+2017-09-20 16:03:51 [INF] [main.main] [main.go:37] seelog info log 日志 2017-09-20 16:03:51.329640277 +0800 CST
+2017-09-20 16:03:51 [ERR] [main.main] [main.go:38] seelog error log 日志 2017-09-20 16:03:51.329656081 +0800 CST
+2017-09-20 16:03:51 [TRC] [main.main] [main.go:39] seelog trace log 日志 2017-09-20 16:03:51.329667193 +0800 CST
+2017-09-20 16:03:51 [DBG] [main.main] [main.go:40] seelog debug log 日志 2017-09-20 16:03:51.32968602 +0800 CST
+2017-09-20 16:03:51 [CRT] [main.main] [main.go:43] seelog critical log 日志 2017-09-20 16:03:51.32970218 +0800 CST
+2017-09-20 16:13:52 [TRC] [main.main] [main.go:30] logger trace log 日志2017-09-20 16:13:52.254541663 +0800 CST
+2017-09-20 16:13:52 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:13:52.2545642 +0800 CST
+2017-09-20 16:13:52 [WRN] [main.main] [main.go:32] logger debug log 日志2017-09-20 16:13:52.254568264 +0800 CST
+2017-09-20 16:13:52 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:13:52.254690933 +0800 CST
+2017-09-20 16:13:52 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:13:52.254699173 +0800 CST
+2017-09-20 16:13:52 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:13:52.254708409 +0800 CST
+2017-09-20 16:13:52 [TRC] [main.main] [main.go:38] seelog trace log 日志 2017-09-20 16:13:52.254949226 +0800 CST
+2017-09-20 16:13:52 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:13:52.254961034 +0800 CST
+2017-09-20 16:13:52 [WRN] [main.main] [main.go:40] seelog debug log 日志 2017-09-20 16:13:52.254975014 +0800 CST
+2017-09-20 16:13:52 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:13:52.254983317 +0800 CST
+2017-09-20 16:13:52 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:13:52.254987232 +0800 CST
+2017-09-20 16:13:52 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:13:52.254992051 +0800 CST
+2017-09-20 16:15:13 [TRC] [main.main] [main.go:30] logger trace log 日志2017-09-20 16:15:13.837091158 +0800 CST
+2017-09-20 16:15:13 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:15:13.837130733 +0800 CST
+2017-09-20 16:15:13 [WRN] [main.main] [main.go:32] logger debug log 日志2017-09-20 16:15:13.837139433 +0800 CST
+2017-09-20 16:15:13 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:15:13.837288525 +0800 CST
+2017-09-20 16:15:13 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:15:13.83729787 +0800 CST
+2017-09-20 16:15:13 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:15:13.837310007 +0800 CST
+2017-09-20 16:15:13 [TRC] [main.main] [main.go:38] seelog trace log 日志 2017-09-20 16:15:13.837781677 +0800 CST
+2017-09-20 16:15:13 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:15:13.837803822 +0800 CST
+2017-09-20 16:15:13 [WRN] [main.main] [main.go:40] seelog debug log 日志 2017-09-20 16:15:13.837826016 +0800 CST
+2017-09-20 16:15:13 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:15:13.837841599 +0800 CST
+2017-09-20 16:15:13 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:15:13.837849624 +0800 CST
+2017-09-20 16:15:13 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:15:13.837959695 +0800 CST
+2017-09-20 16:15:55 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:15:55.376910634 +0800 CST
+2017-09-20 16:15:55 [WRN] [main.main] [main.go:32] logger debug log 日志2017-09-20 16:15:55.376943884 +0800 CST
+2017-09-20 16:15:55 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:15:55.377152095 +0800 CST
+2017-09-20 16:15:55 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:15:55.377163495 +0800 CST
+2017-09-20 16:15:55 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:15:55.377176445 +0800 CST
+2017-09-20 16:15:55 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:15:55.377868707 +0800 CST
+2017-09-20 16:15:55 [WRN] [main.main] [main.go:40] seelog debug log 日志 2017-09-20 16:15:55.377898336 +0800 CST
+2017-09-20 16:15:55 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:15:55.377940369 +0800 CST
+2017-09-20 16:15:55 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:15:55.377952969 +0800 CST
+2017-09-20 16:15:55 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:15:55.377966737 +0800 CST
+2017-09-20 16:16:06 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:16:06.333075736 +0800 CST
+2017-09-20 16:16:06 [WRN] [main.main] [main.go:32] logger debug log 日志2017-09-20 16:16:06.333107456 +0800 CST
+2017-09-20 16:16:06 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:16:06.333257343 +0800 CST
+2017-09-20 16:16:06 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:16:06.333265697 +0800 CST
+2017-09-20 16:16:06 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:16:06.333274674 +0800 CST
+2017-09-20 16:16:06 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:16:06.333883408 +0800 CST
+2017-09-20 16:16:06 [WRN] [main.main] [main.go:40] seelog debug log 日志 2017-09-20 16:16:06.33391309 +0800 CST
+2017-09-20 16:16:06 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:16:06.33393345 +0800 CST
+2017-09-20 16:16:06 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:16:06.33395094 +0800 CST
+2017-09-20 16:16:06 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:16:06.333973823 +0800 CST
+2017-09-20 16:17:15 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:17:15.752090219 +0800 CST
+2017-09-20 16:17:15 [WRN] [main.main] [main.go:32] logger debug log 日志2017-09-20 16:17:15.752132594 +0800 CST
+2017-09-20 16:17:15 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:17:15.75231546 +0800 CST
+2017-09-20 16:17:15 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:17:15.752325971 +0800 CST
+2017-09-20 16:17:15 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:17:15.752338466 +0800 CST
+2017-09-20 16:17:15 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:17:15.753733125 +0800 CST
+2017-09-20 16:17:15 [WRN] [main.main] [main.go:40] seelog debug log 日志 2017-09-20 16:17:15.753749888 +0800 CST
+2017-09-20 16:17:15 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:17:15.753759159 +0800 CST
+2017-09-20 16:17:15 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:17:15.753765256 +0800 CST
+2017-09-20 16:17:15 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:17:15.753775924 +0800 CST
+2017-09-20 16:17:57 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:17:57.794802548 +0800 CST
+2017-09-20 16:17:57 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:17:57.794838367 +0800 CST
+2017-09-20 16:17:57 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:17:57.795049368 +0800 CST
+2017-09-20 16:17:57 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:17:57.79506022 +0800 CST
+2017-09-20 16:17:57 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:17:57.795073066 +0800 CST
+2017-09-20 16:17:57 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:17:57.795664516 +0800 CST
+2017-09-20 16:17:57 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:17:57.795684516 +0800 CST
+2017-09-20 16:17:57 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:17:57.795695956 +0800 CST
+2017-09-20 16:17:57 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:17:57.79572259 +0800 CST
+2017-09-20 16:17:57 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:17:57.795737281 +0800 CST
+2017-09-20 16:18:33 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:18:33.208837845 +0800 CST
+2017-09-20 16:18:33 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:18:33.208873632 +0800 CST
+2017-09-20 16:18:33 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:18:33.20902157 +0800 CST
+2017-09-20 16:18:33 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:18:33.209031821 +0800 CST
+2017-09-20 16:18:33 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:18:33.209044222 +0800 CST
+2017-09-20 16:18:33 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:18:33.209436308 +0800 CST
+2017-09-20 16:18:33 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:18:33.209459351 +0800 CST
+2017-09-20 16:18:33 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:18:33.209470681 +0800 CST
+2017-09-20 16:18:33 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:18:33.209478095 +0800 CST
+2017-09-20 16:18:33 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:18:33.209491051 +0800 CST
+2017-09-20 16:19:13 [TRC] [main.main] [main.go:30] logger trace log 日志2017-09-20 16:19:13.225441775 +0800 CST
+2017-09-20 16:19:13 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:19:13.225483218 +0800 CST
+2017-09-20 16:19:13 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:19:13.225491687 +0800 CST
+2017-09-20 16:19:13 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:19:13.22568933 +0800 CST
+2017-09-20 16:19:13 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:19:13.225699841 +0800 CST
+2017-09-20 16:19:13 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:19:13.225712307 +0800 CST
+2017-09-20 16:19:13 [TRC] [main.main] [main.go:38] seelog trace log 日志 2017-09-20 16:19:13.226225817 +0800 CST
+2017-09-20 16:19:13 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:19:13.226242134 +0800 CST
+2017-09-20 16:19:13 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:19:13.226262531 +0800 CST
+2017-09-20 16:19:13 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:19:13.226283757 +0800 CST
+2017-09-20 16:19:13 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:19:13.226296884 +0800 CST
+2017-09-20 16:19:13 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:19:13.226313897 +0800 CST
+2017-09-20 16:21:54 [TRC] [main.main] [main.go:30] logger trace log 日志2017-09-20 16:21:54.906774429 +0800 CST
+2017-09-20 16:21:54 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:21:54.90681537 +0800 CST
+2017-09-20 16:21:54 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:21:54.906823769 +0800 CST
+2017-09-20 16:21:54 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:21:54.907027591 +0800 CST
+2017-09-20 16:21:54 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:21:54.907037781 +0800 CST
+2017-09-20 16:21:54 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:21:54.907050587 +0800 CST
+2017-09-20 16:21:54 [TRC] [main.main] [main.go:38] seelog trace log 日志 2017-09-20 16:21:54.907974478 +0800 CST
+2017-09-20 16:21:54 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:21:54.907999262 +0800 CST
+2017-09-20 16:21:54 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:21:54.908023227 +0800 CST
+2017-09-20 16:21:54 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:21:54.908061162 +0800 CST
+2017-09-20 16:21:54 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:21:54.908069942 +0800 CST
+2017-09-20 16:21:54 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:21:54.908080163 +0800 CST
+2017-09-20 16:22:13 [TRC] [main.main] [main.go:30] logger trace log 日志2017-09-20 16:22:13.033569506 +0800 CST
+2017-09-20 16:22:13 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:22:13.033609942 +0800 CST
+2017-09-20 16:22:13 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:22:13.033618419 +0800 CST
+2017-09-20 16:22:13 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:22:13.033783247 +0800 CST
+2017-09-20 16:22:13 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:22:13.033793012 +0800 CST
+2017-09-20 16:22:13 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:22:13.033805478 +0800 CST
+2017-09-20 16:22:13 [TRC] [main.main] [main.go:38] seelog trace log 日志 2017-09-20 16:22:13.036253323 +0800 CST
+2017-09-20 16:22:13 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:22:13.036274402 +0800 CST
+2017-09-20 16:22:13 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:22:13.036289781 +0800 CST
+2017-09-20 16:22:13 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:22:13.036304669 +0800 CST
+2017-09-20 16:22:13 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:22:13.03631246 +0800 CST
+2017-09-20 16:22:13 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:22:13.036322723 +0800 CST
+2017-09-20 16:23:24 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:23:24.287223458 +0800 CST
+2017-09-20 16:23:24 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:23:24.287258182 +0800 CST
+2017-09-20 16:23:24 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:23:24.287411997 +0800 CST
+2017-09-20 16:23:24 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:23:24.287421747 +0800 CST
+2017-09-20 16:23:24 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:23:24.287434045 +0800 CST
+2017-09-20 16:23:24 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:23:24.287947722 +0800 CST
+2017-09-20 16:23:24 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:23:24.287965867 +0800 CST
+2017-09-20 16:23:24 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:23:24.287977494 +0800 CST
+2017-09-20 16:23:24 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:23:24.287989789 +0800 CST
+2017-09-20 16:23:24 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:23:24.288002922 +0800 CST
+2017-09-20 16:23:52 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:23:52.059856323 +0800 CST
+2017-09-20 16:23:52 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:23:52.060113781 +0800 CST
+2017-09-20 16:23:52 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:23:52.060132381 +0800 CST
+2017-09-20 16:23:52 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:23:52.060152741 +0800 CST
+2017-09-20 16:23:52 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:23:52.061236107 +0800 CST
+2017-09-20 16:23:52 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:23:52.06128789 +0800 CST
+2017-09-20 16:23:52 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:23:52.061297175 +0800 CST
+2017-09-20 16:23:52 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:23:52.061307369 +0800 CST
+2017-09-20 16:24:08 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:24:08.418955599 +0800 CST
+2017-09-20 16:24:08 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:24:08.419208223 +0800 CST
+2017-09-20 16:24:08 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:24:08.419221453 +0800 CST
+2017-09-20 16:24:08 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:24:08.419235175 +0800 CST
+2017-09-20 16:24:08 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:24:08.419754084 +0800 CST
+2017-09-20 16:24:08 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:24:08.41977245 +0800 CST
+2017-09-20 16:24:08 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:24:08.419780248 +0800 CST
+2017-09-20 16:24:08 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:24:08.419790171 +0800 CST
+2017-09-20 16:25:10 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:25:10.221294187 +0800 CST
+2017-09-20 16:25:10 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:25:10.221555511 +0800 CST
+2017-09-20 16:25:10 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:25:10.221573499 +0800 CST
+2017-09-20 16:25:10 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:25:10.221845294 +0800 CST
+2017-09-20 16:25:10 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:25:10.221863656 +0800 CST
+2017-09-20 16:25:10 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:25:10.221873695 +0800 CST
+2017-09-20 16:26:13 [TRC] [main.main] [main.go:30] logger trace log 日志2017-09-20 16:26:13.174777816 +0800 CST
+2017-09-20 16:26:13 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:26:13.174825606 +0800 CST
+2017-09-20 16:26:13 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:26:13.17483849 +0800 CST
+2017-09-20 16:26:13 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:26:13.175004179 +0800 CST
+2017-09-20 16:26:13 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:26:13.175013363 +0800 CST
+2017-09-20 16:26:13 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:26:13.175025532 +0800 CST
+2017-09-20 16:26:13 [TRC] [main.main] [main.go:38] seelog trace log 日志 2017-09-20 16:26:13.1754679 +0800 CST
+2017-09-20 16:26:13 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:26:13.175602585 +0800 CST
+2017-09-20 16:26:13 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:26:13.175620767 +0800 CST
+2017-09-20 16:26:13 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:26:13.175694698 +0800 CST
+2017-09-20 16:26:13 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:26:13.175702499 +0800 CST
+2017-09-20 16:26:13 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:26:13.175712679 +0800 CST
+2017-09-20 16:26:56 [DBG] [main.main] [main.go:31] logger debug log 日志2017-09-20 16:26:56.788328132 +0800 CST
+2017-09-20 16:26:56 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:26:56.78835546 +0800 CST
+2017-09-20 16:26:56 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:26:56.788488611 +0800 CST
+2017-09-20 16:26:56 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:26:56.788497725 +0800 CST
+2017-09-20 16:26:56 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:26:56.788539686 +0800 CST
+2017-09-20 16:26:56 [DBG] [main.main] [main.go:39] seelog debug log 日志 2017-09-20 16:26:56.788965883 +0800 CST
+2017-09-20 16:26:56 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:26:56.788980301 +0800 CST
+2017-09-20 16:26:56 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:26:56.788994553 +0800 CST
+2017-09-20 16:26:56 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:26:56.789001107 +0800 CST
+2017-09-20 16:26:56 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:26:56.789012346 +0800 CST
+2017-09-20 16:27:24 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:27:24.99768991 +0800 CST
+2017-09-20 16:27:24 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:27:24.998017223 +0800 CST
+2017-09-20 16:27:24 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:27:24.998035275 +0800 CST
+2017-09-20 16:27:24 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:27:24.998056363 +0800 CST
+2017-09-20 16:27:24 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:27:24.99872411 +0800 CST
+2017-09-20 16:27:24 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:27:24.998759849 +0800 CST
+2017-09-20 16:27:24 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:27:24.998779107 +0800 CST
+2017-09-20 16:27:24 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:27:24.998796373 +0800 CST
+2017-09-20 16:27:49 [WRN] [main.main] [main.go:32] logger warn log 日志2017-09-20 16:27:49.383284669 +0800 CST
+2017-09-20 16:27:49 [INF] [main.main] [main.go:33] logger info log 日志2017-09-20 16:27:49.383463946 +0800 CST
+2017-09-20 16:27:49 [ERR] [main.main] [main.go:34] logger error log 日志2017-09-20 16:27:49.383474233 +0800 CST
+2017-09-20 16:27:49 [CRT] [main.main] [main.go:37] logger critical log 日志2017-09-20 16:27:49.383486926 +0800 CST
+2017-09-20 16:27:49 [WRN] [main.main] [main.go:40] seelog warn log 日志 2017-09-20 16:27:49.384192573 +0800 CST
+2017-09-20 16:27:49 [INF] [main.main] [main.go:41] seelog info log 日志 2017-09-20 16:27:49.384215276 +0800 CST
+2017-09-20 16:27:49 [ERR] [main.main] [main.go:42] seelog error log 日志 2017-09-20 16:27:49.384223074 +0800 CST
+2017-09-20 16:27:49 [CRT] [main.main] [main.go:45] seelog critical log 日志 2017-09-20 16:27:49.384232703 +0800 CST
