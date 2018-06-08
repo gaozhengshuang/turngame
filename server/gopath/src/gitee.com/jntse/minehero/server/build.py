@@ -22,6 +22,9 @@ for arg in sys.argv:
         print subprocess.check_output('svn up', shell=True)
         os.chdir(curdir)
         print subprocess.check_output('svn up', shell=True)
+    if arg == 'git':
+        print subprocess.check_output('git pull', shell=True)
+
     if arg == 'match':  quick[arg] = True
     if arg == 'login':  quick[arg] = True
     if arg == 'gate':   quick[arg] = True
@@ -49,6 +52,7 @@ if len(quick) == 0:
 
     # 打表
     print subprocess.check_output('svn info > version.txt', shell=True)
+    print subprocess.check_output('git log -n5> version.txt', shell=True)
     print subprocess.check_output('./maketbl.py', shell=True)
 
     # 编译
