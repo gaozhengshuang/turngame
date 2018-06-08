@@ -80,5 +80,5 @@
     },
 
     "//":"内网标记",
-    "IntranetFlag":true
+    "IntranetFlag":false
 }
