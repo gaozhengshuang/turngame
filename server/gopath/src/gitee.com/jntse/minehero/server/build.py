@@ -51,7 +51,7 @@ if len(quick) == 0:
         if f != ".gitignore": os.remove('./bin/'+f)
 
     # 打表
-    print subprocess.check_output('svn info > version.txt', shell=True)
+    #print subprocess.check_output('svn info > version.txt', shell=True)
     print subprocess.check_output('git log -n5> version.txt', shell=True)
     print subprocess.check_output('./maketbl.py', shell=True)
 
