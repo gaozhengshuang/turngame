@@ -50,9 +50,9 @@ os.chdir(curdir)
 OUT_TBL_EXCEL_SERVER=env_dict['JUMPGAME_SERVER']+'/server/tbl/excel'
 OUT_TBL_EXCEL_CLIENT=env_dict['JUMPGAME_ROOT']+'/docs/tbl'
 OUT_TBL_JSON_SERVER=env_dict['JUMPGAME_SERVER']+'/server/tbl/json'
-shutil.rmtree(OUT_TBL_EXCEL_SERVER)
-shutil.rmtree(OUT_TBL_EXCEL_CLIENT)
-shutil.rmtree(OUT_TBL_JSON_SERVER)
+if os.path.exists(OUT_TBL_EXCEL_SERVER) == True:    shutil.rmtree(OUT_TBL_EXCEL_SERVER)
+if os.path.exists(OUT_TBL_EXCEL_CLIENT) == True:    shutil.rmtree(OUT_TBL_EXCEL_CLIENT)
+if os.path.exists(OUT_TBL_JSON_SERVER) == True:    shutil.rmtree(OUT_TBL_JSON_SERVER)
 os.makedirs(OUT_TBL_EXCEL_SERVER, 0775)
 os.makedirs(OUT_TBL_EXCEL_CLIENT, 0775)
 os.makedirs(OUT_TBL_JSON_SERVER, 0775)
