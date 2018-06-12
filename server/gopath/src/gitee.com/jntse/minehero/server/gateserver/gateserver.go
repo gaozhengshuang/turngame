@@ -146,7 +146,7 @@ func (this *GateServer) OnClose(session network.IBaseNetSession) {
 		break
 	case "TaskClient":
 		log.Info("sid[%d] 和客户端连接断开", sid)
-		user := this.GetUserBySession(session)
+		user := ExtractSessionUser(session)
 		if user != nil { user.OnDisconnect() }
 	default:
 		log.Error("OnClose error not regist session:%+v", sid)
@@ -403,21 +403,21 @@ func (this *GateServer) RegistRoomServer(agent *RoomAgent) {
 	log.Info("注册房间服 id=%d [%s] 当前总数:%d", agent.Id(), agent.name, this.roomsvrmgr.Num())
 }
 
-func (this *GateServer) GetUserBySession(session network.IBaseNetSession) *GateUser {
-	defdata := session.UserDefData()
-	if defdata == nil {
-		log.Error("客户端Session没有绑定账户数据 sid[%d]", session.Id())
-		return nil
-	}
-
-	account, ok := defdata.(string)
-	if ok == false {
-		log.Error("客户端Session绑定了错误的数据")
-		return nil
-	}
-
-	return UserMgr().FindByAccount(account)
-}
+//func (this *GateServer) GetUserBySession(session network.IBaseNetSession) *GateUser {
+//	defdata := session.UserDefData()
+//	if defdata == nil {
+//		log.Error("客户端Session没有绑定账户数据 sid[%d]", session.Id())
+//		return nil
+//	}
+//
+//	account, ok := defdata.(string)
+//	if ok == false {
+//		log.Error("客户端Session绑定了错误的数据")
+//		return nil
+//	}
+//
+//	return UserMgr().FindByAccount(account)
+//}
 
 // 通用公告
 func (this *GateServer) SendNotice(face string, ty msg.NoticeType, subtext ...string) {
