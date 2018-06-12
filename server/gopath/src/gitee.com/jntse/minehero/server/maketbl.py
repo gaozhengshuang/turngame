@@ -40,8 +40,14 @@ os.chdir(curdir)
 
 # 工具生成protobuf协议index配置
 os.chdir(env_dict['JUMPGAME_SERVER'])
-cmd_genpb = './tools/gen_pbindex/gen_pbindex -root=%s -output=%s/proto_index.xlsx' % (PROTOCOL_PATH,TBL_EXCEL)
-#print os.popen(cmd_genpb,'r').read()
+pbindex_path = './tools/gen_pbindex'
+if os.path.isfile(pbindex_path+'/gen_pbindex') == False:
+    curdir = os.getcwd()
+    os.chdir(pbindex_path)
+    ExecShellCmd("gob", True)
+    os.chdir(curdir)
+
+cmd_genpb = '%s/gen_pbindex -root=%s -output=%s/proto_index.xlsx' % (pbindex_path, PROTOCOL_PATH, TBL_EXCEL)
 ExecShellCmd(cmd_genpb,True)
 os.chdir(curdir)
 
