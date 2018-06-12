@@ -21,7 +21,12 @@ import (
 
 // 提取Session User指针
 func ExtractSessionUser(session network.IBaseNetSession) *GateUser {
-	return nil
+	user, ok := session.UserDefData().(*GateUser)
+	if ok == false {
+		log.Fatal("网络会话Sid[%d]中没有绑定User指针", session.Id())
+		return nil
+	}
+	return user
 }
 
 
@@ -130,16 +135,10 @@ func on_C2GW_ReqStartGame(session network.IBaseNetSession, message interface{}) 
 	tmsg := message.(*msg.C2GW_ReqStartGame)
 	//log.Info(reflect.TypeOf(tmsg).String())
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
-		log.Error(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
-
-	user := UserMgr().FindByAccount(account)
+	user := ExtractSessionUser(session)
 	if user == nil {
-		log.Error("请求创建房间，但找不到玩家数据 account[%s]", account)
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
 		return
 	}
 
@@ -151,16 +150,10 @@ func on_C2GW_ReqStartGame(session network.IBaseNetSession, message interface{}) 
 
 func on_C2GW_Get7DayReward(session network.IBaseNetSession, message interface{}) {
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
+	user := ExtractSessionUser(session)
+	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
-		return
-	}
-
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("请求创建房间，但找不到玩家数据 account[%s]", account)
 		return
 	}
 
@@ -171,15 +164,10 @@ func on_BT_ReqEnterRoom(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.BT_ReqEnterRoom)
 	//log.Info(reflect.TypeOf(tmsg).String())
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
+	user := ExtractSessionUser(session)
+	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
-		return
-	}
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("找不到玩家[%s]", account)
 		return
 	}
 
@@ -193,15 +181,10 @@ func on_BT_JumpPreCheck(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.BT_JumpPreCheck)
 	//log.Info(reflect.TypeOf(tmsg).String())
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
+	user := ExtractSessionUser(session)
+	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
-		return
-	}
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("找不到玩家[%s]", account)
 		return
 	}
 
@@ -213,15 +196,10 @@ func on_BT_ReqJumpStep(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.BT_ReqJumpStep)
 	//log.Info(reflect.TypeOf(tmsg).String())
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
+	user := ExtractSessionUser(session)
+	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
-		return
-	}
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("找不到玩家[%s]", account)
 		return
 	}
 
@@ -233,16 +211,10 @@ func on_BT_ReqQuitGameRoom(session network.IBaseNetSession, message interface{})
 	tmsg := message.(*msg.BT_ReqQuitGameRoom)
 	//log.Info(reflect.TypeOf(tmsg).String())
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
+	user := ExtractSessionUser(session)
+	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
-		return
-	}
-
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("找不到玩家[%s]", account)
 		return
 	}
 
@@ -301,13 +273,10 @@ func on_C2GW_ReqLogin(session network.IBaseNetSession, message interface{}) {
 
 
 //func on_C2GW_ReqUserInfo(session network.IBaseNetSession, message interface{}) {
-//	tmsg := message.(*msg.C2GW_ReqUserInfo)
-//	//log.Info(reflect.TypeOf(tmsg).String())
-//
-//	account := tmsg.GetAccount()
-//	user := UserMgr().FindByAccount(account)
+//	//tmsg := message.(*msg.C2GW_ReqUserInfo)
+//	user := ExtractSessionUser(session)
 //	if user == nil {
-//		log.Error("账户%s 没有注册在这个Gate", account)
+//		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 //		session.Close()
 //		return
 //	}
@@ -321,26 +290,20 @@ func on_C2GW_ReqLogin(session network.IBaseNetSession, message interface{}) {
 //	user.Syn()
 //}
 
+
 // 购买道具
 func on_C2GW_BuyItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_BuyItem)
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
+	user := ExtractSessionUser(session)
+	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
 		return
 	}
 
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("账户%s 没有注册在这个Gate", account)
-		session.Close()
-		return
-	}
-
 	if user.IsOnline() == false {
-		log.Error("账户%s 没有登陆Gate成功", account)
+		log.Error("玩家[%s %d]没有登陆Gate成功", user.Name(), user.Id())
 		session.Close()
 		return
 	}
@@ -351,22 +314,15 @@ func on_C2GW_BuyItem(session network.IBaseNetSession, message interface{}) {
 func on_C2GW_ReqDeliveryGoods(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_ReqDeliveryGoods)
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
+	user := ExtractSessionUser(session)
+	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
 		return
 	}
 
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("账户%s 没有注册在这个Gate", account)
-		session.Close()
-		return
-	}
-
 	if user.IsOnline() == false {
-		log.Error("账户%s 没有登陆Gate成功", account)
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
 		session.Close()
 		return
 	}
@@ -384,22 +340,15 @@ func on_C2GW_ReqDeliveryGoods(session network.IBaseNetSession, message interface
 func on_C2GW_ReqDeliveryDiamond(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_ReqDeliveryDiamond)
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
+	user := ExtractSessionUser(session)
+	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
 		return
 	}
 
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("账户%s 没有注册在这个Gate", account)
-		session.Close()
-		return
-	}
-
 	if user.IsOnline() == false {
-		log.Error("账户%s 没有登陆Gate成功", account)
+		log.Error("玩家[%s %d]没有登陆Gate成功", user.Name(), user.Id())
 		session.Close()
 		return
 	}
@@ -417,16 +366,9 @@ func on_C2GW_ReqDeliveryDiamond(session network.IBaseNetSession, message interfa
 func on_C2GW_UseBagItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_UseBagItem)
 
-	account, ok := session.UserDefData().(string)
-	if ok == false {
-		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
-
-	user := UserMgr().FindByAccount(account)
+	user := ExtractSessionUser(session)
 	if user == nil {
-		log.Error("账户%s 没有注册在这个Gate", account)
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
 		return
 	}
@@ -440,16 +382,9 @@ func on_C2GW_ReqRechargeMoney(session network.IBaseNetSession, message interface
 	//log.Trace("%v", tmsg)
 
 	//
-	account, ok := session.UserDefData().(string)
-	if ok == false {
-		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
-
-	user := UserMgr().FindByAccount(account)
+	user := ExtractSessionUser(session)
 	if user == nil {
-		log.Error("账户%s 没有注册在这个Gate", account)
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
 		return
 	}
@@ -461,16 +396,9 @@ func on_C2GW_ReqRechargeMoney(session network.IBaseNetSession, message interface
 
 func on_C2GW_SellBagItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_SellBagItem)
-	account, ok := session.UserDefData().(string)
-	if ok == false {
-		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
-
-	user := UserMgr().FindByAccount(account)
+	user := ExtractSessionUser(session)
 	if user == nil {
-		log.Error("账户%s 没有注册在这个Gate", account)
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
 		return
 	}
@@ -484,16 +412,9 @@ func on_C2GW_SellBagItem(session network.IBaseNetSession, message interface{}) {
 // 玩家充值完成(大厅和房间都自己获取金币返回)
 func on_C2GW_PlatformRechargeDone(session network.IBaseNetSession, message interface{}) {
 	//tmsg := message.(*msg.C2GW_PlatformRechargeDone)
-	account, ok := session.UserDefData().(string)
-	if ok == false {
-		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
-
-	user := UserMgr().FindByAccount(account)
+	user := ExtractSessionUser(session)
 	if user == nil {
-		log.Error("账户%s 没有注册在这个Gate", account)
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
 		return
 	}
