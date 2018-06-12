@@ -449,7 +449,7 @@ func (this *GateUser) CheckDisconnectTimeOut(now int64) {
 	}
 
 	// 异步事件未处理完
-	if this.asynev.EventSize() != 0 {
+	if this.asynev.EventSize() != 0 || this.asynev.FeedBackSize() != 0 {
 		return
 	}
 
