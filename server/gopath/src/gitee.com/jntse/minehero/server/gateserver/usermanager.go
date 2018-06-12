@@ -75,22 +75,22 @@ func (this *UserManager) Init() {
 	this.ids = make(map[uint64]*GateUser)
 }
 
-func (this *UserManager) CreateNewUser(session network.IBaseNetSession, account, key, token, face string) (errcode string) {
+func (this *UserManager) CreateNewUser(session network.IBaseNetSession, account, key, token, face string) (*GateUser, string) {
 	user := NewGateUser(account, key, token)
 	if user.LoadDB() == false {
-		return "加载玩家DB数据失败"
+		return nil, "加载玩家DB数据失败"
 	}
 	user.SetFace(face)
 
 	if user.Online(session) == false {
-		return "Online失败"
+		return nil, "Online失败"
 	}
 
 	WaitPool().Remove(account)
 	this.AddUser(user)
 	log.Info("当前在线人数:%d", len(this.accounts))
 	//this.AddAccount(user)
-	return ""
+	return user, ""
 }
 
 func (this *UserManager) Amount() int {

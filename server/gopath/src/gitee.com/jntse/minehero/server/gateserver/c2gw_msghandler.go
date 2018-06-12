@@ -19,6 +19,12 @@ import (
 //	NewC2GWMsgHandler()
 //}
 
+// 提取Session User指针
+func ExtractSessionUser(session network.IBaseNetSession) *GateUser {
+	return nil
+}
+
+
 type C2GWMsgHandler struct {
 	msgparser *network.ProtoParser
 }
@@ -101,20 +107,12 @@ func on_C2GW_HeartBeat(session network.IBaseNetSession, message interface{}) {
 	//	Time: pb.Int64(util.CURTIMEUS()),
 	//	Test: tmsg.Test,
 	//})
-
-	account, ok := session.UserDefData().(string)
-	if ok == false {
-		//panic(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
 		return
 	}
-
-	user := UserMgr().FindByAccount(account)
-	if user == nil {
-		log.Error("收到账户[%s]心跳，但玩家不在线", account)
-		return
-	}
-
 	user.SetHeartBeat(util.CURTIMEMS())
 	//log.Trace("玩家[%s %d] 更新心跳", user.Name(), user.Id())
 
@@ -280,13 +278,14 @@ func on_C2GW_ReqLogin(session network.IBaseNetSession, message interface{}) {
 		}
 
 		// 构造新GateUser
-		if reason = UserMgr().CreateNewUser(session, account, verifykey, token, face); reason != "" {
-			log.Info("账户%s 创建新GateUser失败 原因[%s]", account, reason)
+		user, newerr := UserMgr().CreateNewUser(session, account, verifykey, token, face)
+		if newerr != "" || user == nil {
+			reason = newerr
+			log.Info("账户%s 创建新GateUser失败 原因[%s]", account, newerr)
 			break
 		}
 
-		// TODO: 登陆成功才绑定账户到会话
-		session.SetUserDefData(account)
+		session.SetUserDefData(user)		// TODO: 登陆成功才绑定账户到会话
 		return
 	}
 
