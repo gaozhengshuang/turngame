@@ -105,13 +105,18 @@ func on_C2GW_HeartBeat(session network.IBaseNetSession, message interface{}) {
 	//tmsg := message.(*msg.C2GW_HeartBeat)
 	//log.Info(reflect.TypeOf(tmsg).String())
 
-	//curtime := util.CURTIMEUS()
-	//log.Info("receive heart beat msg interval=%d", curtime - tmsg.GetTime())
-	//session.SendCmd(&msg.GW2C_HeartBeat{
-	//	Uid: tmsg.Uid,
-	//	Time: pb.Int64(util.CURTIMEUS()),
-	//	Test: tmsg.Test,
-	//})
+	//account, ok := session.UserDefData().(string)
+	//if ok == false {
+	//	session.Close()
+	//	return
+	//}
+
+	//user := UserMgr().FindByAccount(account)
+	//if user == nil {
+	//	log.Error("收到账户[%s]心跳，但玩家不在线", account)
+	//	return
+	//}
+
 	user := ExtractSessionUser(session)
 	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
@@ -119,16 +124,14 @@ func on_C2GW_HeartBeat(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 	user.SetHeartBeat(util.CURTIMEMS())
-	//log.Trace("玩家[%s %d] 更新心跳", user.Name(), user.Id())
 
-	// TODO: 临时方案，保存玩家Reidis token
-	//token := tmsg.GetToken()
-	//if user.Token() != token {
-	//	log.Info("账户[%s] 玩家[%s %d] 更新token[%s] 老token[%s]", account, user.Name(), user.Id(), token, user.Token())
-	//	key := fmt.Sprintf("charid_%d_token", user.Id())
-	//	Redis().Set(key, token, 0)
-	//	user.SetToken(token)	
-	//}
+	//curtime := util.CURTIMEUS()
+	//log.Info("receive heart beat msg interval=%d", curtime - tmsg.GetTime())
+	//session.SendCmd(&msg.GW2C_HeartBeat{
+	//	Uid: tmsg.Uid,
+	//	Time: pb.Int64(util.CURTIMEUS()),
+	//	Test: tmsg.Test,
+	//})
 }
 
 func on_C2GW_ReqStartGame(session network.IBaseNetSession, message interface{}) {

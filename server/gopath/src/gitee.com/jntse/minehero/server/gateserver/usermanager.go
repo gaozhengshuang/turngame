@@ -6,7 +6,9 @@ import (
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/minehero/pbmsg"
-	_"gitee.com/jntse/gotoolkit/util"
+	"gitee.com/jntse/gotoolkit/util"
+	_"gitee.com/jntse/gotoolkit/eventqueue"
+	_"reflect"
 )
 
 // --------------------------------------------------------------------------
@@ -192,19 +194,49 @@ func (this *UserManager) OnServerClose() {
 
 // 广播消息
 func (this *UserManager) BroadcastMsg(msg pb.Message) {
+	t1 := util.CURTIMEUS()
 	for _, user := range this.accounts {
 		user.SendMsg(msg)
-		//key := fmt.Sprintf("accounts_%s", user.Account())
-		//Redis().Exists(key)
 	}
+	log.Trace("BroadcastMsg Amount[%d] 耗时[%d]us", len(this.accounts), util.CURTIMEUS() - t1)
 }
+
+// 异步广播消息
+//func (this *UserManager) BroadcastMsgAsyn(msg pb.Message) {
+//	arglist := []interface{}{msg}
+//	eventque.NewCommonEvent(arglist, this.DoBroadcastMsgAsyn, nil)
+//}
+//
+//func (this *UserManager) DoBroadcastMsgAsyn(arglist []interface{}) []interface{} {
+//	if len(arglist) != 1 {
+//		log.Fatal("DoBroadcastMsgAsyn 参数数量错误")
+//		return nil
+//	}
+//	msg, ok := arglist[0].(pb.Message)
+//	if ok == false { 
+//		log.Fatal("DoBroadcastMsgAsyn 类型转换错误 argu真实类型是：%s", reflect.TypeOf(arglist[0]).String());
+//		return nil 
+//	}
+//
+//	// copy lock
+//	locker.lock()
+//	accounts_tmp := make(map[string]*GateUser)
+//	for k, v := range this.accounts { accounts_tmp[k] = v }
+//	locker.unlock()
+//	for _, user := range accounts_tmp {
+//		user.SendMsg(msg)
+//	}
+//
+//	return nil
+//}
+
 
 // TODO:整点赠送免费步数，异步事件处理
 func (this *UserManager) GiveFreeStep(now int64) {
 	for _, user := range this.accounts {
-		//user.CheckGiveFreeStep(now, "整点在线获得")
 		event := NewGiveFreeStepEvent(now, "整点在线获得", user.CheckGiveFreeStep)
 		user.AsynEventInsert(event)
 	}
 }
+
 
