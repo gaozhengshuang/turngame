@@ -14,7 +14,8 @@ import "unsafe"
 ///
 /// @brief	切片持有对底层数组的引用，如果你将一个切片赋值给另一个，二者都将引用同一个数组。
 ///			如果函数接受一个切片参数，对切片的元素改动(s[k] = v)，对于调用者是可见的，好比是传递了一个底层数组的指针
-///			如果函数接受一个切片参数，增加切片元素(s=append(s,v) , s=src[begin:end] )，对于调用者又是不可见的.
+///			如果函数接受一个切片参数，增加切片元素(s=append(s,v) , ref=src[begin:end] )，对于调用者又是不可见的.
+///			ref=src[begin:end] cut切片实际上是引用，修改原切片src元素，会同步被引用切片ref
 // --------------------------------------------------------------------------
 func TestSlice() {
 	common.PrintSeparateLine("TestSlice")
@@ -136,13 +137,25 @@ func TestSliceCut() {
 	fmt.Println("numbers ==", numbers)
 
 	/* 打印子切片从索引1(包含) 到索引4(不包含)*/
-	fmt.Println("numbers[1:4] ==", numbers[1:4])
+	n1 := numbers[1:4]
+	fmt.Println("numbers[1:4] ==", n1)
 
 	/* 默认下限为 0*/
-	fmt.Println("numbers[:3] ==", numbers[:3])
+	n2 := numbers[:3]
+	fmt.Println("numbers[:3] ==", n2)
 
 	/* 默认上限为 len(s)*/
-	fmt.Println("numbers[4:] ==", numbers[4:])
+	n3 := numbers[4:]
+	fmt.Println("numbers[4:] ==", n3)
+
+	/* cut切片实际上是引用，修改原切片元素，会同步被引用切片*/
+	numbers[1] = numbers[1] * 100
+	numbers[4] = numbers[4] * 100
+	fmt.Println("numbers ==", numbers)
+	fmt.Println("numbers[1:4] ==", n1)
+	fmt.Println("numbers[:3] ==",  n2)
+	fmt.Println("numbers[4:] ==",  n3)
+
 
 	numbers1 := make([]int, 0, 5)
 	printSlice(&numbers1)
