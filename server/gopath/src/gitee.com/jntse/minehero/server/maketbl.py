@@ -49,7 +49,9 @@ if os.path.isfile(pbindex_path+'/gen_pbindex') == False:
 
 cmd_genpb = '%s/gen_pbindex -root=%s -output=%s/proto_index.xlsx' % (pbindex_path, PROTOCOL_PATH, TBL_EXCEL)
 ExecShellCmd(cmd_genpb,True)
-os.chdir(curdir)
+
+# work path
+os.chdir(env_dict['JUMPGAME_SERVER']+'/server')
 
 
 # 输出路径
