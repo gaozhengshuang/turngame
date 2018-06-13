@@ -10,7 +10,9 @@ import (
 // --------------------------------------------------------------------------
 
 
-// 获取充值页面
+// --------------------------------------------------------------------------
+/// @brief 获取充值页面
+// --------------------------------------------------------------------------
 type RechargeEventHandle func(tvmid string, token string, user *GateUser, amount uint32)
 type UserRechargeEvent struct {
 	user *GateUser
@@ -32,7 +34,9 @@ func (this *UserRechargeEvent) Feedback() {
 }
 
 
-// 玩家存盘
+// --------------------------------------------------------------------------
+/// @brief  玩家存盘
+// --------------------------------------------------------------------------
 type UserSaveEventHandle func()
 type UserSaveEvent struct {
 	handler UserSaveEventHandle
@@ -50,7 +54,9 @@ func (this *UserSaveEvent) Feedback() {
 }
 
 
-// 玩家发货
+// --------------------------------------------------------------------------
+/// @brief 玩家发货
+// --------------------------------------------------------------------------
 type DeliveryGoodsHandle func(list []*msg.DeliveryGoods, token string)
 type DeliveryGoodsEvent struct {
 	list []*msg.DeliveryGoods
@@ -72,7 +78,9 @@ func (this *DeliveryGoodsEvent) Feedback() {
 }
 
 
-// 整点给玩家免费步数
+// --------------------------------------------------------------------------
+/// @brief 整点给玩家免费步数
+// --------------------------------------------------------------------------
 type GiveFreeStepHandle func(now int64, reason string)
 type GiveFreeStepEvent struct {
 	now int64
@@ -91,7 +99,9 @@ func (this *GiveFreeStepEvent) Process(ch_fback chan eventque.IEvent) {
 func (this *GiveFreeStepEvent) Feedback() {
 }
 
-// 同步平台金币
+// --------------------------------------------------------------------------
+/// @brief 同步平台金币
+// --------------------------------------------------------------------------
 type QueryPlatformCoinsEventHandle func()
 type QueryPlatformCoinsFeedback func()
 type QueryPlatformCoinsEvent struct {
@@ -118,4 +128,7 @@ func (this *QueryPlatformCoinsEvent) Process(ch_fback chan eventque.IEvent) {
 func (this *QueryPlatformCoinsEvent) Feedback() {
 }
 
+// --------------------------------------------------------------------------
+/// @brief 
+// --------------------------------------------------------------------------
 

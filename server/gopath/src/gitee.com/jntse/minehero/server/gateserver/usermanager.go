@@ -6,7 +6,7 @@ import (
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/minehero/pbmsg"
-	_"gitee.com/jntse/gotoolkit/util"
+	"gitee.com/jntse/gotoolkit/util"
 )
 
 // --------------------------------------------------------------------------
@@ -192,11 +192,11 @@ func (this *UserManager) OnServerClose() {
 
 // 广播消息
 func (this *UserManager) BroadcastMsg(msg pb.Message) {
+	t1 := util.CURTIMEUS()
 	for _, user := range this.accounts {
 		user.SendMsg(msg)
-		//key := fmt.Sprintf("accounts_%s", user.Account())
-		//Redis().Exists(key)
 	}
+	log.Trace("BroadcastMsg Amount[%d] 耗时[%d]us", len(this.accounts), util.CURTIMEUS() - t1)
 }
 
 // TODO:整点赠送免费步数，异步事件处理
