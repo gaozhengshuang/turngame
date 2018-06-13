@@ -78,6 +78,16 @@ func TestMap() {
 	delete(countrySet, "China")
 	fmt.Printf("map删除后 info:%#v\n", countrySet)
 
+	/* 拷贝和引用 */
+	countrySet2 := countrySet
+	countrySet3 := make(map[string]string)
+	for k ,v := range countrySet { countrySet3[k] = v }
+	countrySet["England"] = "London"
+	fmt.Printf("map插入后 info:%#v\n", countrySet)
+	fmt.Printf("map引用后 info:%#v\n", countrySet2)
+	fmt.Printf("map拷贝后 info:%#v\n", countrySet3)
+
+
 	//
 	common.PrintSeparateLine("TestMap")
 }
