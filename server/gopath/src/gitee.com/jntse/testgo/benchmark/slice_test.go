@@ -23,7 +23,7 @@ func BenchmarkSliceCopy(b *testing.B) {
 	}
 }
 
-// 效率最高
+// 效率最高，其实是引用
 func BenchmarkSliceAssign(b *testing.B) {
 	b.StopTimer()
 	s1, s2 := make([]byte, 128), make([]byte, 128)
@@ -82,17 +82,26 @@ func BenchmarkSliceRefArray(b *testing.B) {
 }
 
 
+// 引用半个数组
+func BenchmarkSliceRefHalfArray(b *testing.B) {
+	var a1 [128]byte
+	for i := 0; i < b.N; i++ {
+		s1 := a1[:64]
+		s1[0] = 0
+	}
+}
+
 // --------------------------------------------------------------------------
 /// @brief 数组和切边作为参数传递
 // --------------------------------------------------------------------------
-func PrintArray(arr [32]byte) 	{}
-func PrintArrayAddr(arr *[32]byte) 	{}
+func PrintArray(arr [1024]byte) 	{}
+func PrintArrayAddr(arr *[1024]byte) 	{}
 func PrintSlice(arr []byte) 	{}
 
-// 数组值传递，效率低
+// 数组值传递，和数组大小有关数组越大效率低
 func BenchmarkArrayParameterPassing(b *testing.B) {
 	b.StopTimer()
-	var arr[32]byte
+	var arr[1024]byte
 	for i, _ := range arr {
 		arr[i] = byte(i);
 	}
@@ -106,7 +115,7 @@ func BenchmarkArrayParameterPassing(b *testing.B) {
 // 数组地址传递，效率高
 func BenchmarkArrayParameterPassingPtr(b *testing.B) {
 	b.StopTimer()
-	var arr[32]byte
+	var arr[1024]byte
 	for i, _ := range arr {
 		arr[i] = byte(i);
 	}
@@ -120,7 +129,7 @@ func BenchmarkArrayParameterPassingPtr(b *testing.B) {
 // 切片一直是以地址传递，效率高
 func BenchmarkSliceParameterPassing(b *testing.B) {
 	b.StopTimer()
-	s1 := make([]byte, 32)
+	s1 := make([]byte, 1024)
 	for i, _ := range s1 {
 		s1 = append(s1, byte(i));
 	}
