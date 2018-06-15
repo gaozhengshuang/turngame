@@ -1,7 +1,11 @@
 #!/bin/bash
-if [ -n "$3" ]  #如果参数3不是空
+if [ -n "$4" ]  #如果参数3不是空
 then
-    echo "########bench $1|$2 ########"
+    echo "########bench $1|$2|$3|$4 ########"
+    go test -v -bench=$1'|'$2'|'$3'|'$4 -benchmem
+elif [ -n "$3" ]
+then
+    echo "########bench $1|$2|$3 ########"
     go test -v -bench=$1'|'$2'|'$3 -benchmem
 elif [ -n "$2" ]  #如果参数2不是空
 then
