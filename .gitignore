@@ -19,6 +19,6 @@
 # files
 *.log
 
-# golang pkg files
+# dir
 server/gopath/pkg
-
+git
