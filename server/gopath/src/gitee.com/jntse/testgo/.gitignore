@@ -18,6 +18,7 @@ testhttp/testhttp
 gen_pbindex/gen_pbindex
 testfileserver/testfileserver
 testpanic/testpanic
+testproto/testproto
 
 # Test binary, build with `go test -c`
 *.test
