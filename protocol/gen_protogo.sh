@@ -6,9 +6,9 @@ pbmsg_path=$JUMPGAME_SERVER/pbmsg
 rm $pbmsg_path"/*" -rvf
 mkdir -pv $pbmsg_path
 
-#protoc -I=./ --go_out=$pbmsg_path *.proto
+protoc -I=./ --go_out=$pbmsg_path *.proto
 #protoc -I=./ --gofast_out=$pbmsg_path *.proto
-protoc -I=./ --gogofast_out=$pbmsg_path *.proto
+#protoc -I=./ --gogofast_out=$pbmsg_path *.proto
 echo $pbmsg_path
 ls $pbmsg_path -al
 echo "generate all .proto -> proto.go 成功"

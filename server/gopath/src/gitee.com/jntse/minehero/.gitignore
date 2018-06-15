@@ -14,7 +14,6 @@ server/tbl/json
 server/pack
 server/release
 server/version.txt
-pbmsg
 tools/gen_pbindex/gen_pbindex
 tools/gen_pbindex/proto_index.xlsx
 
