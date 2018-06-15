@@ -46,3 +46,4 @@ func BenchmarkGolangProtobufUnMarshal() {
 	UnPackGoProto(buff, userbin)
 }
 
+

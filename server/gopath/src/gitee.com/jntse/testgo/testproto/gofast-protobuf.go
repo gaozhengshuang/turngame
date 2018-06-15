@@ -31,6 +31,7 @@ func BenchmarkGofastProtobufMarshal() {
 		Base : &msg.UserBase{Money: gopb.Uint32(0), Coupon:gopb.Uint32(0), Yuanbao:gopb.Uint32(0), Level:gopb.Uint32(1)},
 		Item : &msg.ItemBin{Items:make([]*msg.ItemData,0)},
 	}
+
 	PackGofastProto(userinfo)
 }
 
