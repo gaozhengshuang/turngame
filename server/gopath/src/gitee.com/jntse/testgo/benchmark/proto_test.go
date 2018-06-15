@@ -92,6 +92,7 @@ func BenchmarkGofastProtobufMarshal(b *testing.B) {
 		Base : &msg.UserBase{Money: gopb.Uint32(0), Coupon:gopb.Uint32(0), Yuanbao:gopb.Uint32(0), Level:gopb.Uint32(1)},
 		Item : &msg.ItemBin{Items:make([]*msg.ItemData,0)},
 	}
+
 	for i := 0; i < b.N; i++ {
 		PackGofastProto(userinfo)
 	}
@@ -110,22 +111,6 @@ func BenchmarkGofastProtobufUnMarshal(b *testing.B) {
 	userbin := &msg.Serialize{}
 	for i := 0; i < b.N; i++ {
 		UnPackGofastProto(buff, userbin)
-	}
-}
-
-// --------------------------------------------------------------------------
-/// @brief gogofast protobuf
-// --------------------------------------------------------------------------
-func BenchmarkGoGofastProtobufUnMarshal(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-	}
-}
-
-// --------------------------------------------------------------------------
-/// @brief gogofaster protobuf
-// --------------------------------------------------------------------------
-func BenchmarkGoGofasterProtobuf(b *testing.B) {
-	for i := 0; i < b.N; i++ {
 	}
 }
 
