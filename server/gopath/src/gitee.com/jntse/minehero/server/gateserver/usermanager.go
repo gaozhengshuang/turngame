@@ -2,7 +2,7 @@ package main
 import (
 	_"fmt"
 	_"time"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/minehero/pbmsg"

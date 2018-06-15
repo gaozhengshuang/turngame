@@ -12,7 +12,7 @@ import (
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/server/tbl/excel"
 	"gitee.com/jntse/minehero/server/def"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 	"github.com/go-redis/redis"
 )
 

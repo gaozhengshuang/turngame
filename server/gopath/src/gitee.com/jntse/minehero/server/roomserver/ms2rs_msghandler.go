@@ -8,7 +8,7 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/pbmsg"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 	"encoding/json"
 )
 

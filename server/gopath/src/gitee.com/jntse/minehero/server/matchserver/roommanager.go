@@ -9,7 +9,7 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/minehero/pbmsg"
-	pb"github.com/golang/protobuf/proto"
+	pb"github.com/gogo/protobuf/proto"
 	"github.com/go-redis/redis"
 )
 

@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
 	)

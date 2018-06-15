@@ -14,7 +14,7 @@ import (
 	_"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
 	"github.com/go-redis/redis"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 )
 
 

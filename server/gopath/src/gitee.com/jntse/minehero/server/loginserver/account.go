@@ -7,7 +7,7 @@ import (
 	"gitee.com/jntse/gotoolkit/redis"
 	_"gitee.com/jntse/gotoolkit/util"
 	"github.com/go-redis/redis"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 	"gitee.com/jntse/minehero/server/def"
 )
 

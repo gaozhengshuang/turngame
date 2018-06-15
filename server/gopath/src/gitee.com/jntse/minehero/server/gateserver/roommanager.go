@@ -3,7 +3,7 @@ import _"fmt"
 import "gitee.com/jntse/gotoolkit/net"
 import "gitee.com/jntse/gotoolkit/log"
 import _"gitee.com/jntse/minehero/pbmsg"
-import pb"github.com/golang/protobuf/proto"
+import pb"github.com/gogo/protobuf/proto"
 
 
 // --------------------------------------------------------------------------

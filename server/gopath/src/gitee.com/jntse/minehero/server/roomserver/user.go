@@ -7,7 +7,7 @@ import (
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/gotoolkit/eventqueue"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 	"fmt"
 	"strings"
 	"strconv"

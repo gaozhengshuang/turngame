@@ -6,7 +6,7 @@ import (
 	_"math/rand"
 	"crypto/md5"
 	"strings"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 	_  "github.com/go-redis/redis"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"

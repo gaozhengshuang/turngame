@@ -4,7 +4,7 @@ import _"sort"
 import "gitee.com/jntse/gotoolkit/net"
 import "gitee.com/jntse/gotoolkit/log"
 import "gitee.com/jntse/minehero/pbmsg"
-import pb "github.com/golang/protobuf/proto"
+import pb "github.com/gogo/protobuf/proto"
 
 // --------------------------------------------------------------------------
 /// @brief 按人数排序GateAgent

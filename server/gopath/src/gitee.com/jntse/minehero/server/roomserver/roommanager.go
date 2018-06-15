@@ -1,6 +1,6 @@
 package main
 import (
-	pb"github.com/golang/protobuf/proto"
+	pb"github.com/gogo/protobuf/proto"
 	"gitee.com/jntse/gotoolkit/log"
 	_"gitee.com/jntse/gotoolkit/util"
 )

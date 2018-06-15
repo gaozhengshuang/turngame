@@ -3,7 +3,7 @@ import (
 	"fmt"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/log"
-	pb "github.com/golang/protobuf/proto"
+	pb "github.com/gogo/protobuf/proto"
 )
 
 // --------------------------------------------------------------------------
