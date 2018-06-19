@@ -1,3 +1,4 @@
 #!/bin/bash
-./gen_pbindex -root=../../protocol -output=./proto_index.xlsx
+#./gen_pbindex -root=../../protocol -output=./proto_index.xlsx
+./gen_pbindex.py -root=../../protocol -output=./proto_index.xlsx
 #dlv exec ./gen_pbindex -- -root=../../protocol -output=./proto_index.xlsx
