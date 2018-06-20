@@ -4,8 +4,9 @@ import os
 import sys
 import string
 import openpyxl
+import openpyxl.worksheet.dimensions
 
-
+#print openpyxl.__file__
 class GenProtoIndex:
 
     ## init
@@ -78,9 +79,33 @@ class GenProtoIndex:
                 c2 = ws.cell(databegin+uuid-1, 2)
                 c2.value = fullmsg
                 uuid += 1
+    
+        #
+        #style_font = openpyxl.styles.Font(name='Verdana', size=12, color='FF123456')
 
         self.WriteExcelSecondSheet(wb)
         wb.save(self.outfile)
+
+        ### 工作薄数据
+        #print wb.worksheets
+        #print wb.style_names
+        #print wb.active
+
+        ### 表单sheet数据
+        # 按列遍历
+        #for col in ws.iter_cols():
+        #    for cell in col:
+        #        print cell.value
+
+        # 按行遍历
+        #for row in ws.iter_rows():
+        #    for cell in row:
+        #        print cell.value
+
+        # 尺寸
+        #print ws.dimensions
+
+
         print"==>>生成文件 %s\n" % self.outfile
 
     def WriteExcelSecondSheet(self, wb):
