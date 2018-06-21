@@ -180,7 +180,7 @@ function setupInlinePlayground() {
 			code.on('keyup', resize);
 			code.keyup(); // resize now.
 		};
-		
+
 		// If example already visible, set up playground now.
 		if ($(el).is(':visible')) {
 			setup();
@@ -284,7 +284,7 @@ function personalizeInstallInstructions() {
     $('.testWindows').show();
   }
 
-  var download = "https://storage.googleapis.com/golang/" + filename;
+  var download = "https://dl.google.com/go/" + filename;
 
   var message = $('<p class="downloading">'+
     'Your download should begin shortly. '+
@@ -326,6 +326,28 @@ function addPermalinks() {
     var el = $(this);
     // Add the anchor to the "dt" element.
     addPermalink(el, el.find("> dt").first());
+  });
+}
+
+$(".js-expandAll").click(function() {
+  if ($(this).hasClass("collapsed")) {
+    toggleExamples('toggle');
+    $(this).text("(Collapse All)");
+  } else {
+    toggleExamples('toggleVisible');
+    $(this).text("(Expand All)");
+  }
+  $(this).toggleClass("collapsed")
+});
+
+function toggleExamples(className) {
+  // We need to explicitly iterate through divs starting with "example_"
+  // to avoid toggling Overview and Index collapsibles.
+  $("[id^='example_']").each(function() {
+    // Check for state and click it only if required.
+    if ($(this).hasClass(className)) {
+      $(this).find('.toggleButton').first().click();
+    }
   });
 }
 
