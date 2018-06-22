@@ -4,6 +4,7 @@ import (
 	"gitee.com/jntse/gotoolkit/log"
 	_"fmt"
 	"reflect"
+	"math"
 	"sync/atomic"
 )
 
@@ -19,8 +20,10 @@ type NetSessionPool struct {
 	spools map[int]IBaseNetSession
 	slocker *sync.Mutex		// *sync.RWMutex
 	taskid int32
-	//recycles map[int]int
-	//relocker *sync.Mutex
+
+
+	rlocker *sync.Mutex	// *sync.RWMutex
+	recycleid []int32
 }
 
 
@@ -33,15 +36,31 @@ func (this *NetSessionPool) Init() {
 	this.spools = make(map[int]IBaseNetSession)
 	this.slocker = &sync.Mutex{}
 	this.taskid = 0
+
+	this.rlocker = &sync.Mutex{}
+	this.recycleid = make([]int32, 0, 1000000)
 }
 
 func (this *NetSessionPool) Size() int32 {
 	return int32(len(this.spools))
 }
 
-func (this *NetSessionPool) GenerateTaskId() int32 {
-	newid := atomic.AddInt32(&this.taskid, 1)
-	return newid
+func (this *NetSessionPool) GenerateTaskId() int32 {	
+	//return util.UUID()
+	if atomic.LoadInt32(&this.taskid) < math.MaxInt32 {
+		id := atomic.AddInt32(&this.taskid, 1)
+		return id
+	}
+	
+	//
+	id := int32(-1)
+	this.rlocker.Lock()
+	if len(this.recycleid) > 0 { 
+		id = this.recycleid[0]
+		this.recycleid = this.recycleid[1:]
+	}
+	this.rlocker.Unlock()
+	return id
 }
 
 func (this *NetSessionPool) AddSession(s IBaseNetSession) bool {
@@ -61,6 +80,12 @@ func (this *NetSessionPool) DelSession(s IBaseNetSession) {
 	this.slocker.Lock()
 	delete(this.spools, s.Id())
 	this.slocker.Unlock()
+
+	//
+	this.rlocker.Lock()
+	id := int32(s.Id())
+	this.recycleid = append(this.recycleid, id)
+	this.rlocker.Unlock()
 }
 
 
