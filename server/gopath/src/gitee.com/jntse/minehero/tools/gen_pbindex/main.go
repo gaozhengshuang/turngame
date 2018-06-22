@@ -80,22 +80,53 @@ func main() {
 	fmt.Printf("==>>消息总数[%d]\n", totals)
 
 
-	// 检查是否已经生成 proto_index.xlsx
-	//xlFile, err := xlsx.OpenFile(g_CmdLineArgs.Output)
-	//if err == nil && len(xlFile.Sheets) != 0 {
-	//	sheet := xlFile.Sheets[0]
-	//	for _, row := range sheet.Rows {
-	//		if len(row.Cells) == 2 {
-	//			fmt.Printf("%s\n", row.Cells[1])
-	//		}
-	//	}
-	//}
+	// 检查是否已经生成的proto_index.xlsx，消息没有变化不需要重新生成
+	switch {
+	default:
+		xlFile, err := xlsx.OpenFile(g_CmdLineArgs.Output)
+		if err == nil && len(xlFile.Sheets) != 0 {
+			sheet := xlFile.Sheets[0]
+			totalrow := len(sheet.Rows)
+			if totalrow != (totals + 4) {
+				break
+			}
+
+			namelist := make(map[string]string)
+			for i := 4; i < totalrow; i++ {	// 数据从第四行开始	
+				row := sheet.Rows[i]
+				namelist[row.Cells[1].Value] = row.Cells[1].Value
+				//fmt.Println("msgname:", row.Cells[1].Value)
+			}
+			
+			// 检查新旧是否一致
+			if !CheckHaveSameMsg(protofiles, namelist) {
+				break
+			}
+
+			fmt.Println("==>>excel未发生变化<<===")
+			return
+		}
+
+	}
 
 	//
-	fmt.Println("==>>开始生成excel")	
+	fmt.Println("==>>开始生成excel")
 	WriteExcelFile(protofiles)
 }
 
+// 检查是否已经生成的proto_index.xlsx，消息没有变化不需要重新生成
+func CheckHaveSameMsg(protofiles []*FileProtobuf, msglist map[string]string) bool {
+	for _, v := range protofiles {
+		for _, name := range v.messages {
+			fullname := v.pkg + "." + name
+			_, ok := msglist[fullname]
+			if ok == false {
+				return false
+			}
+		}
+	}
+	return true
+}
 
 // --------------------------------------------------------------------------
 /// @brief 

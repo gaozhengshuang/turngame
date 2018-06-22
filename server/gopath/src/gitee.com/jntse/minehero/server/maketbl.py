@@ -47,7 +47,7 @@ if os.path.isfile(pbindex_path+'/gen_pbindex') == False:
     ExecShellCmd("gob", True)
     os.chdir(curdir)
 
-cmd_genpb = '%s/gen_pbindex.py -root=%s -output=%s/proto_index.xlsx' % (pbindex_path, PROTOCOL_PATH, TBL_EXCEL)
+cmd_genpb = '%s/gen_pbindex -root=%s -output=%s/proto_index.xlsx' % (pbindex_path, PROTOCOL_PATH, TBL_EXCEL)
 ExecShellCmd(cmd_genpb,True)
 
 # work path
