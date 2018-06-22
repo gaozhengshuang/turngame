@@ -5,6 +5,7 @@ import (
 	"time"
 	"strings"
 	"strconv"
+	"gitee.com/jntse/gotoolkit/util"
 )
 
 // --------------------------------------------------------------------------
@@ -142,16 +143,27 @@ func BenchmarkStringJoin(b *testing.B) {
 // --------------------------------------------------------------------------
 func BenchmarkGetTimeS(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		s := time.Now().Unix()
-		s = s
+		util.CURTIME()
 	}
 }
 
 func BenchmarkGetTimeMS(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		ms := time.Now().UnixNano() / 1000000
-		ms = ms
+		util.CURTIMEMS()
 	}
 }
 
+// --------------------------------------------------------------------------
+/// @brief uuid生成器
+// --------------------------------------------------------------------------
+func BenchmarkUUID_Closure(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		util.UUID()
+	}
+}
 
+func BenchmarkUUID_GlobalVar(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		util.UUID2()
+	}
+}

@@ -5,6 +5,7 @@ import "strconv"
 import "runtime"
 import "time"
 import "math/rand"
+//import "os"
 
 var Pf = fmt.Printf
 var Pln = fmt.Println
@@ -29,6 +30,34 @@ func GetRoutineID() int {
 	}
 	return id
 }
+
+// uuid生成器，使用闭包
+var UUID func() uint64 = UUIDGenerator()
+func UUIDGenerator() func() uint64 {
+	var counter uint16 = 0
+	return func() uint64{
+		tm := uint64(CURTIME())
+		counter++
+		uuid := tm << 32 | uint64(counter)
+		return uuid
+	}
+}
+
+// uuid生成器，使用全局变量
+var _uuid_counter_ uint16 = 0
+func UUID2() uint64 {
+	tm := uint64(CURTIME())
+	_uuid_counter_++
+	uuid := tm << 32 | uint64(_uuid_counter_)
+	return uuid
+}
+
+// uuid生成器，使用纳秒做uuid(连续两次调用间隔在10微秒左右,不会出现相同)
+func UUID3() uint64 {
+	uuid := uint64(CURTIMENS())
+	return uuid
+}
+
 
 // 百分比概率
 func SelectPercent(per int32) bool {
