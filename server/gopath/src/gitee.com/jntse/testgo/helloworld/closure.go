@@ -24,17 +24,20 @@ func TestClosure() {
 
 	// 创建2个闭包，2个闭包有各自的环境
 	var cl1 = MakeClosure(100)
-	var cl2 = MakeClosure(200)
-	fmt.Printf("cl1=%v cl1=%v\n", cl1(), cl1())
-	fmt.Printf("cl2=%v cl2=%v\n", cl2(), cl2())
+	for i:=0; i<10; i++ {
+		fmt.Printf("cl1=%v\n", cl1())
+	}
 
+	var cl2 = MakeClosure(200)
+	for i:=0; i<10; i++ {
+		fmt.Printf("cl2=%d\n", cl2())
+	}
 }
 
 // 真正的闭包
 func MakeClosure(i int) func() int {
 	var sum int = 0
 	return func() int {
-		i++
 		sum += i
 		return sum
 	}
