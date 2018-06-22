@@ -84,8 +84,9 @@ type GateUser struct {
 	savedone		bool		// 存盘标记
 	cleanup			bool     	// 清理标记
 	roomdata		RoomBase 	// 房间信息
-	token			string	// token
+	token			string		// token
 	asynev			eventque.AsynEventQueue	// 异步事件处理
+	broadcastbuffer []uint64	// 广播消息缓存
 }
 
 func NewGateUser(account, key, token string) *GateUser {
@@ -98,6 +99,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.tm_asynsave = 0
 	u.savedone = false
 	u.token = token
+	u.broadcastbuffer = make([]uint64,0)
 	return u
 }
 
@@ -225,6 +227,11 @@ func (this *GateUser) SendMsg(msg pb.Message) {
 		return
 	}
 	this.client.SendCmd(msg)
+}
+
+// 广播缓存
+func (this *GateUser) AddBroadCastMsg(uuid uint64) {
+	this.broadcastbuffer = append(this.broadcastbuffer, uuid)
 }
 
 // 玩家全部数据
@@ -680,5 +687,4 @@ func (this *GateUser) PlatformPushUserOnlineTime() {
 	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserOnlineTimeArglist, nil)
 	this.AsynEventInsert(event)
 }
-
 

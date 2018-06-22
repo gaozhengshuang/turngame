@@ -74,7 +74,8 @@ func on_MS2GW_HeartBeat(session network.IBaseNetSession, message interface{}) {
 func on_MS2GW_MsgNotice(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.MS2GW_MsgNotice)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	UserMgr().BroadcastMsg(tmsg.GetNotice())
+	//UserMgr().BroadcastMsg(tmsg.GetNotice())
+	UserMgr().BroadcastMsgFaster(tmsg.GetNotice())
 }
 
 func on_MS2GW_RetCreateRoom(session network.IBaseNetSession, message interface{}) {
