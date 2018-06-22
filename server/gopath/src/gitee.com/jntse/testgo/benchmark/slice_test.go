@@ -141,6 +141,58 @@ func BenchmarkSliceParameterPassing(b *testing.B) {
 }
 
 // --------------------------------------------------------------------------
-/// 
+/// 切片插入和删除
 // --------------------------------------------------------------------------
+func BenchmarkSliceInsert(b *testing.B) {
+	b.StopTimer()
+	s1 := make([]int64, 0)
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		s1 = append(s1, int64(i))
+	}
+}
 
+func BenchmarkSliceInsertCap(b *testing.B) {
+	b.StopTimer()
+	s1 := make([]int64, 0, 10000000)
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		s1 = append(s1, int64(i))
+	}
+}
+
+func BenchmarkMapInsert(b *testing.B) {
+	b.StopTimer()
+	m1 := make(map[int64]int64)
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		m1[int64(i)] = int64(i)
+	}
+}
+
+func BenchmarkSliceDelete(b *testing.B) {
+	b.StopTimer()
+	s1 := make([]int64, 0)
+	for i := 0; i < 1000000; i++ { s1 = append(s1, int64(i)) }
+	b.StartTimer()
+
+	for i := 0; i < b.N; i++ {
+		if len(s1) != 0 {
+			s1 = s1[1:]
+		}
+	}
+}
+
+func BenchmarkMapDelete(b *testing.B) {
+	b.StopTimer()
+	m1 := make(map[int64]int64)
+	for i := 0; i < 1000000; i++ { m1[int64(i)] = int64(i) }
+	b.StartTimer()
+
+	for i := 0; i < b.N; i++ {
+		for k, _ := range m1 {
+			delete(m1, k)
+			break
+		}
+	}
+}
