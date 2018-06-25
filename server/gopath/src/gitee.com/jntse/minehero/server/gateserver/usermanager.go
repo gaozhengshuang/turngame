@@ -221,7 +221,7 @@ func (this *UserManager) BroadcastMsg(msg pb.Message) {
 func (this *UserManager) BroadcastMsgFaster(msg pb.Message) {
 	t1 , uuid := util.CURTIMEUS(), util.UUID()
 	this.msgbuffer[uuid] = &BufferMsg{msg:msg, tm_timeout:util.CURTIMEMS()+10000}
-	for _ , _ = range this.accounts {
+	for _ , user := range this.accounts {
 		user.AddBroadCastMsg(uuid)
 	}
 	log.Trace("BroadcastMsgFaster Amount[%d] 耗时[%d]us", len(this.accounts), util.CURTIMEUS() - t1)
