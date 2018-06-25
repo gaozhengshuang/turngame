@@ -6,6 +6,7 @@ import (
 	"strings"
 	"strconv"
 	"gitee.com/jntse/gotoolkit/util"
+	"sync"
 )
 
 // --------------------------------------------------------------------------
@@ -167,3 +168,32 @@ func BenchmarkUUID_GlobalVar(b *testing.B) {
 		util.UUID2()
 	}
 }
+
+// --------------------------------------------------------------------------
+/// @brief defer效率测试
+// --------------------------------------------------------------------------
+func MutexLockDefer(mtx* sync.Mutex) {
+	mtx.Lock()
+	defer mtx.Unlock()
+}
+
+func MutexLock(mtx* sync.Mutex) {
+	mtx.Lock()
+	mtx.Unlock()
+}
+
+func BenchmarkMutexLockDefer(b *testing.B) {
+	var mtx sync.Mutex
+	for i := 0; i < b.N; i++ {
+		MutexLockDefer(&mtx)
+	}
+}
+
+func BenchmarkMutexLock(b *testing.B) {
+	var mtx sync.Mutex
+	for i := 0; i < b.N; i++ {
+		MutexLock(&mtx)
+	}
+}
+
+
