@@ -74,14 +74,14 @@ type UserManager struct {
 	accounts	map[string]*GateUser
 	ids			map[uint64]*GateUser
 	names		map[string]*GateUser
-	msgbuffer	map[uint64]BufferMsg
+	msgbuffer	map[uint64]*BufferMsg
 }
 
 func (this *UserManager) Init() {
 	this.accounts = make(map[string]*GateUser)
 	this.names = make(map[string]*GateUser)
 	this.ids = make(map[uint64]*GateUser)
-	this.msgbuffer = make(map[uint64]BufferMsg)
+	this.msgbuffer = make(map[uint64]*BufferMsg)
 }
 
 func (this *UserManager) CreateNewUser(session network.IBaseNetSession, account, key, token, face string) (*GateUser, string) {
@@ -220,8 +220,8 @@ func (this *UserManager) BroadcastMsg(msg pb.Message) {
 // 通过buffer广播消息
 func (this *UserManager) BroadcastMsgFaster(msg pb.Message) {
 	t1 , uuid := util.CURTIMEUS(), util.UUID()
-	this.msgbuffer[uuid] = BufferMsg{msg:msg, tm_timeout:util.CURTIMEMS()+10000}
-	for _ , user := range this.accounts {
+	this.msgbuffer[uuid] = &BufferMsg{msg:msg, tm_timeout:util.CURTIMEMS()+10000}
+	for _ , _ = range this.accounts {
 		user.AddBroadCastMsg(uuid)
 	}
 	log.Trace("BroadcastMsgFaster Amount[%d] 耗时[%d]us", len(this.accounts), util.CURTIMEUS() - t1)
