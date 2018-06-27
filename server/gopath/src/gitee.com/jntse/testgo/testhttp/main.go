@@ -5,6 +5,9 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/gotoolkit/net"
 	"net/http"
+	"strconv"
+	"encoding/base64"
+	"encoding/json"
 )
 
 func HttpServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery string, body []byte) {
@@ -70,6 +73,8 @@ func main() {
 				TestLoginStat()
 			case "query":
 				TestQuueryPlatformMoney()
+			case "sms":
+				TestPostSms()
 			default:
 				fmt.Println("没有这个指令")
 			}
@@ -137,3 +142,54 @@ func TestQuueryPlatformMoney() {
 	fmt.Printf("HttpPost cost[%dms] code:%d status:%s body:%s\n", util.CURTIMEMS() - tm1, resp.Code, resp.Status, resp.Body)
 
 }
+
+func TestPostSms() {
+	url := "http://211.147.239.62:9051/api/v1.0.0/message/mass/send"
+
+	// make body
+	authcode , phone := util.RandBetween(10000,99999), 13681626939 
+	body := fmt.Sprintf(`{
+		"batchName":"巨枫娱乐测试",
+		"content":"欢迎来到超级弹弹乐，您的验证码是:%d",
+		"msgType":"sms",
+		"items":[ { "to":"%d" } ]
+	}`, authcode, phone)
+	fmt.Printf("手机:%d 验证码:%d\n", phone, authcode)
+
+	// make properties
+	passwd := "00ecUAHi"
+	Auth := "shjf@shjf:" + util.MD5(passwd)	// md5加密
+	AuthBase64:= base64.StdEncoding.EncodeToString([]byte(Auth))	// base64加密
+	Contentlength := strconv.FormatInt(int64(len(body)), 10)	// 这个参数可选
+	ContentType := "application/json"
+	properties := map[string]string{ "Content-Type":ContentType, "Authorization":AuthBase64, "Content-length":Contentlength ,"Accept":ContentType}
+
+	// make request
+	resp, err := network.HttpSendByProperty("POST", url ,body, properties)
+	if err != nil {
+		fmt.Printf("TestPostSms HttpPost err=%v\n", err)
+		return
+	}
+
+	if resp.Code != 200 {
+		fmt.Printf("TestPostSms HttpPost 失败 Code=%d\n", resp.Code)
+		return
+	}
+
+	type stHttpResp struct {
+		Code string
+		Msg  string
+		UUID string
+	}
+	
+	RespObj := &stHttpResp{}
+	unerror := json.Unmarshal(resp.Body, RespObj)
+	if unerror != nil {
+		fmt.Printf("TestPostSms Unmarshal resp.body err[%s]\n", unerror)
+		return
+	}
+
+	fmt.Printf("TestPostSms body=%s\n", resp.Body)
+	fmt.Printf("TestPostSms RespObj=%#v\n", RespObj)
+}
+
