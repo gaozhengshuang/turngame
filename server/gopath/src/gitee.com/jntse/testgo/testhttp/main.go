@@ -167,7 +167,7 @@ func TestPostSms() {
 	// make request
 	resp, err := network.HttpSendByProperty("POST", url ,body, properties)
 	if err != nil {
-		fmt.Printf("TestPostSms HttpPost err=%v\n", err)
+		fmt.Printf("TestPostSms HttpPost err=[%v]\n", err)
 		return
 	}
 
