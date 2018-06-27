@@ -4,6 +4,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"fmt"
 	_"gitee.com/jntse/gotoolkit/log"
 )
 
@@ -15,14 +16,14 @@ type HttpResponse struct {
 }
 
 // --------------------------------------------------------------------------
-/// @brief 
+/// @brief 非导出接口
 ///
 /// @param kind - "GET" or "POST"
 /// @param url  - "http://47.90.41.170:27015/reportonline?game_id=5189&channel_id=1&zone_id=2&number=1"
 /// @param body - ""
 /// @return 
 // --------------------------------------------------------------------------
-func SendHttpRequest(kind string, url string, ctype string, body io.Reader) (*HttpResponse, error) {
+func sendHttpRequest(kind string, url string, ctype string, body io.Reader) (*HttpResponse, error) {
 	//
 	client := &http.Client{}
 	req, err := http.NewRequest(kind, url, body)
@@ -44,7 +45,55 @@ func SendHttpRequest(kind string, url string, ctype string, body io.Reader) (*Ht
 	return &HttpResponse{Code:resp.StatusCode, Status: resp.Status, Body: rbody}, nil
 }
 
+
 // --------------------------------------------------------------------------
+/// @brief 非导出接口
+///
+/// @param 
+/// @param error
+///
+/// @return 
+// --------------------------------------------------------------------------
+func sendHttpRequestByPropertySheet(req *http.Request) (*HttpResponse, error) {
+	// "The client must close the response body when finished with it"
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {  return nil, err }
+	defer resp.Body.Close()
+	
+	rbody, err := ioutil.ReadAll(resp.Body)
+	if err != nil { return nil, err }
+	return &HttpResponse{Code:resp.StatusCode, Status: resp.Status, Body: rbody}, nil
+}
+
+// --------------------------------------------------------------------------
+/// @brief 导出接口
+/// @brief properties可以传空: HttpPostByProperty(url, body, nil)
+///
+/// 使用示例
+/// url := "http://127.0.0.1:27015"
+/// body := "gmcmd=addbox id=1019"
+/// HttpPostByProperty(url, body, map[string]string{"Content-Type":"application/json"}})
+/// properties := map[string]string{ "Content-Type":ContentType, "Authorization":AuthBase64, "Content-length":Contentlength ,"Accept":ContentType}
+/// network.HttpPostByProperty(url ,body, properties)
+// --------------------------------------------------------------------------
+func HttpSendByProperty(kind, url, body string, properties map[string]string) (*HttpResponse, error)	{
+	// make request
+	req, err := http.NewRequest(kind, url, strings.NewReader(body))
+	if err != nil { return nil, err }
+
+	// set property
+	for k , v := range properties {
+		req.Header.Set(k, v)
+	}
+	fmt.Printf("req=%#v\n", req)
+	resp, err := sendHttpRequestByPropertySheet(req)
+	return resp, err
+}
+
+
+// --------------------------------------------------------------------------
+/// @brief 导出接口
 /// 使用示例
 /// addr := "http://127.0.0.1:27015"
 /// request := "/reportonline?game_id=5189&channel_id=1&zone_id=2&number=1"
@@ -55,20 +104,34 @@ func HttpPost(url string, body string) (*HttpResponse, error)	{
 	//ctype := "application/json"
 	//ctype := "text/plain; charset=utf-8"
 	ctype := "application/x-www-form-urlencoded"
-	resp, err := SendHttpRequest("POST", url, ctype, strings.NewReader(body))
+	resp, err := sendHttpRequest("POST", url, ctype, strings.NewReader(body))
 	//log.Info("HttpPost body:%#v", resp)
 	return resp, err
 }
 
+/// @brief 导出接口
+func HttpPostByJson(url string, body string) (*HttpResponse, error)	{
+	ctype := "application/json"
+	resp, err := sendHttpRequest("POST", url, ctype, strings.NewReader(body))
+	return resp, err
+}
+
+/// @brief 导出接口
+func HttpPostByXml(url string, body string) (*HttpResponse, error)	{
+	ctype := "text/xml"
+	resp, err := sendHttpRequest("POST", url, ctype, strings.NewReader(body))
+	return resp, err
+}
+
 // --------------------------------------------------------------------------
+/// @brief 导出接口
 /// 使用示例
 /// addr := "http://127.0.0.1:27015"
 ///	request := "/sendgmcmd?action=add&game_id=5189&zone_id=2"
 ///	HttpGet(addr + request)
 // --------------------------------------------------------------------------
 func HttpGet(url string) (*HttpResponse, error)	{
-	resp, err := SendHttpRequest("GET", url, "", nil)
-	//log.Info("HttpGet body:%#v", resp)
+	resp, err := sendHttpRequest("GET", url, "", nil)
 	return resp, err
 }
 
