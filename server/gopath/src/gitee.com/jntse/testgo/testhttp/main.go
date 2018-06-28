@@ -2,12 +2,14 @@ package main
 import (
 	"time"
 	"fmt"
-	"gitee.com/jntse/gotoolkit/util"
-	"gitee.com/jntse/gotoolkit/net"
 	"net/http"
 	"strconv"
 	"encoding/base64"
 	"encoding/json"
+
+	"gitee.com/jntse/gotoolkit/util"
+	"gitee.com/jntse/gotoolkit/net"
+	_"gitee.com/jntse/minehero/server/def"
 )
 
 func HttpServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery string, body []byte) {
