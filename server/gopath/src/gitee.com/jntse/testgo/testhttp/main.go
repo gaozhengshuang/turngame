@@ -150,7 +150,7 @@ func TestPostSms() {
 	authcode , phone := util.RandBetween(10000,99999), 13681626939 
 	body := fmt.Sprintf(`{
 		"batchName":"巨枫娱乐测试",
-		"content":"欢迎来到超级弹弹乐，您的验证码是:%d",
+		"content":"欢迎来到弹弹乐，您的验证码是:%d",
 		"msgType":"sms",
 		"items":[ { "to":"%d" } ]
 	}`, authcode, phone)
