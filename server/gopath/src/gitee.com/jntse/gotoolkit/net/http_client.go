@@ -4,7 +4,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"fmt"
+	_"fmt"
 	_"gitee.com/jntse/gotoolkit/log"
 )
 
@@ -86,7 +86,7 @@ func HttpSendByProperty(kind, url, body string, properties map[string]string) (*
 	for k , v := range properties {
 		req.Header.Set(k, v)
 	}
-	fmt.Printf("req=%#v\n", req)
+	//fmt.Printf("req=%#v\n", req)
 	resp, err := sendHttpRequestByPropertySheet(req)
 	return resp, err
 }
