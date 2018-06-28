@@ -80,5 +80,14 @@
     },
 
     "//":"内网标记",
-    "IntranetFlag":false
+    "IntranetFlag":false,
+
+    "//":"发短信",
+    "Sms": {
+        "UrlAPI":"http://211.147.239.62:9051/api/v1.0.0/message/mass/send",
+        "Account":"shjf@shjf",
+        "Passwd":"00ecUAHi",
+        "AuthCodeContent":"欢迎来到弹弹乐，您的验证码是"
+    }
+
 }
