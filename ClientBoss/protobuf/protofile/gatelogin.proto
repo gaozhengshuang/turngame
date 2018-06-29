@@ -7,6 +7,7 @@ message GW2L_ReqRegist {
     optional string account = 1;
     optional string passwd  = 2;
     optional msg.IpHost host = 3;
+    optional string name = 4;
 }
 
 

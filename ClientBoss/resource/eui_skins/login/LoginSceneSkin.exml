@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="LoginSceneSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*">
-	<e:Rect width="720" height="100%" fillColor="0xEEEEEE"/>
-	<e:Group width="720" height="1100" touchChildren="true" touchEnabled="false" x="2">
-		<e:Image id="titleImage" source="ui/main/tantanle" x="122" scaleX="1" scaleY="1" touchEnabled="false" y="85"/>
-		<e:Label text="用户名" x="108" y="514" textColor="0x504d5e"/>
-		<e:Rect width="390" height="72" x="229" y="493" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x999999" ellipseWidth="20" ellipseHeight="20"/>
-		<e:EditableText id="nameLabel" width="375.39" height="69.7" text="" x="229.92" y="493.89" anchorOffsetX="0" anchorOffsetY="0" textAlign="center" verticalAlign="middle"/>
-		<game:LabelButton id="loginButton" skinName="NormalLabelButtonSkin" horizontalCenter="0" verticalCenter="140"/>
+
+	<e:Rect width="720" height="100%" fillColor="0xEEEEEE" fillAlpha="0" y="-1" strokeColor="0xFFFFFF"/>
+	<e:Group id="luckyGroup" width="720" height="1100" horizontalCenter="0" verticalCenter="0">
+		<e:Image verticalCenter="0" horizontalCenter="0" source="lucky/luckyBg"/>
+		<e:Image scaleX="1" scaleY="1" source="login/loginTitle" y="170" horizontalCenter="0"/>
+		<e:Label text="登录" touchEnabled="false" scaleX="1" scaleY="1" y="235" horizontalCenter="1" bold="true" size="42" strokeColor="0xfff1cc"/>
+
+		<e:Label text="注册账号&gt;&gt;" y="840.6" touchEnabled="true" scaleX="1" scaleY="1" size="24" horizontalCenter="0" textColor="0xfe9725"/>
+		<game:IconButton id="closeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="620.5" y="157"/>
+		<e:Label text="账号" x="139.8" y="447.33" textColor="0x8c5eda" bold="true"/>
+		<e:Image source="login/loginInput" x="235.97" y="434.83" anchorOffsetX="0" width="348.52"/>
+		<e:EditableText id="nameLabel" width="340.55" height="51.51" text="" x="235.93" y="434.8" anchorOffsetX="0" anchorOffsetY="0" textAlign="center" verticalAlign="middle"/>
+		<e:Label text="密码" x="140.68" y="540.67" textColor="0x8C5EDA" bold="true"/>
+		<e:Image source="login/loginInput" x="236.85" y="528.17" anchorOffsetX="0" width="348.52"/>
+		<e:EditableText id="passwordLabel" width="340.55" height="51.51" text="" x="236.81" y="528.14" anchorOffsetX="0" anchorOffsetY="0" textAlign="center" verticalAlign="middle"/>
+		<game:LabelButton id="loginButton" horizontalCenter="0" verticalCenter="231" skinName="IconButtonSkin"/>
+
 	</e:Group>
+
+
+
 </e:Skin>

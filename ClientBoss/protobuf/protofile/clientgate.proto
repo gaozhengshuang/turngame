@@ -8,6 +8,8 @@ message C2GW_ReqLogin
 {
     optional string account = 1;        // 玩家account
     optional string verifykey = 2;      // login生成的校验key，验证玩家合法性
+    optional string token = 3;          // 
+    optional string face = 4;           // 
 }
 
 
@@ -24,6 +26,11 @@ message GW2C_SendUserInfo {
     optional msg.UserBase   base    = 2;
     optional msg.ItemBin    item    = 3;
 }
+
+message GW2C_SendUserPlatformMoney {
+    optional int32 coins = 1;
+}
+
 
 // 请求玩家数据
 //message C2GW_ReqUserInfo
@@ -46,7 +53,7 @@ message C2GW_HeartBeat {
     optional int64 uid  = 1;
     optional int64 time = 2;
     repeated string test = 3;
-    optional string token = 4;
+    //optional string token = 4;
 }
 
 message GW2C_HeartBeat {
@@ -72,6 +79,5 @@ message GW2C_Ret7DayReward {
 
 message C2GW_Get7DayReward {
 }
-
 
 

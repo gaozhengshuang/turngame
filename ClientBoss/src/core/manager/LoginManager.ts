@@ -73,8 +73,7 @@ module game {
 
     export function Login() {
         NotificationCenter.postNotification("closeLoadingSkin");
-        let loginScene = new LoginScene();
-        GameLayer.sceneLayer.addChild(loginScene);
+        SceneManager.changeScene(SceneType.login, false);
     }
 
     export var loginUserInfo: msg.IC2L_ReqLogin;

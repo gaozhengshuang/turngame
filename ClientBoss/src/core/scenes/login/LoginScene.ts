@@ -1,16 +1,17 @@
 module game {
     export class LoginScene extends SceneComponent {
-        titleImage: eui.Image;
         nameLabel: eui.EditableText;
-        loginButton: LabelButton;
+        passwordLabel: eui.EditableText;
+        loginButton: IconButton;
+        closeButton: IconButton;
 
         protected getSkinName() {
             return LoginSceneSkin;
         }
 
         protected init() {
-            this.titleImage.y = gameConfig.curHeight() * 0.1;
-            this.loginButton.label = "登陆";
+            this.loginButton.icon = "login/loginBtn";
+            this.closeButton.icon = "lucky/luckycloseBtn";
         }
 
         protected beforeShow() {
@@ -31,7 +32,8 @@ module game {
             let userInfo = DataManager.playerModel.userInfo;
             userInfo.openid = realName;
             userInfo.name = realName;
-            this.loginFinish();
+
+            LoginManager.getInstance().login();
         }
 
         private loginFinish() {

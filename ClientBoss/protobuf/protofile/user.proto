@@ -34,4 +34,6 @@ message GW2C_RetRechargeMoney {
     optional string urlcheckout = 1;
 }
 
-
+// 红包平台充值完成通知
+message C2GW_PlatformRechargeDone {
+}

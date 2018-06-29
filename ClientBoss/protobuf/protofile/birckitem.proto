@@ -5,8 +5,8 @@
 package table;
 
 
-// Defined in table: TBirckItemBase
-message TBirckItemBase
+// Defined in table: TBirckItembase
+message TBirckItembase
 {	
 	
 	
