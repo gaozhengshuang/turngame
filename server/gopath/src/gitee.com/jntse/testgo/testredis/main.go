@@ -23,15 +23,13 @@ func ExampleNewClient() *redis.Client {
 
 func TestKeys() {
 	key1 := fmt.Sprintf("goredis_keys_%d", 1001)
-	ret1, err1 := GRedis.Set(key1, "user1", 0).Result()
-	if err1 != nil {
+	if ret1, err1 := GRedis.Set(key1, "user1", 0).Result(); err1 != nil {
 		panic(err1)
 	}else {
 		fmt.Printf("set key=%s status[%s] \n", key1 , ret1)
 	}
 
-	val1, err2 := GRedis.Get(key1).Result()
-	if err2 == redis.Nil {
+	if val1, err2 := GRedis.Get(key1).Result(); err2 == redis.Nil {
 		fmt.Println("key not found:" , key1)
 	}else if( err2 != nil ) {
 		fmt.Println("TestKeys err2:", err2)
@@ -40,8 +38,7 @@ func TestKeys() {
 	}
 
 
-	_, err3 := GRedis.Get("goredis_keys").Result()
-	if err3 == redis.Nil {
+	if _, err3 := GRedis.Get("goredis_keys").Result(); err3 == redis.Nil {
 		fmt.Println("key username not found")
 	}
 
@@ -278,7 +275,7 @@ func main() {
 	ExampleNewClient()
 
 	// 常规key
-	//TestKeys()
+	TestKeys()
 
 	// incr
 	//TestIncr()
@@ -290,7 +287,7 @@ func main() {
 	//TestSet()
 
 	// ZSet
-	TestZSet()
+	//TestZSet()
 
 	// 二进制
 	//TestBin()
