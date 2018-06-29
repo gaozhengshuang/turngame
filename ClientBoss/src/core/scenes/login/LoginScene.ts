@@ -36,10 +36,8 @@ module game {
             userInfo.name = realName;
 
             loginUserInfo = {
-                nickname: this.nameLabel.text,
-                face: "1",
                 account: this.nameLabel.text,
-                token: ""
+                passwd: this.passwordLabel.text
             };
             LoginManager.getInstance().login();
         }

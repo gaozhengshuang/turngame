@@ -3,6 +3,7 @@ module game {
     export var $neiNetIp: string = "https://bfp.giantfun.cn";
     export var $shuangshuangIp: string = "http://192.168.30.202";
     export var $kaiIp: string = "http://192.168.30.206:30002";
+    export var $registIp: string = "http://192.168.30.203:18000";
     export var $isWx: boolean = false;
 
     export var _netIp: string = "192.168.30.203";
