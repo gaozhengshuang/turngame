@@ -19,13 +19,16 @@ module game {
         //通讯初始化
         ClientNet.getInstance().init();
 
+        //弹幕界面初始化
+        BarrageManager.getInstance().init();
+
         Login();
     }
 
     let inited = false;
 
     export function createGameScene() {
-        SceneManager.changeScene(SceneType.login, false);
+        SceneManager.changeScene(SceneType.main);
 
         //登录完成关闭loading界面
         NotificationCenter.postNotification("closeLoadingSkin");
