@@ -17,6 +17,8 @@ enum ItemId {
     Coupon = 6002;          // 金卷, 也不使用了
     Gold = 6003;            // 暂时没有使用
     FreeStep = 6005;        // 免费步数
+    Diamond = 10001;        // 钻石
+    DiamondParts = 10002;   // 钻石碎片
 }
 
 enum ItemType {
@@ -29,6 +31,7 @@ enum ItemType {
     CarAccessory    = 7;    // 汽车用品
     Advertisement   = 8;    // 广告
     Smallware       = 9;    // 小商品
+    DiamondItem     = 10;  // 钻石道具
 }
 
 message PairNumItem {

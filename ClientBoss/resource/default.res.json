@@ -483,6 +483,31 @@
 			"url":"assets/item/8.jpg"
 		},
 		{
+			"name":"login/loginBtn",
+			"type":"image",
+			"url":"assets/login/loginBtn.png"
+		},
+		{
+			"name":"login/loginInput",
+			"type":"image",
+			"url":"assets/login/loginInput.png"
+		},
+		{
+			"name":"login/loginstar",
+			"type":"image",
+			"url":"assets/login/loginstar.png"
+		},
+		{
+			"name":"login/loginTitle",
+			"type":"image",
+			"url":"assets/login/loginTitle.png"
+		},
+		{
+			"name":"login/registerBtn",
+			"type":"image",
+			"url":"assets/login/registerBtn.png"
+		},
+		{
 			"name":"lucky/bagBtn",
 			"type":"image",
 			"url":"assets/lucky/bagBtn.png"
@@ -911,6 +936,11 @@
 			"name":"ui/win/xinjilu",
 			"type":"image",
 			"url":"assets/ui/win/xinjilu.png"
+		},
+		{
+			"name":"_gitignore",
+			"type":"gitignore",
+			"url":"bones/.gitignore"
 		}
 	]
 }

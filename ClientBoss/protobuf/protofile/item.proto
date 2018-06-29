@@ -49,6 +49,18 @@ message C2GW_ReqDeliveryGoods {
     optional string token = 2;
 }
 
+// 提取钻石
+message C2GW_ReqDeliveryDiamond {
+    repeated DeliveryGoods list = 1;
+    optional string token = 2;
+}
+
+message GW2C_RetDeliveryDiamond {
+    optional int32 diamond = 1;
+    optional int32 diamondparts = 2;
+    optional int32 total = 3;
+}
+
 message BigRewardItem {
     optional uint32 id = 1;
     optional uint32 num = 2;

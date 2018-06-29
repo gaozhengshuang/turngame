@@ -11,6 +11,9 @@ message EntityBase {
 message SimpleCounter {
     optional int32 freestep = 1;
     optional int64 givestep = 2;
+    optional int64 diamond_room_cost = 3;       // 钻石场消费
+    optional int64 diamond_room_income = 4;     // 钻石场收入
+    optional int64 diamond_room_step = 5;       // 钻石场计数
 }
 
 message UserBase {

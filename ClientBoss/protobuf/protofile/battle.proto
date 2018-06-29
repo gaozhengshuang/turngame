@@ -15,7 +15,7 @@ message GridItem {
     optional int32 index    = 1;    // 格子编号
     optional int32 id       = 2;    // 道具id
     optional int32 num      = 3;    // 数量
-    optional int32 gridtype = 4;    // 类型：0默认道具，1大奖，2高级元宝1，3高级元宝2
+    optional int32 gridtype = 4;    // 类型：0默认道具，1大奖，2高级中元宝，3高级大元宝，4钻石
     optional bool  control  = 5;    // 作假控制
 }
 
@@ -30,6 +30,7 @@ message BT_UploadGameUser   {
 message BT_ReqEnterRoom {
     optional int64 roomid = 1;
     optional uint64 userid = 2;
+    optional string token = 3;
 }
 
 
@@ -84,6 +85,7 @@ message BT_JumpPreCheck {
 message BT_RetJumpPreCheck {
     optional uint64 userid = 1;
     optional string errcode = 2;
+    optional int32  dice = 3;
 }
 
 // C2R 请求行进, 参数客户端留空
