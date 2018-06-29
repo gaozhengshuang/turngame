@@ -22,11 +22,13 @@ var TBallGiftbase = table.InsTBallGiftbaseTable
 var SignBase = table.InsSignBaseTable
 var ProtoMsgIndex = table.InsProtoMsgIndexTable
 var NameBase = table.InsNameBaseTable
+var TBirckBase = table.InsTBirckBaseTable
 var RandomNameBase = table.InsRandomNameBaseTable
 var DungeonsBase = table.InsDungeonsBaseTable
 var NoticeBase = table.InsNoticeBaseTable
 var TurntableBase = table.InsTurntableBaseTable
 var ShopBase = table.InsShopBaseTable
 var TbirckRefreshbase = table.InsTbirckRefreshbaseTable
+var TBallBase = table.InsTBallBaseTable
 var ItemBase = table.InsItemBaseTable
 

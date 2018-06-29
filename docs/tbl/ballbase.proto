@@ -5,8 +5,8 @@
 package table;
 
 
-// Defined in table: TbirckRefreshbase
-message TbirckRefreshbase
+// Defined in table: TBallBase
+message TBallBase
 {	
 	
 	
