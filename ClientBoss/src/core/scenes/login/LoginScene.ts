@@ -1,9 +1,9 @@
 module game {
     export class LoginScene extends SceneComponent {
         nameLabel: eui.EditableText;
+        registerButton: eui.Label;
         passwordLabel: eui.EditableText;
         loginButton: IconButton;
-        closeButton: IconButton;
 
         protected getSkinName() {
             return LoginSceneSkin;
@@ -11,16 +11,18 @@ module game {
 
         protected init() {
             this.loginButton.icon = "login/loginBtn";
-            this.closeButton.icon = "lucky/luckycloseBtn";
         }
 
         protected beforeShow() {
             this._touchEvent = [
-                {target: this.loginButton, callBackFunc: this.loginHandle}
+                {target: this.loginButton, callBackFunc: this.loginHandle},
+                {target: this.registerButton, callBackFunc: this.registerHandle}
             ];
+            
             if (egret.localStorage.getItem("userName")) {
                 this.nameLabel.text = egret.localStorage.getItem("userName");
             }
+            this.passwordLabel.inputType = egret.TextFieldInputType.PASSWORD;
         }
 
         private async loginHandle() {
@@ -36,8 +38,8 @@ module game {
             LoginManager.getInstance().login();
         }
 
-        private loginFinish() {
-            SceneManager.changeScene(SceneType.main);
+        private registerHandle() {
+            
         }
 
         private static _instance: LoginScene;

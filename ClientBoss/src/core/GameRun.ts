@@ -25,7 +25,7 @@ module game {
     let inited = false;
 
     export function createGameScene() {
-        SceneManager.changeScene(SceneType.login, false);
+        SceneManager.changeScene(SceneType.main);
 
         //登录完成关闭loading界面
         NotificationCenter.postNotification("closeLoadingSkin");
