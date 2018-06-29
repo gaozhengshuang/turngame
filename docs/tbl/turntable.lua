@@ -4,7 +4,7 @@
 module table {
 export var TTurntableNew : table.ITTurntableNewDefine[] = [
 		{ Id : 1, Nums : "0;1;2;3;4;5;6;1;2;0", Max : 6 	},
-		{ Id : 2, Nums : "0;1;2;3;4;5;6;1;2;0", Max : 6 	}
+		{ Id : 2, Nums : "0;1;2;3;4;5;6;7;8;9", Max : 9 	}
 	]
 
 
