@@ -11,7 +11,7 @@
 		<e:Image scaleX="1" scaleY="1" source="login/loginTitle" y="20.33" horizontalCenter="0"/>
 		<e:Label text="登录" touchEnabled="false" scaleX="1" scaleY="1" y="83.33" horizontalCenter="1" bold="true" size="42" strokeColor="0xfff1cc"/>
 
-		<e:Label id="txt_register" text="注册账号&gt;&gt;" touchEnabled="true" scaleX="1" scaleY="1" size="24" horizontalCenter="0" textColor="0xfe9725" verticalCenter="303"/>
+		<e:Label id="btn_register" text="注册账号&gt;&gt;" touchEnabled="true" scaleX="1" scaleY="1" size="24" horizontalCenter="0" textColor="0xfe9725" verticalCenter="303"/>
 		<game:IconButton id="loginButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="0" verticalCenter="231.5"/>
 		<e:Label text="账号" x="139.8" y="318.01" textColor="0x8c5eda" bold="true"/>
 		<e:Image source="login/loginInput" x="235.97" y="305.51" anchorOffsetX="0" width="348.52"/>

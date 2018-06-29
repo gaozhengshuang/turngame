@@ -1,7 +1,7 @@
 module game {
     export class LoginScene extends SceneComponent {
         nameLabel: eui.EditableText;
-        registerButton: eui.Label;
+        btn_register: eui.Label;
         passwordLabel: eui.EditableText;
         loginButton: IconButton;
 
@@ -16,7 +16,7 @@ module game {
         protected beforeShow() {
             this._touchEvent = [
                 {target: this.loginButton, callBackFunc: this.loginHandle},
-                {target: this.registerButton, callBackFunc: this.registerHandle}
+                {target: this.btn_register, callBackFunc: this.registerHandle}
             ];
             
             if (egret.localStorage.getItem("userName")) {
@@ -39,7 +39,7 @@ module game {
         }
 
         private registerHandle() {
-            
+            openPanel(PanelType.register);
         }
 
         private static _instance: LoginScene;

@@ -56,6 +56,8 @@ declare class ToggleButtonSkin extends eui.Skin{
 }
 declare class LoginSceneSkin extends eui.Skin{
 }
+declare class RegisterPanelSkin extends eui.Skin{
+}
 declare class MainSceneSkin extends eui.Skin{
 }
 declare class RankItemSkin extends eui.Skin{

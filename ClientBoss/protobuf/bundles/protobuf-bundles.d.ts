@@ -3711,20 +3711,110 @@ declare namespace msg {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a C2L_ReqRegistAuthCode. */
+    interface IC2L_ReqRegistAuthCode {
+
+        /** C2L_ReqRegistAuthCode phone */
+        phone?: (string|null);
+    }
+
+    /** Represents a C2L_ReqRegistAuthCode. */
+    class C2L_ReqRegistAuthCode implements IC2L_ReqRegistAuthCode {
+
+        /**
+         * Constructs a new C2L_ReqRegistAuthCode.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: msg.IC2L_ReqRegistAuthCode);
+
+        /** C2L_ReqRegistAuthCode phone. */
+        public phone: string;
+
+        /**
+         * Creates a new C2L_ReqRegistAuthCode instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns C2L_ReqRegistAuthCode instance
+         */
+        public static create(properties?: msg.IC2L_ReqRegistAuthCode): msg.C2L_ReqRegistAuthCode;
+
+        /**
+         * Encodes the specified C2L_ReqRegistAuthCode message. Does not implicitly {@link msg.C2L_ReqRegistAuthCode.verify|verify} messages.
+         * @param message C2L_ReqRegistAuthCode message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: msg.IC2L_ReqRegistAuthCode, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified C2L_ReqRegistAuthCode message, length delimited. Does not implicitly {@link msg.C2L_ReqRegistAuthCode.verify|verify} messages.
+         * @param message C2L_ReqRegistAuthCode message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: msg.IC2L_ReqRegistAuthCode, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a C2L_ReqRegistAuthCode message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns C2L_ReqRegistAuthCode
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.C2L_ReqRegistAuthCode;
+
+        /**
+         * Decodes a C2L_ReqRegistAuthCode message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns C2L_ReqRegistAuthCode
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.C2L_ReqRegistAuthCode;
+
+        /**
+         * Verifies a C2L_ReqRegistAuthCode message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a C2L_ReqRegistAuthCode message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns C2L_ReqRegistAuthCode
+         */
+        public static fromObject(object: { [k: string]: any }): msg.C2L_ReqRegistAuthCode;
+
+        /**
+         * Creates a plain object from a C2L_ReqRegistAuthCode message. Also converts values to other types if specified.
+         * @param message C2L_ReqRegistAuthCode
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: msg.C2L_ReqRegistAuthCode, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this C2L_ReqRegistAuthCode to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a C2L_ReqRegistAccount. */
     interface IC2L_ReqRegistAccount {
 
-        /** C2L_ReqRegistAccount account */
-        account?: (string|null);
+        /** C2L_ReqRegistAccount phone */
+        phone?: (string|null);
 
         /** C2L_ReqRegistAccount passwd */
         passwd?: (string|null);
 
-        /** C2L_ReqRegistAccount name */
-        name?: (string|null);
+        /** C2L_ReqRegistAccount authcode */
+        authcode?: (string|null);
 
-        /** C2L_ReqRegistAccount face */
-        face?: (string|null);
+        /** C2L_ReqRegistAccount invitationcode */
+        invitationcode?: (string|null);
     }
 
     /** Represents a C2L_ReqRegistAccount. */
@@ -3736,17 +3826,17 @@ declare namespace msg {
          */
         constructor(properties?: msg.IC2L_ReqRegistAccount);
 
-        /** C2L_ReqRegistAccount account. */
-        public account: string;
+        /** C2L_ReqRegistAccount phone. */
+        public phone: string;
 
         /** C2L_ReqRegistAccount passwd. */
         public passwd: string;
 
-        /** C2L_ReqRegistAccount name. */
-        public name: string;
+        /** C2L_ReqRegistAccount authcode. */
+        public authcode: string;
 
-        /** C2L_ReqRegistAccount face. */
-        public face: string;
+        /** C2L_ReqRegistAccount invitationcode. */
+        public invitationcode: string;
 
         /**
          * Creates a new C2L_ReqRegistAccount instance using the specified properties.
@@ -3821,12 +3911,6 @@ declare namespace msg {
 
     /** Properties of a L2C_RetRegistAccount. */
     interface IL2C_RetRegistAccount {
-
-        /** L2C_RetRegistAccount account */
-        account?: (string|null);
-
-        /** L2C_RetRegistAccount errcode */
-        errcode?: (string|null);
     }
 
     /** Represents a L2C_RetRegistAccount. */
@@ -3837,12 +3921,6 @@ declare namespace msg {
          * @param [properties] Properties to set
          */
         constructor(properties?: msg.IL2C_RetRegistAccount);
-
-        /** L2C_RetRegistAccount account. */
-        public account: string;
-
-        /** L2C_RetRegistAccount errcode. */
-        public errcode: string;
 
         /**
          * Creates a new L2C_RetRegistAccount instance using the specified properties.
@@ -10596,6 +10674,9 @@ declare namespace table {
 
         /** TDungeonsDefine YuanbaoLimit */
         YuanbaoLimit?: (string[]|null);
+
+        /** TDungeonsDefine DiamondChip */
+        DiamondChip?: (string[]|null);
     }
 
     /** Represents a TDungeonsDefine. */
@@ -10663,6 +10744,9 @@ declare namespace table {
 
         /** TDungeonsDefine YuanbaoLimit. */
         public YuanbaoLimit: string[];
+
+        /** TDungeonsDefine DiamondChip. */
+        public DiamondChip: string[];
 
         /**
          * Creates a new TDungeonsDefine instance using the specified properties.
@@ -10845,6 +10929,9 @@ declare namespace table {
 
         /** ItemBaseDataDefine Sold */
         Sold?: (number|null);
+
+        /** ItemBaseDataDefine RealPrice */
+        RealPrice?: (number|null);
     }
 
     /** Represents an ItemBaseDataDefine. */
@@ -10873,6 +10960,9 @@ declare namespace table {
 
         /** ItemBaseDataDefine Sold. */
         public Sold: number;
+
+        /** ItemBaseDataDefine RealPrice. */
+        public RealPrice: number;
 
         /**
          * Creates a new ItemBaseDataDefine instance using the specified properties.
