@@ -35,6 +35,9 @@ message ItemBaseDataDefine
 	
 	
 	optional int32 Sold = 6; // 卖出价格元宝
+	
+	
+	optional int32 RealPrice = 7; // 真实价格
 
 }
 

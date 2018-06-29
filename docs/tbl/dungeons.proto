@@ -31,7 +31,7 @@ message TDungeonsDefine
 	optional int32 Mark = 4; // 推荐标记
 	
 	
-	optional int32 FreeMark = 5; // 1是0否
+	optional int32 FreeMark = 5; // 2钻石1免费0普通
 	
 	
 	optional int32 Getnum = 6; // 中奖次数
@@ -74,6 +74,9 @@ message TDungeonsDefine
 	
 	
 	repeated string YuanbaoLimit = 19; // 元宝档位-数量-限制
+	
+	
+	repeated string DiamondChip = 20; // 钻石碎片
 
 }
 
