@@ -30,11 +30,36 @@ module game {
         }
 
         private registerHandle() {
+            if (deleteBlank(this.nameLabel.text) == "") {
+                showTips("请输入您的手机号!", true);
+                return;
+            }
+
+            if (deleteBlank(this.authCodeLabel.text) == "") {
+                showTips("请输入您的验证码!", true);
+                return;
+            }
+
+            if (deleteBlank(this.passwordLabel.text) == "" || deleteBlank(this.passwordokLabel.text) == "") {
+                showTips("请输入您的密码!", true);
+                return;
+            }
+
+            if (this.passwordLabel.text != this.passwordokLabel.text) {
+                showTips("两次输入的密码不一致!", true);
+                return;
+            }
             
+            sendMessage("msg.C2L_ReqRegistAccount", msg.C2L_ReqRegistAccount.encode({
+                phone: this.nameLabel.text,
+                passwd: this.passwordLabel.text,
+                authcode: this.authCodeLabel.text,
+                invitationcode: ""
+            }));
         }
 
         private authCodeHandle() {
-
+            sendMessage("msg.C2L_ReqRegistAuthCode", msg.C2L_ReqRegistAuthCode.encode({phone: this.nameLabel.text}));
         }
 
         private closeHandle() {

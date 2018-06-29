@@ -813,6 +813,16 @@
 			"url":"assets/ui/bg.png"
 		},
 		{
+			"name":"ui/dialogBg",
+			"type":"image",
+			"url":"assets/ui/dialogBg.png"
+		},
+		{
+			"name":"ui/duanxian",
+			"type":"image",
+			"url":"assets/ui/duanxian.png"
+		},
+		{
 			"name":"ui/gold",
 			"type":"image",
 			"url":"assets/ui/gold.png"

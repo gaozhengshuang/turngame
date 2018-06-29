@@ -77,5 +77,5 @@ module game {
     }
 
     export var loginUserInfo: msg.IC2L_ReqLogin;
-    export var loginGwIp: string = "";
+    export var loginGwIp: string = game._netIp;
 }

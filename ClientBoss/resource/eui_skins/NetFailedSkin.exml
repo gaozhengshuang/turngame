@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="NetFailedSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*">
-	<e:Rect width="720" height="100%" fillColor="0xEEEEEE" fillAlpha="0.8"/>
-	<e:Image source="ui/win/jiesuan" y="189" x="101"/>
-	<game:LabelButton id="reconnectButton" skinName="NormalLabelButtonSkin" verticalCenter="50" anchorOffsetX="0" width="189.09" horizontalCenter="0"/>
-	<e:Label text="网络错误" y="285" textColor="0x504D5E" horizontalCenter="0"/>
-	<e:Label id="reasonLabel" text="错误原因" x="123" y="425" textColor="0xff0000"/>
+	<e:Rect width="720" height="100%" fillAlpha="0.4"/>
+	<e:Group width="526" height="709" touchEnabled="true" touchChildren="true" verticalCenter="0" horizontalCenter="0">
+		<e:Image id="image" source="ui/dialogBg" anchorOffsetY="0" height="709" anchorOffsetX="0" width="526"/>
+		<e:Image source="ui/duanxian" y="96.36" scaleX="0.5" scaleY="0.5" horizontalCenter="0"/>
+		<e:Label id="reasonLabel" text="重复登陆" y="482.66" stroke="2" strokeColor="0xff0000" size="30" horizontalCenter="0"/>
+		<game:LabelButton id="reconnectButton" skinName="NormalLabelButtonSkin" anchorOffsetX="0" width="228.67" anchorOffsetY="0" height="86.66" horizontalCenter="0.5" verticalCenter="238"/>
+	</e:Group>
 </e:Skin>
