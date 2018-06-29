@@ -130,42 +130,57 @@ func QuickLogin(session network.IBaseNetSession, account string) bool {
 /// @brief 账户校验
 /// @return 
 // --------------------------------------------------------------------------
-//func Authenticate(session network.IBaseNetSession, account string, passwd string, name string, face string) (string) {
-//
+func Authenticate(session network.IBaseNetSession, account string, passwd string) (string) {
+
+	// 校验账户密码
+	key := fmt.Sprintf("accounts_passwd_%s", account)
+	svrpasswd, err := Redis().Get(key).Result()
+	if err == redis.Nil {
+		return "密码不存在"
+	}
+
+	if svrpasswd != passwd {
+		return "密码错误"
+	}
+
+	return ""
+
+	// 获取账户信息
+	//accountinfo, key := &msg.AccountInfo{}, fmt.Sprintf("accounts_%s", account)
+	//if err := utredis.GetProtoBin(Redis(), key, accountinfo); err != nil {
+	//	log.Info("账户数据不存在，err: %s", err)		// 不存在的账户
+	//	return "账户数据不存在"
+	//}
+
+	//// 验证账户
+	//if passwd != accountinfo.GetPasswd() {
+	//	log.Info("账户[%s]玩家登陆验证失败，密码错误", account)
+	//	session.SendCmd(newL2C_RetLogin("密码错误", "", 0, ""))
+	//	return fmt.Errorf("密码错误");
+	//}
+
+	//return ""
+}
+
+// 检查新账户
+//func CheckNewAccount(session network.IBaseNetSession, account, name, face, token string) string {
 //	// 获取账户信息
-//	accountinfo, key := &msg.AccountInfo{}, fmt.Sprintf("accounts_%s", account)
-//	if err := utredis.GetProtoBin(Redis(), key, accountinfo); err != nil {
-//		log.Info("账户数据不存在，err: %s", err)		// 不存在的账户
-//		return "账户数据不存在"
+//	key := "accounts_" + account
+//	exist , err := Redis().Exists(key).Result()
+//	if err != nil {
+//		return "登陆检查账户是否存在"
 //	}
 //
-//	// 验证账户
-//	//if passwd != accountinfo.GetPasswd() {
-//	//	log.Info("账户[%s]玩家登陆验证失败，密码错误", account)
-//	//	session.SendCmd(newL2C_RetLogin("密码错误", "", 0, ""))
-//	//	return fmt.Errorf("密码错误");
-//	//}
+//	if exist == 1 {
+//		return ""
+//	}
+//
+//	log.Info("注册新账户[%s]", account)		// 不存在的账户
+//	if errcode := registAccount(account, "", name, "", token); errcode != "" {
+//		return fmt.Sprintf("注册账户失败 账户[%s] 错误[%s]", account, errcode)
+//	}
 //
 //	return ""
 //}
 
-// 检查新账户
-func CheckNewAccount(session network.IBaseNetSession, account, name, face, token string) string {
-	// 获取账户信息
-	key := "accounts_" + account
-	exist , err := Redis().Exists(key).Result()
-	if err != nil {
-		return "登陆检查账户是否存在"
-	}
 
-	if exist == 1 {
-		return ""
-	}
-
-	log.Info("注册新账户[%s]", account)		// 不存在的账户
-	if errcode := registAccount(account, "", name, "", token); errcode != "" {
-		return fmt.Sprintf("注册账户失败 账户[%s] 错误[%s]", account, errcode)
-	}
-
-	return ""
-}
