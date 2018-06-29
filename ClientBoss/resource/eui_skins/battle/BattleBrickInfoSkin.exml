@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BattleBrickInfoSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="175" height="28">
+	<e:Image id="brickImage" source="cube/1/1" scaleX="0.8" scaleY="0.8"/>
+	<e:Label id="priceLabel" text="1000" size="20" strokeColor="0xffffff" textColor="0x504d61" x="74.4" y="4" verticalAlign="middle" textAlign="center" width="50.4" anchorOffsetX="0"/>
+	<e:Label text="炮弹" size="20" strokeColor="0xFFFFFF" textColor="0x504D61" x="123" y="3" verticalAlign="middle" textAlign="left" width="130" bold="true"/>
+	<e:Label text="=" size="20" strokeColor="0xFFFFFF" textColor="0x504D61" x="62" y="4" verticalAlign="middle" textAlign="left" width="130" bold="true"/>
+</e:Skin>

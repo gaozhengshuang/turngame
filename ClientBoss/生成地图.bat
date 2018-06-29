@@ -1,0 +1,1 @@
+..\..\tools\egret\BuildCsvTable\ServerCsvBuilder.exe -map ..\docs\map\ resource\assets\map\

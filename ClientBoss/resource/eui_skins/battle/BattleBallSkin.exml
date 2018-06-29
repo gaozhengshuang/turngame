@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BattleBallSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*" width="34" height="34">
+	<w:Declarations>
+	</w:Declarations>
+	<e:Image id="ballImage" anchorOffsetX="17" anchorOffsetY="17" x="17" y="17" source="ball/3"/>
+</e:Skin>

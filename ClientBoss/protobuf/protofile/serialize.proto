@@ -1,0 +1,60 @@
+package msg;
+
+message EntityBase {
+    optional uint64 id      = 1;
+    optional string name    = 2;
+    optional string face    = 3;
+    optional int32  sex     = 4;
+    optional string account = 5;
+}
+
+message SimpleCounter {
+    optional int32 freestep = 1;
+    optional int64 givestep = 2;
+}
+
+message UserBase {
+    optional uint32     level   = 1;
+    optional uint32     exp     = 2;
+    optional uint32     money   = 3;    // 
+    optional uint32     coupon  = 4;    // 代金卷
+    optional uint32     yuanbao = 5;    // 元宝
+    optional int64      tmlogin  = 6;   // 登陆时间
+    optional int64      tmlogout = 7;   // 离线时间
+    optional uint32     continuelogin = 8;  // 连续登陆
+    optional uint32     nocountlogin = 9;   // 不统计
+    optional uint32     signreward  = 10;   // 签到
+    optional uint32     signtime    = 11;   // 签到时间
+    repeated UserAddress addrlist   = 12;   // 地址列表
+    optional SimpleCounter scounter = 13;   // 简单计数器
+}
+
+message UserAddress {
+    optional string receiver = 1;
+    optional string phone = 2;
+    optional string address = 3;
+}
+
+// 道具位置
+enum ItemPos {
+    Bag = 0;     // 背包
+    Storage = 1; // 仓库
+}
+
+message ItemData {
+    optional uint32 id = 1;     // 目前id就是道具baseid
+    optional uint32 num = 2;
+    optional int32 pos = 3;     // ItemPos
+}
+
+message ItemBin {
+    repeated ItemData items = 1;        // 
+}
+
+message Serialize {
+    optional EntityBase entity  = 1;
+    optional UserBase   base    = 2;
+    optional ItemBin    item    = 3;
+}
+
+

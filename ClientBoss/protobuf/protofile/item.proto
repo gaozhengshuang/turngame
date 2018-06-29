@@ -1,0 +1,73 @@
+// --------------------------------------------------------------------------
+/// @brief 道具相关协议
+// --------------------------------------------------------------------------
+package msg;
+import "define.proto";
+
+// 购买道具
+message C2GW_BuyItem {
+    optional uint32 productid = 1;  // 商品id,不是道具id
+    optional uint32 num = 2;
+}
+
+// 更新背包添加
+message GW2C_AddPackageItem {
+    optional uint32 itemid = 1;
+    optional uint32 num = 2;
+}
+
+// 更新背包扣除
+message GW2C_RemovePackageItem {
+    optional uint32 itemid = 1;
+    optional uint32 num = 2;
+}
+
+// 更新元宝
+message GW2C_UpdateYuanbao {
+    optional uint32 num = 1;
+}
+
+// 更新点卷
+message GW2C_UpdateCoupon {
+    optional uint32 num = 1;
+}
+
+// 更新免费步数
+message GW2C_UpdateFreeStep {
+    optional int32 num = 1;
+}
+
+// 货物信息
+message DeliveryGoods {
+    optional uint32 itemid = 1;
+    optional uint32 num = 2;
+}
+
+// 请求提货
+message C2GW_ReqDeliveryGoods {
+    repeated DeliveryGoods list = 1;
+    optional string token = 2;
+}
+
+message BigRewardItem {
+    optional uint32 id = 1;
+    optional uint32 num = 2;
+}
+
+// 全服大奖被拿走次数
+message Sync_BigRewardPickNum {
+    repeated BigRewardItem list = 1;
+}
+
+// 使用道具
+message C2GW_UseBagItem {
+    optional uint32 itemid = 1;
+    optional uint32 num = 2;
+}
+
+// 出售道具
+message C2GW_SellBagItem {
+    repeated msg.PairNumItem list = 1;
+}
+
+

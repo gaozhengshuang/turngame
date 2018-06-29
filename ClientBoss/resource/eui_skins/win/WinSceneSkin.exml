@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="WinSceneSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:game="game.*" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect width="720" height="100%" fillColor="0xeeeeee" fillAlpha="0.8" y="-1"/>
+	<e:Group width="720" height="1100">
+		<e:Group id="newRecordGroup" width="720" height="1100" touchChildren="false" touchEnabled="false">
+			<e:Image source="ui/win/xinjilu" y="164.03" horizontalCenter="0" x="-13" scaleX="1" scaleY="1"/>
+			<e:Label text="新纪录" y="312.15" size="48" textColor="0xffa530" bold="true" anchorOffsetX="0" width="247" textAlign="center" horizontalCenter="0.5"/>
+			<e:Label id="recordLabel" text="100000" y="403.05" size="100" bold="true" horizontalCenter="0" anchorOffsetX="0" width="518.21" textAlign="center" textColor="0x5e93ed"/>
+		</e:Group>
+		<e:Group id="normalGroup" width="720" height="1100" touchChildren="false" touchEnabled="false">
+			<e:Image source="ui/win/jiesuan" y="194" horizontalCenter="0"/>
+			<e:Label text="本次得分" y="245.59" size="48" textColor="0xFFA530" bold="true" anchorOffsetX="0" width="247" textAlign="center" horizontalCenter="0.5"/>
+			<e:Label id="scoreLabel" text="100000" y="303.05" size="48" bold="true" horizontalCenter="0" anchorOffsetX="0" width="518.21" textAlign="center" textColor="0x5E93ED"/>
+			<e:Group id="rankGroup" height="214" y="386.01" horizontalCenter="0">
+				<e:layout>
+					<e:HorizontalLayout gap="40"/>
+				</e:layout>
+			</e:Group>
+		</e:Group>
+		<e:Label id="rankLabel" text="查看排行榜" y="634" textColor="0x514e5f" anchorOffsetX="0" width="449.33" anchorOffsetY="0" height="60.67" verticalAlign="middle" textAlign="center" horizontalCenter="-0.5"/>
+	</e:Group>
+	<e:Group width="720" height="1100" bottom="0" touchEnabled="false" touchChildren="true">
+		<e:Image source="ui/win/anniudi" y="815.88" scaleX="1" scaleY="1" horizontalCenter="0" touchEnabled="false"/>
+		<game:IconButton id="backButton" skinName="IconButtonSkin" horizontalCenter="-194.5" verticalCenter="304.5"/>
+		<game:IconButton id="againButton" skinName="IconButtonSkin" horizontalCenter="-1.5" verticalCenter="304.5"/>
+		<game:IconButton id="shareButton" skinName="IconButtonSkin" horizontalCenter="194.5" verticalCenter="304.5"/>
+		<e:Label text="回到首页" y="931.27" textColor="0x514E5F" anchorOffsetX="0" anchorOffsetY="0" height="60.67" verticalAlign="middle" textAlign="center" horizontalCenter="-194.5" x="135" scaleX="1" scaleY="1" touchEnabled="false"/>
+		<e:Label text="再玩一局" y="931.27" textColor="0x514E5F" anchorOffsetX="0" anchorOffsetY="0" height="60.67" verticalAlign="middle" textAlign="center" horizontalCenter="-1.5" x="145" scaleX="1" scaleY="1" touchEnabled="false"/>
+		<e:Label text="发起挑战" y="931.27" textColor="0x514E5F" anchorOffsetX="0" anchorOffsetY="0" height="60.67" verticalAlign="middle" textAlign="center" horizontalCenter="194.5" x="155" scaleX="1" scaleY="1" touchEnabled="false"/>
+	</e:Group>
+</e:Skin>

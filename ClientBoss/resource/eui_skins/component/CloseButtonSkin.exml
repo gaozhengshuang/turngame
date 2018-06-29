@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="CloseButtonSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="75" height="75">
+	<e:Image id="iconDisplay" source="ui/ca"/>
+</e:Skin>

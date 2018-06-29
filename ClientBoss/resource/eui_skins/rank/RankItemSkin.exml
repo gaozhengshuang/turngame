@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RankItemSkin" width="518" height="92" xmlns:e="http://ns.egret.com/eui" xmlns:game="game.*" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="itemBg" source="ui/rank/rankitembg" y="0" width="486" height="92" horizontalCenter="0"/>
+	<game:Avatar id="avatar" skinName="AvatarSkin" scaleX="0.6" scaleY="0.6" x="92" touchChildren="false" touchEnabled="false" width="116" height="116" y="44" anchorOffsetX="58" anchorOffsetY="58"/>
+	<e:Label id="rankLabel" text="1" size="24" horizontalCenter="-235" textAlign="center" touchEnabled="false" verticalCenter="0"/>
+	<e:Label id="nameLabel" text="玩家名" x="156.66" size="24" textColor="0x514e5f" touchEnabled="false" verticalCenter="0" width="180"/>
+	<e:Label id="scoreLabel" text="123456789" size="24" textColor="0x5c8bf7" horizontalCenter="160.5" touchEnabled="false" verticalCenter="0" textAlign="right"/>
+</e:Skin>

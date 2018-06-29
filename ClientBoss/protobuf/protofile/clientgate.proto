@@ -1,0 +1,77 @@
+//package MsgClientGate;
+package msg;
+import "serialize.proto";
+//import "define.proto";
+
+// 客户端请求登陆网关
+message C2GW_ReqLogin
+{
+    optional string account = 1;        // 玩家account
+    optional string verifykey = 2;      // login生成的校验key，验证玩家合法性
+}
+
+
+// 结果
+message GW2C_RetLogin
+{
+    //optional string account = 1;
+    optional string errcode = 1;
+}
+
+// 发送玩家个人数据
+message GW2C_SendUserInfo {
+    optional msg.EntityBase entity  = 1;
+    optional msg.UserBase   base    = 2;
+    optional msg.ItemBin    item    = 3;
+}
+
+// 请求玩家数据
+//message C2GW_ReqUserInfo
+//{
+//    optional string account = 1;
+//}
+//
+//
+//// 返回
+//message GW2C_RetUserInfo
+//{
+//    optional msg.EntityBase entity  = 1;
+//    optional msg.UserBase   base    = 2;
+//    optional msg.ItemBin    item    = 3;
+//}
+
+
+// 心跳
+message C2GW_HeartBeat {
+    optional int64 uid  = 1;
+    optional int64 time = 2;
+    repeated string test = 3;
+    optional string token = 4;
+}
+
+message GW2C_HeartBeat {
+    optional int64 uid  = 1;
+    optional int64 time = 2;
+    repeated string test = 3;
+}
+
+// 请求开始游戏(开房间)
+message C2GW_ReqStartGame {
+    optional int32 gamekind = 1;    // 游戏类型
+    optional int32 gridnum = 2;     // 格子数
+}
+
+message GW2C_RetStartGame {
+    optional string errcode = 1;
+    optional int64 roomid = 2;
+}
+
+message GW2C_Ret7DayReward {
+    optional uint32 day = 1;
+}
+
+message C2GW_Get7DayReward {
+}
+
+
+

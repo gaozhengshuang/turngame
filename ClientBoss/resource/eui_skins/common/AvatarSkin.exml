@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="AvatarSkin" width="116" height="116" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="selectImage" source="ui/win/touxiangkuang" horizontalCenter="0" verticalCenter="0" visible="false"/>
+	<e:Image id="avatarImage" source="ui/win/again" width="116" height="116"/>
+</e:Skin>

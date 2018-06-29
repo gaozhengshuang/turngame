@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSceneSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*">
+	<e:Rect width="720" height="100%" fillColor="0xEEEEEE"/>
+	<e:Group width="720" height="1100" touchChildren="true" touchEnabled="false" x="2">
+		<e:Image id="titleImage" source="ui/main/tantanle" x="122" scaleX="1" scaleY="1" touchEnabled="false" y="85"/>
+		<e:Label text="用户名" x="108" y="514" textColor="0x504d5e"/>
+		<e:Rect width="390" height="72" x="229" y="493" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x999999" ellipseWidth="20" ellipseHeight="20"/>
+		<e:EditableText id="nameLabel" width="375.39" height="69.7" text="" x="229.92" y="493.89" anchorOffsetX="0" anchorOffsetY="0" textAlign="center" verticalAlign="middle"/>
+		<game:LabelButton id="loginButton" skinName="NormalLabelButtonSkin" horizontalCenter="0" verticalCenter="140"/>
+	</e:Group>
+</e:Skin>

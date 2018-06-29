@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RankPanelSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:game="game.*" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect width="720" height="100%" fillColor="0xEEEEEE" fillAlpha="0.8" y="-1"/>
+	<e:Group id="titleGroup" width="720" height="1100" touchEnabled="false" horizontalCenter="0" verticalCenter="0">
+		<e:Image id="rankbg" y="129" scaleX="1" scaleY="1" horizontalCenter="0" source="ui/win/rankBg"/>
+		<game:IconButton id="backButton" skinName="IconButtonSkin" scaleX="0.5" scaleY="0.5" y="951" horizontalCenter="0"/>
+		<e:Image source="ui/rank/bg" x="129" y="98.35999999999999" scaleX="1" scaleY="1"/>
+		<e:Label id="rankNameLabel" text="好友排行榜" touchEnabled="false" size="30" textColor="0xffffff" horizontalCenter="-132" verticalCenter="-417" x="153" y="118" scaleX="1" scaleY="1"/>
+		<game:IconButton id="friendButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="403" y="99.02" visible="false"/>
+		<game:IconButton id="worldButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="509.64" y="99.02"/>
+		<e:Label text="每周一凌晨刷新" x="450.69" y="924.03" scaleX="1" scaleY="1" size="20" textColor="0xa25daa"/>
+	</e:Group>
+	<e:Group id="worldGroup" width="720" height="1100" touchChildren="true" touchEnabled="false" horizontalCenter="0" verticalCenter="0">
+		<e:Group id="selfWorldGroup" width="518" height="92.8" y="815.88" x="100" touchChildren="false" touchEnabled="false"/>
+		<e:Group id="rankWorld" width="518" height="595" touchChildren="true" touchEnabled="false" y="182.67" horizontalCenter="0">
+			<e:Scroller id="rankScroller" height="595" y="0" width="518" horizontalCenter="0" anchorOffsetY="0">
+			<e:List id="rankList" useVirtualLayout="true" y="-17.33">
+				<e:layout>
+				<e:VerticalLayout gap="10"/>
+				</e:layout>
+			</e:List>
+			</e:Scroller>
+		</e:Group>
+	</e:Group>
+	<e:Group id="friendGroup" width="720" height="1100" touchChildren="true" touchEnabled="false" horizontalCenter="0" verticalCenter="0" visible="false">
+	</e:Group>
+</e:Skin>

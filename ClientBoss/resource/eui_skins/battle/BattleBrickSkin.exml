@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BattleBrickSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*" height="36" width="72">
+	<w:Declarations>
+		<tween:TweenGroup id="shakeAnim">
+			<tween:TweenItem target="{group}">
+				<tween:Set/>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object scaleX="{0.9}" scaleY="{0.9}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object scaleX="{1}" scaleY="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+		<tween:TweenGroup id="showAnim">
+			<tween:TweenItem target="{group}">
+				<tween:Set>
+					<tween:props>
+						<e:Object scaleX="{0}" scaleY="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object scaleX="{1.2}" scaleY="{1.2}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object scaleX="{1}" scaleY="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
+	<e:Group id="group" touchChildren="false" touchEnabled="false" width="72" height="36" horizontalCenter="0" verticalCenter="0">
+		<e:Image id="brickImage" scaleX="1" scaleY="1" verticalCenter="-0.5" horizontalCenter="0" source="cube/5"/>
+		<e:Label id="countdownLabel" text="99" size="18" textColor="0xff0000" width="72" textAlign="center" verticalCenter="-1" fontFamily="DynoBold" x="-2"/>
+		<e:Image id="crackImage" horizontalCenter="0" x="0" scaleX="1" scaleY="1" source="cube/crack1" height="36" verticalCenter="0"/>
+	</e:Group>
+</e:Skin>

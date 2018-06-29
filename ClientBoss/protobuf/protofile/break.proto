@@ -1,0 +1,68 @@
+package msg;
+
+enum SortType {
+    SortSorce = 1;         // 积分排行
+}
+
+//写入排行榜
+message C2GW_UpdateScore 
+{
+    optional uint32 id      = 1;        //唯一id
+    optional uint32 score   = 2;        //比分
+    optional uint32 type    = 3;        //类型
+}
+
+//排行榜结构
+message SortInfo
+{
+    optional uint32 id      = 1;        //唯一id
+    optional string name    = 2;        //名字
+    optional string face    = 3;        //头像
+    optional uint32 score   = 4;        //比分
+    optional uint32 rank    = 5;        //名次
+}
+
+//返回附近排名的玩家
+message GW2C_SortNearBy
+{
+    optional uint32 type = 1;
+    repeated SortInfo list = 2;
+}
+
+//请求排行榜
+message C2GW_ReqSort
+{
+    optional uint32 type = 1;       //类型
+    optional uint32 begin = 2;
+    optional uint32 end = 3;
+}
+
+//返回排行榜
+message GW2C_RetSort
+{
+    optional uint32 type = 1;
+    repeated SortInfo list = 2;
+}
+
+//写入排行榜之后发送左右排名信息
+message GW2C_ScoreReturn
+{
+    optional uint32 type = 1;
+    repeated SortInfo list = 2;
+}
+
+//我的积分数据
+message MySort
+{
+    optional uint32 type = 1;
+    optional uint32 score = 2;
+    optional uint32 rank = 3;
+}
+
+//玩家主数据
+message GW2C_UserInfo
+{
+    optional uint32 id    = 1;          //唯一id
+    repeated MySort slist = 2;          //积分最高信息
+}
+

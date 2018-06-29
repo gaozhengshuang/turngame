@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LuckyItemSkin" width="126" height="126" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="itembg" source="lucky/luckyItemBg" anchorOffsetX="63" anchorOffsetY="63" horizontalCenter="0" verticalCenter="0"/>
+	<e:Image id="itemImg" source="item/6" width="80" height="80" anchorOffsetX="40" anchorOffsetY="40" horizontalCenter="0" verticalCenter="-9"/>
+	<e:Image source="lucky/itemNameBg" x="0" y="97"/>
+	<e:Label id="itemName" text="道具名" size="18" textAlign="center" anchorOffsetX="0" verticalCenter="49" horizontalCenter="0" textColor="0x5e5e5e"/>
+</e:Skin>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="ImageButtonSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="bgDisplay" scale9Grid="43,19,39,11" width="100%" height="100%" source="ui/an4"/>
+	<e:Image id="imageDisplay" verticalCenter="-0.5" horizontalCenter="0" source="ui/bag/tijiao"/>
+</e:Skin>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="MainSceneSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:game="game.*" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect width="720" height="100%" fillColor="0xeeeeee"/>
+	<e:Group width="720" height="1100" touchChildren="false" touchEnabled="false">
+		<e:Image id="titleImage" source="ui/main/tantanle" x="122" scaleX="1" scaleY="1" touchEnabled="false" y="85"/>
+	</e:Group>
+	<e:Group touchEnabled="false" touchChildren="true" width="720" height="1100" bottom="0">
+		<e:Image id="lightImage" source="ui/main/guangquan" anchorOffsetX="205" anchorOffsetY="204.5" scaleX="1" scaleY="1" touchEnabled="false" x="360" y="712.5"/>
+		<game:IconButton id="playButton" skinName="IconButtonSkin" verticalCenter="162" horizontalCenter="0" x="220.00000000000003" y="410.00000000000006"/>
+		<game:IconButton id="rankButton" skinName="IconButtonSkin" verticalCenter="388" y="430.00000000000006" horizontalCenter="0" visible="false"/>
+		<e:Label id="rankLabel" text="排行榜&gt;&gt;" y="945" textColor="0x504D5E" touchEnabled="true" anchorOffsetX="0" width="224" anchorOffsetY="0" height="58" horizontalCenter="0" verticalAlign="middle" textAlign="center"/>
+	</e:Group>
+	<e:Label id="costLabel" text="5" y="134.5" size="35" textAlign="center" width="227" anchorOffsetX="0" horizontalCenter="0" touchEnabled="false" fontFamily="DynoBold" visible="false"/>
+</e:Skin>

@@ -1,0 +1,1 @@
+egret publish %cd%\

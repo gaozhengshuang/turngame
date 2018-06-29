@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BattleFirewallSkin" width="22" height="144" xmlns:e="http://ns.egret.com/eui">
+	<e:Image source="cube/fire" x="0" scale9Grid="2,29,18,5" height="144" width="22"/>
+</e:Skin>

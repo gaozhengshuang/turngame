@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BattlePaddleSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*" width="197" height="251">
+	<w:Declarations>
+		<tween:TweenGroup id="shotAnim">
+			<tween:TweenItem target="{group}">
+				<tween:Set/>
+				<tween:To duration="150">
+				<tween:props>
+					<e:Object y="{5}"/>
+				</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+				<tween:props>
+					<e:Object y="{0}"/>
+				</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
+	<e:Image id="bg" source="paddle/bg" anchorOffsetX="98.5" anchorOffsetY="98.5" x="98.5" y="150"/>
+	<e:Group id="paddleGroup" width="131" height="217" x="98.5" y="153" anchorOffsetX="65.5" anchorOffsetY="153">
+		<e:Group id="group" height="217" width="131" y="-4">
+			<e:Image id="cannonImage" y="-4" scaleX="1" scaleY="1" horizontalCenter="0" source="paddle/pao"/>
+			<e:Image id="ball1" source="paddle/guanchuan" x="50.67" y="61.83"/>
+			<e:Image id="ball2" source="paddle/guanchuan" x="50.67" y="50.16"/>
+			<e:Image id="ball3" source="paddle/guanchuan" x="50.67" y="38.5"/>
+		</e:Group>
+	</e:Group>
+	<e:Image source="paddle/paota" x="24.5" y="76"/>
+	<e:Image source="paddle/di" x="42" y="93" touchEnabled="false"/>
+	<e:Image id="waveMask" source="paddle/di" x="42" y="93" touchEnabled="false"/>
+	<e:Image id="waveImage" source="paddle/wave/00000" x="0" y="173" touchEnabled="true"/>
+	<e:Label id="spLabel" text="能量" y="170.99" size="18" horizontalCenter="1.5" touchEnabled="false"/>
+	<e:Label id="costLabel" text="5" y="134.5" size="35" textAlign="center" width="227" anchorOffsetX="0" horizontalCenter="0" touchEnabled="false" fontFamily="DynoBold"/>
+	<e:Image id="spImage" scaleX="1.5" scaleY="1.5" verticalCenter="11.5" horizontalCenter="1.5" touchEnabled="false" source="paddle/sp/00000" visible="false"/>
+	<e:Image id="boomImage" source="cube/redBoom/00000" bottom="-91" touchEnabled="false" scaleX="2" scaleY="2" horizontalCenter="0" visible="false"/>
+</e:Skin>

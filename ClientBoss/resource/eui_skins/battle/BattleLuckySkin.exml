@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*" class="BattleLuckySkin">
+	<e:Rect width="720" height="100%" fillColor="0xEEEEEE" fillAlpha="0" y="-1" strokeColor="0xffffff"/>
+	<e:Group id="luckyGroup" width="720" height="1100" horizontalCenter="0" verticalCenter="0">
+		<e:Image verticalCenter="0" horizontalCenter="0" source="lucky/luckyBg"/>
+		<e:Image width="280" height="279" horizontalCenter="0" verticalCenter="-72.5" source="lucky/luckyIMG"/>
+		<game:LuckyItem id="gift_1" width="126" height="126" x="142" y="264" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63"/>
+		<game:LuckyItem width="126" height="126" x="288" y="264" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_2"/>
+		<game:LuckyItem width="126" height="126" x="433" y="264" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_3"/>
+		<game:LuckyItem width="126" height="126" x="578" y="264" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_4"/>
+		<game:LuckyItem width="126" height="126" x="578" y="408" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_5"/>
+		<game:LuckyItem width="126" height="126" x="578" y="553" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_6"/>
+		<game:LuckyItem width="126" height="126" x="578" y="693" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_7"/>
+		<game:LuckyItem width="126" height="126" x="433" y="693" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_8"/>
+		<game:LuckyItem width="126" height="126" x="288" y="693" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_9"/>
+		<game:LuckyItem width="126" height="126" x="142" y="693" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_10"/>
+		<game:LuckyItem width="126" height="126" x="142" y="553" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_11"/>
+		<game:LuckyItem width="126" height="126" x="142" y="408" skinName="LuckyItemSkin" anchorOffsetX="63" anchorOffsetY="63" id="gift_12"/>
+
+
+
+
+
+
+
+
+
+
+
+		<e:Image id="luckyLight" source="lucky/luckyLight" x="142" y="264" anchorOffsetX="82" anchorOffsetY="82"/>
+		<game:IconButton id="closeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="620.5" y="157"/>
+		<game:IconButton id="startButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="0.5" verticalCenter="302.5"/>
+		<game:IconButton id="bagButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="208.5" verticalCenter="302.5"/>
+		<e:Label text="抽  奖" y="833" horizontalCenter="0.5" touchEnabled="false"/>
+		<e:Label text="战利品" y="835" touchEnabled="false" size="26" horizontalCenter="209"/>
+	</e:Group>
+</e:Skin>

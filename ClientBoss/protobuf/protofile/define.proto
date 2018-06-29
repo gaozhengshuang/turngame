@@ -1,0 +1,39 @@
+package msg;
+
+message IpHost { 
+    optional string ip = 1;
+    optional int32  port = 2;
+}
+
+// 房间信息
+//message MatchRoomInfo {
+//    optional string server = 1;
+//    optional int64 roomid = 2;
+//}
+
+// 道具id规则 = 类型 * 1000 + id
+enum ItemId {
+    YuanBao = 6001;         // 元宝
+    Coupon = 6002;          // 金卷, 也不使用了
+    Gold = 6003;            // 暂时没有使用
+    FreeStep = 6005;        // 免费步数
+}
+
+enum ItemType {
+    Digital         = 1;    // 数码产品
+    ShoppingCard    = 2;    // 购物卡
+    DailyUse        = 3;    // 生活用品
+    Toy             = 4;    // 玩具
+    MobileCard      = 5;    // 电话卡
+    Currency        = 6;    // 货币
+    CarAccessory    = 7;    // 汽车用品
+    Advertisement   = 8;    // 广告
+    Smallware       = 9;    // 小商品
+}
+
+message PairNumItem {
+    optional uint32 itemid = 1;
+    optional uint32 num = 2;
+}
+
+

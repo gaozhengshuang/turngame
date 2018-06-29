@@ -1,0 +1,123 @@
+// --------------------------------------------------------------------------
+/// @brief 战场消息, 消息通过Gate转发到客户端
+// --------------------------------------------------------------------------
+import "serialize.proto";
+package msg;
+
+message BattleUser {
+    optional uint64 userid = 1;
+    optional int32  gold = 2;
+    optional int32  stepindex = 3;
+}
+
+
+message GridItem {
+    optional int32 index    = 1;    // 格子编号
+    optional int32 id       = 2;    // 道具id
+    optional int32 num      = 3;    // 数量
+    optional int32 gridtype = 4;    // 类型：0默认道具，1大奖，2高级元宝1，3高级元宝2
+    optional bool  control  = 5;    // 作假控制
+}
+
+// 发送个人信息到游戏房间
+message BT_UploadGameUser   {
+    optional int64 roomid = 1;
+    optional msg.Serialize bin = 2;     // TODO: 玩家数据没必要全部发送
+}
+
+
+// 房间存在，直接进入房间, 客户端参数留空
+message BT_ReqEnterRoom {
+    optional int64 roomid = 1;
+    optional uint64 userid = 2;
+}
+
+
+// 房间初始化
+message BT_GameInit {
+    optional int64  roomid = 1;
+    optional uint64 ownerid = 2;
+    optional int32  gamekind = 3;
+    repeated GridItem listitem = 4;
+}
+
+
+// 同步玩家数据
+message BT_SendBattleUser {
+    //optional int64  roomid = 1;
+    optional uint64 ownerid = 2;
+    optional uint32 gold = 3;           // 红包金币
+    optional uint32 coupon = 4;         // 代金卷
+    optional uint32 yuanbao = 5;        // 元宝
+    optional uint32 level = 6;          // 等级
+    optional int32 freestep = 7;        // 免费步数，免费场
+}
+
+
+// 游戏开始
+message BT_GameStart {
+    optional int64 roomid = 1;
+    optional uint64 ownerid = 2;
+}
+
+// 游戏结束
+message BT_GameEnd {
+    optional int64 roomid = 1;
+    optional uint64 ownerid = 2;
+    optional string reason = 3;
+    optional msg.Serialize bin = 4;     // TODO: 玩家数据没必要全部发送
+}
+
+// 通知客户端游戏结束
+message BT_GameOver {
+    optional int64 roomid = 1;
+}
+
+// C2R 起跳检查
+message BT_JumpPreCheck {
+    optional int64 roomid = 1;
+    optional uint64 userid = 2;
+    optional string token = 3;
+}
+
+// R2C 返回起跳检查
+message BT_RetJumpPreCheck {
+    optional uint64 userid = 1;
+    optional string errcode = 2;
+}
+
+// C2R 请求行进, 参数客户端留空
+message BT_ReqJumpStep {
+    optional int64 roomid = 1;
+    optional uint64 userid = 2;
+    optional int32 stepnum = 3;
+}
+
+// R2C 返回行进结果
+message BT_RetJumpStep {
+    //optional int64 roomid = 1;
+    optional uint64 userid = 1;
+    optional int32 stepindex = 2;
+    repeated int32 fakelist = 3;      // 更新作假列表
+}
+
+// C2R 退出游戏房间，游戏结束,参数客户端留空
+message BT_ReqQuitGameRoom {
+    optional int64 roomid = 1;
+    optional uint64 userid = 2;
+}
+
+
+// R2C 获得道具
+message BT_PickItem {
+    optional uint64 userid = 1;
+    optional GridItem item = 2;
+}
+
+// R2C升级
+//message BT_LevelUp {
+//    optional uint64 userid = 1;
+//    optional uint32 level = 2;
+//}
+
+

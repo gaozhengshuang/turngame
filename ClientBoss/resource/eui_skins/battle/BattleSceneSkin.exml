@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BattleSceneSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*" xmlns:tween="egret.tween.*">
+	<w:Declarations>
+		<tween:TweenGroup id="doubleAnim">
+			<tween:TweenItem target="{doubleGroup}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
+	<e:Image source="ui/bg" x="0" y="0" height="100%" scale9Grid="90,102,540,601"/>
+	<e:Group id="brickInfoGroup" touchChildren="false" touchEnabled="false" left="5" bottom="30" scaleX="0.9" scaleY="0.9" visible="false">
+		<e:layout>
+		<e:VerticalLayout/>
+		</e:layout>
+	</e:Group>
+	<e:Group id="doubleGroup" width="720" height="100%" touchChildren="false" touchEnabled="false" y="87.81" scrollEnabled="true">
+		<e:Image id="light1" source="paddle/light" scaleX="1" scaleY="1" width="720" y="0"/>
+		<e:Image id="light2" source="paddle/light" scaleX="1" scaleY="1" width="720" y="775"/>
+		<e:Image id="light3" source="paddle/light" scaleX="1" scaleY="1" width="720" y="1550"/>
+	</e:Group>
+	<e:Image id="topBg" source="ui/topBg" x="0" scale9Grid="90,10,540,45" y="0" touchEnabled="false"/>
+	<e:Group id="touchGroup" width="720" height="100%"/>
+	<e:Group id="mainGroup" width="720" height="100%" touchChildren="true" touchEnabled="false">
+		<e:Group id="buffGroup" width="720" height="876" anchorOffsetX="0" touchChildren="false" touchEnabled="false" x="0" scaleX="1" scaleY="1" top="88"/>
+		<e:Group id="showGroup" width="720" height="876" anchorOffsetX="0" touchChildren="false" touchEnabled="false" x="0" scaleX="1" scaleY="1" top="88">
+		</e:Group>
+		<e:Group id="paddleGroup" width="720" height="876" anchorOffsetX="0" touchChildren="true" touchEnabled="false" x="0" scaleX="1" scaleY="1" top="88">
+			<e:Component scaleX="1" scaleY="1" skinName="BattlePaddleSkin" anchorOffsetX="98.5" anchorOffsetY="153" x="360.5" y="900" visible="false"/>
+			<e:Image id="moreFireImg" source="ui/moreFire" verticalCenter="-39" horizontalCenter="0" touchEnabled="false" visible="false"/>
+		</e:Group>
+		<e:Group id="debugGroup" width="720" height="876" anchorOffsetX="0" touchChildren="false" touchEnabled="false" x="0" scaleX="1" scaleY="1" top="88" visible="false"/>
+	</e:Group>
+	<e:Group id="penetrationGroup" touchChildren="false" touchEnabled="false" left="5" bottom="30" height="100" width="100" visible="false">
+		<e:Image id="penetrationBallImage" source="ball/3" y="61" x="190"/>
+		<e:Label id="penetrationLabel" text="x5" y="71.99" scaleX="1" scaleY="1" horizontalCenter="225" textColor="0x514e5f" fontFamily="DynoBold" width="100" size="25"/>
+	</e:Group>
+	<e:Group id="ballGroup" width="720" height="100%" touchEnabled="false" touchChildren="true" visible="false">
+		<e:Rect width="720" height="100%" fillAlpha="0.5" touchChildren="false" touchEnabled="false"/>
+		<game:IconButton id="ballButton1" skinName="IconButtonSkin" scaleX="2" scaleY="2" horizontalCenter="-151" verticalCenter="-76" visible="false"/>
+		<game:IconButton id="ballButton2" skinName="IconButtonSkin" scaleX="2" scaleY="2" verticalCenter="44" horizontalCenter="0"/>
+		<e:Label id="ball1Price" text="Label" y="541" size="20" horizontalCenter="-151" visible="false"/>
+		<e:Label id="ball2Price" text="Label" size="20" horizontalCenter="0.5" verticalCenter="121"/>
+	</e:Group>
+	<e:Label id="scoreLabel" text="分数:0" strokeColor="0xFFFFFF" textAlign="center" verticalAlign="middle" anchorOffsetX="0" width="344" size="34" horizontalCenter="0" y="26" textColor="0xffffff"/>
+	<game:IconButton id="luckyButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="247.5" verticalCenter="481.5"/>
+	<e:Label id="hitLabel" text="" stroke="2" strokeColor="0xFFFFFF" right="20" top="20" textColor="0x898989" visible="false"/>
+	<e:Label id="noticeLabel" text="" y="92" textColor="0xff678e" horizontalCenter="0"/>
+	<e:Group id="guideGroup" width="720" height="100%" touchChildren="false" touchEnabled="true">
+		<e:Image source="ui/yindao" scaleX="1" scaleY="1" horizontalCenter="0.5" verticalCenter="-220.5"/>
+	</e:Group>
+</e:Skin>

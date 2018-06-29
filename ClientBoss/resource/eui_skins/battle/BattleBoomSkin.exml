@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BattleBoomSkin" width="72" height="36" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="boomImage" source="cube/boom/00002" horizontalCenter="0" verticalCenter="0" scaleY="1"/>
+</e:Skin>
