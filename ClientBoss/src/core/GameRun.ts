@@ -16,28 +16,58 @@ module game {
         DataManager.init();
         SoundManager.init();
 
-        createMainScene();
+        //通讯初始化
+        ClientNet.getInstance().init();
+
+        Login();
     }
 
     let inited = false;
 
-    export async function createMainScene() {
-        if (game.$isWx) {
-            WXLogin();
-            platform.showShareMenu();
-            SceneManager.changeScene(SceneType.main, false);
-        } else {
-            SceneManager.changeScene(SceneType.login, false);
+    export function createGameScene() {
+        SceneManager.changeScene(SceneType.login, false);
+
+        //登录完成关闭loading界面
+        NotificationCenter.postNotification("closeLoadingSkin");
+        NotificationCenter.once(this, connectFailed, ClientNet.SOCKET_CONNECT_CLOSE);
+        this.startHeart();
+        window.onbeforeunload = () => {
+            stopHeart();
+            ClientNet.getInstance().onConnectClose();
+            return;
         }
     }
 
-    export async function WXLogin() {
-        const loginRes = await platform.login();
-        const playerInfo: WxUserInfo = await platform.getUserInfo();
-        let userInfo = DataManager.playerModel.userInfo;
-        userInfo.token = loginRes.code;
-        userInfo.name = playerInfo.nickName;
-        userInfo.face = playerInfo.avatarUrl;
+    export function connectFailed() {
+        stopHeart();
+        NetFailed.getInstance().show();
+    }
+
+    export var heartTimeout: number;
+
+    export function stopHeart() {
+        if (heartTimeout) {
+            clearTimeout(heartTimeout);
+            heartTimeout = null;
+        }
+    }
+
+    export async function startHeart() {
+        if (heartTimeout) return;
+        if (game.leaveTime) {
+            let now = new Date().getTime();
+            if ((now - game.leaveTime) >= 300000) {
+                stopHeart();
+                return;
+            }
+        }
+
+        sendMessage("msg.C2GW_HeartBeat", msg.C2GW_HeartBeat.encode({}));
+        heartTimeout = setTimeout(() => {
+            // showTips("测试心跳", true);
+            heartTimeout = null;
+            startHeart();
+        }, 3000);
     }
 }
 
