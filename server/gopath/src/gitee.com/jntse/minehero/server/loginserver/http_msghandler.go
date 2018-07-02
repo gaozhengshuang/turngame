@@ -2,10 +2,11 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"gitee.com/jntse/gotoolkit/log"
-	"gitee.com/jntse/gotoolkit/util"
 	"encoding/json"
 	"github.com/go-redis/redis"
+	"gitee.com/jntse/gotoolkit/log"
+	"gitee.com/jntse/gotoolkit/util"
+	"gitee.com/jntse/minehero/server/def"
 )
 
 // 定义Http解析参数 字段名首字母必须大写
@@ -105,6 +106,8 @@ func DoGMCmd(cmd map[string]string) string {
 	switch value {
 	case "reload":
 		return DoReload(cmd)
+	case "wechatpay":
+		return DoWeChatPay(cmd)
 	}
 
 	return "错误的cmd类型"
@@ -112,6 +115,12 @@ func DoGMCmd(cmd map[string]string) string {
 
 func DoReload(cmd map[string]string) string {
 	Login().Reload()
+	return ""
+}
+
+func DoWeChatPay(cmd map[string]string) string {
+	openid := cmd["openid"]
+	def.HttpWechatCompanyPay(openid)
 	return ""
 }
 

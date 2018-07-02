@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"crypto/md5"
 	"encoding/json"
+	"encoding/xml"
 	"sort"
 	"fmt"
 	"time"
@@ -766,17 +767,17 @@ func HttpWechatCompanyPay(openid string) string {
 	//
 	mapset := make(map[string]interface{})
 	mapset["mch_appid"] = "wx50a65298622b1651"
-	mapset["mchid"] = ""
+	mapset["mchid"] = "10000098"
 	//mapset["device_info"] = ""
 	mapset["nonce_str"] = strconv.FormatInt(util.CURTIMEUS(), 10)
-	mapset["sign"] = ""
-	mapset["partner_trade_no"] = ""
+	mapset["partner_trade_no"] = strconv.FormatInt(util.CURTIMEUS(), 10)
 	mapset["openid"] = openid
 	mapset["check_name"] = "NO_CHECK"
 	//mapset["re_user_name"] = ""
-	mapset["amount"] = int64(0)
+	mapset["amount"] = int64(1)
 	mapset["desc"] = "巨枫用户奖励"
 	mapset["spbill_create_ip"] = "127.0.0.1"
+	mapset["sign"] = ""
 
 	//
 	sortKeys := make(sort.StringSlice,0)
@@ -813,12 +814,39 @@ func HttpWechatCompanyPay(openid string) string {
 	mapset["sign"] = sign
 
 	//
-	postbody, jsonerr := json.Marshal(mapset)
-	if jsonerr != nil {
-		log.Error("玩家[%s] json.Marshal err[%s]", openid, jsonerr)
-		return "json.Marshal Fail"
+	type OrderWechatPay struct {
+		XMLName   xml.Name 		`xml:"xml"`
+		Mch_appid 	string		`xml:"mch_appid"`
+		Mchid		string   	`xml:"mchid"`
+		Nonce_str	string   	`xml:"nonce_str"`
+		Partner_trade_no string	`xml:"partner_trade_no"`
+		Openid 		string		`xml:"openid"`
+		Check_name 	string		`xml:"check_name"`
+		Amount 		int64 		`xml:"amount"`
+		Desc 		string 		`xml:"desc"`
+		Spbill_create_ip string `xml:"spbill_create_ip"`
+		Sign		string		`xml:"sign"`
 	}
-	log.Trace("玩家[%s] postbody[%s]", openid, postbody)
+
+	order := &OrderWechatPay{}
+	order.Mch_appid = mapset["mch_appid"].(string)
+	order.Mchid = mapset["mchid"].(string)
+	order.Nonce_str = mapset["nonce_str"].(string)
+	order.Partner_trade_no = mapset["partner_trade_no"].(string)
+	order.Openid = mapset["openid"].(string)
+	order.Check_name = mapset["check_name"].(string)
+	order.Amount = mapset["amount"].(int64)
+	order.Desc = mapset["desc"].(string)
+	order.Spbill_create_ip = mapset["spbill_create_ip"].(string)
+	order.Sign = mapset["sign"].(string)
+
+	//
+	postbody, xmlerr := xml.MarshalIndent(order, "", "   ")
+	if xmlerr != nil {
+		log.Error("玩家[%s] xml.Marshal err[%s]", openid, xmlerr)
+		return "xml.Marshal Fail"
+	}
+	log.Trace("玩家[%s] postbody=\n%s", openid, util.BytesToString(postbody))
 
 	// post
 	url := "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers"
@@ -833,7 +861,7 @@ func HttpWechatCompanyPay(openid string) string {
 		log.Info("玩家[%s] 推送失败 errcode[%d] status[%s]", openid, resp.Code, resp.Status)
 		return "HttpPost ErrorCode"
 	}
-	log.Trace("玩家[%s] 推送完成 [%s]", openid, util.BytesToString(resp.Body))
+	log.Trace("玩家[%s] 推送完成 resp.body=\n%s", openid, util.BytesToString(resp.Body))
 	return ""
 }
 
