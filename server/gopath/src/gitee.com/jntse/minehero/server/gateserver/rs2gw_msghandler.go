@@ -49,6 +49,7 @@ func (this* RS2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_UploadGameUser{})
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
 	this.msgparser.RegistSendProto(msg.BT_ReqQuitGameRoom{})
+	this.msgparser.RegistSendProto(msg.BT_UpdateMoney{})
 }
 
 func on_RS2GW_ReqRegist(session network.IBaseNetSession, message interface{}) {
