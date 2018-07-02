@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="UserPanelSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*">
+	<e:Rect width="720" height="100%" fillColor="0xEEEEEE" fillAlpha="0" y="-1" strokeColor="0xFFFFFF"/>
+	<e:Group id="userGroup" width="720" height="1100" horizontalCenter="0" verticalCenter="0">
+		<e:Image verticalCenter="0" horizontalCenter="0" source="lucky/luckyBg"/>
+		<e:Image y="122" scaleX="1" scaleY="1" source="user/userTitle" horizontalCenter="0"/>
+		<game:IconButton id="closeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="620.5" y="157"/>
+		<e:Label id="labelName" text="未设置用户名" textColor="0x8C5EDA" bold="true" scaleX="1" scaleY="1" horizontalCenter="0" y="267" textAlign="center" size="36"/>
+		<e:Label id="labelId" text="ID:123456" textColor="0x8C5EDA" bold="true" scaleX="1" scaleY="1" horizontalCenter="0.5" y="315" textAlign="center" size="24"/>
+		<e:Label text="邀请码" bold="true" scaleX="1" scaleY="1" textAlign="center" size="28" verticalCenter="-115" horizontalCenter="-73" textColor="0x2fb2e0"/>
+		<e:Label id="labelInvitationcode" text="TJ123456" textColor="0x2FB2E0" bold="true" scaleX="1" scaleY="1" textAlign="center" size="28" verticalCenter="-115" left="362"/>
+	</e:Group>
+
+
+
+
+
+
+
+
+</e:Skin>

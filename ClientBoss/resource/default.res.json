@@ -948,6 +948,31 @@
 			"url":"assets/ui/win/xinjilu.png"
 		},
 		{
+			"name":"user/userButton",
+			"type":"image",
+			"url":"assets/user/userButton.png"
+		},
+		{
+			"name":"user/userOk",
+			"type":"image",
+			"url":"assets/user/userOk.png"
+		},
+		{
+			"name":"user/userTask",
+			"type":"image",
+			"url":"assets/user/userTask.png"
+		},
+		{
+			"name":"user/userTaskBom",
+			"type":"image",
+			"url":"assets/user/userTaskBom.png"
+		},
+		{
+			"name":"user/userTitle",
+			"type":"image",
+			"url":"assets/user/userTitle.png"
+		},
+		{
 			"name":"_gitignore",
 			"type":"gitignore",
 			"url":"bones/.gitignore"

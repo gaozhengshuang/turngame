@@ -65,7 +65,6 @@ module game {
             this._rankData.removeAll();
             this.rankNameLabel.text = "好友排行榜";
             this._currentType = gameConfig.RankType.friend;
-            this.openFriendRegion();
         }
 
         private updateSelf() {
@@ -79,7 +78,7 @@ module game {
                     rank: info.rank,
                     score: info.score,
                     name: info.name,
-                    openid: info.openid,
+                    userid: info.userid,
                     face: info.face
                 });
                 this.selfWorldGroup.addChild(this._selfRankItem);
@@ -124,49 +123,6 @@ module game {
                 RankPanel._instance = new RankPanel();
             }
             return RankPanel._instance;
-        }
-
-//---------------------------------------------------------WX---------------------------------------------------------------------------------
-        //微信子域
-        private bitmapdata: egret.BitmapData;
-        private bitmap: egret.Bitmap;
-        private rankingListMask: egret.Shape;
-        private openFriendRegion() {
-            this.bitmapdata = new egret.BitmapData(window["sharedCanvas"]);
-            this.bitmapdata.$deleteSource = false;
-            const texture = new egret.Texture();
-            texture._setBitmapData(this.bitmapdata);
-            this.bitmap = new egret.Bitmap(texture);
-            this.bitmap.width = this.friendGroup.stage.stageWidth;
-            this.bitmap.height = this.friendGroup.stage.stageHeight;
-            this.friendGroup.addChild(this.bitmap);
-
-            egret.startTick(this.tickFirendRegion, this);
-            wx.getOpenDataContext().postMessage({
-                isDisplay: true,
-                openid: DataManager.playerModel.userInfo.openid,
-                functionType: gameConfig.FunctionType.openRank
-            });
-        }
-
-        private closeFirendRegion() {
-            egret.stopTick(this.tickFirendRegion, this);
-            if (this.bitmap && this.bitmap.parent) {
-                this.bitmap.parent.removeChild(this.bitmap);
-                this.bitmap = null;
-            }
-
-            wx.getOpenDataContext().postMessage({
-                isDisplay: false,
-                openid: DataManager.playerModel.userInfo.openid,
-                functionType: gameConfig.FunctionType.openRank
-            });
-        }
-
-        private tickFirendRegion(timeStarmp: number) {
-            egret.WebGLUtils.deleteWebGLTexture(this.bitmapdata.webGLTexture);
-            this.bitmapdata.webGLTexture = null;
-            return false;
         }
     }
 }
