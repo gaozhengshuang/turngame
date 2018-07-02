@@ -33,7 +33,7 @@ func SendSms(phone string) (authcode string) {
 		"batchName":"巨枫娱乐测试",
 		"content":"%s:%d",
 		"msgType":"sms",
-		"items":[ { "to":"%d" } ]
+		"items":[ { "to":"%s" } ]
 	}`, tbl.Global.Sms.AuthCodeContent, randcode, phone)
 
 	// make properties

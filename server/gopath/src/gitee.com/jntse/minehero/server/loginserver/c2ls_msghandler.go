@@ -74,7 +74,7 @@ func on_C2L_ReqRegistAuthCode(session network.IBaseNetSession, message interface
 
 // 获取注册短信验证码
 func GetRegistAuthCode(phone string) string {
-	errcode, key := "", fmt.Sprintf("regist_phone_%s", phone)
+	errcode, keyauthcode := "", fmt.Sprintf("regist_phone_%s", phone)
 	switch {
 	default:
 		// 手机是否已经注册过
@@ -86,7 +86,7 @@ func GetRegistAuthCode(phone string) string {
 		}
 
 		// 检查redis是否获取过验证码(自动过期)
-		exist , _ := Redis().Exists(key).Result()
+		exist , _ := Redis().Exists(keyauthcode).Result()
 		if exist == 1 {
 			errcode = "稍后再试"
 			break
@@ -99,10 +99,10 @@ func GetRegistAuthCode(phone string) string {
 		}
 
 		// 缓存验证码
-		Redis().Set(key, authcode, time.Second * 10).Result()
+		Redis().Set(keyauthcode, authcode, time.Second * 10).Result()
 	}
 
-	if errcode != "" { log.Error("获取注册验证码失败 %s [%s]", key, errcode) }
+	if errcode != "" { log.Error("获取注册验证码失败 %s [%s]", keyauthcode, errcode) }
 	return errcode 
 }
 
