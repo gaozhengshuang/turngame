@@ -4,6 +4,7 @@ module game {
 
         public static init() {
             DataManager.playerModel = new PlayerModel();
+            DataManager.playerModel.RegisterEvent();
             table.TBirckInfo = table.TBirckInfo.sort((s1: table.ITBirckInfoDefine, s2: table.ITBirckInfoDefine) => {
                 let n1 = splitStringToNumberArray(s1.Info, "-");
                 let n2 = splitStringToNumberArray(s2.Info, "-");

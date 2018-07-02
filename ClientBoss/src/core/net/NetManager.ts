@@ -10,20 +10,20 @@ module game {
     export var _netPort: string = "7020";
 
     export interface IUpdateScore {
-        token: string;
         openid: string;
         face: string;
         name: string;
         score: number;
+        token: string;
     }
 
     export interface IGetRankList {
-        token: string;
         openid: string;
         face: string;
         name: string;
         start: number;
         stop: number;
+        token: string;
     }
 
     export interface IHttpRetInfo {
@@ -37,7 +37,7 @@ module game {
     }
 
     export interface IRankInfo {
-        openid: string;
+        userid: number|Long;
         face: string;
         name: string;
         score: number;
@@ -45,12 +45,12 @@ module game {
     }
 
     export interface IUserInfo {
-        openid: string;
+        userid: number|Long;
         face: string;
         name: string;
         score: number;
         rank: number;
-        token: string;
+        money: number;
     }
 
     export var $uploadScore = "/score/uploadScore";

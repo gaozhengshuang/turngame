@@ -12,8 +12,18 @@ module game {
         public penetration: number = 0;
         private _gold: number = 50;
         private _score: number = 0;
-        public userInfo: IUserInfo = {score: 0, face: "1", name: "", openid: "", rank: 0, token: ""};
+        public userInfo: IUserInfo = {score: 0, face: "1", name: "", userid: 0, rank: 0, money: 0};
         public bagList: Array<bagInfo> = [];
+
+        public RegisterEvent() {
+            NotificationCenter.addObserver(this, this.OnGW2C_RetUserInfo, "msg.GW2C_SendUserInfo");
+        }
+
+        private OnGW2C_RetUserInfo(data: msg.IGW2C_SendUserInfo) {
+            this.userInfo.money = data.base.money;
+            this.userInfo.name = data.entity.name;
+            this.userInfo.userid = data.entity.id;
+        }
 
         public getScore() {
             return this._score;
@@ -131,9 +141,9 @@ module game {
             let sendInfo: IUpdateScore = {
                 face: this.userInfo.face,
                 name: this.userInfo.name,
-                openid: this.userInfo.openid,
+                openid: this.userInfo.userid+"",
                 score: this._score,
-                token: this.userInfo.token
+                token: ""
             };
             let r: IHttpRetInfo = await SendHttp($uploadScore, sendInfo);
             if (r) {
@@ -142,14 +152,6 @@ module game {
                 let winPanel = WinScene.getInstance();
                 winPanel.setScore(isTop, this._score, r.msg.ranklist);
                 openPanel(PanelType.win);
-            }
-
-            if ($isWx) {
-                wx.getOpenDataContext().postMessage({
-                    openid: DataManager.playerModel.userInfo.openid,
-                    functionType: gameConfig.FunctionType.setUserRank,
-                    score: this._score
-                });
             }
         }
 
@@ -167,10 +169,10 @@ module game {
             let sendInfo: IGetRankList = {
                 face: this.userInfo.face,
                 name: this.userInfo.name,
-                openid: this.userInfo.openid,
+                openid: this.userInfo.userid+"",
                 start: 0,
                 stop: 1,
-                token: this.userInfo.token
+                token: ""
             };
             let r: IHttpRetInfo = await SendHttp($getRankList, sendInfo);
             if (r) {
@@ -183,10 +185,10 @@ module game {
             let sendInfo: IGetRankList = {
                 face: this.userInfo.face,
                 name: this.userInfo.name,
-                openid: this.userInfo.openid,
+                openid: this.userInfo.userid+"",
                 start: begin,
                 stop: begin + 50,
-                token: this.userInfo.token
+                token: ""
             };
             let r: IHttpRetInfo = await SendHttp($getRankList, sendInfo);
             if (r) {
@@ -196,7 +198,7 @@ module game {
         }
 
         private updateUserInfo(info: IRankInfo) {
-            this.userInfo.openid = info.openid;
+            this.userInfo.userid = info.userid;
             this.userInfo.name = info.name;
             this.userInfo.face = info.face;
             this.userInfo.rank = info.rank;

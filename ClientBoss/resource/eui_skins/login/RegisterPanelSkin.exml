@@ -4,7 +4,7 @@
 
 
 
-	<e:Group id="loginGroup" width="720" height="800" horizontalCenter="0" verticalCenter="130">
+	<e:Group id="registGroup" width="720" height="800" horizontalCenter="0" verticalCenter="130">
 		<e:Image verticalCenter="0" horizontalCenter="0" source="lucky/luckyBg"/>
 		<e:Image scaleX="1" scaleY="1" source="login/loginTitle" y="20.33" horizontalCenter="0"/>
 		<e:Label text="注册" touchEnabled="false" scaleX="1" scaleY="1" y="83.33" horizontalCenter="1" bold="true" size="42" strokeColor="0xfff1cc"/>

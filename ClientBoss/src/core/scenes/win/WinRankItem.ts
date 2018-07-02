@@ -10,7 +10,7 @@ module game {
         }
 
         public setInfo(info: IRankInfo) {
-            let isSelf = info.openid == DataManager.playerModel.userInfo.openid;
+            let isSelf = info.userid == DataManager.playerModel.userInfo.userid;
             this.avatar.setAvatar(info.face, isSelf);
             this.nameLabel.text = info.name;
             this.scoreLabel.text = info.score.toString();

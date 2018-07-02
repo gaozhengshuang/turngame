@@ -21,8 +21,10 @@ module game {
             
             if (egret.localStorage.getItem("userName")) {
                 this.nameLabel.text = egret.localStorage.getItem("userName");
+                this.passwordLabel.text = egret.localStorage.getItem("password");
             }
             this.passwordLabel.inputType = egret.TextFieldInputType.PASSWORD;
+            this.passwordLabel.displayAsPassword = true;
         }
 
         private async loginHandle() {
@@ -31,15 +33,15 @@ module game {
                 showTips("请输入您的用户名!", true);
                 return;
             }
-            let userInfo = DataManager.playerModel.userInfo;
-            userInfo.openid = realName;
-            userInfo.name = realName;
 
             loginUserInfo = {
                 account: this.nameLabel.text,
                 passwd: this.passwordLabel.text
             };
             LoginManager.getInstance().login();
+
+            egret.localStorage.setItem("userName", this.nameLabel.text);
+            egret.localStorage.setItem("password", this.passwordLabel.text);
         }
 
         private registerHandle() {
