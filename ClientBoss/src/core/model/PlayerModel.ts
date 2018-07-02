@@ -12,7 +12,7 @@ module game {
         public penetration: number = 0;
         private _gold: number = 50;
         private _score: number = 0;
-        public userInfo: IUserInfo = {score: 0, face: "1", name: "", userid: 0, rank: 0, money: 0};
+        public userInfo: IUserInfo = {face: "1", name: "", userid: 0, rank: 0, money: 0};
         public bagList: Array<bagInfo> = [];
 
         public RegisterEvent() {
@@ -204,7 +204,7 @@ module game {
             this.userInfo.name = info.name;
             this.userInfo.face = info.face;
             this.userInfo.rank = info.rank;
-            this.userInfo.score = info.score;
+            this.userInfo.money = info.score;
             this.postNotification(PlayerModel.TOP_UPDATE);
         }
 
@@ -214,6 +214,10 @@ module game {
             } else {
                 return false;
             }
+        }
+
+        public getUserId() {
+            return this.userInfo.userid;
         }
     }
 

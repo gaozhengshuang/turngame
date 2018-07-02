@@ -34,6 +34,7 @@ module game {
 
         private _nowSp: number = 0;
         private _spCool: number = 0;
+        private _moneySyn: number = 0;
         private _nowEvent: number = 0;
         private _goodBuff: ProInfo[];
         private _badBuff: ProInfo[];
@@ -293,6 +294,7 @@ module game {
             }
             this._blackHoleList = [];
             this._spCool = 0;
+            this._moneySyn = 0;
             this._topColumn = [];
             for (let i = 0; i < 20; i += 2) {
                 this._topColumn.push(i);
@@ -581,14 +583,28 @@ module game {
             }
 
             //临时代码
-            if (DataManager.playerModel.getScore() > 0 && DataManager.playerModel.getScore() <= 10000) {
-                this.curScoreTimeSp = 0;
-            } else if (DataManager.playerModel.getScore() > 10000 && DataManager.playerModel.getScore() <= 20000) {
-                this.curScoreTimeSp = 1;
-            } else if (DataManager.playerModel.getScore() > 20000) {
-                this.curScoreTimeSp = 2;
+            for (let i = 0; i < _eventCdByMoney.length; i++) {
+                if (i < _eventCdByMoney.length - 1) {
+                    if (DataManager.playerModel.getScore() > _eventCdByMoney[i] && DataManager.playerModel.getScore() <= _eventCdByMoney[i+1]) {
+                        this.curScoreTimeSp = i;
+                        break;
+                    }
+                } else {
+                    this.curScoreTimeSp = _eventCdByMoney.length - 1;
+                }
             }
             //临时代码
+
+            //每秒同步一次金币
+            this._moneySyn++;
+            if (this._moneySyn > 100) {
+                this._moneySyn = 0;
+                sendMessage("msg.BT_UpdateMoney", msg.BT_UpdateMoney.encode({
+                    roomid: BattleManager.getInstance().getRoomId(),
+                    userid: DataManager.playerModel.getUserId(),
+                    money: DataManager.playerModel.getScore()
+                }));
+            }
 
             if (this._doubleTime > 0) {
                 this._doubleTime--;
