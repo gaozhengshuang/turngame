@@ -247,6 +247,13 @@ func (this *RoomUser) AddMoney(gold uint32, reason string) {
 	log.Info("玩家[%d] 添加金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 }
 
+func (this *RoomUser) SetMoney(gold uint32, reason string) {
+	userbase := this.UserBase()
+	userbase.Money = pb.Uint32(gold)
+	log.Info("玩家[%d] 设置金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
+}
+
+
 // 元宝
 func (this *RoomUser) GetYuanbao() uint32 {
 	return this.UserBase().GetYuanbao()
@@ -355,7 +362,7 @@ func (this *RoomUser) SendBattleUser() {
 		Yuanbao:pb.Uint32(this.GetYuanbao()),
 		Level:pb.Uint32(this.Level()),
 		Freestep:pb.Int32(this.GetFreeStep()),
-		Gold:pb.Uint32(this.GetCoins()),
+		Gold:pb.Uint32(this.GetMoney()),
 	}
 	this.SendMsg(send)
 }

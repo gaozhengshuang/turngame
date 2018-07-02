@@ -212,7 +212,7 @@ func (this *RoomServer) Handler1mTick(now int64) {
 }
 
 func (this *RoomServer) Handler5sTick(now int64) {
-	this.TickCacheNotice(now)
+	//this.TickCacheNotice(now)
 }
 
 func (this *RoomServer) Handler100msTick(now int64) {

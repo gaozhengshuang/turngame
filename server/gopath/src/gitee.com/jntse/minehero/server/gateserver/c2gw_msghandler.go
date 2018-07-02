@@ -66,6 +66,7 @@ func (this* C2GWMsgHandler) Init() {
 	// 收战场消息
 	this.msgparser.RegistProtoMsg(msg.BT_ReqEnterRoom{}, on_BT_ReqEnterRoom)
 	this.msgparser.RegistProtoMsg(msg.BT_ReqQuitGameRoom{}, on_BT_ReqQuitGameRoom)
+	this.msgparser.RegistProtoMsg(msg.BT_UpdateMoney{}, on_BT_UpdateMoney)
 
 	// 发
 	this.msgparser.RegistSendProto(msg.GW2C_HeartBeat{})
@@ -94,6 +95,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_GameStart{})
 	this.msgparser.RegistSendProto(msg.BT_GameOver{})
 	this.msgparser.RegistSendProto(msg.BT_PickItem{})
+	this.msgparser.RegistSendProto(msg.BT_UpdateMoney{})
 }
 
 // 客户端心跳
@@ -180,6 +182,20 @@ func on_BT_ReqQuitGameRoom(session network.IBaseNetSession, message interface{})
 	tmsg := message.(*msg.BT_ReqQuitGameRoom)
 	//log.Info(reflect.TypeOf(tmsg).String())
 
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	// 离开游戏房间
+	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
+	user.SendRoomMsg(tmsg)
+}
+
+func on_BT_UpdateMoney(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.BT_UpdateMoney)
 	user := ExtractSessionUser(session)
 	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))

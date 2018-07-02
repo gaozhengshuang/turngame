@@ -152,24 +152,4 @@ func PickNumItemNotice(user *RoomUser, itemname string, num int64) {
 	);
 }
 
-//func GetDungeonsConfig(roomkind int32) (*table.TDungeonsDefine) {
-//	config, findid := tbl.DungeonsBase.TDungeonsById[roomkind]
-//	if findid == false {
-//		return nil
-//	}
-//	return config
-//}
-//
-//func GetTurntableConfig(roomkind int32) (*table.TTurntableNewDefine) {
-//	config := GetDungeonsConfig(roomkind)
-//	if config == nil {
-//		return nil
-//	}
-//
-//	tconfig, ok := tbl.TurntableBase.TTurntableNewById[uint32(config.Turntableid)]
-//	if ok == false {
-//		return nil
-//	}
-//	return tconfig
-//}
 
