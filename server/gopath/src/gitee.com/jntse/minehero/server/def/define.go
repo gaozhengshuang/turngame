@@ -37,7 +37,7 @@ func SendSms(phone string) (authcode string) {
 	}`, tbl.Global.Sms.AuthCodeContent, randcode, phone)
 
 	// make properties
-	Auth := tbl.Global.Sms.Account + "=" + util.MD5(tbl.Global.Sms.Passwd)	// md5加密
+	Auth := tbl.Global.Sms.Account + ":" + util.MD5(tbl.Global.Sms.Passwd)	// md5加密
 	AuthBase64:= base64.StdEncoding.EncodeToString([]byte(Auth))	// base64加密
 	Contentlength := strconv.FormatInt(int64(len(body)), 10)	// 这个参数可选
 	ContentType := "application/json"
@@ -71,7 +71,7 @@ func SendSms(phone string) (authcode string) {
 
 	log.Trace("TestPostSms body=%s", resp.Body)
 	log.Trace("TestPostSms RespObj=%#v", RespObj)
-	log.Info("手机:%d 生成验证码:%d", phone, randcode)
+	log.Info("手机:%s 生成验证码:%d", phone, randcode)
 	authcode = strconv.FormatInt(int64(randcode), 10)
 	return authcode
 }

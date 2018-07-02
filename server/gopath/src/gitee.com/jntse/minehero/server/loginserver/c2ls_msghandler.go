@@ -68,12 +68,15 @@ func newL2C_RetLogin(reason string, ip string, port int, key string) *msg.L2C_Re
 
 // 获取手机验证码
 func on_C2L_ReqRegistAuthCode(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.C2L_ReqRegistAuthCode)
-	errcode, phone := "", tmsg.GetPhone()
-	key := fmt.Sprintf("regist_phone_%s", phone)
+	//tmsg := message.(*msg.C2L_ReqRegistAuthCode)
+	//GetRegistAuthCode(tmsg.GetPhone())
+}
+
+// 获取注册短信验证码
+func GetRegistAuthCode(phone string) string {
+	errcode, key := "", fmt.Sprintf("regist_phone_%s", phone)
 	switch {
 	default:
-
 		// 手机是否已经注册过
 		accountkey := fmt.Sprintf("accounts_%s", phone)
 		accountexist, _ := Redis().Exists(accountkey).Result()
@@ -90,7 +93,7 @@ func on_C2L_ReqRegistAuthCode(session network.IBaseNetSession, message interface
 		}
 
 		authcode := def.SendSms(phone)
-		if authcode != "" {
+		if authcode == "" {
 			errcode = "发送验证码失败"
 			break
 		}
@@ -99,9 +102,8 @@ func on_C2L_ReqRegistAuthCode(session network.IBaseNetSession, message interface
 		Redis().Set(key, authcode, time.Second * 10).Result()
 	}
 
-	if errcode != "" {
-		log.Error("获取注册验证码失败 %s [%s]", key, errcode)
-	}
+	if errcode != "" { log.Error("获取注册验证码失败 %s [%s]", key, errcode) }
+	return errcode 
 }
 
 // 注册账户
