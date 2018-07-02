@@ -35,6 +35,10 @@ module game {
             userInfo.openid = realName;
             userInfo.name = realName;
 
+            loginUserInfo = {
+                account: this.nameLabel.text,
+                passwd: this.passwordLabel.text
+            };
             LoginManager.getInstance().login();
         }
 

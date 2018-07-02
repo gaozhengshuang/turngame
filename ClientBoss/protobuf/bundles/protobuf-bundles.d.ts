@@ -3501,14 +3501,8 @@ declare namespace msg {
         /** C2L_ReqLogin account */
         account?: (string|null);
 
-        /** C2L_ReqLogin nickname */
-        nickname?: (string|null);
-
-        /** C2L_ReqLogin face */
-        face?: (string|null);
-
-        /** C2L_ReqLogin token */
-        token?: (string|null);
+        /** C2L_ReqLogin passwd */
+        passwd?: (string|null);
     }
 
     /** Represents a C2L_ReqLogin. */
@@ -3523,14 +3517,8 @@ declare namespace msg {
         /** C2L_ReqLogin account. */
         public account: string;
 
-        /** C2L_ReqLogin nickname. */
-        public nickname: string;
-
-        /** C2L_ReqLogin face. */
-        public face: string;
-
-        /** C2L_ReqLogin token. */
-        public token: string;
+        /** C2L_ReqLogin passwd. */
+        public passwd: string;
 
         /**
          * Creates a new C2L_ReqLogin instance using the specified properties.
@@ -3911,6 +3899,9 @@ declare namespace msg {
 
     /** Properties of a L2C_RetRegistAccount. */
     interface IL2C_RetRegistAccount {
+
+        /** L2C_RetRegistAccount errcode */
+        errcode?: (string|null);
     }
 
     /** Represents a L2C_RetRegistAccount. */
@@ -3921,6 +3912,9 @@ declare namespace msg {
          * @param [properties] Properties to set
          */
         constructor(properties?: msg.IL2C_RetRegistAccount);
+
+        /** L2C_RetRegistAccount errcode. */
+        public errcode: string;
 
         /**
          * Creates a new L2C_RetRegistAccount instance using the specified properties.

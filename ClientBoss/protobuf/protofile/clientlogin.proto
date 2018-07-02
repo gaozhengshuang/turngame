@@ -5,12 +5,7 @@ import "define.proto";
 // 客户端请求登陆
 message C2L_ReqLogin {
     optional string account = 1;
-    optional string nickname = 2;
-    optional string face = 3;
-    optional string token = 4;
-    //optional string passwd  = 2;
-    //optional string token   = 3;
-    //optional string token = 1;
+    optional string passwd  = 2;
 }
 
 
@@ -39,8 +34,7 @@ message C2L_ReqRegistAccount {
 
 // 注册返回
 message L2C_RetRegistAccount {
-    //optional string account = 1;
-    //optional string errcode = 2;
+    optional string errcode = 1;
 }
 
 

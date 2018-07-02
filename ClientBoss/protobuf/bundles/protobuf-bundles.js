@@ -8626,9 +8626,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2L_ReqLogin
          * @property {string|null} [account] C2L_ReqLogin account
-         * @property {string|null} [nickname] C2L_ReqLogin nickname
-         * @property {string|null} [face] C2L_ReqLogin face
-         * @property {string|null} [token] C2L_ReqLogin token
+         * @property {string|null} [passwd] C2L_ReqLogin passwd
          */
 
         /**
@@ -8655,28 +8653,12 @@ $root.msg = (function() {
         C2L_ReqLogin.prototype.account = "";
 
         /**
-         * C2L_ReqLogin nickname.
-         * @member {string} nickname
+         * C2L_ReqLogin passwd.
+         * @member {string} passwd
          * @memberof msg.C2L_ReqLogin
          * @instance
          */
-        C2L_ReqLogin.prototype.nickname = "";
-
-        /**
-         * C2L_ReqLogin face.
-         * @member {string} face
-         * @memberof msg.C2L_ReqLogin
-         * @instance
-         */
-        C2L_ReqLogin.prototype.face = "";
-
-        /**
-         * C2L_ReqLogin token.
-         * @member {string} token
-         * @memberof msg.C2L_ReqLogin
-         * @instance
-         */
-        C2L_ReqLogin.prototype.token = "";
+        C2L_ReqLogin.prototype.passwd = "";
 
         /**
          * Creates a new C2L_ReqLogin instance using the specified properties.
@@ -8704,12 +8686,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.account != null && message.hasOwnProperty("account"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.account);
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.nickname);
-            if (message.face != null && message.hasOwnProperty("face"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.face);
-            if (message.token != null && message.hasOwnProperty("token"))
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.token);
+            if (message.passwd != null && message.hasOwnProperty("passwd"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.passwd);
             return writer;
         };
 
@@ -8748,13 +8726,7 @@ $root.msg = (function() {
                     message.account = reader.string();
                     break;
                 case 2:
-                    message.nickname = reader.string();
-                    break;
-                case 3:
-                    message.face = reader.string();
-                    break;
-                case 4:
-                    message.token = reader.string();
+                    message.passwd = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -8794,15 +8766,9 @@ $root.msg = (function() {
             if (message.account != null && message.hasOwnProperty("account"))
                 if (!$util.isString(message.account))
                     return "account: string expected";
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                if (!$util.isString(message.nickname))
-                    return "nickname: string expected";
-            if (message.face != null && message.hasOwnProperty("face"))
-                if (!$util.isString(message.face))
-                    return "face: string expected";
-            if (message.token != null && message.hasOwnProperty("token"))
-                if (!$util.isString(message.token))
-                    return "token: string expected";
+            if (message.passwd != null && message.hasOwnProperty("passwd"))
+                if (!$util.isString(message.passwd))
+                    return "passwd: string expected";
             return null;
         };
 
@@ -8820,12 +8786,8 @@ $root.msg = (function() {
             var message = new $root.msg.C2L_ReqLogin();
             if (object.account != null)
                 message.account = String(object.account);
-            if (object.nickname != null)
-                message.nickname = String(object.nickname);
-            if (object.face != null)
-                message.face = String(object.face);
-            if (object.token != null)
-                message.token = String(object.token);
+            if (object.passwd != null)
+                message.passwd = String(object.passwd);
             return message;
         };
 
@@ -8844,18 +8806,12 @@ $root.msg = (function() {
             var object = {};
             if (options.defaults) {
                 object.account = "";
-                object.nickname = "";
-                object.face = "";
-                object.token = "";
+                object.passwd = "";
             }
             if (message.account != null && message.hasOwnProperty("account"))
                 object.account = message.account;
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                object.nickname = message.nickname;
-            if (message.face != null && message.hasOwnProperty("face"))
-                object.face = message.face;
-            if (message.token != null && message.hasOwnProperty("token"))
-                object.token = message.token;
+            if (message.passwd != null && message.hasOwnProperty("passwd"))
+                object.passwd = message.passwd;
             return object;
         };
 
@@ -9579,6 +9535,7 @@ $root.msg = (function() {
          * Properties of a L2C_RetRegistAccount.
          * @memberof msg
          * @interface IL2C_RetRegistAccount
+         * @property {string|null} [errcode] L2C_RetRegistAccount errcode
          */
 
         /**
@@ -9595,6 +9552,14 @@ $root.msg = (function() {
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
+
+        /**
+         * L2C_RetRegistAccount errcode.
+         * @member {string} errcode
+         * @memberof msg.L2C_RetRegistAccount
+         * @instance
+         */
+        L2C_RetRegistAccount.prototype.errcode = "";
 
         /**
          * Creates a new L2C_RetRegistAccount instance using the specified properties.
@@ -9620,6 +9585,8 @@ $root.msg = (function() {
         L2C_RetRegistAccount.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.errcode != null && message.hasOwnProperty("errcode"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.errcode);
             return writer;
         };
 
@@ -9654,6 +9621,9 @@ $root.msg = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
+                case 1:
+                    message.errcode = reader.string();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -9689,6 +9659,9 @@ $root.msg = (function() {
         L2C_RetRegistAccount.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.errcode != null && message.hasOwnProperty("errcode"))
+                if (!$util.isString(message.errcode))
+                    return "errcode: string expected";
             return null;
         };
 
@@ -9703,7 +9676,10 @@ $root.msg = (function() {
         L2C_RetRegistAccount.fromObject = function fromObject(object) {
             if (object instanceof $root.msg.L2C_RetRegistAccount)
                 return object;
-            return new $root.msg.L2C_RetRegistAccount();
+            var message = new $root.msg.L2C_RetRegistAccount();
+            if (object.errcode != null)
+                message.errcode = String(object.errcode);
+            return message;
         };
 
         /**
@@ -9715,8 +9691,15 @@ $root.msg = (function() {
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        L2C_RetRegistAccount.toObject = function toObject() {
-            return {};
+        L2C_RetRegistAccount.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.errcode = "";
+            if (message.errcode != null && message.hasOwnProperty("errcode"))
+                object.errcode = message.errcode;
+            return object;
         };
 
         /**
