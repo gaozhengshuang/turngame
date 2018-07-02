@@ -25,6 +25,10 @@ module game {
             this.userInfo.userid = data.entity.id;
         }
 
+        public setScore(count: number) {
+            this._score = count;
+        }
+
         public getScore() {
             return this._score;
         }
@@ -131,8 +135,6 @@ module game {
         }
 
         public battleStart() {
-            this._score = 1000;
-            this._gold = 100;
             this.penetration = 0;
         }
 
@@ -213,15 +215,6 @@ module game {
                 return false;
             }
         }
-    }
-
-    export interface WxUserInfo {
-        nickName: string;
-        avatarUrl: string;
-        gender: number;
-        province: string;
-        city: string;
-        country: string;
     }
 
     export interface bagInfo {

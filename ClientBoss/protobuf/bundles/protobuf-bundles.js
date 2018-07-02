@@ -1513,7 +1513,6 @@ $root.msg = (function() {
          * @property {number|Long|null} [roomid] BT_GameInit roomid
          * @property {number|Long|null} [ownerid] BT_GameInit ownerid
          * @property {number|null} [gamekind] BT_GameInit gamekind
-         * @property {Array.<msg.IGridItem>|null} [listitem] BT_GameInit listitem
          */
 
         /**
@@ -1525,7 +1524,6 @@ $root.msg = (function() {
          * @param {msg.IBT_GameInit=} [properties] Properties to set
          */
         function BT_GameInit(properties) {
-            this.listitem = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1557,14 +1555,6 @@ $root.msg = (function() {
         BT_GameInit.prototype.gamekind = 0;
 
         /**
-         * BT_GameInit listitem.
-         * @member {Array.<msg.IGridItem>} listitem
-         * @memberof msg.BT_GameInit
-         * @instance
-         */
-        BT_GameInit.prototype.listitem = $util.emptyArray;
-
-        /**
          * Creates a new BT_GameInit instance using the specified properties.
          * @function create
          * @memberof msg.BT_GameInit
@@ -1594,9 +1584,6 @@ $root.msg = (function() {
                 writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 writer.uint32(/* id 3, wireType 0 =*/24).int32(message.gamekind);
-            if (message.listitem != null && message.listitem.length)
-                for (var i = 0; i < message.listitem.length; ++i)
-                    $root.msg.GridItem.encode(message.listitem[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             return writer;
         };
 
@@ -1639,11 +1626,6 @@ $root.msg = (function() {
                     break;
                 case 3:
                     message.gamekind = reader.int32();
-                    break;
-                case 4:
-                    if (!(message.listitem && message.listitem.length))
-                        message.listitem = [];
-                    message.listitem.push($root.msg.GridItem.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1689,15 +1671,6 @@ $root.msg = (function() {
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 if (!$util.isInteger(message.gamekind))
                     return "gamekind: integer expected";
-            if (message.listitem != null && message.hasOwnProperty("listitem")) {
-                if (!Array.isArray(message.listitem))
-                    return "listitem: array expected";
-                for (var i = 0; i < message.listitem.length; ++i) {
-                    var error = $root.msg.GridItem.verify(message.listitem[i]);
-                    if (error)
-                        return "listitem." + error;
-                }
-            }
             return null;
         };
 
@@ -1733,16 +1706,6 @@ $root.msg = (function() {
                     message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
             if (object.gamekind != null)
                 message.gamekind = object.gamekind | 0;
-            if (object.listitem) {
-                if (!Array.isArray(object.listitem))
-                    throw TypeError(".msg.BT_GameInit.listitem: array expected");
-                message.listitem = [];
-                for (var i = 0; i < object.listitem.length; ++i) {
-                    if (typeof object.listitem[i] !== "object")
-                        throw TypeError(".msg.BT_GameInit.listitem: object expected");
-                    message.listitem[i] = $root.msg.GridItem.fromObject(object.listitem[i]);
-                }
-            }
             return message;
         };
 
@@ -1759,8 +1722,6 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.listitem = [];
             if (options.defaults) {
                 if ($util.Long) {
                     var long = new $util.Long(0, 0, false);
@@ -1786,11 +1747,6 @@ $root.msg = (function() {
                     object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 object.gamekind = message.gamekind;
-            if (message.listitem && message.listitem.length) {
-                object.listitem = [];
-                for (var j = 0; j < message.listitem.length; ++j)
-                    object.listitem[j] = $root.msg.GridItem.toObject(message.listitem[j], options);
-            }
             return object;
         };
 
@@ -2844,1040 +2800,6 @@ $root.msg = (function() {
         };
 
         return BT_GameOver;
-    })();
-
-    msg.BT_JumpPreCheck = (function() {
-
-        /**
-         * Properties of a BT_JumpPreCheck.
-         * @memberof msg
-         * @interface IBT_JumpPreCheck
-         * @property {number|Long|null} [roomid] BT_JumpPreCheck roomid
-         * @property {number|Long|null} [userid] BT_JumpPreCheck userid
-         * @property {string|null} [token] BT_JumpPreCheck token
-         */
-
-        /**
-         * Constructs a new BT_JumpPreCheck.
-         * @memberof msg
-         * @classdesc Represents a BT_JumpPreCheck.
-         * @implements IBT_JumpPreCheck
-         * @constructor
-         * @param {msg.IBT_JumpPreCheck=} [properties] Properties to set
-         */
-        function BT_JumpPreCheck(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_JumpPreCheck roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_JumpPreCheck
-         * @instance
-         */
-        BT_JumpPreCheck.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_JumpPreCheck userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_JumpPreCheck
-         * @instance
-         */
-        BT_JumpPreCheck.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_JumpPreCheck token.
-         * @member {string} token
-         * @memberof msg.BT_JumpPreCheck
-         * @instance
-         */
-        BT_JumpPreCheck.prototype.token = "";
-
-        /**
-         * Creates a new BT_JumpPreCheck instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_JumpPreCheck
-         * @static
-         * @param {msg.IBT_JumpPreCheck=} [properties] Properties to set
-         * @returns {msg.BT_JumpPreCheck} BT_JumpPreCheck instance
-         */
-        BT_JumpPreCheck.create = function create(properties) {
-            return new BT_JumpPreCheck(properties);
-        };
-
-        /**
-         * Encodes the specified BT_JumpPreCheck message. Does not implicitly {@link msg.BT_JumpPreCheck.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_JumpPreCheck
-         * @static
-         * @param {msg.IBT_JumpPreCheck} message BT_JumpPreCheck message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_JumpPreCheck.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.userid);
-            if (message.token != null && message.hasOwnProperty("token"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.token);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_JumpPreCheck message, length delimited. Does not implicitly {@link msg.BT_JumpPreCheck.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_JumpPreCheck
-         * @static
-         * @param {msg.IBT_JumpPreCheck} message BT_JumpPreCheck message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_JumpPreCheck.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_JumpPreCheck message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_JumpPreCheck
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_JumpPreCheck} BT_JumpPreCheck
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_JumpPreCheck.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_JumpPreCheck();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                case 2:
-                    message.userid = reader.uint64();
-                    break;
-                case 3:
-                    message.token = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_JumpPreCheck message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_JumpPreCheck
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_JumpPreCheck} BT_JumpPreCheck
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_JumpPreCheck.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_JumpPreCheck message.
-         * @function verify
-         * @memberof msg.BT_JumpPreCheck
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_JumpPreCheck.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.token != null && message.hasOwnProperty("token"))
-                if (!$util.isString(message.token))
-                    return "token: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_JumpPreCheck message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_JumpPreCheck
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_JumpPreCheck} BT_JumpPreCheck
-         */
-        BT_JumpPreCheck.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_JumpPreCheck)
-                return object;
-            var message = new $root.msg.BT_JumpPreCheck();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.token != null)
-                message.token = String(object.token);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_JumpPreCheck message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_JumpPreCheck
-         * @static
-         * @param {msg.BT_JumpPreCheck} message BT_JumpPreCheck
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_JumpPreCheck.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                object.token = "";
-            }
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.token != null && message.hasOwnProperty("token"))
-                object.token = message.token;
-            return object;
-        };
-
-        /**
-         * Converts this BT_JumpPreCheck to JSON.
-         * @function toJSON
-         * @memberof msg.BT_JumpPreCheck
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_JumpPreCheck.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_JumpPreCheck;
-    })();
-
-    msg.BT_RetJumpPreCheck = (function() {
-
-        /**
-         * Properties of a BT_RetJumpPreCheck.
-         * @memberof msg
-         * @interface IBT_RetJumpPreCheck
-         * @property {number|Long|null} [userid] BT_RetJumpPreCheck userid
-         * @property {string|null} [errcode] BT_RetJumpPreCheck errcode
-         * @property {number|null} [dice] BT_RetJumpPreCheck dice
-         */
-
-        /**
-         * Constructs a new BT_RetJumpPreCheck.
-         * @memberof msg
-         * @classdesc Represents a BT_RetJumpPreCheck.
-         * @implements IBT_RetJumpPreCheck
-         * @constructor
-         * @param {msg.IBT_RetJumpPreCheck=} [properties] Properties to set
-         */
-        function BT_RetJumpPreCheck(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_RetJumpPreCheck userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_RetJumpPreCheck
-         * @instance
-         */
-        BT_RetJumpPreCheck.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_RetJumpPreCheck errcode.
-         * @member {string} errcode
-         * @memberof msg.BT_RetJumpPreCheck
-         * @instance
-         */
-        BT_RetJumpPreCheck.prototype.errcode = "";
-
-        /**
-         * BT_RetJumpPreCheck dice.
-         * @member {number} dice
-         * @memberof msg.BT_RetJumpPreCheck
-         * @instance
-         */
-        BT_RetJumpPreCheck.prototype.dice = 0;
-
-        /**
-         * Creates a new BT_RetJumpPreCheck instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_RetJumpPreCheck
-         * @static
-         * @param {msg.IBT_RetJumpPreCheck=} [properties] Properties to set
-         * @returns {msg.BT_RetJumpPreCheck} BT_RetJumpPreCheck instance
-         */
-        BT_RetJumpPreCheck.create = function create(properties) {
-            return new BT_RetJumpPreCheck(properties);
-        };
-
-        /**
-         * Encodes the specified BT_RetJumpPreCheck message. Does not implicitly {@link msg.BT_RetJumpPreCheck.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_RetJumpPreCheck
-         * @static
-         * @param {msg.IBT_RetJumpPreCheck} message BT_RetJumpPreCheck message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_RetJumpPreCheck.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
-            if (message.errcode != null && message.hasOwnProperty("errcode"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.errcode);
-            if (message.dice != null && message.hasOwnProperty("dice"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.dice);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_RetJumpPreCheck message, length delimited. Does not implicitly {@link msg.BT_RetJumpPreCheck.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_RetJumpPreCheck
-         * @static
-         * @param {msg.IBT_RetJumpPreCheck} message BT_RetJumpPreCheck message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_RetJumpPreCheck.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_RetJumpPreCheck message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_RetJumpPreCheck
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_RetJumpPreCheck} BT_RetJumpPreCheck
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_RetJumpPreCheck.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_RetJumpPreCheck();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.userid = reader.uint64();
-                    break;
-                case 2:
-                    message.errcode = reader.string();
-                    break;
-                case 3:
-                    message.dice = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_RetJumpPreCheck message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_RetJumpPreCheck
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_RetJumpPreCheck} BT_RetJumpPreCheck
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_RetJumpPreCheck.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_RetJumpPreCheck message.
-         * @function verify
-         * @memberof msg.BT_RetJumpPreCheck
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_RetJumpPreCheck.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.errcode != null && message.hasOwnProperty("errcode"))
-                if (!$util.isString(message.errcode))
-                    return "errcode: string expected";
-            if (message.dice != null && message.hasOwnProperty("dice"))
-                if (!$util.isInteger(message.dice))
-                    return "dice: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_RetJumpPreCheck message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_RetJumpPreCheck
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_RetJumpPreCheck} BT_RetJumpPreCheck
-         */
-        BT_RetJumpPreCheck.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_RetJumpPreCheck)
-                return object;
-            var message = new $root.msg.BT_RetJumpPreCheck();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.errcode != null)
-                message.errcode = String(object.errcode);
-            if (object.dice != null)
-                message.dice = object.dice | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_RetJumpPreCheck message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_RetJumpPreCheck
-         * @static
-         * @param {msg.BT_RetJumpPreCheck} message BT_RetJumpPreCheck
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_RetJumpPreCheck.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                object.errcode = "";
-                object.dice = 0;
-            }
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.errcode != null && message.hasOwnProperty("errcode"))
-                object.errcode = message.errcode;
-            if (message.dice != null && message.hasOwnProperty("dice"))
-                object.dice = message.dice;
-            return object;
-        };
-
-        /**
-         * Converts this BT_RetJumpPreCheck to JSON.
-         * @function toJSON
-         * @memberof msg.BT_RetJumpPreCheck
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_RetJumpPreCheck.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_RetJumpPreCheck;
-    })();
-
-    msg.BT_ReqJumpStep = (function() {
-
-        /**
-         * Properties of a BT_ReqJumpStep.
-         * @memberof msg
-         * @interface IBT_ReqJumpStep
-         * @property {number|Long|null} [roomid] BT_ReqJumpStep roomid
-         * @property {number|Long|null} [userid] BT_ReqJumpStep userid
-         * @property {number|null} [stepnum] BT_ReqJumpStep stepnum
-         */
-
-        /**
-         * Constructs a new BT_ReqJumpStep.
-         * @memberof msg
-         * @classdesc Represents a BT_ReqJumpStep.
-         * @implements IBT_ReqJumpStep
-         * @constructor
-         * @param {msg.IBT_ReqJumpStep=} [properties] Properties to set
-         */
-        function BT_ReqJumpStep(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_ReqJumpStep roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_ReqJumpStep
-         * @instance
-         */
-        BT_ReqJumpStep.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_ReqJumpStep userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_ReqJumpStep
-         * @instance
-         */
-        BT_ReqJumpStep.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_ReqJumpStep stepnum.
-         * @member {number} stepnum
-         * @memberof msg.BT_ReqJumpStep
-         * @instance
-         */
-        BT_ReqJumpStep.prototype.stepnum = 0;
-
-        /**
-         * Creates a new BT_ReqJumpStep instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_ReqJumpStep
-         * @static
-         * @param {msg.IBT_ReqJumpStep=} [properties] Properties to set
-         * @returns {msg.BT_ReqJumpStep} BT_ReqJumpStep instance
-         */
-        BT_ReqJumpStep.create = function create(properties) {
-            return new BT_ReqJumpStep(properties);
-        };
-
-        /**
-         * Encodes the specified BT_ReqJumpStep message. Does not implicitly {@link msg.BT_ReqJumpStep.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_ReqJumpStep
-         * @static
-         * @param {msg.IBT_ReqJumpStep} message BT_ReqJumpStep message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_ReqJumpStep.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.userid);
-            if (message.stepnum != null && message.hasOwnProperty("stepnum"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.stepnum);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_ReqJumpStep message, length delimited. Does not implicitly {@link msg.BT_ReqJumpStep.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_ReqJumpStep
-         * @static
-         * @param {msg.IBT_ReqJumpStep} message BT_ReqJumpStep message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_ReqJumpStep.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_ReqJumpStep message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_ReqJumpStep
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_ReqJumpStep} BT_ReqJumpStep
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_ReqJumpStep.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_ReqJumpStep();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                case 2:
-                    message.userid = reader.uint64();
-                    break;
-                case 3:
-                    message.stepnum = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_ReqJumpStep message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_ReqJumpStep
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_ReqJumpStep} BT_ReqJumpStep
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_ReqJumpStep.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_ReqJumpStep message.
-         * @function verify
-         * @memberof msg.BT_ReqJumpStep
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_ReqJumpStep.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.stepnum != null && message.hasOwnProperty("stepnum"))
-                if (!$util.isInteger(message.stepnum))
-                    return "stepnum: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_ReqJumpStep message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_ReqJumpStep
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_ReqJumpStep} BT_ReqJumpStep
-         */
-        BT_ReqJumpStep.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_ReqJumpStep)
-                return object;
-            var message = new $root.msg.BT_ReqJumpStep();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.stepnum != null)
-                message.stepnum = object.stepnum | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_ReqJumpStep message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_ReqJumpStep
-         * @static
-         * @param {msg.BT_ReqJumpStep} message BT_ReqJumpStep
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_ReqJumpStep.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                object.stepnum = 0;
-            }
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.stepnum != null && message.hasOwnProperty("stepnum"))
-                object.stepnum = message.stepnum;
-            return object;
-        };
-
-        /**
-         * Converts this BT_ReqJumpStep to JSON.
-         * @function toJSON
-         * @memberof msg.BT_ReqJumpStep
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_ReqJumpStep.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_ReqJumpStep;
-    })();
-
-    msg.BT_RetJumpStep = (function() {
-
-        /**
-         * Properties of a BT_RetJumpStep.
-         * @memberof msg
-         * @interface IBT_RetJumpStep
-         * @property {number|Long|null} [userid] BT_RetJumpStep userid
-         * @property {number|null} [stepindex] BT_RetJumpStep stepindex
-         * @property {Array.<number>|null} [fakelist] BT_RetJumpStep fakelist
-         */
-
-        /**
-         * Constructs a new BT_RetJumpStep.
-         * @memberof msg
-         * @classdesc Represents a BT_RetJumpStep.
-         * @implements IBT_RetJumpStep
-         * @constructor
-         * @param {msg.IBT_RetJumpStep=} [properties] Properties to set
-         */
-        function BT_RetJumpStep(properties) {
-            this.fakelist = [];
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_RetJumpStep userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_RetJumpStep
-         * @instance
-         */
-        BT_RetJumpStep.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_RetJumpStep stepindex.
-         * @member {number} stepindex
-         * @memberof msg.BT_RetJumpStep
-         * @instance
-         */
-        BT_RetJumpStep.prototype.stepindex = 0;
-
-        /**
-         * BT_RetJumpStep fakelist.
-         * @member {Array.<number>} fakelist
-         * @memberof msg.BT_RetJumpStep
-         * @instance
-         */
-        BT_RetJumpStep.prototype.fakelist = $util.emptyArray;
-
-        /**
-         * Creates a new BT_RetJumpStep instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_RetJumpStep
-         * @static
-         * @param {msg.IBT_RetJumpStep=} [properties] Properties to set
-         * @returns {msg.BT_RetJumpStep} BT_RetJumpStep instance
-         */
-        BT_RetJumpStep.create = function create(properties) {
-            return new BT_RetJumpStep(properties);
-        };
-
-        /**
-         * Encodes the specified BT_RetJumpStep message. Does not implicitly {@link msg.BT_RetJumpStep.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_RetJumpStep
-         * @static
-         * @param {msg.IBT_RetJumpStep} message BT_RetJumpStep message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_RetJumpStep.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
-            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.stepindex);
-            if (message.fakelist != null && message.fakelist.length)
-                for (var i = 0; i < message.fakelist.length; ++i)
-                    writer.uint32(/* id 3, wireType 0 =*/24).int32(message.fakelist[i]);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_RetJumpStep message, length delimited. Does not implicitly {@link msg.BT_RetJumpStep.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_RetJumpStep
-         * @static
-         * @param {msg.IBT_RetJumpStep} message BT_RetJumpStep message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_RetJumpStep.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_RetJumpStep message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_RetJumpStep
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_RetJumpStep} BT_RetJumpStep
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_RetJumpStep.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_RetJumpStep();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.userid = reader.uint64();
-                    break;
-                case 2:
-                    message.stepindex = reader.int32();
-                    break;
-                case 3:
-                    if (!(message.fakelist && message.fakelist.length))
-                        message.fakelist = [];
-                    if ((tag & 7) === 2) {
-                        var end2 = reader.uint32() + reader.pos;
-                        while (reader.pos < end2)
-                            message.fakelist.push(reader.int32());
-                    } else
-                        message.fakelist.push(reader.int32());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_RetJumpStep message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_RetJumpStep
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_RetJumpStep} BT_RetJumpStep
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_RetJumpStep.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_RetJumpStep message.
-         * @function verify
-         * @memberof msg.BT_RetJumpStep
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_RetJumpStep.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
-                if (!$util.isInteger(message.stepindex))
-                    return "stepindex: integer expected";
-            if (message.fakelist != null && message.hasOwnProperty("fakelist")) {
-                if (!Array.isArray(message.fakelist))
-                    return "fakelist: array expected";
-                for (var i = 0; i < message.fakelist.length; ++i)
-                    if (!$util.isInteger(message.fakelist[i]))
-                        return "fakelist: integer[] expected";
-            }
-            return null;
-        };
-
-        /**
-         * Creates a BT_RetJumpStep message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_RetJumpStep
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_RetJumpStep} BT_RetJumpStep
-         */
-        BT_RetJumpStep.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_RetJumpStep)
-                return object;
-            var message = new $root.msg.BT_RetJumpStep();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.stepindex != null)
-                message.stepindex = object.stepindex | 0;
-            if (object.fakelist) {
-                if (!Array.isArray(object.fakelist))
-                    throw TypeError(".msg.BT_RetJumpStep.fakelist: array expected");
-                message.fakelist = [];
-                for (var i = 0; i < object.fakelist.length; ++i)
-                    message.fakelist[i] = object.fakelist[i] | 0;
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_RetJumpStep message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_RetJumpStep
-         * @static
-         * @param {msg.BT_RetJumpStep} message BT_RetJumpStep
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_RetJumpStep.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.arrays || options.defaults)
-                object.fakelist = [];
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                object.stepindex = 0;
-            }
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
-                object.stepindex = message.stepindex;
-            if (message.fakelist && message.fakelist.length) {
-                object.fakelist = [];
-                for (var j = 0; j < message.fakelist.length; ++j)
-                    object.fakelist[j] = message.fakelist[j];
-            }
-            return object;
-        };
-
-        /**
-         * Converts this BT_RetJumpStep to JSON.
-         * @function toJSON
-         * @memberof msg.BT_RetJumpStep
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_RetJumpStep.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_RetJumpStep;
     })();
 
     msg.BT_ReqQuitGameRoom = (function() {
@@ -7845,7 +6767,6 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2GW_ReqStartGame
          * @property {number|null} [gamekind] C2GW_ReqStartGame gamekind
-         * @property {number|null} [gridnum] C2GW_ReqStartGame gridnum
          */
 
         /**
@@ -7870,14 +6791,6 @@ $root.msg = (function() {
          * @instance
          */
         C2GW_ReqStartGame.prototype.gamekind = 0;
-
-        /**
-         * C2GW_ReqStartGame gridnum.
-         * @member {number} gridnum
-         * @memberof msg.C2GW_ReqStartGame
-         * @instance
-         */
-        C2GW_ReqStartGame.prototype.gridnum = 0;
 
         /**
          * Creates a new C2GW_ReqStartGame instance using the specified properties.
@@ -7905,8 +6818,6 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gamekind);
-            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.gridnum);
             return writer;
         };
 
@@ -7943,9 +6854,6 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.gamekind = reader.int32();
-                    break;
-                case 2:
-                    message.gridnum = reader.int32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -7985,9 +6893,6 @@ $root.msg = (function() {
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 if (!$util.isInteger(message.gamekind))
                     return "gamekind: integer expected";
-            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
-                if (!$util.isInteger(message.gridnum))
-                    return "gridnum: integer expected";
             return null;
         };
 
@@ -8005,8 +6910,6 @@ $root.msg = (function() {
             var message = new $root.msg.C2GW_ReqStartGame();
             if (object.gamekind != null)
                 message.gamekind = object.gamekind | 0;
-            if (object.gridnum != null)
-                message.gridnum = object.gridnum | 0;
             return message;
         };
 
@@ -8023,14 +6926,10 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults) {
+            if (options.defaults)
                 object.gamekind = 0;
-                object.gridnum = 0;
-            }
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 object.gamekind = message.gamekind;
-            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
-                object.gridnum = message.gridnum;
             return object;
         };
 
@@ -12386,7 +11285,6 @@ $root.msg = (function() {
          * @interface IGW2MS_ReqCreateRoom
          * @property {number|Long|null} [userid] GW2MS_ReqCreateRoom userid
          * @property {number|null} [gamekind] GW2MS_ReqCreateRoom gamekind
-         * @property {number|null} [gridnum] GW2MS_ReqCreateRoom gridnum
          */
 
         /**
@@ -12421,14 +11319,6 @@ $root.msg = (function() {
         GW2MS_ReqCreateRoom.prototype.gamekind = 0;
 
         /**
-         * GW2MS_ReqCreateRoom gridnum.
-         * @member {number} gridnum
-         * @memberof msg.GW2MS_ReqCreateRoom
-         * @instance
-         */
-        GW2MS_ReqCreateRoom.prototype.gridnum = 0;
-
-        /**
          * Creates a new GW2MS_ReqCreateRoom instance using the specified properties.
          * @function create
          * @memberof msg.GW2MS_ReqCreateRoom
@@ -12456,8 +11346,6 @@ $root.msg = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 writer.uint32(/* id 2, wireType 0 =*/16).int32(message.gamekind);
-            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.gridnum);
             return writer;
         };
 
@@ -12497,9 +11385,6 @@ $root.msg = (function() {
                     break;
                 case 2:
                     message.gamekind = reader.int32();
-                    break;
-                case 3:
-                    message.gridnum = reader.int32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -12542,9 +11427,6 @@ $root.msg = (function() {
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 if (!$util.isInteger(message.gamekind))
                     return "gamekind: integer expected";
-            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
-                if (!$util.isInteger(message.gridnum))
-                    return "gridnum: integer expected";
             return null;
         };
 
@@ -12571,8 +11453,6 @@ $root.msg = (function() {
                     message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
             if (object.gamekind != null)
                 message.gamekind = object.gamekind | 0;
-            if (object.gridnum != null)
-                message.gridnum = object.gridnum | 0;
             return message;
         };
 
@@ -12596,7 +11476,6 @@ $root.msg = (function() {
                 } else
                     object.userid = options.longs === String ? "0" : 0;
                 object.gamekind = 0;
-                object.gridnum = 0;
             }
             if (message.userid != null && message.hasOwnProperty("userid"))
                 if (typeof message.userid === "number")
@@ -12605,8 +11484,6 @@ $root.msg = (function() {
                     object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 object.gamekind = message.gamekind;
-            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
-                object.gridnum = message.gridnum;
             return object;
         };
 
