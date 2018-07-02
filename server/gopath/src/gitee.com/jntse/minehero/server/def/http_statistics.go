@@ -760,3 +760,81 @@ func HttpRequestCheckWechatBound(charid uint64, token, tvmid string) {
 	HttpPostDataStatistics(charid, mapset, sortVal, tvmid, url, secret, "检查绑定微信")
 }
 
+// 企业微信支付到个人
+func HttpWechatCompanyPay(openid string) string {
+
+	//
+	mapset := make(map[string]interface{})
+	mapset["mch_appid"] = "wx50a65298622b1651"
+	mapset["mchid"] = ""
+	//mapset["device_info"] = ""
+	mapset["nonce_str"] = strconv.FormatInt(util.CURTIMEUS(), 10)
+	mapset["sign"] = ""
+	mapset["partner_trade_no"] = ""
+	mapset["openid"] = openid
+	mapset["check_name"] = "NO_CHECK"
+	//mapset["re_user_name"] = ""
+	mapset["amount"] = int64(0)
+	mapset["desc"] = "巨枫用户奖励"
+	mapset["spbill_create_ip"] = "127.0.0.1"
+
+	//
+	sortKeys := make(sort.StringSlice,0)
+	sortKeys = append(sortKeys, "mch_appid")
+	sortKeys = append(sortKeys, "mchid")
+	sortKeys = append(sortKeys, "nonce_str")
+	sortKeys = append(sortKeys, "partner_trade_no")
+	sortKeys = append(sortKeys, "openid")
+	sortKeys = append(sortKeys, "check_name")
+	sortKeys = append(sortKeys, "amount")
+	sortKeys = append(sortKeys, "desc")
+	sortKeys = append(sortKeys, "spbill_create_ip")
+	sortKeys.Sort()
+
+	sortVal := ""
+	for _, v := range sortKeys {
+		if sortVal != "" { sortVal += "&" }
+		if str, ok := mapset[v].(string); ok == true {
+			keypair := v + "=" + str
+			sortVal += keypair
+		}else if num, ok := mapset[v].(int64); ok == true {
+			keypair := v + "=" + strconv.FormatInt(num, 10)
+			sortVal += keypair
+		}else {
+			log.Error("签名拼接参数[%s]的类型不是int64或者string", v )
+			return "签名拼接参数失败"
+		}
+	}
+
+	stringSignTemp := sortVal + "&key=6934870a36e3d0e3f02e32ef9bd013cb"
+	sign, md5string := "", util.MD5(stringSignTemp)
+	sign = strings.ToUpper(md5string)
+	//sign = util.SHA256(sign)	// HMAC-SHA256签名方式
+	mapset["sign"] = sign
+
+	//
+	postbody, jsonerr := json.Marshal(mapset)
+	if jsonerr != nil {
+		log.Error("玩家[%s] json.Marshal err[%s]", openid, jsonerr)
+		return "json.Marshal Fail"
+	}
+	log.Trace("玩家[%s] postbody[%s]", openid, postbody)
+
+	// post
+	url := "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers"
+	resp, posterr := network.HttpPost(url, util.BytesToString(postbody))
+	if posterr != nil {
+		log.Error("玩家[%s] 推送失败 error[%s] resp[%#v]", openid, posterr, resp)
+		return "HttpPost失败"
+	}
+
+	// response
+	if resp.Code != http.StatusOK { 
+		log.Info("玩家[%s] 推送失败 errcode[%d] status[%s]", openid, resp.Code, resp.Status)
+		return "HttpPost ErrorCode"
+	}
+	log.Trace("玩家[%s] 推送完成 [%s]", openid, util.BytesToString(resp.Body))
+	return ""
+}
+
+
