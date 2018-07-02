@@ -581,13 +581,17 @@ module game {
             }
 
             //临时代码
-            if (DataManager.playerModel.getScore() > 0 && DataManager.playerModel.getScore() <= 10000) {
-                this.curScoreTimeSp = 0;
-            } else if (DataManager.playerModel.getScore() > 10000 && DataManager.playerModel.getScore() <= 20000) {
-                this.curScoreTimeSp = 1;
-            } else if (DataManager.playerModel.getScore() > 20000) {
-                this.curScoreTimeSp = 2;
+            for (let i = 0; i < _eventCdByMoney.length; i++) {
+                if (i < _eventCdByMoney.length - 1) {
+                    if (DataManager.playerModel.getScore() > _eventCdByMoney[i] && DataManager.playerModel.getScore() <= _eventCdByMoney[i+1]) {
+                        this.curScoreTimeSp = i;
+                        break;
+                    }
+                } else {
+                    this.curScoreTimeSp = _eventCdByMoney.length - 1;
+                }
             }
+            egret.log("this.curScoreTimeSp--->", this.curScoreTimeSp);
             //临时代码
 
             if (this._doubleTime > 0) {
