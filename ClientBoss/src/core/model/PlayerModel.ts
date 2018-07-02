@@ -215,6 +215,10 @@ module game {
                 return false;
             }
         }
+
+        public getUserId() {
+            return this.userInfo.userid;
+        }
     }
 
     export interface bagInfo {

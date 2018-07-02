@@ -1,6 +1,7 @@
 module game {
     export class BattleManager {
         isRetStartGame: boolean = true;
+        roomId: number|Long = 0;
 
         public init() {
             //添加系统消息监听
@@ -12,10 +13,11 @@ module game {
 
         private OnGW2C_RetStartGame(data: msg.GW2C_RetStartGame) {
             this.isRetStartGame = true;
+            this.roomId = data.roomid;
             if (data.errcode == "") {
                 sendMessage("msg.BT_ReqEnterRoom", msg.BT_ReqEnterRoom.encode({
                     roomid: data.roomid,
-                    userid: DataManager.playerModel.userInfo.userid
+                    userid: DataManager.playerModel.getUserId()
                 }));
             } else {
                 showTips(data.errcode, true);
@@ -34,6 +36,10 @@ module game {
             DataManager.playerModel.battleStart();
             SoundManager.playEffect("play");
             SceneManager.changeScene(SceneType.battle);
+        }
+
+        public getRoomId() {
+            return this.roomId;
         }
 
         private static _instance: BattleManager;
