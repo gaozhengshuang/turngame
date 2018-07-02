@@ -19,7 +19,7 @@ module game {
                 {target: this.btn_register, callBackFunc: this.registerHandle}
             ];
             
-            if (egret.localStorage.getItem("userName")) {
+            if (egret.localStorage.getItem("userName") && egret.localStorage.getItem("password")) {
                 this.nameLabel.text = egret.localStorage.getItem("userName");
                 this.passwordLabel.text = egret.localStorage.getItem("password");
             }

@@ -632,9 +632,6 @@ declare namespace msg {
 
         /** BT_GameInit gamekind */
         gamekind?: (number|null);
-
-        /** BT_GameInit listitem */
-        listitem?: (msg.IGridItem[]|null);
     }
 
     /** Represents a BT_GameInit. */
@@ -654,9 +651,6 @@ declare namespace msg {
 
         /** BT_GameInit gamekind. */
         public gamekind: number;
-
-        /** BT_GameInit listitem. */
-        public listitem: msg.IGridItem[];
 
         /**
          * Creates a new BT_GameInit instance using the specified properties.
@@ -1138,414 +1132,6 @@ declare namespace msg {
 
         /**
          * Converts this BT_GameOver to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a BT_JumpPreCheck. */
-    interface IBT_JumpPreCheck {
-
-        /** BT_JumpPreCheck roomid */
-        roomid?: (number|Long|null);
-
-        /** BT_JumpPreCheck userid */
-        userid?: (number|Long|null);
-
-        /** BT_JumpPreCheck token */
-        token?: (string|null);
-    }
-
-    /** Represents a BT_JumpPreCheck. */
-    class BT_JumpPreCheck implements IBT_JumpPreCheck {
-
-        /**
-         * Constructs a new BT_JumpPreCheck.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: msg.IBT_JumpPreCheck);
-
-        /** BT_JumpPreCheck roomid. */
-        public roomid: (number|Long);
-
-        /** BT_JumpPreCheck userid. */
-        public userid: (number|Long);
-
-        /** BT_JumpPreCheck token. */
-        public token: string;
-
-        /**
-         * Creates a new BT_JumpPreCheck instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns BT_JumpPreCheck instance
-         */
-        public static create(properties?: msg.IBT_JumpPreCheck): msg.BT_JumpPreCheck;
-
-        /**
-         * Encodes the specified BT_JumpPreCheck message. Does not implicitly {@link msg.BT_JumpPreCheck.verify|verify} messages.
-         * @param message BT_JumpPreCheck message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: msg.IBT_JumpPreCheck, writer?: protobuf.Writer): protobuf.Writer;
-
-        /**
-         * Encodes the specified BT_JumpPreCheck message, length delimited. Does not implicitly {@link msg.BT_JumpPreCheck.verify|verify} messages.
-         * @param message BT_JumpPreCheck message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: msg.IBT_JumpPreCheck, writer?: protobuf.Writer): protobuf.Writer;
-
-        /**
-         * Decodes a BT_JumpPreCheck message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns BT_JumpPreCheck
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.BT_JumpPreCheck;
-
-        /**
-         * Decodes a BT_JumpPreCheck message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns BT_JumpPreCheck
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.BT_JumpPreCheck;
-
-        /**
-         * Verifies a BT_JumpPreCheck message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a BT_JumpPreCheck message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns BT_JumpPreCheck
-         */
-        public static fromObject(object: { [k: string]: any }): msg.BT_JumpPreCheck;
-
-        /**
-         * Creates a plain object from a BT_JumpPreCheck message. Also converts values to other types if specified.
-         * @param message BT_JumpPreCheck
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: msg.BT_JumpPreCheck, options?: protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this BT_JumpPreCheck to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a BT_RetJumpPreCheck. */
-    interface IBT_RetJumpPreCheck {
-
-        /** BT_RetJumpPreCheck userid */
-        userid?: (number|Long|null);
-
-        /** BT_RetJumpPreCheck errcode */
-        errcode?: (string|null);
-
-        /** BT_RetJumpPreCheck dice */
-        dice?: (number|null);
-    }
-
-    /** Represents a BT_RetJumpPreCheck. */
-    class BT_RetJumpPreCheck implements IBT_RetJumpPreCheck {
-
-        /**
-         * Constructs a new BT_RetJumpPreCheck.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: msg.IBT_RetJumpPreCheck);
-
-        /** BT_RetJumpPreCheck userid. */
-        public userid: (number|Long);
-
-        /** BT_RetJumpPreCheck errcode. */
-        public errcode: string;
-
-        /** BT_RetJumpPreCheck dice. */
-        public dice: number;
-
-        /**
-         * Creates a new BT_RetJumpPreCheck instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns BT_RetJumpPreCheck instance
-         */
-        public static create(properties?: msg.IBT_RetJumpPreCheck): msg.BT_RetJumpPreCheck;
-
-        /**
-         * Encodes the specified BT_RetJumpPreCheck message. Does not implicitly {@link msg.BT_RetJumpPreCheck.verify|verify} messages.
-         * @param message BT_RetJumpPreCheck message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: msg.IBT_RetJumpPreCheck, writer?: protobuf.Writer): protobuf.Writer;
-
-        /**
-         * Encodes the specified BT_RetJumpPreCheck message, length delimited. Does not implicitly {@link msg.BT_RetJumpPreCheck.verify|verify} messages.
-         * @param message BT_RetJumpPreCheck message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: msg.IBT_RetJumpPreCheck, writer?: protobuf.Writer): protobuf.Writer;
-
-        /**
-         * Decodes a BT_RetJumpPreCheck message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns BT_RetJumpPreCheck
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.BT_RetJumpPreCheck;
-
-        /**
-         * Decodes a BT_RetJumpPreCheck message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns BT_RetJumpPreCheck
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.BT_RetJumpPreCheck;
-
-        /**
-         * Verifies a BT_RetJumpPreCheck message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a BT_RetJumpPreCheck message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns BT_RetJumpPreCheck
-         */
-        public static fromObject(object: { [k: string]: any }): msg.BT_RetJumpPreCheck;
-
-        /**
-         * Creates a plain object from a BT_RetJumpPreCheck message. Also converts values to other types if specified.
-         * @param message BT_RetJumpPreCheck
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: msg.BT_RetJumpPreCheck, options?: protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this BT_RetJumpPreCheck to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a BT_ReqJumpStep. */
-    interface IBT_ReqJumpStep {
-
-        /** BT_ReqJumpStep roomid */
-        roomid?: (number|Long|null);
-
-        /** BT_ReqJumpStep userid */
-        userid?: (number|Long|null);
-
-        /** BT_ReqJumpStep stepnum */
-        stepnum?: (number|null);
-    }
-
-    /** Represents a BT_ReqJumpStep. */
-    class BT_ReqJumpStep implements IBT_ReqJumpStep {
-
-        /**
-         * Constructs a new BT_ReqJumpStep.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: msg.IBT_ReqJumpStep);
-
-        /** BT_ReqJumpStep roomid. */
-        public roomid: (number|Long);
-
-        /** BT_ReqJumpStep userid. */
-        public userid: (number|Long);
-
-        /** BT_ReqJumpStep stepnum. */
-        public stepnum: number;
-
-        /**
-         * Creates a new BT_ReqJumpStep instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns BT_ReqJumpStep instance
-         */
-        public static create(properties?: msg.IBT_ReqJumpStep): msg.BT_ReqJumpStep;
-
-        /**
-         * Encodes the specified BT_ReqJumpStep message. Does not implicitly {@link msg.BT_ReqJumpStep.verify|verify} messages.
-         * @param message BT_ReqJumpStep message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: msg.IBT_ReqJumpStep, writer?: protobuf.Writer): protobuf.Writer;
-
-        /**
-         * Encodes the specified BT_ReqJumpStep message, length delimited. Does not implicitly {@link msg.BT_ReqJumpStep.verify|verify} messages.
-         * @param message BT_ReqJumpStep message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: msg.IBT_ReqJumpStep, writer?: protobuf.Writer): protobuf.Writer;
-
-        /**
-         * Decodes a BT_ReqJumpStep message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns BT_ReqJumpStep
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.BT_ReqJumpStep;
-
-        /**
-         * Decodes a BT_ReqJumpStep message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns BT_ReqJumpStep
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.BT_ReqJumpStep;
-
-        /**
-         * Verifies a BT_ReqJumpStep message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a BT_ReqJumpStep message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns BT_ReqJumpStep
-         */
-        public static fromObject(object: { [k: string]: any }): msg.BT_ReqJumpStep;
-
-        /**
-         * Creates a plain object from a BT_ReqJumpStep message. Also converts values to other types if specified.
-         * @param message BT_ReqJumpStep
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: msg.BT_ReqJumpStep, options?: protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this BT_ReqJumpStep to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a BT_RetJumpStep. */
-    interface IBT_RetJumpStep {
-
-        /** BT_RetJumpStep userid */
-        userid?: (number|Long|null);
-
-        /** BT_RetJumpStep stepindex */
-        stepindex?: (number|null);
-
-        /** BT_RetJumpStep fakelist */
-        fakelist?: (number[]|null);
-    }
-
-    /** Represents a BT_RetJumpStep. */
-    class BT_RetJumpStep implements IBT_RetJumpStep {
-
-        /**
-         * Constructs a new BT_RetJumpStep.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: msg.IBT_RetJumpStep);
-
-        /** BT_RetJumpStep userid. */
-        public userid: (number|Long);
-
-        /** BT_RetJumpStep stepindex. */
-        public stepindex: number;
-
-        /** BT_RetJumpStep fakelist. */
-        public fakelist: number[];
-
-        /**
-         * Creates a new BT_RetJumpStep instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns BT_RetJumpStep instance
-         */
-        public static create(properties?: msg.IBT_RetJumpStep): msg.BT_RetJumpStep;
-
-        /**
-         * Encodes the specified BT_RetJumpStep message. Does not implicitly {@link msg.BT_RetJumpStep.verify|verify} messages.
-         * @param message BT_RetJumpStep message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: msg.IBT_RetJumpStep, writer?: protobuf.Writer): protobuf.Writer;
-
-        /**
-         * Encodes the specified BT_RetJumpStep message, length delimited. Does not implicitly {@link msg.BT_RetJumpStep.verify|verify} messages.
-         * @param message BT_RetJumpStep message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: msg.IBT_RetJumpStep, writer?: protobuf.Writer): protobuf.Writer;
-
-        /**
-         * Decodes a BT_RetJumpStep message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns BT_RetJumpStep
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.BT_RetJumpStep;
-
-        /**
-         * Decodes a BT_RetJumpStep message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns BT_RetJumpStep
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.BT_RetJumpStep;
-
-        /**
-         * Verifies a BT_RetJumpStep message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a BT_RetJumpStep message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns BT_RetJumpStep
-         */
-        public static fromObject(object: { [k: string]: any }): msg.BT_RetJumpStep;
-
-        /**
-         * Creates a plain object from a BT_RetJumpStep message. Also converts values to other types if specified.
-         * @param message BT_RetJumpStep
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: msg.BT_RetJumpStep, options?: protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this BT_RetJumpStep to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -3134,9 +2720,6 @@ declare namespace msg {
 
         /** C2GW_ReqStartGame gamekind */
         gamekind?: (number|null);
-
-        /** C2GW_ReqStartGame gridnum */
-        gridnum?: (number|null);
     }
 
     /** Represents a C2GW_ReqStartGame. */
@@ -3150,9 +2733,6 @@ declare namespace msg {
 
         /** C2GW_ReqStartGame gamekind. */
         public gamekind: number;
-
-        /** C2GW_ReqStartGame gridnum. */
-        public gridnum: number;
 
         /**
          * Creates a new C2GW_ReqStartGame instance using the specified properties.
@@ -5189,9 +4769,6 @@ declare namespace msg {
 
         /** GW2MS_ReqCreateRoom gamekind */
         gamekind?: (number|null);
-
-        /** GW2MS_ReqCreateRoom gridnum */
-        gridnum?: (number|null);
     }
 
     /** Represents a GW2MS_ReqCreateRoom. */
@@ -5208,9 +4785,6 @@ declare namespace msg {
 
         /** GW2MS_ReqCreateRoom gamekind. */
         public gamekind: number;
-
-        /** GW2MS_ReqCreateRoom gridnum. */
-        public gridnum: number;
 
         /**
          * Creates a new GW2MS_ReqCreateRoom instance using the specified properties.

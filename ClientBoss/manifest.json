@@ -16,16 +16,16 @@
 	"game": [
 		"bin-debug/core/scenes/component/GameComponent.js",
 		"bin-debug/core/utils/Notification.js",
-		"bin-debug/core/scenes/battle/BattleBody.js",
-		"bin-debug/core/GameConfig.js",
+		"bin-debug/LoadingUI.js",
 		"bin-debug/core/model/BaseModel.js",
 		"bin-debug/core/net/NetManager.js",
+		"bin-debug/core/scenes/battle/BattleBody.js",
+		"bin-debug/core/GameConfig.js",
 		"bin-debug/core/scenes/component/EffectButton.js",
 		"bin-debug/core/scenes/component/PanelComponent.js",
 		"bin-debug/core/scenes/component/SceneComponent.js",
 		"bin-debug/core/GameLayer.js",
 		"bin-debug/core/utils/ObjectPool.js",
-		"bin-debug/table/turntable.js",
 		"bin-debug/core/manager/BarrageManager.js",
 		"bin-debug/core/manager/DataManager.js",
 		"bin-debug/core/manager/LoginManager.js",
@@ -102,6 +102,6 @@
 		"bin-debug/table/recharge.js",
 		"bin-debug/table/shopbase.js",
 		"bin-debug/table/signbase.js",
-		"bin-debug/LoadingUI.js"
+		"bin-debug/table/turntable.js"
 	]
 }
