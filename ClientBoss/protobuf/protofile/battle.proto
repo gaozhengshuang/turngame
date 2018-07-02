@@ -86,3 +86,11 @@ message BT_PickItem {
     optional GridItem item = 2;
 }
 
+// C2R 更新money
+message BT_UpdateMoney {
+    optional uint64 userid = 1;
+    optional int64  roomid = 2;
+    optional uint64 money  = 3;
+}
+
+

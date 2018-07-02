@@ -3269,6 +3269,280 @@ $root.msg = (function() {
         return BT_PickItem;
     })();
 
+    msg.BT_UpdateMoney = (function() {
+
+        /**
+         * Properties of a BT_UpdateMoney.
+         * @memberof msg
+         * @interface IBT_UpdateMoney
+         * @property {number|Long|null} [userid] BT_UpdateMoney userid
+         * @property {number|Long|null} [roomid] BT_UpdateMoney roomid
+         * @property {number|Long|null} [money] BT_UpdateMoney money
+         */
+
+        /**
+         * Constructs a new BT_UpdateMoney.
+         * @memberof msg
+         * @classdesc Represents a BT_UpdateMoney.
+         * @implements IBT_UpdateMoney
+         * @constructor
+         * @param {msg.IBT_UpdateMoney=} [properties] Properties to set
+         */
+        function BT_UpdateMoney(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_UpdateMoney userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_UpdateMoney
+         * @instance
+         */
+        BT_UpdateMoney.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_UpdateMoney roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_UpdateMoney
+         * @instance
+         */
+        BT_UpdateMoney.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_UpdateMoney money.
+         * @member {number|Long} money
+         * @memberof msg.BT_UpdateMoney
+         * @instance
+         */
+        BT_UpdateMoney.prototype.money = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * Creates a new BT_UpdateMoney instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {msg.IBT_UpdateMoney=} [properties] Properties to set
+         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney instance
+         */
+        BT_UpdateMoney.create = function create(properties) {
+            return new BT_UpdateMoney(properties);
+        };
+
+        /**
+         * Encodes the specified BT_UpdateMoney message. Does not implicitly {@link msg.BT_UpdateMoney.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {msg.IBT_UpdateMoney} message BT_UpdateMoney message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_UpdateMoney.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.roomid);
+            if (message.money != null && message.hasOwnProperty("money"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.money);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_UpdateMoney message, length delimited. Does not implicitly {@link msg.BT_UpdateMoney.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {msg.IBT_UpdateMoney} message BT_UpdateMoney message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_UpdateMoney.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_UpdateMoney message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_UpdateMoney.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_UpdateMoney();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.userid = reader.uint64();
+                    break;
+                case 2:
+                    message.roomid = reader.int64();
+                    break;
+                case 3:
+                    message.money = reader.uint64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_UpdateMoney message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_UpdateMoney.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_UpdateMoney message.
+         * @function verify
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_UpdateMoney.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.money != null && message.hasOwnProperty("money"))
+                if (!$util.isInteger(message.money) && !(message.money && $util.isInteger(message.money.low) && $util.isInteger(message.money.high)))
+                    return "money: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_UpdateMoney message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
+         */
+        BT_UpdateMoney.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_UpdateMoney)
+                return object;
+            var message = new $root.msg.BT_UpdateMoney();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.money != null)
+                if ($util.Long)
+                    (message.money = $util.Long.fromValue(object.money)).unsigned = true;
+                else if (typeof object.money === "string")
+                    message.money = parseInt(object.money, 10);
+                else if (typeof object.money === "number")
+                    message.money = object.money;
+                else if (typeof object.money === "object")
+                    message.money = new $util.LongBits(object.money.low >>> 0, object.money.high >>> 0).toNumber(true);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_UpdateMoney message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {msg.BT_UpdateMoney} message BT_UpdateMoney
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_UpdateMoney.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.money = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.money = options.longs === String ? "0" : 0;
+            }
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.money != null && message.hasOwnProperty("money"))
+                if (typeof message.money === "number")
+                    object.money = options.longs === String ? String(message.money) : message.money;
+                else
+                    object.money = options.longs === String ? $util.Long.prototype.toString.call(message.money) : options.longs === Number ? new $util.LongBits(message.money.low >>> 0, message.money.high >>> 0).toNumber(true) : message.money;
+            return object;
+        };
+
+        /**
+         * Converts this BT_UpdateMoney to JSON.
+         * @function toJSON
+         * @memberof msg.BT_UpdateMoney
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_UpdateMoney.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_UpdateMoney;
+    })();
+
     msg.EntityBase = (function() {
 
         /**

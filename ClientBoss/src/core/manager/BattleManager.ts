@@ -12,6 +12,14 @@ module game {
 
         private OnGW2C_RetStartGame(data: msg.GW2C_RetStartGame) {
             this.isRetStartGame = true;
+            if (data.errcode == "") {
+                sendMessage("msg.BT_ReqEnterRoom", msg.BT_ReqEnterRoom.encode({
+                    roomid: data.roomid,
+                    userid: DataManager.playerModel.userInfo.userid
+                }));
+            } else {
+                showTips(data.errcode, true);
+            }
         }
 
         private OnBT_GameInit(data: msg.BT_GameInit) {

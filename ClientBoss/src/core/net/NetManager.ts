@@ -48,7 +48,6 @@ module game {
         userid: number|Long;
         face: string;
         name: string;
-        score: number;
         rank: number;
         money: number;
     }
