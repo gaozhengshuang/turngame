@@ -99,7 +99,7 @@ func GetRegistAuthCode(phone string) string {
 		}
 
 		// 缓存验证码
-		Redis().Set(keyauthcode, authcode, time.Second * 10).Result()
+		Redis().Set(keyauthcode, authcode, time.Second * 120).Result()
 	}
 
 	if errcode != "" { log.Error("获取注册验证码失败 %s [%s]", keyauthcode, errcode) }
@@ -211,7 +211,7 @@ func registAccount(account, passwd, invitationcode, token string) (errcode strin
 		Yuanbao, Coupon := uint32(tbl.Global.Newuser.Yuanbao), uint32(tbl.Global.Newuser.Coupon)
 		userinfo := &msg.Serialize {
 			Entity : &msg.EntityBase{ Id:pb.Uint64(userid), Name:pb.String(""), Face:pb.String(""), Account:pb.String(account) },
-			Base : &msg.UserBase{Money: pb.Uint32(0), Coupon:pb.Uint32(Coupon), Yuanbao:pb.Uint32(Yuanbao), Level:pb.Uint32(1)},
+			Base : &msg.UserBase{Money: pb.Uint32(1000), Coupon:pb.Uint32(Coupon), Yuanbao:pb.Uint32(Yuanbao), Level:pb.Uint32(1)},
 			Item : nil,
 		}
 		userkey := fmt.Sprintf("userbin_%d", userid)
