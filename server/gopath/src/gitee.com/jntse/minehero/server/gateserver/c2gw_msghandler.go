@@ -65,9 +65,7 @@ func (this* C2GWMsgHandler) Init() {
 
 	// 收战场消息
 	this.msgparser.RegistProtoMsg(msg.BT_ReqEnterRoom{}, on_BT_ReqEnterRoom)
-	this.msgparser.RegistProtoMsg(msg.BT_ReqJumpStep{}, on_BT_ReqJumpStep)
 	this.msgparser.RegistProtoMsg(msg.BT_ReqQuitGameRoom{}, on_BT_ReqQuitGameRoom)
-	this.msgparser.RegistProtoMsg(msg.BT_JumpPreCheck{}, on_BT_JumpPreCheck)
 
 	// 发
 	this.msgparser.RegistSendProto(msg.GW2C_HeartBeat{})
@@ -95,9 +93,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_SendBattleUser{})
 	this.msgparser.RegistSendProto(msg.BT_GameStart{})
 	this.msgparser.RegistSendProto(msg.BT_GameOver{})
-	this.msgparser.RegistSendProto(msg.BT_RetJumpStep{})
 	this.msgparser.RegistSendProto(msg.BT_PickItem{})
-	this.msgparser.RegistSendProto(msg.BT_RetJumpPreCheck{})
 }
 
 // 客户端心跳
@@ -145,8 +141,8 @@ func on_C2GW_ReqStartGame(session network.IBaseNetSession, message interface{}) 
 		return
 	}
 
-	gamekind, girdnum := tmsg.GetGamekind(), tmsg.GetGridnum()
-	if errcode := user.ReqStartGame(gamekind, girdnum); errcode != "" {
+	gamekind := tmsg.GetGamekind()
+	if errcode := user.ReqStartGame(gamekind); errcode != "" {
 		user.ReplyStartGame(errcode, 0)
 	}
 }
@@ -176,36 +172,6 @@ func on_BT_ReqEnterRoom(session network.IBaseNetSession, message interface{}) {
 
 	// 进入游戏房间
 	log.Info("玩家[%d] 开始进入房间[%d] ts[%d]", user.Id(), user.RoomId(), util.CURTIMEMS())
-	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
-	user.SendRoomMsg(tmsg)
-}
-
-func on_BT_JumpPreCheck(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.BT_JumpPreCheck)
-	//log.Info(reflect.TypeOf(tmsg).String())
-
-	user := ExtractSessionUser(session)
-	if user == nil {
-		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
-
-	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
-	user.SendRoomMsg(tmsg)
-}
-
-func on_BT_ReqJumpStep(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.BT_ReqJumpStep)
-	//log.Info(reflect.TypeOf(tmsg).String())
-
-	user := ExtractSessionUser(session)
-	if user == nil {
-		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
-
 	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
 	user.SendRoomMsg(tmsg)
 }

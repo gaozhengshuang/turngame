@@ -65,7 +65,7 @@ message GW2C_HeartBeat {
 // 请求开始游戏(开房间)
 message C2GW_ReqStartGame {
     optional int32 gamekind = 1;    // 游戏类型
-    optional int32 gridnum = 2;     // 格子数
+    //optional int32 gridnum = 2;     // 格子数
 }
 
 message GW2C_RetStartGame {

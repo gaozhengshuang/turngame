@@ -41,9 +41,7 @@ func (this* RS2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.BT_SendBattleUser{}, on_BT_SendBattleUser)
 	this.msgparser.RegistProtoMsg(msg.BT_GameStart{}, on_BT_GameStart)
 	this.msgparser.RegistProtoMsg(msg.BT_GameEnd{}, on_BT_GameEnd)
-	this.msgparser.RegistProtoMsg(msg.BT_RetJumpStep{}, on_BT_RetJumpStep)
 	this.msgparser.RegistProtoMsg(msg.BT_PickItem{}, on_BT_PickItem)
-	this.msgparser.RegistProtoMsg(msg.BT_RetJumpPreCheck{}, on_BT_RetJumpPreCheck)
 
 	// 发
 	this.msgparser.RegistSendProto(msg.GW2RS_RetRegist{})
@@ -51,8 +49,6 @@ func (this* RS2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_UploadGameUser{})
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
 	this.msgparser.RegistSendProto(msg.BT_ReqQuitGameRoom{})
-	this.msgparser.RegistSendProto(msg.BT_JumpPreCheck{})
-	this.msgparser.RegistSendProto(msg.BT_ReqJumpStep{})
 }
 
 func on_RS2GW_ReqRegist(session network.IBaseNetSession, message interface{}) {
@@ -120,34 +116,12 @@ func on_BT_GameEnd(session network.IBaseNetSession, message interface{}) {
 	log.Info("房间[%d] BT_GameEnd 游戏结束，Owner[%d]", tmsg.GetRoomid(), tmsg.GetOwnerid())
 }
 
-func on_BT_RetJumpStep(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.BT_RetJumpStep)
-	//log.Info(reflect.TypeOf(tmsg).String())
-	user := UserMgr().FindById(tmsg.GetUserid())
-	if user == nil {
-		log.Error("BT_RetJumpStep 找不到玩家[%d]", tmsg.GetUserid())
-		return
-	}
-	user.SendMsg(tmsg)
-}
-
 func on_BT_PickItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.BT_PickItem)
 	//log.Info(reflect.TypeOf(tmsg).String())
 	user := UserMgr().FindById(tmsg.GetUserid())
 	if user == nil {
 		log.Error("BT_PickItem 找不到玩家[%d]", tmsg.GetUserid())
-		return
-	}
-	user.SendMsg(tmsg)
-}
-
-func on_BT_RetJumpPreCheck(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.BT_RetJumpPreCheck)
-	//log.Info(reflect.TypeOf(tmsg).String())
-	user := UserMgr().FindById(tmsg.GetUserid())
-	if user == nil {
-		log.Error("BT_RetJumpPreCheck 找不到玩家[%d]", tmsg.GetUserid())
 		return
 	}
 	user.SendMsg(tmsg)

@@ -224,12 +224,6 @@ func (this *RoomUser) SyncPlatformCoins() {
 	this.SendBattleUser()	// 同步玩家数据
 }
 
-// 扣平台金币
-func (this *RoomUser) RemoveCoins(room *GameRoom, amount int32) {
-	event := NewRemovePlatformCoinsEvent(room, amount, "请求跳跃", room.RemovePlatformCoins, room.RemovePlatformCoinsOk)
-	this.AsynEventInsert(event)
-}
-
 func (this *RoomUser) GetMoney() uint32 {
 	return this.UserBase().GetMoney()
 }

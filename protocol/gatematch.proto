@@ -30,7 +30,6 @@ message MS2GW_HeartBeat {
 message GW2MS_ReqCreateRoom {
     optional uint64 userid = 1;
     optional int32 gamekind = 2;
-    optional int32 gridnum = 3;
 }
 
 // 

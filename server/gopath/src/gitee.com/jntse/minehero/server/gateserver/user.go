@@ -32,7 +32,6 @@ type RoomBase struct {
 	roomid      int64
 	sid_room    int
 	kind        int32
-	gridnum     int32
 	tm_closing	int64		// 房间关闭超时
 	creating	bool
 }
@@ -41,7 +40,6 @@ func (this *RoomBase) Reset() {
 	this.roomid = 0
 	this.sid_room = 0
 	this.kind = 0
-	this.gridnum = 0
 	this.tm_closing = 0
 	this.creating = false
 }
@@ -515,20 +513,14 @@ func (this *GateUser) ReplyStartGame(err string, roomid int64) {
 }
 
 // 请求开始游戏
-func (this *GateUser) ReqStartGame(gamekind int32, gridnum int32) (errcode string) {
+func (this *GateUser) ReqStartGame(gamekind int32) (errcode string) {
 
 	// 检查游戏类型是否有效
-	dunconfig , findid := tbl.DungeonsBase.TDungeonsById[gamekind]
-	if findid == false {
-		errcode = "无效的游戏类型"
-		return
-	}
-
-	// 最小格子数检查
-	if gridnum < (dunconfig.Size * 2 + 2) {
-		errcode = "格子数太少了"
-		return
-	}
+	//dunconfig , findid := tbl.DungeonsBase.TDungeonsById[gamekind]
+	//if findid == false {
+	//	errcode = "无效的游戏类型"
+	//	return
+	//}
 
 	if Match() == nil {
 		log.Error("玩家[%s %d] 匹配服务器未连接", this.Name(), this.Id())
@@ -559,14 +551,12 @@ func (this *GateUser) ReqStartGame(gamekind int32, gridnum int32) (errcode strin
 
 	// 请求创建房间
 	this.roomdata.kind = gamekind
-	this.roomdata.gridnum = gridnum
 	this.roomdata.creating = true
 
 	//
 	send := &msg.GW2MS_ReqCreateRoom{
 		Userid:   pb.Uint64(this.Id()),
 		Gamekind: pb.Int32(gamekind),
-		Gridnum:  pb.Int32(gridnum),
 	}
 	Match().SendCmd(send)
 	log.Info("玩家[%s %d] 请求创建房间类型:%d ts[%d]", this.Name(), this.Id(), gamekind, util.CURTIMEMS())
