@@ -36,9 +36,6 @@ func (this* GW2CMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.GW2C_HeartBeat{}, on_GW2C_HeartBeat)
 	this.msgparser.RegistProtoMsg(msg.GW2C_MsgNotify{}, on_GW2C_MsgNotify)
 	this.msgparser.RegistProtoMsg(msg.GW2C_MsgNotice{}, on_GW2C_MsgNotice)
-	//this.msgparser.RegistProtoMsg(msg.GW2C_RetStartMatch{}, on_GW2C_RetStartMatch)
-	//this.msgparser.RegistProtoMsg(msg.GW2C_RetCancelMatch{}, on_GW2C_RetCancelMatch)
-	//this.msgparser.RegistProtoMsg(msg.GW2C_MatchSuccess{}, on_GW2C_MatchSuccess)
 	this.msgparser.RegistProtoMsg(msg.GW2C_RetStartGame{}, on_GW2C_RetStartGame)
 	this.msgparser.RegistProtoMsg(msg.GW2C_AddPackageItem{}, on_GW2C_AddPackageItem)
 	this.msgparser.RegistProtoMsg(msg.GW2C_RemovePackageItem{}, on_GW2C_RemovePackageItem)
@@ -53,27 +50,18 @@ func (this* GW2CMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.BT_SendBattleUser{}, on_BT_SendBattleUser)
 	this.msgparser.RegistProtoMsg(msg.BT_GameStart{}, on_BT_GameStart)
 	this.msgparser.RegistProtoMsg(msg.BT_GameOver{}, on_BT_GameOver)
-	this.msgparser.RegistProtoMsg(msg.BT_RetJumpStep{}, on_BT_RetJumpStep)
 	this.msgparser.RegistProtoMsg(msg.BT_PickItem{}, on_BT_PickItem)
-	this.msgparser.RegistProtoMsg(msg.BT_RetJumpPreCheck{}, on_BT_RetJumpPreCheck)
 	
-
 	// 发
 	this.msgparser.RegistSendProto(msg.C2GW_ReqLogin{})
-	//this.msgparser.RegistSendProto(msg.C2GW_ReqUserInfo{})
 	this.msgparser.RegistSendProto(msg.C2GW_HeartBeat{})
-	//this.msgparser.RegistSendProto(msg.C2GW_ReqStartMatch{})
-	//this.msgparser.RegistSendProto(msg.C2GW_ReqCancelMatch{})
 	this.msgparser.RegistSendProto(msg.C2GW_ReqStartGame{})
 	this.msgparser.RegistSendProto(msg.C2GW_BuyItem{})
 	this.msgparser.RegistSendProto(msg.C2GW_ReqRechargeMoney{})
 
-
 	// 发room消息
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
 	this.msgparser.RegistSendProto(msg.BT_ReqQuitGameRoom{})
-	this.msgparser.RegistSendProto(msg.BT_JumpPreCheck{})
-	this.msgparser.RegistSendProto(msg.BT_ReqJumpStep{})
 
 }
 

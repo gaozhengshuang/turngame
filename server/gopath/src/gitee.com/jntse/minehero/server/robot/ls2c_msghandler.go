@@ -38,6 +38,7 @@ func (this* LS2CMsgHandler) Init() {
 	// 发
 	this.msgparser.RegistSendProto(msg.C2L_ReqLogin{})
 	this.msgparser.RegistSendProto(msg.C2L_ReqRegistAccount{})
+	this.msgparser.RegistSendProto(msg.C2L_ReqRegistAuthCode{})
 }
 
 func on_L2C_RetLogin(session network.IBaseNetSession, message interface{}) {
@@ -84,10 +85,10 @@ func on_L2C_RetLogin(session network.IBaseNetSession, message interface{}) {
 func on_L2C_RetRegistAccount(session network.IBaseNetSession, message interface{}) {
 	msg := message.(*msg.L2C_RetRegistAccount)
 	if msg.GetErrcode() != "" {
-		log.Error("账户%s 注册失败, err:%s", msg.GetAccount(), msg.GetErrcode())
+		log.Error("账户注册失败, err:%s", msg.GetErrcode())
 		return
 	}
-	log.Info("账户%s 注册成功", msg.GetAccount())
+	log.Info("账户注册成功")
 }
 
 

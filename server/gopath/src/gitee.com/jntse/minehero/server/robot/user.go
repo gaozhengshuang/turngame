@@ -235,7 +235,7 @@ func (this *User) OnTicker1s(now int64) {
 	// 随机跳跳
 	if this.gate != nil && this.do_jump {
 		if util.SelectPercent(10) == true {
-			this.JumpStep()
+			//this.JumpStep()
 		}
 	}
 }
@@ -255,17 +255,16 @@ func (this *User) SendLogin() {
 }
 
 func (this *User) StartGame() {
-	this.SendGateMsg(&msg.C2GW_ReqStartGame{Gamekind:pb.Int32(30), Gridnum:pb.Int32(12)})
+	this.SendGateMsg(&msg.C2GW_ReqStartGame{Gamekind:pb.Int32(30)})
 }
 
 func (this *User) LeaveGame() {
 	this.SendGateMsg(&msg.BT_ReqQuitGameRoom{})
 }
 
-func (this *User) JumpStep() {
-	this.SendGateMsg(&msg.BT_JumpPreCheck{})
-	//this.SendGateMsg(&msg.BT_ReqJumpStep{Stepnum:pb.Int32(1)})
-}
+//func (this *User) JumpStep() {
+//	this.SendGateMsg(&msg.BT_JumpPreCheck{})
+//}
 
 func (this *User) BuyItem() {
 	this.SendGateMsg(&msg.C2GW_BuyItem{Productid:pb.Uint32(7), Num:pb.Uint32(1)})
@@ -303,7 +302,6 @@ func (this *User) DoInputCmd(cmd string) {
 	case "leave":
 		this.LeaveGame()
 	case "jump":
-		//this.JumpStep()
 		this.do_jump = !this.do_jump
 	case "buy":
 		this.BuyItem()

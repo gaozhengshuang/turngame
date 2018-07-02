@@ -45,16 +45,6 @@ func on_BT_GameOver(session network.IBaseNetSession, message interface{}) {
 	log.Info("玩家[%s %d]收到 BT_GameOver:[%v]", name, id, tmsg)
 }
 
-func on_BT_RetJumpStep(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.BT_RetJumpStep)
-	//log.Info(reflect.TypeOf(tmsg).String())
-	client, ok := session.UserDefData().(*User)
-	if ok == false { panic("没有为Session设置UserDefData") }
-
-	name, id := client.Name(), client.Id()
-	log.Info("玩家[%s %d]收到 BT_RetJumpStep:[%v]", name, id, tmsg)
-}
-
 func on_BT_PickItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.BT_PickItem)
 	//log.Info(reflect.TypeOf(tmsg).String())
@@ -65,13 +55,4 @@ func on_BT_PickItem(session network.IBaseNetSession, message interface{}) {
 	log.Info("玩家[%s %d]收到 BT_PickItem:[%v]", name, id, tmsg)
 }
 
-func on_BT_RetJumpPreCheck(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.BT_RetJumpPreCheck)
-	//log.Info(reflect.TypeOf(tmsg).String())
-	client, ok := session.UserDefData().(*User)
-	if ok == false { panic("没有为Session设置UserDefData") }
-
-	name, id := client.Name(), client.Id()
-	log.Info("玩家[%s %d]收到 BT_RetJumpPreCheck:[%v]", name, id, tmsg)
-}
 

@@ -71,10 +71,10 @@ func (this *UserBase) LoadUserData(tmsg *msg.GW2C_SendUserInfo) {
 
 func (this *UserBase) NewRegistAccountMsg() *msg.C2L_ReqRegistAccount {
 	msg := &msg.C2L_ReqRegistAccount{
-		Account: pb.String(this.account),
+		Phone: pb.String(this.account),
 		Passwd: pb.String(this.passwd),
-		Name: pb.String(""),
-		Face: pb.String(""),
+		Authcode: pb.String(""),
+		Invitationcode: pb.String(""),
 	}
 	return msg
 }
