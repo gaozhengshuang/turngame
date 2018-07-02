@@ -24,6 +24,7 @@ module game {
                 this.passwordLabel.text = egret.localStorage.getItem("password");
             }
             this.passwordLabel.inputType = egret.TextFieldInputType.PASSWORD;
+            this.passwordLabel.displayAsPassword = true;
         }
 
         private async loginHandle() {
@@ -32,7 +33,7 @@ module game {
                 showTips("请输入您的用户名!", true);
                 return;
             }
-            
+
             loginUserInfo = {
                 account: this.nameLabel.text,
                 passwd: this.passwordLabel.text

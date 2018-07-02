@@ -26,7 +26,9 @@ module game {
             ];
 
             this.passwordLabel.inputType = egret.TextFieldInputType.PASSWORD;
+            this.passwordLabel.displayAsPassword = true;
             this.passwordokLabel.inputType = egret.TextFieldInputType.PASSWORD;
+            this.passwordokLabel.displayAsPassword = true;
         }
 
         private async registerHandle() {
