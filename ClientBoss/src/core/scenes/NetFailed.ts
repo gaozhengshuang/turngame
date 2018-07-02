@@ -28,11 +28,8 @@ module game {
         }
 
         private async reconnectHandle() {
-            NotificationCenter.once(this, (r: boolean) => {
-                if (r)
-                    this.close();
-            }, LoginManager.LOGIN_STATE);
-            LoginManager.getInstance().login();
+            this.close();
+            SceneManager.changeScene(SceneType.login);
         }
 
         public close() {
