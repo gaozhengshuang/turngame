@@ -33,10 +33,10 @@
 		"resource/eui_skins/login/RegisterPanelSkin.exml",
 		"resource/eui_skins/main/MainSceneSkin.exml",
 		"resource/eui_skins/main/UserPanelSkin.exml",
-		"resource/eui_skins/win/WinRankItemSkin.exml",
-		"resource/eui_skins/win/WinSceneSkin.exml",
 		"resource/eui_skins/rank/RankItemSkin.exml",
-		"resource/eui_skins/rank/RankPanelSkin.exml"
+		"resource/eui_skins/rank/RankPanelSkin.exml",
+		"resource/eui_skins/win/WinRankItemSkin.exml",
+		"resource/eui_skins/win/WinSceneSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }

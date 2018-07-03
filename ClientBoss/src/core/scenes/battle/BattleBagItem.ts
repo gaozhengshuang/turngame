@@ -5,7 +5,6 @@ module game {
         itemName: eui.Label;
         itemNum: eui.Label;
         itemMoney: eui.Label;
-        itemDesc: eui.Label;
         getButton: IconButton;
         data;
 
@@ -47,7 +46,6 @@ module game {
 
             this.itemImg.source = _data.Path;
             this.itemName.text = _data.Name;
-            this.itemDesc.text = _data.Info;
             if (_data.Num > 1) { //临时代码 (代表这是金币)
                 this.itemMoney.text = "";
             } else {
