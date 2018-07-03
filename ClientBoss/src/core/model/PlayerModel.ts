@@ -17,6 +17,7 @@ module game {
 
         public RegisterEvent() {
             NotificationCenter.addObserver(this, this.OnGW2C_RetUserInfo, "msg.GW2C_SendUserInfo");
+            NotificationCenter.addObserver(this, this.OnGW2C_SendWechatInfo, "msg.GW2C_SendWechatInfo")
         }
 
         private OnGW2C_RetUserInfo(data: msg.IGW2C_SendUserInfo) {
@@ -24,6 +25,10 @@ module game {
             this.userInfo.name = data.entity.name;
             this.userInfo.userid = data.entity.id;
             this.userInfo.openid = data.base.wechat.openid;
+        }
+
+        private OnGW2C_SendWechatInfo(data: msg.GW2C_SendWechatInfo) {
+            this.userInfo.openid = data.openid;
         }
 
         public setScore(count: number) {

@@ -15,7 +15,7 @@ message IpHost {
 enum ItemId {
     YuanBao = 6001;         // 元宝
     Coupon = 6002;          // 金卷, 也不使用了
-    Gold = 6003;            // 暂时没有使用
+    Gold = 6003;            // 金币
     FreeStep = 6005;        // 免费步数
     Diamond = 10001;        // 钻石
     DiamondParts = 10002;   // 钻石碎片

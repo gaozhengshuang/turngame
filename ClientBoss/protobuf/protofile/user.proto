@@ -37,3 +37,9 @@ message GW2C_RetRechargeMoney {
 // 红包平台充值完成通知
 message C2GW_PlatformRechargeDone {
 }
+
+// 同步玩家绑定微信信息
+message GW2C_SendWechatInfo {
+    optional string openid = 1;
+}
+

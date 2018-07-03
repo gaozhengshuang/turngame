@@ -21182,6 +21182,193 @@ $root.msg = (function() {
         return C2GW_PlatformRechargeDone;
     })();
 
+    msg.GW2C_SendWechatInfo = (function() {
+
+        /**
+         * Properties of a GW2C_SendWechatInfo.
+         * @memberof msg
+         * @interface IGW2C_SendWechatInfo
+         * @property {string|null} [openid] GW2C_SendWechatInfo openid
+         */
+
+        /**
+         * Constructs a new GW2C_SendWechatInfo.
+         * @memberof msg
+         * @classdesc Represents a GW2C_SendWechatInfo.
+         * @implements IGW2C_SendWechatInfo
+         * @constructor
+         * @param {msg.IGW2C_SendWechatInfo=} [properties] Properties to set
+         */
+        function GW2C_SendWechatInfo(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_SendWechatInfo openid.
+         * @member {string} openid
+         * @memberof msg.GW2C_SendWechatInfo
+         * @instance
+         */
+        GW2C_SendWechatInfo.prototype.openid = "";
+
+        /**
+         * Creates a new GW2C_SendWechatInfo instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_SendWechatInfo
+         * @static
+         * @param {msg.IGW2C_SendWechatInfo=} [properties] Properties to set
+         * @returns {msg.GW2C_SendWechatInfo} GW2C_SendWechatInfo instance
+         */
+        GW2C_SendWechatInfo.create = function create(properties) {
+            return new GW2C_SendWechatInfo(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_SendWechatInfo message. Does not implicitly {@link msg.GW2C_SendWechatInfo.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_SendWechatInfo
+         * @static
+         * @param {msg.IGW2C_SendWechatInfo} message GW2C_SendWechatInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_SendWechatInfo.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.openid);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_SendWechatInfo message, length delimited. Does not implicitly {@link msg.GW2C_SendWechatInfo.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_SendWechatInfo
+         * @static
+         * @param {msg.IGW2C_SendWechatInfo} message GW2C_SendWechatInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_SendWechatInfo.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_SendWechatInfo message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_SendWechatInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_SendWechatInfo} GW2C_SendWechatInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_SendWechatInfo.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_SendWechatInfo();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.openid = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_SendWechatInfo message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_SendWechatInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_SendWechatInfo} GW2C_SendWechatInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_SendWechatInfo.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_SendWechatInfo message.
+         * @function verify
+         * @memberof msg.GW2C_SendWechatInfo
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_SendWechatInfo.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                if (!$util.isString(message.openid))
+                    return "openid: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_SendWechatInfo message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_SendWechatInfo
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_SendWechatInfo} GW2C_SendWechatInfo
+         */
+        GW2C_SendWechatInfo.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_SendWechatInfo)
+                return object;
+            var message = new $root.msg.GW2C_SendWechatInfo();
+            if (object.openid != null)
+                message.openid = String(object.openid);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_SendWechatInfo message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_SendWechatInfo
+         * @static
+         * @param {msg.GW2C_SendWechatInfo} message GW2C_SendWechatInfo
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_SendWechatInfo.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.openid = "";
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                object.openid = message.openid;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_SendWechatInfo to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_SendWechatInfo
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_SendWechatInfo.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_SendWechatInfo;
+    })();
+
     return msg;
 })();
 
