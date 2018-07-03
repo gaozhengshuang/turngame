@@ -7792,6 +7792,193 @@ $root.msg = (function() {
         return C2GW_Get7DayReward;
     })();
 
+    msg.C2GW_SendWechatAuthCode = (function() {
+
+        /**
+         * Properties of a C2GW_SendWechatAuthCode.
+         * @memberof msg
+         * @interface IC2GW_SendWechatAuthCode
+         * @property {string|null} [code] C2GW_SendWechatAuthCode code
+         */
+
+        /**
+         * Constructs a new C2GW_SendWechatAuthCode.
+         * @memberof msg
+         * @classdesc Represents a C2GW_SendWechatAuthCode.
+         * @implements IC2GW_SendWechatAuthCode
+         * @constructor
+         * @param {msg.IC2GW_SendWechatAuthCode=} [properties] Properties to set
+         */
+        function C2GW_SendWechatAuthCode(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_SendWechatAuthCode code.
+         * @member {string} code
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @instance
+         */
+        C2GW_SendWechatAuthCode.prototype.code = "";
+
+        /**
+         * Creates a new C2GW_SendWechatAuthCode instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @static
+         * @param {msg.IC2GW_SendWechatAuthCode=} [properties] Properties to set
+         * @returns {msg.C2GW_SendWechatAuthCode} C2GW_SendWechatAuthCode instance
+         */
+        C2GW_SendWechatAuthCode.create = function create(properties) {
+            return new C2GW_SendWechatAuthCode(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_SendWechatAuthCode message. Does not implicitly {@link msg.C2GW_SendWechatAuthCode.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @static
+         * @param {msg.IC2GW_SendWechatAuthCode} message C2GW_SendWechatAuthCode message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_SendWechatAuthCode.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.code != null && message.hasOwnProperty("code"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.code);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_SendWechatAuthCode message, length delimited. Does not implicitly {@link msg.C2GW_SendWechatAuthCode.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @static
+         * @param {msg.IC2GW_SendWechatAuthCode} message C2GW_SendWechatAuthCode message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_SendWechatAuthCode.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_SendWechatAuthCode message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_SendWechatAuthCode} C2GW_SendWechatAuthCode
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_SendWechatAuthCode.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_SendWechatAuthCode();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.code = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_SendWechatAuthCode message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_SendWechatAuthCode} C2GW_SendWechatAuthCode
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_SendWechatAuthCode.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_SendWechatAuthCode message.
+         * @function verify
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_SendWechatAuthCode.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.code != null && message.hasOwnProperty("code"))
+                if (!$util.isString(message.code))
+                    return "code: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_SendWechatAuthCode message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_SendWechatAuthCode} C2GW_SendWechatAuthCode
+         */
+        C2GW_SendWechatAuthCode.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_SendWechatAuthCode)
+                return object;
+            var message = new $root.msg.C2GW_SendWechatAuthCode();
+            if (object.code != null)
+                message.code = String(object.code);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_SendWechatAuthCode message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @static
+         * @param {msg.C2GW_SendWechatAuthCode} message C2GW_SendWechatAuthCode
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_SendWechatAuthCode.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.code = "";
+            if (message.code != null && message.hasOwnProperty("code"))
+                object.code = message.code;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_SendWechatAuthCode to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_SendWechatAuthCode
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_SendWechatAuthCode.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_SendWechatAuthCode;
+    })();
+
     msg.C2L_ReqLogin = (function() {
 
         /**

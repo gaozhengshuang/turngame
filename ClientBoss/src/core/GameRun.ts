@@ -1,6 +1,8 @@
 declare var platform;
 
 module game {
+    let inited = false;
+
     export function run() {
         // gameConfig.curStage().once(egret.TouchEvent.TOUCH_BEGIN, () => {
         //     initWebAudio();
@@ -23,10 +25,29 @@ module game {
         //战斗数据初始化
         BattleManager.getInstance().init();
 
-        Login();
+        //游戏初始化
+        gameInit();
     }
 
-    let inited = false;
+    export function gameInit() {
+        wxCode = egret.getOption("code");
+        wxState = egret.getOption("state");
+        if(wxCode != "" && wxState != "") {
+            sendMessage("msg.C2GW_SendWechatAuthCode", msg.C2GW_SendWechatAuthCode.encode({
+                code: wxCode
+            }));
+
+            let userArray = wxState.split("-");
+            loginUserInfo = {
+                account: userArray[0],
+                passwd: userArray[1]
+            };
+            LoginManager.getInstance().login();
+            showTips("绑定微信成功!");
+        } else {
+            Login();
+        }
+    }
 
     export function createGameScene() {
         SceneManager.changeScene(SceneType.main);

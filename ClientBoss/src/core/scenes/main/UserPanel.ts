@@ -1,6 +1,7 @@
 module game {
     export class UserPanel extends PanelComponent {
         closeButton: IconButton;
+        wxButton: IconButton;
 
         labelName: eui.Label;
         labelId: eui.Label;
@@ -12,11 +13,13 @@ module game {
 
         protected init() {
             this.closeButton.icon = "lucky/luckycloseBtn";
+            this.wxButton.icon = "lucky/luckyGo";
         }
 
         protected beforeShow() {
             this._touchEvent = [
                 {target: this.closeButton, callBackFunc: this.backHandle},
+                {target: this.wxButton, callBackFunc: this.wxHandle},
             ];
 
             this.initUser();
@@ -33,6 +36,14 @@ module game {
 
         private backHandle() {
             this.remove();
+        }
+
+        private wxHandle() {
+            let appid = "wx03789100061e5d6c";
+            let redirect_uri = "http%3a%2f%2fjump.test.giantfun.cn%2ftantanle";
+            let state = egret.localStorage.getItem("userName")+"-"+egret.localStorage.getItem("password");
+            let wxUrl = "https://open.weixin.qq.com/connect/qrconnect?appid="+appid+"&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_login&state="+state;
+            window.location.href = wxUrl;
         }
 
         private static _instance: UserPanel;

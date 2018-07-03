@@ -4,8 +4,8 @@ module game {
     export var testP1: number;
     export var testP2: number;
     export var testSpeed: number;
-
-
+    export var wxCode: string = "";
+    export var wxState: string = "";
 
     //游戏内配置支持
     export var _buyLucky: number = 2000;    //转一次奖消耗金币数量
