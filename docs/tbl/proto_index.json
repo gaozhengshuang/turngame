@@ -94,5 +94,6 @@
 		{ "Id": 90, "Name": "msg.GW2C_SendDeliveryAddressList" },
 		{ "Id": 91, "Name": "msg.C2GW_ReqRechargeMoney" },
 		{ "Id": 92, "Name": "msg.GW2C_RetRechargeMoney" },
-		{ "Id": 93, "Name": "msg.C2GW_PlatformRechargeDone" }
+		{ "Id": 93, "Name": "msg.C2GW_PlatformRechargeDone" },
+		{ "Id": 94, "Name": "msg.GW2C_SendWechatInfo" }
 	]}

@@ -84,6 +84,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_UpdateFreeStep{})
 	this.msgparser.RegistSendProto(msg.GW2C_SendUserPlatformMoney{})
 	this.msgparser.RegistSendProto(msg.GW2C_RetDeliveryDiamond{})
+	this.msgparser.RegistSendProto(msg.GW2C_SendWechatInfo{})
 
 	// Room
 	this.msgparser.RegistSendProto(msg.BT_GameInit{})
@@ -454,10 +455,16 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 	}
 	log.Info("玩家[%d] 获取access_token成功, respok=%#v", user.Id(), respok)
 	
+	// 
 	if user.WechatOpenId() == "" {
+		if _, errset := Redis().Set(fmt.Sprintf("user_%d_wechat_openid", user.Id()), respok.Openid, 0).Result(); errset != nil {
+			log.Info("玩家[%d] 设置wechat openid到redis失败", user.Id())
+			return
+		}
 		user.SetWechatOpenId(respok.Openid)
-		user.SendUserBase()
-		log.Info("玩家[%d] 绑定Wechat Openid", user.Id(), respok.Openid)
+		send := &msg.GW2C_SendWechatInfo{ Openid:pb.String(respok.Openid)}
+		user.SendMsg(send)
+		log.Info("玩家[%d] 绑定wechat openid[%s]", user.Id(), respok.Openid)
 	}
 }
 
