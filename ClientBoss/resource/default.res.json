@@ -1,5 +1,6 @@
-{
-	"groups":[
+﻿{
+	"groups":
+	[
 		{
 			"keys":"ball/1,ball/2,1",
 			"name":"loading"
@@ -9,7 +10,8 @@
 			"name":"preload"
 		}
 	],
-	"resources":[
+	"resources":
+	[
 		{
 			"name":"1",
 			"type":"image",
@@ -481,6 +483,11 @@
 			"url":"assets/item/8.jpg"
 		},
 		{
+			"name":"login/loginbg",
+			"type":"image",
+			"url":"assets/login/loginbg.png"
+		},
+		{
 			"name":"login/loginBtn",
 			"type":"image",
 			"url":"assets/login/loginBtn.png"
@@ -501,6 +508,16 @@
 			"url":"assets/login/loginTitle.png"
 		},
 		{
+			"name":"login/passwdicon",
+			"type":"image",
+			"url":"assets/login/passwdicon.png"
+		},
+		{
+			"name":"login/phoneicon",
+			"type":"image",
+			"url":"assets/login/phoneicon.png"
+		},
+		{
 			"name":"login/registerBtn",
 			"type":"image",
 			"url":"assets/login/registerBtn.png"
@@ -514,6 +531,21 @@
 			"name":"login/wxyjbd",
 			"type":"image",
 			"url":"assets/login/wxyjbd.png"
+		},
+		{
+			"name":"login/yqmicon",
+			"type":"image",
+			"url":"assets/login/yqmicon.png"
+		},
+		{
+			"name":"login/yzmbutton",
+			"type":"image",
+			"url":"assets/login/yzmbutton.png"
+		},
+		{
+			"name":"login/yzmicon",
+			"type":"image",
+			"url":"assets/login/yzmicon.png"
 		},
 		{
 			"name":"lucky/bagBtn",
