@@ -63,6 +63,7 @@ type DBUserData struct {
 	addrlist	  []*msg.UserAddress
 	freestep	  int32
 	givestep	  int64
+	wechatopenid  string
 }
 
 // --------------------------------------------------------------------------
@@ -215,6 +216,14 @@ func (this *GateUser) IsRoomCloseTimeOut() bool {
 	return util.CURTIMEMS() > (this.roomdata.tm_closing + 10000)
 }
 
+func (this *GateUser) SetWechatOpenId(id string)  {
+	this.wechatopenid = id
+}
+
+func (this *GateUser) WechatOpenId() string {
+	return this.wechatopenid
+}
+
 func (this *GateUser) IsCleanUp() bool {
 	return this.cleanup
 }
@@ -302,7 +311,11 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	bin.Entity = pb.Clone(this.bin.GetEntity()).(*msg.EntityBase)
 
 	// 玩家信息
-	bin.Base = pb.Clone(this.bin.GetBase()).(*msg.UserBase)
+	//bin.Base = pb.Clone(this.bin.GetBase()).(*msg.UserBase)
+	bin.Base = &msg.UserBase{}
+	bin.Base.Scounter = &msg.SimpleCounter{}
+	bin.Base.Wechat = &msg.UserWechat{}
+
 	userbase := bin.GetBase()
 	userbase.Tmlogin = pb.Int64(this.tm_login)
 	userbase.Tmlogout = pb.Int64(this.tm_logout)
@@ -318,6 +331,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.Addrlist = this.addrlist[:]
 	userbase.GetScounter().Freestep = pb.Int32(this.freestep)
 	userbase.GetScounter().Givestep = pb.Int64(this.givestep)
+	userbase.Wechat.Openid = pb.String(this.wechatopenid)
 
 	// 道具信息
 	this.bag.PackBin(bin)
@@ -345,8 +359,9 @@ func (this *GateUser) LoadBin() {
 	this.signreward = userbase.GetSignreward()
 	this.signtime	= userbase.GetSigntime()	
 	this.addrlist = userbase.GetAddrlist()[:]
-	this.freestep = userbase.GetScounter().GetFreestep();
-	this.givestep = userbase.GetScounter().GetGivestep();
+	this.freestep = userbase.GetScounter().GetFreestep()
+	this.givestep = userbase.GetScounter().GetGivestep()
+	this.wechatopenid = userbase.GetWechat().GetOpenid()
 
 	// 道具信息
 	this.bag.Clean()
@@ -407,7 +422,7 @@ func (this *GateUser) Syn(){
 	this.CheckGiveFreeStep(util.CURTIME(), "上线跨整点")
 	this.CheckHaveCompensation()
 	this.SyncBigRewardPickNum()
-	this.QueryPlatformCoins()
+	//this.QueryPlatformCoins()
 }
 
 // 断开连接回调
@@ -604,7 +619,7 @@ func (this *GateUser) GameEnd(bin *msg.Serialize, reason string) {
 			this.SendUserBase()
 			this.CheckGiveFreeStep(util.CURTIME(), "回大厅跨整点")
 			this.SyncBigRewardPickNum()
-			this.QueryPlatformCoins()
+			//this.QueryPlatformCoins()
 		}
 	}
 }
@@ -637,10 +652,10 @@ func (this *GateUser) AsynEventInsert(event eventque.IEvent) {
 }
 
 // 获取平台金币
-func (this *GateUser) QueryPlatformCoins() {
-	event := NewQueryPlatformCoinsEvent(this.SyncPlatformCoins)
-	this.AsynEventInsert(event)
-}
+//func (this *GateUser) QueryPlatformCoins() {
+//	event := NewQueryPlatformCoinsEvent(this.SyncPlatformCoins)
+//	this.AsynEventInsert(event)
+//}
 
 func (this *GateUser) SyncPlatformCoins () {
 	errcode, coins, _ := def.HttpRequestFinanceQuery(this.Id(), this.Token(), this.Account())
@@ -677,4 +692,5 @@ func (this *GateUser) PlatformPushUserOnlineTime() {
 	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserOnlineTimeArglist, nil)
 	this.AsynEventInsert(event)
 }
+
 

@@ -16,6 +16,10 @@ message SimpleCounter {
     optional int64 diamond_room_step = 5;       // 钻石场计数
 }
 
+message UserWechat {
+    optional string openid = 1;
+}
+
 message UserBase {
     optional uint32     level   = 1;
     optional uint32     exp     = 2;
@@ -30,6 +34,7 @@ message UserBase {
     optional uint32     signtime    = 11;   // 签到时间
     repeated UserAddress addrlist   = 12;   // 地址列表
     optional SimpleCounter scounter = 13;   // 简单计数器
+    optional UserWechat wechat = 14;
 }
 
 message UserAddress {

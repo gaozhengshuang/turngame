@@ -398,7 +398,7 @@ func on_C2GW_PlatformRechargeDone(session network.IBaseNetSession, message inter
 		return
 	}
 
-	user.QueryPlatformCoins()
+	//user.QueryPlatformCoins()
 }
 
 
@@ -410,7 +410,6 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 		session.Close()
 		return
 	}
-
 	log.Info("玩家[%d] 获取access_token 微信授权code[%s]", user.Id(), tmsg.GetCode())
 
 	//获取用户access_token 和 openid
@@ -423,25 +422,29 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 		return 
 	}
 
-	respfail := make(map[string]interface{})
+	type RespFail struct {
+		Errcode int64
+		Errmsg string
+	}
+	var respfail RespFail
 	unerror := json.Unmarshal(resp.Body, &respfail)
 	if unerror != nil {
-		log.Info("玩家[%d] 获取access_token失败， json.Unmarshal Fail[%s] ", user.Id(), unerror)
+		log.Info("玩家[%d] 获取access_token失败 json.Unmarshal Object Fail[%s] ", user.Id(), unerror)
 		return 
 	}
-	
-	if _, find := respfail["errcode"]; find == true {
-		log.Error("玩家[%d] 获取access_token失败， resp.errcode=%s resp.errmsg=%s", respfail["errcode"].(string), respfail["errmsg"].(string))
+
+	if respfail.Errcode != 0 && respfail.Errmsg != "" {
+		log.Error("玩家[%d] 获取access_token失败， resp.errcode=%d resp.errmsg=%s", user.Id(), respfail.Errcode, respfail.Errmsg)
 		return
 	}
 
 	type RespOk struct {
-		Access_token string
-		Expires_in int64
-		Refresh_token string
-		Openid string
-		Scope string
-		Unionid string
+		Access_token 	string
+		Expires_in 		float64
+		Refresh_token 	string
+		Openid 			string
+		Scope 			string
+		Unionid 		string
 	}
 	var respok RespOk
 	unerror = json.Unmarshal(resp.Body, &respok)
@@ -449,7 +452,12 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 		log.Info("玩家[%d] 获取access_token失败 json.Unmarshal Object Fail[%s] ", user.Id(), unerror)
 		return 
 	}
-
 	log.Info("玩家[%d] 获取access_token成功, respok=%#v", user.Id(), respok)
+	
+	if user.WechatOpenId() == "" {
+		user.SetWechatOpenId(respok.Openid)
+		user.SendUserBase()
+		log.Info("玩家[%d] 绑定Wechat Openid", user.Id(), respok.Openid)
+	}
 }
 
