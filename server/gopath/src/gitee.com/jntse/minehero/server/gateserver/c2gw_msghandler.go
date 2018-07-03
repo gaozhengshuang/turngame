@@ -3,6 +3,7 @@ import (
 	"fmt"
 	_"reflect"
 	_"strconv"
+	"encoding/json"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/util"
@@ -410,8 +411,45 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 		return
 	}
 
-	log.Info("玩家[%s %d] 获得微信授权code[%s]", user.Name(), user.Id(), tmsg.GetCode())
+	log.Info("玩家[%d] 获取access_token 微信授权code[%s]", user.Id(), tmsg.GetCode())
 
-	//获取用户openid
+	//获取用户access_token 和 openid
+	appid, secret, code := tbl.Global.Wechat.AppID, tbl.Global.Wechat.AppSecret, tmsg.GetCode()
+	url := fmt.Sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
+			appid, secret, code);
+	resp , errcode := network.HttpGet(url)
+	if errcode != nil || resp == nil {
+		log.Error("玩家[%d] 获取access_token失败 HttpGet失败[%s]", user.Id(), errcode)
+		return 
+	}
+
+	respfail := make(map[string]interface{})
+	unerror := json.Unmarshal(resp.Body, &respfail)
+	if unerror != nil {
+		log.Info("玩家[%d] 获取access_token失败， json.Unmarshal Fail[%s] ", user.Id(), unerror)
+		return 
+	}
+	
+	if _, find := respfail["errcode"]; find == true {
+		log.Error("玩家[%d] 获取access_token失败， resp.errcode=%s resp.errmsg=%s", respfail["errcode"].(string), respfail["errmsg"].(string))
+		return
+	}
+
+	type RespOk struct {
+		Access_token string
+		Expires_in int64
+		Refresh_token string
+		Openid string
+		Scope string
+		Unionid string
+	}
+	var respok RespOk
+	unerror = json.Unmarshal(resp.Body, &respok)
+	if unerror != nil {
+		log.Info("玩家[%d] 获取access_token失败 json.Unmarshal Object Fail[%s] ", user.Id(), unerror)
+		return 
+	}
+
+	log.Info("玩家[%d] 获取access_token成功, respok=%#v", user.Id(), respok)
 }
 
