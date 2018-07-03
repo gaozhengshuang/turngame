@@ -766,8 +766,8 @@ func HttpWechatCompanyPay(openid string) string {
 
 	//
 	mapset := make(map[string]interface{})
-	mapset["mch_appid"] = "wx50a65298622b1651"
-	mapset["mchid"] = "10000098"
+	mapset["mch_appid"] = tbl.Global.Wechat.AppID
+	mapset["mchid"] = tbl.Global.Wechat.Mchid
 	//mapset["device_info"] = ""
 	mapset["nonce_str"] = strconv.FormatInt(util.CURTIMEUS(), 10)
 	mapset["partner_trade_no"] = strconv.FormatInt(util.CURTIMEUS(), 10)
@@ -807,7 +807,7 @@ func HttpWechatCompanyPay(openid string) string {
 		}
 	}
 
-	stringSignTemp := sortVal + "&key=6934870a36e3d0e3f02e32ef9bd013cb"
+	stringSignTemp := sortVal + "&key=" + tbl.Global.Wechat.PaySecret
 	sign, md5string := "", util.MD5(stringSignTemp)
 	sign = strings.ToUpper(md5string)
 	//sign = util.SHA256(sign)	// HMAC-SHA256签名方式
@@ -850,7 +850,9 @@ func HttpWechatCompanyPay(openid string) string {
 
 	// post
 	url := "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers"
-	resp, posterr := network.HttpPost(url, util.BytesToString(postbody))
+	certFile := "../cert/wechat/apiclient_cert.pem"
+	certKey := "../cert/wechat/apiclient_key.pem"
+	resp, posterr := network.HttpsPost(url, certFile, certKey, util.BytesToString(postbody))
 	if posterr != nil {
 		log.Error("玩家[%s] 推送失败 error[%s] resp[%#v]", openid, posterr, resp)
 		return "HttpPost失败"
