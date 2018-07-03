@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="MainSceneSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:game="game.*" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect width="720" height="100%" fillColor="0xeeeeee"/>
+
 	<e:Group width="720" height="1100" touchChildren="false" touchEnabled="false">
+		<e:Image source="login/loginbg" x="0" y="0"/>
 		<e:Image id="titleImage" source="ui/main/tantanle" x="122" scaleX="1" scaleY="1" touchEnabled="false" y="85"/>
 	</e:Group>
 	<e:Group touchEnabled="false" touchChildren="true" width="720" height="1100" bottom="0">
