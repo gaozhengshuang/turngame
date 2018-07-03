@@ -1,5 +1,6 @@
-{
-	"groups":[
+﻿{
+	"groups":
+	[
 		{
 			"keys":"ball/1,ball/2,1",
 			"name":"loading"
@@ -9,7 +10,8 @@
 			"name":"preload"
 		}
 	],
-	"resources":[
+	"resources":
+	[
 		{
 			"name":"1",
 			"type":"image",
@@ -504,6 +506,16 @@
 			"name":"login/registerBtn",
 			"type":"image",
 			"url":"assets/login/registerBtn.png"
+		},
+		{
+			"name":"login/wxwbd",
+			"type":"image",
+			"url":"assets/login/wxwbd.png"
+		},
+		{
+			"name":"login/wxyjbd",
+			"type":"image",
+			"url":"assets/login/wxyjbd.png"
 		},
 		{
 			"name":"lucky/bagBtn",

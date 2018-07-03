@@ -3,6 +3,7 @@ module game {
         closeButton: IconButton;
         wxButton: IconButton;
 
+        img_wxybd: eui.Image;
         labelName: eui.Label;
         labelId: eui.Label;
         labelInvitationcode: eui.Label;
@@ -13,7 +14,10 @@ module game {
 
         protected init() {
             this.closeButton.icon = "lucky/luckycloseBtn";
-            this.wxButton.icon = "lucky/luckyGo";
+            this.wxButton.icon = "login/wxwbd";
+
+            this.img_wxybd.visible = DataManager.playerModel.getOpenId() != "";
+            this.wxButton.visible = DataManager.playerModel.getOpenId() == "";
         }
 
         protected beforeShow() {

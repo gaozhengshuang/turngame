@@ -12,7 +12,7 @@ module game {
         public penetration: number = 0;
         private _gold: number = 50;
         private _score: number = 0;
-        public userInfo: IUserInfo = {face: "1", name: "", userid: 0, rank: 0, money: 0};
+        public userInfo: IUserInfo = {face: "1", name: "", userid: 0, rank: 0, money: 0, openid: ""};
         public bagList: Array<bagInfo> = [];
 
         public RegisterEvent() {
@@ -23,6 +23,7 @@ module game {
             this.userInfo.money = data.base.money;
             this.userInfo.name = data.entity.name;
             this.userInfo.userid = data.entity.id;
+            this.userInfo.openid = data.base.wechat.openid;
         }
 
         public setScore(count: number) {
@@ -218,6 +219,10 @@ module game {
 
         public getUserId() {
             return this.userInfo.userid;
+        }
+
+        public getOpenId() {
+            return this.userInfo.openid;
         }
     }
 

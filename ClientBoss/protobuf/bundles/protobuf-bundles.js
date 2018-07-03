@@ -4165,6 +4165,193 @@ $root.msg = (function() {
         return SimpleCounter;
     })();
 
+    msg.UserWechat = (function() {
+
+        /**
+         * Properties of a UserWechat.
+         * @memberof msg
+         * @interface IUserWechat
+         * @property {string|null} [openid] UserWechat openid
+         */
+
+        /**
+         * Constructs a new UserWechat.
+         * @memberof msg
+         * @classdesc Represents a UserWechat.
+         * @implements IUserWechat
+         * @constructor
+         * @param {msg.IUserWechat=} [properties] Properties to set
+         */
+        function UserWechat(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * UserWechat openid.
+         * @member {string} openid
+         * @memberof msg.UserWechat
+         * @instance
+         */
+        UserWechat.prototype.openid = "";
+
+        /**
+         * Creates a new UserWechat instance using the specified properties.
+         * @function create
+         * @memberof msg.UserWechat
+         * @static
+         * @param {msg.IUserWechat=} [properties] Properties to set
+         * @returns {msg.UserWechat} UserWechat instance
+         */
+        UserWechat.create = function create(properties) {
+            return new UserWechat(properties);
+        };
+
+        /**
+         * Encodes the specified UserWechat message. Does not implicitly {@link msg.UserWechat.verify|verify} messages.
+         * @function encode
+         * @memberof msg.UserWechat
+         * @static
+         * @param {msg.IUserWechat} message UserWechat message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UserWechat.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.openid);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified UserWechat message, length delimited. Does not implicitly {@link msg.UserWechat.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.UserWechat
+         * @static
+         * @param {msg.IUserWechat} message UserWechat message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UserWechat.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a UserWechat message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.UserWechat
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.UserWechat} UserWechat
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UserWechat.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.UserWechat();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.openid = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a UserWechat message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.UserWechat
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.UserWechat} UserWechat
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UserWechat.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a UserWechat message.
+         * @function verify
+         * @memberof msg.UserWechat
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        UserWechat.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                if (!$util.isString(message.openid))
+                    return "openid: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a UserWechat message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.UserWechat
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.UserWechat} UserWechat
+         */
+        UserWechat.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.UserWechat)
+                return object;
+            var message = new $root.msg.UserWechat();
+            if (object.openid != null)
+                message.openid = String(object.openid);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a UserWechat message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.UserWechat
+         * @static
+         * @param {msg.UserWechat} message UserWechat
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        UserWechat.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.openid = "";
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                object.openid = message.openid;
+            return object;
+        };
+
+        /**
+         * Converts this UserWechat to JSON.
+         * @function toJSON
+         * @memberof msg.UserWechat
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        UserWechat.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return UserWechat;
+    })();
+
     msg.UserBase = (function() {
 
         /**
@@ -4184,6 +4371,7 @@ $root.msg = (function() {
          * @property {number|null} [signtime] UserBase signtime
          * @property {Array.<msg.IUserAddress>|null} [addrlist] UserBase addrlist
          * @property {msg.ISimpleCounter|null} [scounter] UserBase scounter
+         * @property {msg.IUserWechat|null} [wechat] UserBase wechat
          */
 
         /**
@@ -4307,6 +4495,14 @@ $root.msg = (function() {
         UserBase.prototype.scounter = null;
 
         /**
+         * UserBase wechat.
+         * @member {msg.IUserWechat|null|undefined} wechat
+         * @memberof msg.UserBase
+         * @instance
+         */
+        UserBase.prototype.wechat = null;
+
+        /**
          * Creates a new UserBase instance using the specified properties.
          * @function create
          * @memberof msg.UserBase
@@ -4357,6 +4553,8 @@ $root.msg = (function() {
                     $root.msg.UserAddress.encode(message.addrlist[i], writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
             if (message.scounter != null && message.hasOwnProperty("scounter"))
                 $root.msg.SimpleCounter.encode(message.scounter, writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
+            if (message.wechat != null && message.hasOwnProperty("wechat"))
+                $root.msg.UserWechat.encode(message.wechat, writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
             return writer;
         };
 
@@ -4431,6 +4629,9 @@ $root.msg = (function() {
                     break;
                 case 13:
                     message.scounter = $root.msg.SimpleCounter.decode(reader, reader.uint32());
+                    break;
+                case 14:
+                    message.wechat = $root.msg.UserWechat.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4514,6 +4715,11 @@ $root.msg = (function() {
                 if (error)
                     return "scounter." + error;
             }
+            if (message.wechat != null && message.hasOwnProperty("wechat")) {
+                var error = $root.msg.UserWechat.verify(message.wechat);
+                if (error)
+                    return "wechat." + error;
+            }
             return null;
         };
 
@@ -4580,6 +4786,11 @@ $root.msg = (function() {
                     throw TypeError(".msg.UserBase.scounter: object expected");
                 message.scounter = $root.msg.SimpleCounter.fromObject(object.scounter);
             }
+            if (object.wechat != null) {
+                if (typeof object.wechat !== "object")
+                    throw TypeError(".msg.UserBase.wechat: object expected");
+                message.wechat = $root.msg.UserWechat.fromObject(object.wechat);
+            }
             return message;
         };
 
@@ -4619,6 +4830,7 @@ $root.msg = (function() {
                 object.signreward = 0;
                 object.signtime = 0;
                 object.scounter = null;
+                object.wechat = null;
             }
             if (message.level != null && message.hasOwnProperty("level"))
                 object.level = message.level;
@@ -4655,6 +4867,8 @@ $root.msg = (function() {
             }
             if (message.scounter != null && message.hasOwnProperty("scounter"))
                 object.scounter = $root.msg.SimpleCounter.toObject(message.scounter, options);
+            if (message.wechat != null && message.hasOwnProperty("wechat"))
+                object.wechat = $root.msg.UserWechat.toObject(message.wechat, options);
             return object;
         };
 

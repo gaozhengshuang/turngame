@@ -5,12 +5,11 @@ module game {
         rankButton: IconButton;
         titleImage: eui.Image;
         rankLabel: eui.Label;
-        userButton: IconButton;
+        userButton: eui.Label;
 
         protected init() {
             this.playButton.icon = "ui/main/play";
             this.rankButton.icon = "ui/main/paihang";
-            this.userButton.icon = "user/userButton"
             this.titleImage.y = gameConfig.curHeight() * 0.1;
         }
 

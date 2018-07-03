@@ -5,7 +5,8 @@
 		<e:Image verticalCenter="0" horizontalCenter="0" source="lucky/luckyBg"/>
 		<e:Image y="122" scaleX="1" scaleY="1" source="user/userTitle" horizontalCenter="0"/>
 		<game:IconButton id="closeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="620.5" y="157"/>
-		<game:IconButton id="wxButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="330" y="771"/>
+		<game:IconButton id="wxButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="0.5" verticalCenter="230.5"/>
+		<e:Image id="img_wxybd" source="login/wxyjbd" verticalCenter="237" horizontalCenter="0"/>
 		<e:Label id="labelName" text="未设置用户名" textColor="0x8C5EDA" bold="true" scaleX="1" scaleY="1" horizontalCenter="0" y="267" textAlign="center" size="36"/>
 		<e:Label id="labelId" text="ID:123456" textColor="0x8C5EDA" bold="true" scaleX="1" scaleY="1" horizontalCenter="0.5" y="315" textAlign="center" size="24"/>
 		<e:Label text="邀请码" bold="true" scaleX="1" scaleY="1" textAlign="center" size="28" verticalCenter="-115" horizontalCenter="-73" textColor="0x2fb2e0"/>

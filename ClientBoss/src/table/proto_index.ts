@@ -82,19 +82,20 @@ export var ProtoId : table.IProtoIdDefine[] = [
 		{ Id : 77, Name : "msg.MS2GW_MsgNotice" 	},
 		{ Id : 78, Name : "msg.EntityBase" 	},
 		{ Id : 79, Name : "msg.SimpleCounter" 	},
-		{ Id : 80, Name : "msg.UserBase" 	},
-		{ Id : 81, Name : "msg.UserAddress" 	},
-		{ Id : 82, Name : "msg.ItemData" 	},
-		{ Id : 83, Name : "msg.ItemBin" 	},
-		{ Id : 84, Name : "msg.Serialize" 	},
-		{ Id : 85, Name : "msg.MS2Server_BroadCast" 	},
-		{ Id : 86, Name : "msg.C2GW_AddDeliveryAddress" 	},
-		{ Id : 87, Name : "msg.C2GW_DelDeliveryAddress" 	},
-		{ Id : 88, Name : "msg.C2GW_ChangeDeliveryAddress" 	},
-		{ Id : 89, Name : "msg.GW2C_SendDeliveryAddressList" 	},
-		{ Id : 90, Name : "msg.C2GW_ReqRechargeMoney" 	},
-		{ Id : 91, Name : "msg.GW2C_RetRechargeMoney" 	},
-		{ Id : 92, Name : "msg.C2GW_PlatformRechargeDone" 	}
+		{ Id : 80, Name : "msg.UserWechat" 	},
+		{ Id : 81, Name : "msg.UserBase" 	},
+		{ Id : 82, Name : "msg.UserAddress" 	},
+		{ Id : 83, Name : "msg.ItemData" 	},
+		{ Id : 84, Name : "msg.ItemBin" 	},
+		{ Id : 85, Name : "msg.Serialize" 	},
+		{ Id : 86, Name : "msg.MS2Server_BroadCast" 	},
+		{ Id : 87, Name : "msg.C2GW_AddDeliveryAddress" 	},
+		{ Id : 88, Name : "msg.C2GW_DelDeliveryAddress" 	},
+		{ Id : 89, Name : "msg.C2GW_ChangeDeliveryAddress" 	},
+		{ Id : 90, Name : "msg.GW2C_SendDeliveryAddressList" 	},
+		{ Id : 91, Name : "msg.C2GW_ReqRechargeMoney" 	},
+		{ Id : 92, Name : "msg.GW2C_RetRechargeMoney" 	},
+		{ Id : 93, Name : "msg.C2GW_PlatformRechargeDone" 	}
 	]
 
 

@@ -50,6 +50,7 @@ module game {
         name: string;
         rank: number;
         money: number;
+        openid: string;
     }
 
     export var $uploadScore = "/score/uploadScore";

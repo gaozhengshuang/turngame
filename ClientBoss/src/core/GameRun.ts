@@ -33,17 +33,12 @@ module game {
         wxCode = egret.getOption("code");
         wxState = egret.getOption("state");
         if(wxCode != "" && wxState != "") {
-            sendMessage("msg.C2GW_SendWechatAuthCode", msg.C2GW_SendWechatAuthCode.encode({
-                code: wxCode
-            }));
-
             let userArray = wxState.split("-");
             loginUserInfo = {
                 account: userArray[0],
                 passwd: userArray[1]
             };
             LoginManager.getInstance().login();
-            showTips("绑定微信成功!");
         } else {
             Login();
         }
@@ -51,6 +46,13 @@ module game {
 
     export function createGameScene() {
         SceneManager.changeScene(SceneType.main);
+
+        if (wxCode != "" && wxState != "" && DataManager.playerModel.getOpenId() == "") {
+            sendMessage("msg.C2GW_SendWechatAuthCode", msg.C2GW_SendWechatAuthCode.encode({
+                code: wxCode
+            }));
+            showTips("绑定微信成功!");
+        }
 
         //登录完成关闭loading界面
         NotificationCenter.postNotification("closeLoadingSkin");
