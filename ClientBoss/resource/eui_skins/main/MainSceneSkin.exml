@@ -11,6 +11,7 @@
 		<game:IconButton id="rankButton" skinName="IconButtonSkin" verticalCenter="388" y="430.00000000000006" horizontalCenter="0" visible="false"/>
 		<e:Label id="rankLabel" text="排行榜&gt;&gt;" y="971" textColor="0x504D5E" touchEnabled="true" anchorOffsetX="0" width="224" anchorOffsetY="0" height="58" horizontalCenter="-148" verticalAlign="middle" textAlign="center" visible="false"/>
 		<e:Label id="userButton" text="个人信息&gt;&gt;" y="971" textColor="0x504D5E" touchEnabled="true" anchorOffsetX="0" width="224" anchorOffsetY="0" height="58" verticalAlign="middle" textAlign="center" horizontalCenter="0"/>
+		<e:Image source="user/getMoneyImg" x="413.64" y="956.96"/>
 	</e:Group>
 	<e:Label id="costLabel" text="5" y="134.5" size="35" textAlign="center" width="227" anchorOffsetX="0" horizontalCenter="0" touchEnabled="false" fontFamily="DynoBold" visible="false"/>
 </e:Skin>

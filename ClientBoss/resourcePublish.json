@@ -711,14 +711,6 @@
 		},
 		{
 			"compress":false,
-			"key":"user/userTask"
-		},
-		{
-			"compress":false,
-			"key":"user/userTaskBom"
-		},
-		{
-			"compress":false,
 			"key":"user/userTitle"
 		},
 		{
@@ -728,6 +720,50 @@
 		{
 			"compress":false,
 			"key":"login/wxyjbd"
+		},
+		{
+			"compress":false,
+			"key":"login/loginbg"
+		},
+		{
+			"compress":false,
+			"key":"login/passwdicon"
+		},
+		{
+			"compress":false,
+			"key":"login/phoneicon"
+		},
+		{
+			"compress":false,
+			"key":"login/yqmicon"
+		},
+		{
+			"compress":false,
+			"key":"login/yzmbutton"
+		},
+		{
+			"compress":false,
+			"key":"login/yzmicon"
+		},
+		{
+			"compress":false,
+			"key":"user/comeonBg"
+		},
+		{
+			"compress":false,
+			"key":"user/copyButton"
+		},
+		{
+			"compress":false,
+			"key":"user/getMoneyImg"
+		},
+		{
+			"compress":false,
+			"key":"user/taskRewardImg"
+		},
+		{
+			"compress":false,
+			"key":"user/userBg"
 		}
 	]
 }

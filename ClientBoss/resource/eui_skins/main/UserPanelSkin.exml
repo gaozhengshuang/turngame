@@ -2,15 +2,41 @@
 <e:Skin class="UserPanelSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*">
 	<e:Rect width="720" height="100%" fillColor="0xEEEEEE" fillAlpha="0" y="-1" strokeColor="0xFFFFFF"/>
 	<e:Group id="userGroup" width="720" height="1100" horizontalCenter="0" verticalCenter="0">
-		<e:Image verticalCenter="0" horizontalCenter="0" source="lucky/luckyBg"/>
-		<e:Image y="122" scaleX="1" scaleY="1" source="user/userTitle" horizontalCenter="0"/>
-		<game:IconButton id="closeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="620.5" y="157"/>
-		<game:IconButton id="wxButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="0.5" verticalCenter="230.5"/>
-		<e:Image id="img_wxybd" source="login/wxyjbd" verticalCenter="237" horizontalCenter="0"/>
-		<e:Label id="labelName" text="未设置用户名" textColor="0x8C5EDA" bold="true" scaleX="1" scaleY="1" horizontalCenter="0" y="267" textAlign="center" size="36"/>
-		<e:Label id="labelId" text="ID:123456" textColor="0x8C5EDA" bold="true" scaleX="1" scaleY="1" horizontalCenter="0.5" y="315" textAlign="center" size="24"/>
-		<e:Label text="邀请码" bold="true" scaleX="1" scaleY="1" textAlign="center" size="28" verticalCenter="-115" horizontalCenter="-73" textColor="0x2fb2e0"/>
-		<e:Label id="labelInvitationcode" text="TJ123456" textColor="0x2FB2E0" bold="true" scaleX="1" scaleY="1" textAlign="center" size="28" verticalCenter="-115" left="362"/>
+		<e:Image verticalCenter="0" source="user/userBg" horizontalCenter="0"/>
+		<e:Image y="-9" scaleX="1" scaleY="1" source="user/userTitle" horizontalCenter="0"/>
+		<e:Image source="user/comeonBg" y="310" horizontalCenter="0.5"/>
+		<game:IconButton id="closeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="652.5" y="26"/>
+
+
+		<e:Label id="labelName" text="未设置用户名" textColor="0x8C5EDA" bold="true" scaleX="1" scaleY="1" y="179" textAlign="center" size="36" strokeColor="0x8c5eda" horizontalCenter="0"/>
+		<e:Label id="labelId" text="ID:123456" textColor="0x8C5EDA" bold="true" scaleX="1" scaleY="1" y="237" textAlign="center" size="24" strokeColor="0xce8ffe" horizontalCenter="0"/>
+		<e:Label text="邀请码" bold="true" scaleX="1" scaleY="1" textAlign="center" size="28" horizontalCenter="-103" verticalCenter="-218" textColor="0xffffff"/>
+		<e:Label text="暂无二维码" bold="true" scaleX="1" scaleY="1" textAlign="center" size="28" verticalCenter="-88" textColor="0xff0000" horizontalCenter="0"/>
+		<e:Label id="labelInvitationcode" text="TJ1234" bold="true" scaleX="1" scaleY="1" textAlign="center" size="28" left="318" textColor="0xffffff" y="318"/>
+		<game:IconButton id="btn_copy" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" right="206" verticalCenter="-217.5"/>
+		<game:IconButton id="wxButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" verticalCenter="36.5" horizontalCenter="0"/>
+		<e:Image id="img_wxybd" source="login/wxyjbd" verticalCenter="43" horizontalCenter="0"/>
+		<e:Image source="user/getMoneyImg" x="432" y="552"/>
+		<e:Label text="绑定微信立刻获得一元现金,现金直接转入微信账号。" y="631.52" textColor="0x4d4d4d" size="18" horizontalCenter="0"/>
+		<e:Image source="user/taskRewardImg" y="673" horizontalCenter="0"/>
+	</e:Group>
+	<e:Group id="taskGroup1" width="720" height="109.09" y="740" horizontalCenter="0" anchorOffsetY="0">
+		<e:Image source="lucky/bagline" y="-0.4699999999999136" horizontalCenter="0" x="65" scaleX="1" scaleY="1"/>
+		<e:Label text="任务：邀请好友得现金，用邀请码邀请好友注册" size="22" textColor="0x808080" scaleX="1" scaleY="1" verticalCenter="-16.545" textAlign="left" left="58"/>
+		<e:Label text="奖励：注册成功立刻获得1元现金" size="24" textColor="0xff8b26" bold="true" scaleX="1" scaleY="1" verticalCenter="23.455" x="58" textAlign="left"/>
+		<e:Image id="img_comeTask" source="user/userOk" horizontalCenter="260" verticalCenter="-0.045000000000001705"/>
+	</e:Group>
+	<e:Group id="taskGroup2" width="720" height="109.09" y="850" anchorOffsetY="0" x="0">
+		<e:Image source="lucky/bagline" y="-0.4699999999999136" horizontalCenter="0" x="65" scaleX="1" scaleY="1"/>
+		<e:Label text="任务：玩游戏得现金，单局游戏内最高金币数达到1万" size="22" textColor="0x808080" scaleX="1" scaleY="1" left="58" verticalCenter="-16.545" textAlign="left"/>
+		<e:Label text="奖励：立刻获得1元现金" size="24" textColor="0xFF8B26" bold="true" scaleX="1" scaleY="1" textAlign="left" verticalCenter="23.455" x="58"/>
+		<e:Image id="img_gameTask" source="user/userOk" horizontalCenter="260" x="581" scaleX="1" scaleY="1" verticalCenter="0"/>
+	</e:Group>
+	<e:Group id="taskGroup3" width="720" height="109.09" y="960" anchorOffsetY="0" x="0">
+		<e:Image source="lucky/bagline" y="-0.4699999999999136" horizontalCenter="0" x="65" scaleX="1" scaleY="1"/>
+		<e:Label text="任务：被邀请的人单局游戏内最高金币数达到1万" size="22" textColor="0x808080" scaleX="1" scaleY="1" left="58" verticalCenter="-16.545" textAlign="left"/>
+		<e:Label text="奖励：立刻获得1元现金" size="24" textColor="0xFF8B26" bold="true" scaleX="1" scaleY="1" textAlign="left" verticalCenter="23.455" x="58"/>
+		<e:Image id="img_becomeonTask" source="user/userOk" horizontalCenter="260" verticalCenter="0"/>
 	</e:Group>
 
 
