@@ -149,9 +149,9 @@ func HttpGet(url string) (*HttpResponse, error)	{
 // --------------------------------------------------------------------------
 func HttpsPost(url, cert, certkey, body string) (*HttpResponse, error) {
 	//pool := x509.NewCertPool()
-	//caCrt, err := ioutil.ReadFile(certkey)
+	//caCrt, err := ioutil.ReadFile(cacert)
 	//if err != nil {
-	//	return nil, fmt.Errorf("ReadFile err:%s", err)
+	//	return nil, fmt.Errorf("Read CA Cert File err:%s", err)
 	//}
 	//pool.AppendCertsFromPEM(caCrt)
 
@@ -161,8 +161,11 @@ func HttpsPost(url, cert, certkey, body string) (*HttpResponse, error) {
 		return nil, fmt.Errorf("Loadx509keypair err:%s", err)
 	}
 
+	//tr := &http.Transport{
+	//	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	//}
 	tr := &http.Transport {
-		TLSClientConfig: &tls.Config{
+		TLSClientConfig: &tls.Config {
 			//RootCAs:      pool,
 			Certificates: []tls.Certificate{cliCrt},
 		},
