@@ -6,9 +6,11 @@ module game {
         passwordokLabel: eui.EditableText;
         comeonLabel: eui.EditableText;
 
+        yzmbtnLabel: eui.Label;
+
         registerButton: IconButton;
         btn_login: eui.Label;
-        btn_authCode: eui.Label;
+        btn_authCode: eui.Image;
 
         protected getSkinName() {
             return RegisterPanelSkin;
@@ -93,11 +95,9 @@ module game {
                         egret.clearInterval(_playInterval);
                         _playInterval = null;
                         this.btn_authCode.touchEnabled = true;
-                        this.btn_authCode.text = '获取验证码';
-                        this.btn_authCode.textColor = 0xFE9725;
+                        this.yzmbtnLabel.text = '获取验证码';
                     } else {
-                        this.btn_authCode.text = `${_timeleft - _currentIndex}s后重新获取`;
-                        this.btn_authCode.textColor = 0x808080;
+                        this.yzmbtnLabel.text = `${_timeleft - _currentIndex}s后重新获取`;
                     }
                 }, this, 1000);
             }
