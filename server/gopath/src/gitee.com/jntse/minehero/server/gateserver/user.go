@@ -293,6 +293,7 @@ func (this *GateUser) OnLoadDB(way string) {
 	// proto对象变量初始化
 	if this.bin.Base == nil { this.bin.Base = &msg.UserBase{} }
 	if this.bin.Base.Scounter == nil { this.bin.Base.Scounter = &msg.SimpleCounter{} }
+	if this.bin.Base.Wechat == nil { this.bin.Base.Wechat = &msg.UserWechat{} }
 
 	// 加载二进制
 	this.LoadBin()

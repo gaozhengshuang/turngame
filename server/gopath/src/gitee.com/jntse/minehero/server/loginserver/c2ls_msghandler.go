@@ -99,7 +99,7 @@ func GetRegistAuthCode(phone string) string {
 		}
 
 		// 缓存验证码
-		Redis().Set(keyauthcode, authcode, time.Second * 120).Result()
+		Redis().Set(keyauthcode, authcode, time.Second * 60).Result()
 	}
 
 	if errcode != "" { log.Error("获取注册验证码失败 %s [%s]", keyauthcode, errcode) }

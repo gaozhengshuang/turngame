@@ -136,7 +136,7 @@ func Authenticate(session network.IBaseNetSession, account string, passwd string
 	key := fmt.Sprintf("accounts_passwd_%s", account)
 	svrpasswd, err := Redis().Get(key).Result()
 	if err == redis.Nil {
-		return "密码不存在"
+		return "账户未注册"
 	}
 
 	if svrpasswd != passwd {
