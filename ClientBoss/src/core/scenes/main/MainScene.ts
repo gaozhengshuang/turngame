@@ -5,10 +5,12 @@ module game {
         rankButton: IconButton;
         titleImage: eui.Image;
         rankLabel: eui.Label;
+        userButton: IconButton;
 
         protected init() {
             this.playButton.icon = "ui/main/play";
             this.rankButton.icon = "ui/main/paihang";
+            this.userButton.icon = "user/userButton"
             this.titleImage.y = gameConfig.curHeight() * 0.1;
         }
 
@@ -21,6 +23,7 @@ module game {
                 {target: this.playButton, callBackFunc: this.playHandle},
                 {target: this.rankButton, callBackFunc: this.rankHandle},
                 {target: this.rankLabel, callBackFunc: this.rankHandle},
+                {target: this.userButton, callBackFunc: this.userHandle},
             ];
             this.lightImage.rotation = 0;
             egret.Tween.get(this.lightImage, {loop: true}).to({rotation: 360}, 10000);
@@ -37,6 +40,10 @@ module game {
 
         private rankHandle() {
             DataManager.playerModel.openRankPanel();
+        }
+
+        private userHandle() {
+            openPanel(PanelType.user);
         }
 
         protected beforeRemove() {

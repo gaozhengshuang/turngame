@@ -80,4 +80,9 @@ message GW2C_Ret7DayReward {
 message C2GW_Get7DayReward {
 }
 
+// 上传微信授权code
+message C2GW_SendWechatAuthCode {
+    optional string code = 1;
+}
+
 

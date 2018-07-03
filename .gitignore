@@ -23,3 +23,5 @@
 server/gopath/pkg
 git
 /ClientBoss/bin-debug
+/ClientBoss/resource_Publish
+/ClientBoss/bin-release

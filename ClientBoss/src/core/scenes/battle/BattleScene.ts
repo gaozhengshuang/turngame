@@ -9,7 +9,6 @@ module game {
         ballButton1: IconButton;
         ballButton2: IconButton;
         luckyButton: IconButton;
-        userButton: IconButton;
         scoreLabel: eui.Label;
         ball1Price: eui.Label;
         ball2Price: eui.Label;
@@ -126,7 +125,6 @@ module game {
             this.buffLootList = table.TBirckItem;
             this._buffList = [];
             this.luckyButton.icon = "lucky/luckyGo";
-            this.userButton.icon = "user/userButton"
             this.ballButton1.icon = "ball/1";
             this.ballButton2.icon = "ball/2";
             this.ball1Price.text = `价值:${table.TBallById[1].Price}炮弹`;
@@ -308,7 +306,6 @@ module game {
                 {target: this.ballButton1, callBackFunc: this.ballHandle},
                 {target: this.ballButton2, callBackFunc: this.ballHandle},
                 {target: this.luckyButton, callBackFunc: this.luckyGoHandle},
-                {target: this.userButton, callBackFunc: this.userHandle},
             ];
             this._notify = [
                 {
@@ -1244,10 +1241,6 @@ module game {
 
         private luckyGoHandle() {
             openPanel(PanelType.lucky);
-        }
-
-        private userHandle() {
-            openPanel(PanelType.user);
         }
 
         private static _instance: BattleScene;

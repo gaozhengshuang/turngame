@@ -218,8 +218,8 @@
 		}
 	],
 	"publishCopyAll":true,
-	"publishPath":"D:/egretProject/BreakFireMoney/ClientBoss/resource_Publish/",
-	"sourcePath":"D:/egretProject/BreakFireMoney/ClientBoss/resource/",
+	"publishPath":"D:/h5Project/brickcrush/ClientBoss/resource_Publish/",
+	"sourcePath":"D:/h5Project/brickcrush/ClientBoss/resource/",
 	"unPackGroup":[
 		{
 			"compress":false,
@@ -620,6 +620,106 @@
 		{
 			"compress":false,
 			"key":"lucky/luckyLight"
+		},
+		{
+			"compress":false,
+			"key":"cube/sharkPop/00001"
+		},
+		{
+			"compress":false,
+			"key":"cube/sharkPop/00002"
+		},
+		{
+			"compress":false,
+			"key":"cube/sharkPop/00003"
+		},
+		{
+			"compress":false,
+			"key":"cube/sharkPop/00004"
+		},
+		{
+			"compress":false,
+			"key":"cube/sharkPop/00005"
+		},
+		{
+			"compress":false,
+			"key":"cube/sharkPop/00006"
+		},
+		{
+			"compress":false,
+			"key":"login/loginBtn"
+		},
+		{
+			"compress":false,
+			"key":"login/loginInput"
+		},
+		{
+			"compress":false,
+			"key":"login/loginstar"
+		},
+		{
+			"compress":false,
+			"key":"login/loginTitle"
+		},
+		{
+			"compress":false,
+			"key":"login/registerBtn"
+		},
+		{
+			"compress":false,
+			"key":"lucky/bagget"
+		},
+		{
+			"compress":false,
+			"key":"lucky/bagline"
+		},
+		{
+			"compress":false,
+			"key":"lucky/bagshopbg"
+		},
+		{
+			"compress":false,
+			"key":"lucky/bagtitle"
+		},
+		{
+			"compress":false,
+			"key":"lucky/shopbg"
+		},
+		{
+			"compress":false,
+			"key":"lucky/shoplight"
+		},
+		{
+			"compress":false,
+			"key":"lucky/shopnumbg"
+		},
+		{
+			"compress":false,
+			"key":"ui/dialogBg"
+		},
+		{
+			"compress":false,
+			"key":"ui/duanxian"
+		},
+		{
+			"compress":false,
+			"key":"user/userButton"
+		},
+		{
+			"compress":false,
+			"key":"user/userOk"
+		},
+		{
+			"compress":false,
+			"key":"user/userTask"
+		},
+		{
+			"compress":false,
+			"key":"user/userTaskBom"
+		},
+		{
+			"compress":false,
+			"key":"user/userTitle"
 		}
 	]
 }
