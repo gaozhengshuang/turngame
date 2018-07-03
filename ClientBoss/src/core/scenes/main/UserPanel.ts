@@ -15,9 +15,6 @@ module game {
         protected init() {
             this.closeButton.icon = "lucky/luckycloseBtn";
             this.wxButton.icon = "login/wxwbd";
-
-            this.img_wxybd.visible = DataManager.playerModel.getOpenId() != "";
-            this.wxButton.visible = DataManager.playerModel.getOpenId() == "";
         }
 
         protected beforeShow() {
@@ -36,6 +33,10 @@ module game {
             let userInfo = DataManager.playerModel.userInfo;
             this.labelId.text = `${userInfo.userid}`;
             this.labelInvitationcode.text = "TJ"+userInfo.userid;
+
+            
+            this.img_wxybd.visible = DataManager.playerModel.getOpenId() != "";
+            this.wxButton.visible = DataManager.playerModel.getOpenId() == "";
         }
 
         private backHandle() {

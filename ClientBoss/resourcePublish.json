@@ -720,6 +720,14 @@
 		{
 			"compress":false,
 			"key":"user/userTitle"
+		},
+		{
+			"compress":false,
+			"key":"login/wxwbd"
+		},
+		{
+			"compress":false,
+			"key":"login/wxyjbd"
 		}
 	]
 }
