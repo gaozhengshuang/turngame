@@ -1,10 +1,12 @@
 package network
 import (
+	"fmt"
 	"strings"
 	"io"
 	"io/ioutil"
 	"net/http"
-	_"fmt"
+	"crypto/tls"
+	_"crypto/x509"
 	_"gitee.com/jntse/gotoolkit/log"
 )
 
@@ -134,4 +136,49 @@ func HttpGet(url string) (*HttpResponse, error)	{
 	resp, err := sendHttpRequest("GET", url, "", nil)
 	return resp, err
 }
+
+
+// --------------------------------------------------------------------------
+/// @brief 
+///
+/// @param string
+/// @param 
+/// @param error
+///
+/// @return 
+// --------------------------------------------------------------------------
+func HttpsPost(url, cert, certkey, body string) (*HttpResponse, error) {
+	//pool := x509.NewCertPool()
+	//caCrt, err := ioutil.ReadFile(certkey)
+	//if err != nil {
+	//	return nil, fmt.Errorf("ReadFile err:%s", err)
+	//}
+	//pool.AppendCertsFromPEM(caCrt)
+
+
+	cliCrt, err := tls.LoadX509KeyPair(cert, certkey)
+	if err != nil {
+		return nil, fmt.Errorf("Loadx509keypair err:%s", err)
+	}
+
+	tr := &http.Transport {
+		TLSClientConfig: &tls.Config{
+			//RootCAs:      pool,
+			Certificates: []tls.Certificate{cliCrt},
+		},
+	}
+	client := &http.Client{Transport: tr}
+	req, err := http.NewRequest("POST", url, strings.NewReader(body))
+	if err != nil { return nil, err }
+
+	// "The client must close the response body when finished with it"
+	resp, err := client.Do(req)
+	if err != nil {  return nil, err }
+	defer resp.Body.Close()
+
+	rbody, err := ioutil.ReadAll(resp.Body)
+	if err != nil { return nil, err }
+	return &HttpResponse{Code:resp.StatusCode, Status: resp.Status, Body: rbody}, nil
+}
+
 
