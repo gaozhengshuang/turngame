@@ -70,6 +70,9 @@ module game {
                     passwd: this.passwordLabel.text
                 };
                 LoginManager.getInstance().login();
+
+                egret.localStorage.setItem("userName", this.nameLabel.text);
+                egret.localStorage.setItem("password", this.passwordLabel.text);
             }
         }
 
