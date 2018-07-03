@@ -35,6 +35,7 @@ message UserBase {
     repeated UserAddress addrlist   = 12;   // 地址列表
     optional SimpleCounter scounter = 13;   // 简单计数器
     optional UserWechat wechat = 14;
+    optional string     invitationcode = 15;    // 邀请码
 }
 
 message UserAddress {

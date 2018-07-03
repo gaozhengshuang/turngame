@@ -335,7 +335,7 @@ func (this *LoginServer) AsynEventInsert(event eventque.IEvent) {
 func GenerateUserId() (userid uint64, errcode string ) {
 	key := "genuserid"
 	id, err := Redis().Incr(key).Result()
-	var idstart uint64 = 1000000
+	var idstart uint64 = 1000
 	if err != nil {
 		log.Error("生成userid redis报错, err: %s", err)
 		return 0, "redis不可用"

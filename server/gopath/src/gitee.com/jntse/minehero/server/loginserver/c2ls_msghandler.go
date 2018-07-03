@@ -186,6 +186,7 @@ func registAccount(account, passwd, invitationcode, token string) (errcode strin
 			break
 		}
 
+
 		// 实名认证
 		// 生成唯一userid
 		userid , errstr := GenerateUserId()
@@ -208,10 +209,10 @@ func registAccount(account, passwd, invitationcode, token string) (errcode strin
 		}
 		
 		// 初始元宝和金卷
-		Yuanbao, Coupon := uint32(tbl.Global.Newuser.Yuanbao), uint32(tbl.Global.Newuser.Coupon)
+		Yuanbao := uint32(tbl.Global.Newuser.Yuanbao)
 		userinfo := &msg.Serialize {
 			Entity : &msg.EntityBase{ Id:pb.Uint64(userid), Name:pb.String(""), Face:pb.String(""), Account:pb.String(account) },
-			Base : &msg.UserBase{Money: pb.Uint32(1000), Coupon:pb.Uint32(Coupon), Yuanbao:pb.Uint32(Yuanbao), Level:pb.Uint32(1)},
+			Base : &msg.UserBase{Money: pb.Uint32(1000), Invitationcode:pb.String(invitationcode), Yuanbao:pb.Uint32(Yuanbao), Level:pb.Uint32(1)},
 			Item : nil,
 		}
 		userkey := fmt.Sprintf("userbin_%d", userid)
@@ -221,6 +222,11 @@ func registAccount(account, passwd, invitationcode, token string) (errcode strin
 			log.Error("新建账户%s插入玩家数据失败，err: %s", account, err)
 			break
 		}
+
+		// 保存邀请人信息
+		invitkey := fmt.Sprintf("user_%d_invitation", userid)
+		Redis().Set(invitkey, invitationcode, 0)
+
 
 		log.Info("账户[%s] UserId[%d] 创建新用户成功", account, userid)
 	}
