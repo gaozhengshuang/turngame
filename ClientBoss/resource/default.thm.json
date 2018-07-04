@@ -24,19 +24,19 @@
 		"resource/eui_skins/battle/BattleSpBarSkin.exml",
 		"resource/eui_skins/battle/BattleTimeBoomSkin.exml",
 		"resource/eui_skins/battle/NewFile.exml",
+		"resource/eui_skins/common/AvatarSkin.exml",
 		"resource/eui_skins/component/CloseButtonSkin.exml",
 		"resource/eui_skins/component/ImageButtonSkin.exml",
 		"resource/eui_skins/component/LoadProgressBar.exml",
 		"resource/eui_skins/component/ToggleButtonSkin.exml",
-		"resource/eui_skins/common/AvatarSkin.exml",
 		"resource/eui_skins/login/LoginSceneSkin.exml",
 		"resource/eui_skins/login/RegisterPanelSkin.exml",
 		"resource/eui_skins/main/MainSceneSkin.exml",
 		"resource/eui_skins/main/UserPanelSkin.exml",
-		"resource/eui_skins/win/WinRankItemSkin.exml",
-		"resource/eui_skins/win/WinSceneSkin.exml",
 		"resource/eui_skins/rank/RankItemSkin.exml",
-		"resource/eui_skins/rank/RankPanelSkin.exml"
+		"resource/eui_skins/rank/RankPanelSkin.exml",
+		"resource/eui_skins/win/WinRankItemSkin.exml",
+		"resource/eui_skins/win/WinSceneSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }
