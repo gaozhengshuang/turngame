@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="LoginSceneSkin" width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*">
+	<e:Image source="login/loginbg" height="100%" horizontalCenter="0" verticalCenter="0"/>
 
 
 
 
 	<e:Group id="registGroup" width="720" height="1100" horizontalCenter="0" y="0">
-		<e:Image source="login/loginbg" x="0" y="0"/>
+
 		<e:Image id="titleImage" source="ui/main/tantanle" scaleX="1" scaleY="1" touchEnabled="false" y="54" horizontalCenter="0"/>
 		<e:Label id="btn_register" text="注册账号&gt;&gt;" touchEnabled="true" scaleX="1" scaleY="1" size="30" verticalCenter="485" textColor="0x8C5EDA" bold="true" horizontalCenter="0"/>
 		<game:IconButton id="loginButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" verticalCenter="263.5" horizontalCenter="0.5"/>
