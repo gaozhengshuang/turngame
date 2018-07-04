@@ -8,6 +8,6 @@
 	<e:Label id="itemMoney" text="价值：100RMB" textColor="0x47b3fc" bold="true" size="20" verticalCenter="56" textAlign="left" x="160"/>
 	<e:Label id="itemDesc" text="商品描述: 我是大灰狼" textAlign="left" size="18" textColor="0x4d4d4d" y="63" width="280" x="160"/>
 	<game:IconButton id="getButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" verticalCenter="46.5" horizontalCenter="227"/>
-	<e:Image id="itemNumBg" x="523.5" y="88" source="lucky/shopnumbg" touchEnabled="false"/>
-	<e:Label id="itemNum" text="X50" size="18" anchorOffsetX="0" textColor="0xffffff" textAlign="center" horizontalCenter="254" verticalCenter="20" touchEnabled="false"/>
+	<e:Image id="itemNumBg" x="367.5" y="25" source="lucky/shopnumbg" touchEnabled="false"/>
+	<e:Label id="itemNum" text="X50" size="18" anchorOffsetX="0" textColor="0xffffff" textAlign="center" horizontalCenter="98" verticalCenter="-43" touchEnabled="false"/>
 </e:Skin>
