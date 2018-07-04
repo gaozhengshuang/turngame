@@ -1793,6 +1793,9 @@ declare namespace msg {
 
         /** UserBase wechat */
         wechat?: (msg.IUserWechat|null);
+
+        /** UserBase invitationcode */
+        invitationcode?: (string|null);
     }
 
     /** Represents a UserBase. */
@@ -1845,6 +1848,9 @@ declare namespace msg {
 
         /** UserBase wechat. */
         public wechat?: (msg.IUserWechat|null);
+
+        /** UserBase invitationcode. */
+        public invitationcode: string;
 
         /**
          * Creates a new UserBase instance using the specified properties.
