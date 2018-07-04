@@ -12,7 +12,7 @@
 			"parser": "LS2GW_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 7010
+				"port": 17010
 			},
             "interval": 3,
             "svrchannel":true,
@@ -23,7 +23,7 @@
 			"parser": "MS2GW_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 7110
+				"port": 17110
 			},
             "interval": 3,
             "svrchannel":true,
@@ -36,7 +36,7 @@
 			"parser": "RS2GW_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 8110
+				"port": 18110
 			},
             "verify": 0,
             "svrchannel":true
@@ -48,7 +48,7 @@
 			"parser": "C2GW_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 8010
+				"port": 9010
 			},
             "verify": 1,
             "svrchannel":false

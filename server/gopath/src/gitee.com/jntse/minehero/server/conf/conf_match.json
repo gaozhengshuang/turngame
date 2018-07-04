@@ -12,7 +12,7 @@
 			"parser": "GW2MS_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 7110
+				"port": 17110
 			},
             "verify": 0,
             "svrchannel":true
@@ -22,7 +22,7 @@
 			"parser": "RS2MS_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 7120
+				"port": 17120
 			},
             "verify": 0,
             "svrchannel":true
@@ -33,7 +33,7 @@
 			"name": "GmCmdListener",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 19000
+				"port": 19010
 			}
 		}
     ],
