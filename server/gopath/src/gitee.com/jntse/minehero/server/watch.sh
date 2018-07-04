@@ -42,9 +42,9 @@ while true ; do
     appid=$2
     if [[ -n $appid && $appid -ne 0 ]]
     then
-        NUM=`ps aux | grep ${PRO_NAME}${appid} | grep conf | grep logname | grep -v grep |wc -l`
+        NUM=`ps ux | grep ${PRO_NAME}${appid} | grep conf | grep logname | grep -v grep |wc -l`
     else
-        NUM=`ps aux | grep ${PRO_NAME} | grep conf | grep logname | grep -v grep |wc -l`
+        NUM=`ps ux | grep ${PRO_NAME} | grep conf | grep logname | grep -v grep |wc -l`
     fi
     #  echo $NUM
     #    少于1，重启进程
