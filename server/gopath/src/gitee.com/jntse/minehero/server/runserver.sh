@@ -11,7 +11,7 @@ stopserver() {
     #关闭进程
     echo "关闭进程 $app..."
     #appid=`pidof $app`
-    appid=$(ps -u | grep $app | grep 'conf' | grep 'logname' | grep -v grep | awk '{print $2}')
+    appid=$(ps ux | grep $app | grep 'conf' | grep 'logname' | grep -v grep | awk '{print $2}')
     if [ -n "$appid" ]; then
         kill -2 $appid
     else
@@ -22,7 +22,7 @@ stopserver() {
     do
         sleep 0.1s
         #result=`pidof $app`
-        result=$(ps -u | grep $app | grep 'conf' | grep 'logname' | grep -v grep | awk '{print $2}')
+        result=$(ps ux | grep $app | grep 'conf' | grep 'logname' | grep -v grep | awk '{print $2}')
         if [ -n "$result" ]; then
             echo -n "."
         else
