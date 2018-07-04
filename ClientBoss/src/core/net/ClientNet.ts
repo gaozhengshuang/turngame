@@ -152,9 +152,6 @@ module game {
 
     export async function SendHttp(msgName: string, msgJson: any = {}) {
         let ip = $neiNetIp;
-        if ($isWx) {
-            ip = $netIp;
-        }
         let r = <string>await ajax(ip + msgName, msgJson, "POST");
         let json = JSON.parse(r);
         if (json.code != 200) {

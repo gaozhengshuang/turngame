@@ -656,9 +656,9 @@ module game {
                 buff.updateView();
             }
             this._world.step(s);
-            if (DataManager.playerModel.getScore() < _paddlePrice && this._ballPool.list.length == 0) {
-                this.gameEnd();
-            }
+            // if (DataManager.playerModel.getScore() < _paddlePrice && this._ballPool.list.length == 0) { --金钱不够可以充值
+            //     this.gameEnd();
+            // }
             return true;
         }
 

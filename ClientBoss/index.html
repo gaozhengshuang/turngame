@@ -104,7 +104,6 @@
         var manifest = JSON.parse(xhr.response);
         var list = manifest.initial.concat(manifest.game);
         loadScript(list, function () {
-            game.$netIp = game.$kaiIp;
             egret.ImageLoader.crossOrigin = "anonymous";
             egret.TextField.default_fontFamily = "微软雅黑";
             game._platform = 1;
