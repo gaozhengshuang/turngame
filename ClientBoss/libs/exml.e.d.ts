@@ -38,8 +38,6 @@ declare class BattleTimeBoomSkin extends eui.Skin{
 }
 declare class NewFile extends eui.Skin{
 }
-declare class AvatarSkin extends eui.Skin{
-}
 declare class CloseButtonSkin extends eui.Skin{
 }
 declare class IconButtonSkin extends eui.Skin{
@@ -54,6 +52,8 @@ declare class NormalLabelButtonSkin extends eui.Skin{
 }
 declare class ToggleButtonSkin extends eui.Skin{
 }
+declare class AvatarSkin extends eui.Skin{
+}
 declare class LoginSceneSkin extends eui.Skin{
 }
 declare class RegisterPanelSkin extends eui.Skin{
@@ -62,11 +62,11 @@ declare class MainSceneSkin extends eui.Skin{
 }
 declare class UserPanelSkin extends eui.Skin{
 }
-declare class RankItemSkin extends eui.Skin{
-}
-declare class RankPanelSkin extends eui.Skin{
-}
 declare class WinRankItemSkin extends eui.Skin{
 }
 declare class WinSceneSkin extends eui.Skin{
+}
+declare class RankItemSkin extends eui.Skin{
+}
+declare class RankPanelSkin extends eui.Skin{
 }
