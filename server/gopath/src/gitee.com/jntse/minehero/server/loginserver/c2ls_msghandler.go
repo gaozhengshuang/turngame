@@ -223,12 +223,8 @@ func registAccount(account, passwd, invitationcode, token string) (errcode strin
 			break
 		}
 
-		// 保存邀请人信息
-		invitkey := fmt.Sprintf("user_%d_invitation", userid)
-		Redis().Set(invitkey, invitationcode, 0)
-
-
 		log.Info("账户[%s] UserId[%d] 创建新用户成功", account, userid)
+		ProcessInvitationUser(userid, invitationcode)
 	}
 
 	if errcode != "" {

@@ -120,7 +120,7 @@ func DoReload(cmd map[string]string) string {
 
 func DoWeChatPay(cmd map[string]string) string {
 	openid := cmd["openid"]
-	def.HttpWechatCompanyPay(openid)
+	def.HttpWechatCompanyPay(openid, 1)
 	return ""
 }
 

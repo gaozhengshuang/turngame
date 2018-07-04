@@ -11,7 +11,7 @@ import (
 	pb "github.com/gogo/protobuf/proto"
 	_"github.com/go-redis/redis"
 	"gitee.com/jntse/minehero/server/tbl"
-	_"gitee.com/jntse/minehero/server/def"
+	"gitee.com/jntse/minehero/server/def"
 )
 
 
@@ -466,7 +466,7 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 		user.SendMsg(send)
 
 		// 转账给新用户
-		def.HttpWechatCompanyPay(respok.Openid)
+		def.HttpWechatCompanyPay(respok.Openid, 1)
 
 		log.Info("玩家[%d] 绑定wechat openid[%s]", user.Id(), respok.Openid)
 	}
