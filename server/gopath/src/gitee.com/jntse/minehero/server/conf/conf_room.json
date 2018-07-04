@@ -12,7 +12,7 @@
 			"parser": "MS2RS_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 7120
+				"port": 17120
 			},
             "interval": 3,
             "svrchannel":true,

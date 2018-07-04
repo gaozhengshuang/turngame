@@ -12,7 +12,7 @@
 			"parser": "GW2LS_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 7010
+				"port": 17010
 			},
             "verify": 0,
             "svrchannel":true
@@ -24,7 +24,7 @@
 			"parser": "C2LS_MsgParser",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 7020
+				"port": 17020
 			},
             "verify": 1,
             "svrchannel":false
@@ -35,7 +35,7 @@
 			"name": "TestHttpListener1",
 			"host": {
 				"ip": "192.168.30.203",
-				"port": 18000
+				"port": 18010
 			}
 		}
     ],
