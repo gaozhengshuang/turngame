@@ -8,10 +8,10 @@ import (
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/server/tbl"
-	"gitee.com/jntse/minehero/server/tbl/excel"
+	_"gitee.com/jntse/minehero/server/tbl/excel"
 	pb "github.com/gogo/protobuf/proto"
 	"gitee.com/jntse/minehero/pbmsg"
-	"github.com/go-redis/redis"
+	_"github.com/go-redis/redis"
 )
 
 
@@ -114,67 +114,67 @@ func on_RS2MS_RetCreateRoom(session network.IBaseNetSession, message interface{}
 
 
 func on_RS2MS_UpdateRewardPool(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.RS2MS_UpdateRewardPool)
-	log.Info(reflect.TypeOf(tmsg).String())
-	mapid , cost := tmsg.GetMapid(), tmsg.GetCost()
-	SetGlobalRewardPool(mapid, int64(cost))
+	//tmsg := message.(*msg.RS2MS_UpdateRewardPool)
+	//log.Info(reflect.TypeOf(tmsg).String())
+	//mapid , cost := tmsg.GetMapid(), tmsg.GetCost()
+	//SetGlobalRewardPool(mapid, int64(cost))
 }
 
 // 
-func GetDungeonsConfig(gamekind int32) (*table.TDungeonsDefine) {
-	dconfig, findid := tbl.DungeonsBase.TDungeonsById[gamekind]
-	if findid == false {
-		return nil
-	}
-	return dconfig
-}
+//func GetDungeonsConfig(gamekind int32) (*table.TDungeonsDefine) {
+//	dconfig, findid := tbl.DungeonsBase.TDungeonsById[gamekind]
+//	if findid == false {
+//		return nil
+//	}
+//	return dconfig
+//}
 
 // --------------------------------------------------------------------------
 /// @brief 全局奖池
 // --------------------------------------------------------------------------
-func SetGlobalRewardPool(mapid int32, cost int64) bool {
-
-	dconfig := GetDungeonsConfig(mapid)
-	if dconfig == nil {
-		log.Error("[全局奖池] 获取房间类型[%d]配置失败", mapid)
-		return false
-	}
-
-	// 生成一次奖励配额
-	if dconfig.Rewardid == 0 {
-		log.Error("[全局奖池] 获取房间类型[%d]的奖池失败，没有配置大奖", mapid)
-		return false
-	}
-
-	// 获得当前奖池
-	key := fmt.Sprintf("global_rewardpool_%d", mapid)
-	val, err := Redis().Get(key).Int64()
-	if err != nil && err != redis.Nil {
-		log.Error("[全局奖池] 获取房间类型[%d]的奖池失败 err[%s]", mapid, err)
-		return false
-	}
-
-	newval := val + cost
-	for newval >= int64(dconfig.Scorelimit) && dconfig.Scorelimit != 0 {
-		rkey := fmt.Sprintf("global_rewardpool_%d_quota", mapid)
-		val, err := Redis().Incr(rkey).Result()
-		if err != nil {
-			log.Error("[全局奖池] 更新房间类型[%d]的奖励配额失败 err[%s]", mapid, err)
-			return false
-		}
-		log.Error("[全局奖池] 更新房间类型[%d]的奖励配额成功 Old[%d] New[%d]", mapid, val - 1, val)
-		newval = newval - int64(dconfig.Scorelimit)
-	}
-
-	// 保存剩余奖池
-	retset, seterr := Redis().Set(key, newval, 0).Result()
-	if  seterr != nil || retset != "OK" {
-		log.Error("[全局奖池] 更新房间类型[%d]的奖池失败 err[%s]", mapid, seterr)
-		return false
-	}
-	log.Info("[全局奖池] 更新房间类型[%d]的奖池成功 当前奖池[%d]", mapid, newval)
-	return true
-}
+//func SetGlobalRewardPool(mapid int32, cost int64) bool {
+//
+//	dconfig := GetDungeonsConfig(mapid)
+//	if dconfig == nil {
+//		log.Error("[全局奖池] 获取房间类型[%d]配置失败", mapid)
+//		return false
+//	}
+//
+//	// 生成一次奖励配额
+//	if dconfig.Rewardid == 0 {
+//		log.Error("[全局奖池] 获取房间类型[%d]的奖池失败，没有配置大奖", mapid)
+//		return false
+//	}
+//
+//	// 获得当前奖池
+//	key := fmt.Sprintf("global_rewardpool_%d", mapid)
+//	val, err := Redis().Get(key).Int64()
+//	if err != nil && err != redis.Nil {
+//		log.Error("[全局奖池] 获取房间类型[%d]的奖池失败 err[%s]", mapid, err)
+//		return false
+//	}
+//
+//	newval := val + cost
+//	for newval >= int64(dconfig.Scorelimit) && dconfig.Scorelimit != 0 {
+//		rkey := fmt.Sprintf("global_rewardpool_%d_quota", mapid)
+//		val, err := Redis().Incr(rkey).Result()
+//		if err != nil {
+//			log.Error("[全局奖池] 更新房间类型[%d]的奖励配额失败 err[%s]", mapid, err)
+//			return false
+//		}
+//		log.Error("[全局奖池] 更新房间类型[%d]的奖励配额成功 Old[%d] New[%d]", mapid, val - 1, val)
+//		newval = newval - int64(dconfig.Scorelimit)
+//	}
+//
+//	// 保存剩余奖池
+//	retset, seterr := Redis().Set(key, newval, 0).Result()
+//	if  seterr != nil || retset != "OK" {
+//		log.Error("[全局奖池] 更新房间类型[%d]的奖池失败 err[%s]", mapid, seterr)
+//		return false
+//	}
+//	log.Info("[全局奖池] 更新房间类型[%d]的奖池成功 当前奖池[%d]", mapid, newval)
+//	return true
+//}
 
 
 //func on_RS2MS_DeleteRoom(session network.IBaseNetSession, message interface{}) {

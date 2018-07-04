@@ -186,30 +186,30 @@ func DoConsumeCount(cmd map[string]string) {
 			log.Info("产品数据统计,日期:%s,产品id:%d, 名字:%s，总产出:%d, 总收入:%d", datetime, j, iconfig.Name, get, remove)
 		}
 
-		for _, dconfig := range tbl.DungeonsBase.TDungeonsById {
-			if dconfig == nil {
-				continue
-			}
-			iconfig := tbl.ItemBase.ItemBaseDataById[dconfig.Rewardid]
-			if iconfig == nil {
-				continue
-			}
-			key := fmt.Sprintf("%s_%d_jumpcount", datetime, dconfig.Rewardid)
-			jumpcount, costerr := Redis().Get(key).Int64()
-			key2 := fmt.Sprintf("%s_%d_item_add", datetime, dconfig.Rewardid)
-			get, geterr:= Redis().Get(key2).Int64()
+		//for _, dconfig := range tbl.DungeonsBase.TDungeonsById {
+		//	if dconfig == nil {
+		//		continue
+		//	}
+		//	iconfig := tbl.ItemBase.ItemBaseDataById[dconfig.Rewardid]
+		//	if iconfig == nil {
+		//		continue
+		//	}
+		//	key := fmt.Sprintf("%s_%d_jumpcount", datetime, dconfig.Rewardid)
+		//	jumpcount, costerr := Redis().Get(key).Int64()
+		//	key2 := fmt.Sprintf("%s_%d_item_add", datetime, dconfig.Rewardid)
+		//	get, geterr:= Redis().Get(key2).Int64()
 
-			if geterr == nil || costerr == nil {
-			}
-			log.Info("产品数据统计,日期:%s,产品id:%d, 名字:%s, 总次数:%d，命中:%d", datetime, dconfig.Rewardid, iconfig.Name, jumpcount, get)
+		//	if geterr == nil || costerr == nil {
+		//	}
+		//	log.Info("产品数据统计,日期:%s,产品id:%d, 名字:%s, 总次数:%d，命中:%d", datetime, dconfig.Rewardid, iconfig.Name, jumpcount, get)
 
-			// 房间产出和收入
-			key3 := fmt.Sprintf("%s_%d_room_output", datetime, dconfig.Id)
-			output, _ := Redis().Get(key3).Int64()
-			key4 := fmt.Sprintf("%s_%d_room_income", datetime, dconfig.Id)
-			income, _ := Redis().Get(key4).Int64()
-			log.Info("房间数据统计,日期:%s,房间id:%d 产出元宝:%d 收入金币:%d", datetime, dconfig.Id, output, income)
-		}
+		//	// 房间产出和收入
+		//	key3 := fmt.Sprintf("%s_%d_room_output", datetime, dconfig.Id)
+		//	output, _ := Redis().Get(key3).Int64()
+		//	key4 := fmt.Sprintf("%s_%d_room_income", datetime, dconfig.Id)
+		//	income, _ := Redis().Get(key4).Int64()
+		//	log.Info("房间数据统计,日期:%s,房间id:%d 产出元宝:%d 收入金币:%d", datetime, dconfig.Id, output, income)
+		//}
 	}
 }
 

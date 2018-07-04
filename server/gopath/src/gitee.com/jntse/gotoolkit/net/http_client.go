@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"crypto/tls"
-	_"crypto/x509"
+	"crypto/x509"
 	_"gitee.com/jntse/gotoolkit/log"
 )
 
@@ -147,14 +147,14 @@ func HttpGet(url string) (*HttpResponse, error)	{
 ///
 /// @return 
 // --------------------------------------------------------------------------
-func HttpsPost(url, cert, certkey, body string) (*HttpResponse, error) {
+func HttpsPost(url, cacert, cert, certkey, body string) (*HttpResponse, error) {
 	// 加载根证书
-	//pool := x509.NewCertPool()
-	//caCrt, err := ioutil.ReadFile(cacert)
-	//if err != nil {
-	//	return nil, fmt.Errorf("Read CA Cert File err:%s", err)
-	//}
-	//pool.AppendCertsFromPEM(caCrt)
+	pool := x509.NewCertPool()
+	caCrt, err := ioutil.ReadFile(cacert)
+	if err != nil {
+		return nil, fmt.Errorf("Read CA Cert File err:%s", err)
+	}
+	pool.AppendCertsFromPEM(caCrt)
 
 
 	cliCrt, err := tls.LoadX509KeyPair(cert, certkey)
@@ -167,7 +167,7 @@ func HttpsPost(url, cert, certkey, body string) (*HttpResponse, error) {
 	//}
 	tr := &http.Transport {
 		TLSClientConfig: &tls.Config {
-			//RootCAs:      pool,	// 如不指定使用默认根证书
+			RootCAs:      pool,	// 如不指定使用默认根证书
 			Certificates: []tls.Certificate{cliCrt},
 		},
 	}

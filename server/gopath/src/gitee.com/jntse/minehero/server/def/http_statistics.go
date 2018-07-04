@@ -850,9 +850,10 @@ func HttpWechatCompanyPay(openid string, amount int64) string {
 
 	// post
 	url := "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers"
+	caCert := "../cert/wechat/cacert.pem"
 	certFile := "../cert/wechat/apiclient_cert.pem"
 	certKey := "../cert/wechat/apiclient_key.pem"
-	resp, posterr := network.HttpsPost(url, certFile, certKey, util.BytesToString(postbody))
+	resp, posterr := network.HttpsPost(url, caCert, certFile, certKey, util.BytesToString(postbody))
 	if posterr != nil {
 		log.Error("玩家[%s] 推送失败 error[%s] resp[%#v]", openid, posterr, resp)
 		return "HttpPost失败"

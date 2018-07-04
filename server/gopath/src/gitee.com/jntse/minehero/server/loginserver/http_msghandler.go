@@ -1,6 +1,7 @@
 package main
 import (
 	"fmt"
+	"strconv"
 	"net/http"
 	"encoding/json"
 	"github.com/go-redis/redis"
@@ -119,8 +120,9 @@ func DoReload(cmd map[string]string) string {
 }
 
 func DoWeChatPay(cmd map[string]string) string {
-	openid := cmd["openid"]
-	def.HttpWechatCompanyPay(openid, 1)
+	openid , amount := cmd["openid"], cmd["amount"]
+	num , _:= strconv.ParseInt(amount, 10, 32)
+	def.HttpWechatCompanyPay(openid, num)
 	return ""
 }
 
