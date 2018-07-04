@@ -4372,6 +4372,7 @@ $root.msg = (function() {
          * @property {Array.<msg.IUserAddress>|null} [addrlist] UserBase addrlist
          * @property {msg.ISimpleCounter|null} [scounter] UserBase scounter
          * @property {msg.IUserWechat|null} [wechat] UserBase wechat
+         * @property {string|null} [invitationcode] UserBase invitationcode
          */
 
         /**
@@ -4503,6 +4504,14 @@ $root.msg = (function() {
         UserBase.prototype.wechat = null;
 
         /**
+         * UserBase invitationcode.
+         * @member {string} invitationcode
+         * @memberof msg.UserBase
+         * @instance
+         */
+        UserBase.prototype.invitationcode = "";
+
+        /**
          * Creates a new UserBase instance using the specified properties.
          * @function create
          * @memberof msg.UserBase
@@ -4555,6 +4564,8 @@ $root.msg = (function() {
                 $root.msg.SimpleCounter.encode(message.scounter, writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
             if (message.wechat != null && message.hasOwnProperty("wechat"))
                 $root.msg.UserWechat.encode(message.wechat, writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
+            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
+                writer.uint32(/* id 15, wireType 2 =*/122).string(message.invitationcode);
             return writer;
         };
 
@@ -4632,6 +4643,9 @@ $root.msg = (function() {
                     break;
                 case 14:
                     message.wechat = $root.msg.UserWechat.decode(reader, reader.uint32());
+                    break;
+                case 15:
+                    message.invitationcode = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4720,6 +4734,9 @@ $root.msg = (function() {
                 if (error)
                     return "wechat." + error;
             }
+            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
+                if (!$util.isString(message.invitationcode))
+                    return "invitationcode: string expected";
             return null;
         };
 
@@ -4791,6 +4808,8 @@ $root.msg = (function() {
                     throw TypeError(".msg.UserBase.wechat: object expected");
                 message.wechat = $root.msg.UserWechat.fromObject(object.wechat);
             }
+            if (object.invitationcode != null)
+                message.invitationcode = String(object.invitationcode);
             return message;
         };
 
@@ -4831,6 +4850,7 @@ $root.msg = (function() {
                 object.signtime = 0;
                 object.scounter = null;
                 object.wechat = null;
+                object.invitationcode = "";
             }
             if (message.level != null && message.hasOwnProperty("level"))
                 object.level = message.level;
@@ -4869,6 +4889,8 @@ $root.msg = (function() {
                 object.scounter = $root.msg.SimpleCounter.toObject(message.scounter, options);
             if (message.wechat != null && message.hasOwnProperty("wechat"))
                 object.wechat = $root.msg.UserWechat.toObject(message.wechat, options);
+            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
+                object.invitationcode = message.invitationcode;
             return object;
         };
 
