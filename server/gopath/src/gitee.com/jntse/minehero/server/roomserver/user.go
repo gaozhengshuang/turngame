@@ -187,6 +187,7 @@ func (this *RoomUser) OnEnd(now int64) {
 	this.ticker1s.Stop()
 	this.ticker10ms.Stop()
 	this.asynev.Shutdown()
+	UserMgr().DelUser(this)
 	//this.bin = this.PackBin()
 }
 
