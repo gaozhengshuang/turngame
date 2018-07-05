@@ -79,6 +79,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_RemovePackageItem{})
 	this.msgparser.RegistSendProto(msg.GW2C_UpdateYuanbao{})
 	this.msgparser.RegistSendProto(msg.GW2C_UpdateCoupon{})
+	this.msgparser.RegistSendProto(msg.GW2C_UpdateGold{})
 	this.msgparser.RegistSendProto(msg.GW2C_Ret7DayReward{})
 	this.msgparser.RegistSendProto(msg.Sync_BigRewardPickNum{})
 	this.msgparser.RegistSendProto(msg.GW2C_RetRechargeMoney{})

@@ -294,6 +294,7 @@ func (this *GateUser) OnLoadDB(way string) {
 	if this.bin.Base == nil { this.bin.Base = &msg.UserBase{} }
 	if this.bin.Base.Scounter == nil { this.bin.Base.Scounter = &msg.SimpleCounter{} }
 	if this.bin.Base.Wechat == nil { this.bin.Base.Wechat = &msg.UserWechat{} }
+	if this.bin.Item == nil { this.bin.Item = &msg.ItemBin{} }
 
 	// 加载二进制
 	this.LoadBin()
