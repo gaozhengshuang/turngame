@@ -48,6 +48,8 @@ module game {
                 {target: this.startButton, callBackFunc: this.startLuckyHandle},
                 {target: this.bagButton, callBackFunc: this.bagHandle},
             ];
+
+            this.registerEvent();
         }
 
         protected beforeRemove() {
@@ -55,6 +57,15 @@ module game {
                 egret.clearInterval(this._playInterval);
                 this._playInterval = null;
             }
+            this.removeEvent()
+        }
+
+        private registerEvent() {
+            NotificationCenter.addObserver(this, this.OnGW2C_LuckyDrawHit, "msg.GW2C_LuckyDrawHit");
+        }
+
+        private removeEvent() {
+            NotificationCenter.removeObserver(this, "msg.GW2C_LuckyDrawHit");
         }
 
         private initGift() {
@@ -70,22 +81,25 @@ module game {
             this.remove();
         }
 
+        private OnGW2C_LuckyDrawHit(data: msg.GW2C_LuckyDrawHit) {
+            this.showStartLucky(data.id);
+        }
+
         private startLuckyHandle() {
             if (this._isStart) {
                 return;
             }
 
             if (DataManager.playerModel.getScore() >= _buyLucky) {
-                DataManager.playerModel.useScore(_buyLucky);
-                this.showStartLucky();
+                sendMessage("msg.C2GW_StartLuckyDraw", msg.C2GW_StartLuckyDraw.encode({}));
             } else {
                 showTips("需要消耗"+_buyLucky+"金币抽奖一次");
             }
         }
 
-        private showStartLucky() {
+        private showStartLucky(giftId: number) {
             let lastGiftIndex = this._giftIndex;
-            this._giftIndex = lootEvent(this._giftPro);
+            this._giftIndex = giftId;
             let posIndex = this._giftIndex + (this._giftPro.length * (Math.floor(Math.random() * 3) + 5)) + (this._giftPro.length - lastGiftIndex); 
             let _currentIndex = 0;
             
@@ -133,9 +147,6 @@ module game {
                 let giftInfo = table.TBallGiftById[this._giftIndex];
                 if (giftInfo) {
                     showTips("恭喜您获得: "+ giftInfo.Name);
-                    if (giftInfo.PushBag == 1) {
-                        DataManager.playerModel.addBag(giftInfo.Id);
-                    }
                 }
             }.bind(this);
 

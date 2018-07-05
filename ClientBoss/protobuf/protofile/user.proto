@@ -43,3 +43,10 @@ message GW2C_SendWechatInfo {
     optional string openid = 1;
 }
 
+// 抽奖
+message C2GW_StartLuckyDraw {
+}
+
+message GW2C_LuckyDrawHit {
+    optional int32 id = 1;
+}

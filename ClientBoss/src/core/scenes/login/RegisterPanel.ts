@@ -86,12 +86,14 @@ module game {
                 "gmcmd": "registauthcode",
                 "phone": this.nameLabel.text
             });
+
+            this.yzmbtnLabel.text = `${59}s后重新获取`;
             let r = await postHttpByJson($registIp, strJson);
             if (r) {
                 this.btn_authCode.touchEnabled = false;
 
                 let _currentIndex = 0;
-                let _timeleft = 60;
+                let _timeleft = 59;
                 let _playInterval = egret.setInterval(() => {
                     _currentIndex++;
                     if (_currentIndex > 60) {

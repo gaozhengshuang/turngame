@@ -26,12 +26,21 @@ module game {
                 {target: this.closeButton, callBackFunc: this.closeHandle},
                 {target: this.luckyButton, callBackFunc: this.luckyHandle},
             ];
+            this.registerEvent();
 
             this.updateList();
         }
 
         protected beforeRemove() {
+            this.removeEvent();
+        }
 
+        private registerEvent() {
+            NotificationCenter.addObserver(this, this.updateList, PlayerModel.BAG_UPDATE);
+        }
+
+        private removeEvent() {
+            NotificationCenter.removeObserver(this, PlayerModel.BAG_UPDATE);
         }
 
         public updateList() {
