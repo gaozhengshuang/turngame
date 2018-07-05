@@ -222,6 +222,7 @@ gen.maketbl_excel('TBallGiftbase', 'ballgiftbase', 'TBallGift.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')
+gen.maketbl_json('table', 'Game', 'game.json')
 
 #// --------------------------------------------------------------------------
 #/// @brief 生成自动加载代码

@@ -489,7 +489,7 @@ func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}
 	}
 
 	// 检查消耗
-	cost := uint32(10)
+	cost := uint32(tbl.Game.LuckDrawPrice)
 	if user.GetMoney() < cost {
 		user.SendNotify("金币不足")
 		return
