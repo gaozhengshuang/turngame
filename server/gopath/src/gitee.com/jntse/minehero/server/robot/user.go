@@ -116,7 +116,7 @@ func (this *User) OnConnect(session network.IBaseNetSession)	{
 		//log.Trace("OnConnect loginsession:%+v", session)
 		session.SetUserDefData(this)
 		this.SetLoginSession(session)
-		//this.SendLogin()
+		this.SendLogin()
 		//this.RegistAccount()
 	case "GateConnector":
 		//log.Trace("OnConnect gatesession:%+v", session)
@@ -285,7 +285,7 @@ func (this *User) Recharge() {
 
 // 抽奖
 func (this *User) LuckyDraw() {
-	send := &msg.C2GW_StartLuckyDraw{ Uid:pb.Int32(12345) }
+	send := &msg.C2GW_StartLuckyDraw{Phone:pb.Int32(136816269), Text:pb.String("xiejian")}
 	this.SendGateMsg(send)
 }
 

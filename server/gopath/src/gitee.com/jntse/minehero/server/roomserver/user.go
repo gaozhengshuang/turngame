@@ -457,3 +457,6 @@ func (this *RoomUser) PlatformPushLootMoney(yuanbao float32) {
 	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceEarnArglist, nil)
 	this.AsynEventInsert(event)
 }
+
+func (this *RoomUser) LuckyDraw(tmsg *msg.C2GW_StartLuckyDraw) {
+}
