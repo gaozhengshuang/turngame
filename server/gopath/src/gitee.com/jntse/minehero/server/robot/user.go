@@ -283,6 +283,13 @@ func (this *User) Recharge() {
 	this.SendGateMsg(send)
 }
 
+// 抽奖
+func (this *User) LuckyDraw() {
+	send := &msg.C2GW_StartLuckyDraw{ Uid:pb.Int32(12345) }
+	this.SendGateMsg(send)
+}
+
+
 //func (this *User) ReqMatch() {
 //	this.SendGateMsg(this.NewReqMatchMsg(int(msg.GameMode_Normal_1v1)))
 //}
@@ -311,6 +318,8 @@ func (this *User) DoInputCmd(cmd string) {
 		this.Recharge()
 	case "heart":
 		this.do_heart = !this.do_heart
+	case "luckydraw":
+		this.LuckyDraw()
 	}
 }
 

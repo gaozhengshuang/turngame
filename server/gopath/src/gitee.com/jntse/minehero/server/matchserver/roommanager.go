@@ -259,7 +259,7 @@ func (this *RoomSvrManager) CreateGameRoom(kind int32, now int64, sid_gate int, 
 	}
 	agent.SendMsg(rmsg)
 	tm2 := util.CURTIMEUS()
-	log.Info("向RS请求创建房间[%d]，玩家[%d] 模式[%d] 格子数[%d] 创建耗时[%dus] ts[%d]", roomid, userid, kind, tm2-tm1, util.CURTIMEMS())
+	log.Info("向RS请求创建房间[%d]，玩家[%d] 模式[%d] 创建耗时[%dus] ts[%d]", roomid, userid, kind, tm2-tm1, util.CURTIMEMS())
 	return ""
 }
 

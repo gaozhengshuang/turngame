@@ -477,7 +477,7 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 
 // 抽奖
 func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}) {
-	//tmsg := message.(*msg.C2GW_StartLuckyDraw)
+	tmsg := message.(*msg.C2GW_StartLuckyDraw)
 	user := ExtractSessionUser(session)
 	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
@@ -487,6 +487,7 @@ func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}
 	
 	if user.IsInRoom() {
 		user.SendNotify("游戏中不能抽奖")
+		user.TransferRoomMsg(tmsg)
 		return
 	}
 

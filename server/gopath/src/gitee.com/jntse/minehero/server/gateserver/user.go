@@ -520,6 +520,16 @@ func (this *GateUser) SendRoomMsg(msg pb.Message) {
 	RoomSvrMgr().SendMsg(this.roomdata.sid_room, msg)
 }
 
+func (this *GateUser) TransferRoomMsg(m pb.Message) {
+	name := pb.MessageName(m)
+	msgbuf, _ := pb.Marshal(m)
+	send := &msg.GW2RS_MsgTransfer {
+		Name : pb.String(name),
+		Buf : msgbuf,
+	}
+	this.SendRoomMsg(send)
+}
+
 // 回复客户端
 func (this *GateUser) ReplyStartGame(err string, roomid int64) {
 	send := &msg.GW2C_RetStartGame{Errcode: pb.String(err), Roomid: pb.Int64(roomid)}

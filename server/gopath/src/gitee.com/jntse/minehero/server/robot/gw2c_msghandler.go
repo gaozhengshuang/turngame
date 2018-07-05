@@ -44,6 +44,7 @@ func (this* GW2CMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.Sync_BigRewardPickNum{}, on_Sync_BigRewardPickNum)
 	this.msgparser.RegistProtoMsg(msg.GW2C_Ret7DayReward{}, on_GW2C_Ret7DayReward)
 	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateFreeStep{}, on_GW2C_UpdateFreeStep)
+	this.msgparser.RegistProtoMsg(msg.GW2C_LuckyDrawHit{}, on_GW2C_LuckyDrawHit)
 
 	// 收room消息
 	this.msgparser.RegistProtoMsg(msg.BT_GameInit{}, on_BT_GameInit)
@@ -58,6 +59,7 @@ func (this* GW2CMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.C2GW_ReqStartGame{})
 	this.msgparser.RegistSendProto(msg.C2GW_BuyItem{})
 	this.msgparser.RegistSendProto(msg.C2GW_ReqRechargeMoney{})
+	this.msgparser.RegistSendProto(msg.C2GW_StartLuckyDraw{})
 
 	// 发room消息
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
@@ -191,3 +193,9 @@ func on_Sync_BigRewardPickNum(session network.IBaseNetSession, message interface
 	//log.Info(reflect.TypeOf(tmsg).String())
 	//log.Info("大奖获取次数同步:%v", tmsg)
 }
+
+func on_GW2C_LuckyDrawHit(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.GW2C_LuckyDrawHit)
+	log.Info(reflect.TypeOf(tmsg).String())
+}
+

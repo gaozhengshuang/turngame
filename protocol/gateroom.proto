@@ -27,3 +27,9 @@ message RS2GW_RetUserDisconnect {
     optional string errcode = 3;
 }
 
+// Client消息转发到Room
+message GW2RS_MsgTransfer {
+    optional string name = 1;
+    optional bytes buf = 2;
+}
+
