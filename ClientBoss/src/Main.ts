@@ -76,12 +76,28 @@ class Main extends eui.UILayer {
 
     private async loadResource() {
         try {
-            if (typeof(resUrl) != "undefined") {
+            if (typeof (resUrl) != "undefined") {
                 game.$isWx = false;
                 await RES.loadConfig(`${resUrl}?v=${Math.random()}`, "resource/");
             } else {
                 game.$isWx = true;
                 await RES.loadConfig(`default.res.json`, "resource/");
+            }
+            {
+                const remoteUrl = "http://jump.test.giantfun.cn/egret_remote/resource/"
+
+                egret.ImageLoader.crossOrigin = "anonymous";
+
+                RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, (e) => { console.log("加载资源成功"); }, this);
+                RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, (e) => { console.log("加载资源出错！", e); }, this);
+                RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, (e) => { console.log("加载资源项出错", e); }, this);
+
+                await RES.loadConfig("default.res.json", "resource/");
+                try {
+                    await RES.loadConfig("default.res.json", remoteUrl);
+                } catch (e) {
+                    console.log("加载远端文件失败：", remoteUrl, "default.res.json");
+                }
             }
             await this.loadTheme();
             await RES.loadGroup("loading");
