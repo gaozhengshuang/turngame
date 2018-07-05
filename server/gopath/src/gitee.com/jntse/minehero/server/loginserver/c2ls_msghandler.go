@@ -213,7 +213,7 @@ func registAccount(account, passwd, invitationcode, token string) (errcode strin
 		userinfo := &msg.Serialize {
 			Entity : &msg.EntityBase{ Id:pb.Uint64(userid), Name:pb.String(""), Face:pb.String(""), Account:pb.String(account) },
 			Base : &msg.UserBase{Money: pb.Uint32(1000), Invitationcode:pb.String(invitationcode), Yuanbao:pb.Uint32(Yuanbao), Level:pb.Uint32(1)},
-			Item : nil,
+			Item : &msg.ItemBin{},
 		}
 		userkey := fmt.Sprintf("userbin_%d", userid)
 		log.Info("userinfo=%v",userinfo)

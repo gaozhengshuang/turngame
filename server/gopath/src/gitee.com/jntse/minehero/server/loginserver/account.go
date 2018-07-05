@@ -149,6 +149,10 @@ func Authenticate(session network.IBaseNetSession, account string, passwd string
 func ProcessInvitationUser(charid uint64, invitationcode string) {
 
 	// 保存邀请人信息
+	if len(invitationcode) < 2 {
+		return
+	}
+
 	invitation_user := invitationcode[2:]
 	invitkey := fmt.Sprintf("user_%d_invitation", charid)
 	Redis().Set(invitkey, invitation_user, 0)
