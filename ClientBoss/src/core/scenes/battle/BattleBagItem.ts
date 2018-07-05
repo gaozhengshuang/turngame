@@ -19,7 +19,8 @@ module game {
         }
 
         private getHandle() {
-            
+            let list: msg.IDeliveryGoods[] = [{itemid: this.data.id, num: this.data.num}];
+            sendMessage("msg.C2GW_ReqDeliveryGoods", msg.C2GW_ReqDeliveryGoods.encode({list: list, token: ""}));
         }
 
         protected dataChanged() {

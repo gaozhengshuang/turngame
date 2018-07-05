@@ -1,5 +1,6 @@
-{
-	"groups":[
+﻿{
+	"groups":
+	[
 		{
 			"keys":"ball/1,ball/2,1",
 			"name":"loading"
@@ -9,7 +10,8 @@
 			"name":"preload"
 		}
 	],
-	"resources":[
+	"resources":
+	[
 		{
 			"name":"1",
 			"type":"image",
@@ -614,6 +616,11 @@
 			"name":"lucky/luckyLight",
 			"type":"image",
 			"url":"assets/lucky/luckyLight.png"
+		},
+		{
+			"name":"lucky/luckyTitle",
+			"type":"image",
+			"url":"assets/lucky/luckyTitle.png"
 		},
 		{
 			"name":"lucky/shopbg",

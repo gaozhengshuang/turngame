@@ -17,6 +17,12 @@ module game {
         gift_10: LuckyItem;
         gift_11: LuckyItem;
         gift_12: LuckyItem;
+        gift_13: LuckyItem;
+        gift_14: LuckyItem;
+        gift_15: LuckyItem;
+        gift_16: LuckyItem;
+        gift_17: LuckyItem;
+        gift_18: LuckyItem;
 
         private _playInterval: number;
         private _giftPro: number[];
@@ -125,7 +131,7 @@ module game {
                         playEnd();
                     } else {
                         this._lightIndex++;
-                        if (this._lightIndex > 12) {
+                        if (this._lightIndex > this._giftPro.length) {
                             this._lightIndex = 1;
                         }
                         this.luckyLight.x = this["gift_"+this._lightIndex].x;
