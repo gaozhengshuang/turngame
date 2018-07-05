@@ -54,6 +54,19 @@ func (this *GateUser) AddMoney(gold uint32, reason string) {
 	this.money = this.GetMoney() + gold
 	log.Info("玩家[%d] 添加金币[%d] 库存[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 }
+func (this *GateUser) RemoveMoney(gold uint32, reason string) bool {
+	if this.GetMoney() > gold {
+		userbase := this.UserBase()
+		userbase.Money = pb.Uint32(this.GetMoney() - gold)
+		send := &msg.GW2C_UpdateYuanbao{Num:pb.Uint32(this.GetMoney())}
+		this.SendMsg(send)
+		log.Info("玩家[%d] 扣除金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
+		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Gold), gold)
+		return true
+	}
+	log.Info("玩家[%d] 扣除金币失败[%d] 原因[%s]", this.Id(), gold, reason)
+	return false
+}
 
 // 添加元宝
 func (this *GateUser) GetYuanbao() uint32 { return this.yuanbao }
