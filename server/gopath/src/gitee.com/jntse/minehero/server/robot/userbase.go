@@ -73,7 +73,7 @@ func (this *UserBase) NewRegistAccountMsg() *msg.C2L_ReqRegistAccount {
 	msg := &msg.C2L_ReqRegistAccount{
 		Phone: pb.String(this.account),
 		Passwd: pb.String(this.passwd),
-		Authcode: pb.String(""),
+		Authcode: pb.String("robot@free@regist"),
 		Invitationcode: pb.String(""),
 	}
 	return msg
@@ -82,7 +82,7 @@ func (this *UserBase) NewRegistAccountMsg() *msg.C2L_ReqRegistAccount {
 func (this *UserBase) NewReqLoginMsg() *msg.C2L_ReqLogin {
 	msg := &msg.C2L_ReqLogin {
 		Account:pb.String(this.account),
-		//Passwd:pb.String(this.passwd),
+		Passwd:pb.String(this.passwd),
 	}
 	return msg
 }

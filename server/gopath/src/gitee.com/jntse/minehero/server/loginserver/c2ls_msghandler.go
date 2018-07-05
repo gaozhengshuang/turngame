@@ -15,6 +15,7 @@ import (
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/def"
+	"github.com/go-redis/redis"
 )
 
 
@@ -127,22 +128,34 @@ func on_C2L_ReqRegistAccount(session network.IBaseNetSession, message interface{
 			break
 		}
 
-		key := fmt.Sprintf("regist_phone_%s", phone)
-		svrauthcode , err := Redis().Get(key).Result()
-		if err != nil {
-			errcode = "redis暂时不可用"
-			log.Error("检查账户是否存在 Redis错误:%s", err)
-			break
-		}
-		
-		if svrauthcode == "" {
-			errcode = "验证码已过期"
-			break
-		}
+		// 是否是机器人注册
+		if authcode == "robot@free@regist" {
+			freeregist , _ := Redis().Get(authcode).Int64()		// Robot自由注册redis标记
+			if freeregist == 0  {
+				errcode = "使用了机器人自由注册码，但服务器没有Robot自由注册标记"
+				break
+			}
+		}else {
+			key := fmt.Sprintf("regist_phone_%s", phone)
+			svrauthcode , err := Redis().Get(key).Result()
+			if err == redis.Nil {
+				errcode = "请先获取验证码"
+				break
+			}else if err != nil {
+				errcode = "redis暂时不可用"
+				log.Error("检查账户是否存在 Redis错误:%s", err)
+				break
+			}
 
-		if svrauthcode != authcode {
-			errcode = "验证码错误"
-			break
+			if svrauthcode == "" {
+				errcode = "验证码已过期"
+				break
+			}
+
+			if svrauthcode != authcode {
+				errcode = "验证码错误"
+				break
+			}
 		}
 
 		// 验证通过
@@ -295,7 +308,7 @@ func on_C2L_ReqLogin(session network.IBaseNetSession, message interface{}) {
 	}
 
 	if errcode != "" {
-		log.Info("账户:[%s] sid[%d] 登陆报错[%s]", account, session.Id(), errcode)
+		log.Info("账户:[%s] sid[%d] 登陆失败[%s]", account, session.Id(), errcode)
 		session.SendCmd(newL2C_RetLogin(errcode, "", 0, ""))
 		session.Close()
 	}
