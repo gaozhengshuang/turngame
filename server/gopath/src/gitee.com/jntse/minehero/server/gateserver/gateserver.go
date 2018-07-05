@@ -238,6 +238,7 @@ func (this *GateServer) InitMsgHandler() {
 	this.msghandlers = append(this.msghandlers, NewLS2GMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewMS2GWMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewRS2GWMsgHandler())
+
 }
 
 

@@ -51,6 +51,7 @@ type RoomServer struct {
 	usermgr			UserManager
 	//sessions		map[int]network.IBaseNetSession     // 及时删除，没有任何地方引用golang才会GC
 	msghandlers		[]network.IBaseMsgHandler
+	clienthandler	*ClientMsgHandler
 	tblloader		*tbl.TblLoader
 	//countmgr		  CountManager
 	rcounter		util.RedisCounter
@@ -93,6 +94,10 @@ func UserMgr() *UserManager {
 
 func Redis() *redis.Client {
 	return RoomSvr().hredis
+}
+
+func CMHandler() *ClientMsgHandler {
+	return RoomSvr().clienthandler
 }
 
 //func CountMgr() *CountManager {
@@ -231,6 +236,7 @@ func (this *RoomServer) InitMsgHandler() {
 	if this.tblloader == nil { panic("should init 'tblloader' first") }
 	this.msghandlers = append(this.msghandlers, NewC2GWMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewMS2RSMsgHandler())
+	this.clienthandler = NewClientMsgHandler()
 }
 
 // 启动redis

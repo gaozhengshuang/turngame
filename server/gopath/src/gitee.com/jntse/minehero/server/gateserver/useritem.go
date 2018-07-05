@@ -29,10 +29,7 @@ func (this *GateUser) AddItem(item uint32, num uint32, reason string) {
 	}else if item == uint32(msg.ItemId_FreeStep) {
 		this.AddFreeStep(int32(num), reason)
 	}else {
-		base, ok := tbl.ItemBase.ItemBaseDataById[item]
-		if ok && this.bag.AddItem(item, num, reason) != nil {
-			this.PlatformPushLootMoney(float32(base.RealPrice) * float32(num))
-		}
+		this.bag.AddItem(item, num, reason)
 	}
 	//CountMgr().AddGet(item, num)
 	RCounter().IncrByDate("item_add", uint32(item), num)
@@ -40,12 +37,7 @@ func (this *GateUser) AddItem(item uint32, num uint32, reason string) {
 
 // 扣除道具
 func (this *GateUser) RemoveItem(item uint32, num uint32, reason string) bool{
-	base, ok := tbl.ItemBase.ItemBaseDataById[item]
-	if ok && this.bag.RemoveItem(item, num, reason) {
-		this.PlatformPushConsumeMoney(float32(base.RealPrice) * float32(num))
-		return true
-	}
-	return false
+	return this.bag.RemoveItem(item, num, reason)
 }
 
 // 金币
@@ -78,7 +70,6 @@ func (this *GateUser) AddYuanbao(yuanbao uint32, reason string) {
 	this.SendMsg(send)
 	RCounter().IncrByDate("item_add", uint32(msg.ItemId_YuanBao), yuanbao)
 	log.Info("玩家[%d] 添加元宝[%d] 库存[%d] 原因[%s]", this.Id(), yuanbao, this.GetYuanbao(), reason)
-	this.PlatformPushLootMoney(float32(yuanbao))
 }
 func (this *GateUser) RemoveYuanbao(yuanbao uint32, reason string) bool {
 	if this.GetYuanbao() >= yuanbao {
@@ -87,7 +78,6 @@ func (this *GateUser) RemoveYuanbao(yuanbao uint32, reason string) bool {
 		this.SendMsg(send)
 		log.Info("玩家[%d] 扣除元宝[%d] 库存[%d] 原因[%s]", this.Id(), yuanbao, this.GetYuanbao(), reason)
 		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_YuanBao), yuanbao)
-		this.PlatformPushConsumeMoney(float32(yuanbao))
 		return true
 	}
 	log.Info("玩家[%d] 扣除元宝[%d]失败 库存[%d] 原因[%s]", this.Id(), yuanbao, this.GetYuanbao(), reason)

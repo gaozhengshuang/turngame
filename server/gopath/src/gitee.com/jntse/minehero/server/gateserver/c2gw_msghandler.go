@@ -486,7 +486,7 @@ func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}
 	}
 	
 	if user.IsInRoom() {
-		user.SendNotify("游戏中不能抽奖")
+		//user.SendNotify("游戏中不能抽奖")
 		user.TransferRoomMsg(tmsg)
 		return
 	}

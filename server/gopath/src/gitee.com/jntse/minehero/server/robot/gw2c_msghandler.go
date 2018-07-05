@@ -40,6 +40,7 @@ func (this* GW2CMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.GW2C_AddPackageItem{}, on_GW2C_AddPackageItem)
 	this.msgparser.RegistProtoMsg(msg.GW2C_RemovePackageItem{}, on_GW2C_RemovePackageItem)
 	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateYuanbao{}, on_GW2C_UpdateYuanbao)
+	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateGold{}, on_GW2C_UpdateGold)
 	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateCoupon{}, on_GW2C_UpdateCoupon)
 	this.msgparser.RegistProtoMsg(msg.Sync_BigRewardPickNum{}, on_Sync_BigRewardPickNum)
 	this.msgparser.RegistProtoMsg(msg.GW2C_Ret7DayReward{}, on_GW2C_Ret7DayReward)
@@ -79,16 +80,22 @@ func on_GW2C_UpdateYuanbao(session network.IBaseNetSession, message interface{})
 	log.Info("%#v", tmsg)
 }
 
+func on_GW2C_UpdateGold(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.GW2C_UpdateGold)
+	//log.Info(reflect.TypeOf(tmsg).String())
+	log.Info("%#v", tmsg)
+}
+
 func on_GW2C_RemovePackageItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_RemovePackageItem)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%v", tmsg)
+	log.Info("%#v", tmsg)
 }
 
 func on_GW2C_AddPackageItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_AddPackageItem)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%v", tmsg)
+	log.Info("%#v", tmsg)
 }
 
 func on_GW2C_MsgNotify(session network.IBaseNetSession, message interface{}) {
@@ -196,6 +203,7 @@ func on_Sync_BigRewardPickNum(session network.IBaseNetSession, message interface
 
 func on_GW2C_LuckyDrawHit(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_LuckyDrawHit)
-	log.Info(reflect.TypeOf(tmsg).String())
+	//log.Info(reflect.TypeOf(tmsg).String())
+	log.Info("%#v", tmsg)
 }
 

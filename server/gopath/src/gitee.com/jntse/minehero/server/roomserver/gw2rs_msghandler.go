@@ -46,6 +46,7 @@ func (this* C2GWMsgHandler) Init() {
 	// 发
 	this.msgparser.RegistSendProto(msg.RS2GW_ReqRegist{})
 	this.msgparser.RegistSendProto(msg.RS2GW_RetUserDisconnect{})
+	this.msgparser.RegistSendProto(msg.RS2GW_MsgTransfer{})
 	this.msgparser.RegistSendProto(msg.BT_GameInit{})
 	this.msgparser.RegistSendProto(msg.BT_SendBattleUser{})
 	this.msgparser.RegistSendProto(msg.BT_GameStart{})
@@ -117,7 +118,8 @@ func on_GW2RS_MsgTransfer(session network.IBaseNetSession, message interface{}) 
 		return
 	}
 
-	log.Info("msg=%v", protomsg)
+	CMHandler().Handler(session, protomsg, tmsg.GetUid())
+	//log.Info("msg=%v", protomsg)
 }
 
 func on_BT_UploadGameUser(session network.IBaseNetSession, message interface{}) {
@@ -167,5 +169,3 @@ func on_BT_UpdateMoney(session network.IBaseNetSession, message interface{}) {
 	room.owner.SetMoney(uint32(money), "同步客户端")
 }
 
-type ClientMsgHandler struct {
-}
