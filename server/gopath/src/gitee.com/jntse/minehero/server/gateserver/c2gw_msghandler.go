@@ -86,6 +86,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_SendUserPlatformMoney{})
 	this.msgparser.RegistSendProto(msg.GW2C_RetDeliveryDiamond{})
 	this.msgparser.RegistSendProto(msg.GW2C_SendWechatInfo{})
+	this.msgparser.RegistSendProto(msg.GW2C_LuckyDrawHit{})
 
 	// Room
 	this.msgparser.RegistSendProto(msg.BT_GameInit{})
@@ -489,11 +490,12 @@ func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}
 	}
 
 	// 检查消耗
-	cost := uint32(10)
+	cost := uint32(tbl.Game.LuckDrawPrice)
 	if user.GetMoney() < cost {
 		user.SendNotify("金币不足")
 		return
 	}
+	user.RemoveMoney(cost, "幸运抽奖")
 
 	//
 	giftweight := make([]util.WeightOdds, 0)

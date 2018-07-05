@@ -107,7 +107,7 @@ func (this *GameRoom) LoadUser(bin *msg.Serialize, gate network.IBaseNetSession)
 	}
 
 	// 
-	user := NewRoomUser(this.id, bin, gate, this.roomkind)
+	user := UserMgr().CreateRoomUser(this.id, bin, gate, this.roomkind)
 	this.owner = user
 
 	// 

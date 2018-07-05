@@ -95,7 +95,8 @@ func (this *TblLoader) Init() {
 	
 
 	// load jsons
-    this.LoadJson(Global, "global.json")
+    this.LoadJson(Game, "game.json")
+	this.LoadJson(Global, "global.json")
 	this.LoadJson(Room, "room.json")
 	
 }

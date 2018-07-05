@@ -11,6 +11,7 @@ type IBaseJson interface {
 // --------------------------------------------------------------------------
 /// @brief 创建json config 实例
 // --------------------------------------------------------------------------
+var Game *table.Game = new(table.Game)
 var Global *table.Global = new(table.Global)
 var Room *table.Room = new(table.Room)
 

@@ -42,6 +42,7 @@ func (this* RS2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.BT_GameStart{}, on_BT_GameStart)
 	this.msgparser.RegistProtoMsg(msg.BT_GameEnd{}, on_BT_GameEnd)
 	this.msgparser.RegistProtoMsg(msg.BT_PickItem{}, on_BT_PickItem)
+	this.msgparser.RegistProtoMsg(msg.GW2C_LuckyDrawHit{}, on_GW2C_LuckyDrawHit)
 
 	// 发
 	this.msgparser.RegistSendProto(msg.GW2RS_RetRegist{})
@@ -50,6 +51,7 @@ func (this* RS2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
 	this.msgparser.RegistSendProto(msg.BT_ReqQuitGameRoom{})
 	this.msgparser.RegistSendProto(msg.BT_UpdateMoney{})
+	this.msgparser.RegistSendProto(msg.C2GW_StartLuckyDraw{})
 }
 
 func on_RS2GW_ReqRegist(session network.IBaseNetSession, message interface{}) {
@@ -144,3 +146,8 @@ func on_RS2GW_RetUserDisconnect(session network.IBaseNetSession, message interfa
 		user.Logout()
 	}
 }
+
+func on_GW2C_LuckyDrawHit(session network.IBaseNetSession, message interface{}) {
+}
+
+
