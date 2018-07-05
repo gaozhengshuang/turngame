@@ -5,12 +5,11 @@ module game {
         passwordLabel: eui.EditableText;
         passwordokLabel: eui.EditableText;
         comeonLabel: eui.EditableText;
-
         yzmbtnLabel: eui.Label;
 
         registerButton: IconButton;
+        btn_authCode: IconButton;
         btn_login: eui.Label;
-        btn_authCode: eui.Image;
 
         protected getSkinName() {
             return RegisterPanelSkin;
@@ -18,6 +17,7 @@ module game {
 
         protected init() {
             this.registerButton.icon = "login/registerBtn";
+            this.btn_authCode.icon = "login/yzmbutton";
         }
 
         protected beforeShow() {
