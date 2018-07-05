@@ -2,6 +2,8 @@ declare class LoadingSkin extends eui.Skin{
 }
 declare class NetFailedSkin extends eui.Skin{
 }
+declare class AvatarSkin extends eui.Skin{
+}
 declare class BattleBagItemSkin extends eui.Skin{
 }
 declare class BattleBagSkin extends eui.Skin{
@@ -51,8 +53,6 @@ declare class LuckyItemSkin extends eui.Skin{
 declare class NormalLabelButtonSkin extends eui.Skin{
 }
 declare class ToggleButtonSkin extends eui.Skin{
-}
-declare class AvatarSkin extends eui.Skin{
 }
 declare class LoginSceneSkin extends eui.Skin{
 }

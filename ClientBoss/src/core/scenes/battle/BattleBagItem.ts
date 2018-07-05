@@ -23,7 +23,7 @@ module game {
         }
 
         protected dataChanged() {
-            let _data = table.ItemBaseData[this.data.id];
+            let _data = table.ItemBaseDataById[this.data.id];
             if (!_data) {
                 egret.log(`${this.data.id}找不到道具!`);
                 this.visible = false;
