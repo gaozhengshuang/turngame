@@ -92,10 +92,12 @@ class Main extends eui.UILayer {
                 RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, (e) => { console.log("加载资源出错！", e); }, this);
                 RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, (e) => { console.log("加载资源项出错", e); }, this);
 
-                await RES.loadConfig("default.res.json", "resource/")
-
-                await RES.loadConfig("default.res.json", remoteUrl)
-
+                await RES.loadConfig("default.res.json", "resource/");
+                try {
+                    await RES.loadConfig("default.res.json", remoteUrl);
+                } catch (e) {
+                    console.log("加载远端文件失败：", remoteUrl, "default.res.json");
+                }
             }
             await this.loadTheme();
             await RES.loadGroup("loading");
