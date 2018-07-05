@@ -255,7 +255,7 @@ func (this *GateServer) StartRedis() bool {
 		return false
 	}
 
-	log.Info("连接Redis成功")
+	log.Info("连接Redis[%s]成功", this.netconf.Redis.Host.String())
 	return true
 }
 
