@@ -52,13 +52,15 @@ func (this *GateUser) RemoveItem(item uint32, num uint32, reason string) bool{
 func (this *GateUser) GetMoney() uint32   { return this.money }
 func (this *GateUser) AddMoney(gold uint32, reason string) {
 	this.money = this.GetMoney() + gold
+	send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+	this.SendMsg(send)
 	log.Info("玩家[%d] 添加金币[%d] 库存[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 }
 func (this *GateUser) RemoveMoney(gold uint32, reason string) bool {
 	if this.GetMoney() > gold {
 		userbase := this.UserBase()
 		userbase.Money = pb.Uint32(this.GetMoney() - gold)
-		send := &msg.GW2C_UpdateYuanbao{Num:pb.Uint32(this.GetMoney())}
+		send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
 		this.SendMsg(send)
 		log.Info("玩家[%d] 扣除金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Gold), gold)
@@ -499,4 +501,41 @@ func (this *GateUser) LoginStatistics() {
 		}
 	}
 }
+
+// 幸运抽奖
+func (this *GateUser) LuckyDraw() {
+
+	// 检查消耗
+	cost := uint32(tbl.Game.LuckDrawPrice)
+	if this.GetMoney() < cost {
+		this.SendNotify("金币不足")
+		return
+	}
+	this.RemoveMoney(cost, "幸运抽奖")
+
+	//
+	giftweight := make([]util.WeightOdds, 0)
+	for k ,v := range tbl.TBallGiftbase.TBallGiftById {
+		giftweight = append(giftweight, util.WeightOdds{Weight:v.Pro, Uid:int64(k)})
+	}
+	index := util.SelectByWeightOdds(giftweight)
+	if index < 0 || index >= int32(len(giftweight)) {
+		log.Error("[%d %s] 抽奖异常，无法获取抽奖id", this.Id(), this.Name())
+		return
+	}
+
+	uid := giftweight[index].Uid
+	gift, find := tbl.TBallGiftbase.TBallGiftById[uint32(uid)]
+	if find == false {
+		log.Error("[%d %s] 无效的奖励id[%d]", this.Id(), this.Name(), uid)
+		return
+	}
+
+	this.AddItem(gift.ItemId, gift.Num, "幸运抽奖")
+
+	// feedback
+	send := &msg.GW2C_LuckyDrawHit{Id:pb.Int32(int32(uid))}
+	this.SendMsg(send)
+}
+
 
