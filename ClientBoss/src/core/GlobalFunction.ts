@@ -1,4 +1,9 @@
 module game {
+    //获取道具图片
+    export function getItemIconSource(id: number) {
+        return `item/${id}`;
+    }
+
     //显示等待界面
     export function showWaitPanel(type = 0) {
         gameConfig.curStage().touchChildren = false;
