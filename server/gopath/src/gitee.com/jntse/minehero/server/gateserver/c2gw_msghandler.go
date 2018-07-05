@@ -61,6 +61,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqDeliveryDiamond{}, on_C2GW_ReqDeliveryDiamond)
 	this.msgparser.RegistProtoMsg(msg.C2GW_PlatformRechargeDone{}, on_C2GW_PlatformRechargeDone)
 	this.msgparser.RegistProtoMsg(msg.C2GW_SendWechatAuthCode{}, on_C2GW_SendWechatAuthCode)
+	this.msgparser.RegistProtoMsg(msg.C2GW_StartLuckyDraw{}, on_C2GW_StartLuckyDraw)
 
 	// 收战场消息
 	this.msgparser.RegistProtoMsg(msg.BT_ReqEnterRoom{}, on_BT_ReqEnterRoom)
@@ -471,4 +472,52 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 		log.Info("玩家[%d] 绑定wechat openid[%s]", user.Id(), respok.Openid)
 	}
 }
+
+// 抽奖
+func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}) {
+	//tmsg := message.(*msg.C2GW_StartLuckyDraw)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+	
+	if user.IsInRoom() {
+		user.SendNotify("游戏中不能抽奖")
+		return
+	}
+
+	// 检查消耗
+	cost := uint32(10)
+	if user.GetMoney() < cost {
+		user.SendNotify("金币不足")
+		return
+	}
+
+	//
+	giftweight := make([]util.WeightOdds, 0)
+	for k ,v := range tbl.TBallGiftbase.TBallGiftById {
+		giftweight = append(giftweight, util.WeightOdds{Weight:v.Pro, Uid:int64(k)})
+	}
+	index := util.SelectByWeightOdds(giftweight)
+	if index < 0 || index >= int32(len(giftweight)) {
+		log.Error("[%d %s] 抽奖异常，无法获取抽奖id", user.Id(), user.Name())
+		return
+	}
+
+	uid := giftweight[index].Uid
+	gift, find := tbl.TBallGiftbase.TBallGiftById[uint32(uid)]
+	if find == false {
+		log.Error("[%d %s] 无效的奖励id[%d]", user.Id(), user.Name(), uid)
+		return
+	}
+
+	user.AddItem(gift.ItemId, gift.Num, "幸运抽奖")
+
+	// feedback
+	send := &msg.GW2C_LuckyDrawHit{Id:pb.Int32(int32(uid))}
+	user.SendMsg(send)
+}
+
 
