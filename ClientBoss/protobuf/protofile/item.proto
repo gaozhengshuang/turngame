@@ -22,6 +22,11 @@ message GW2C_RemovePackageItem {
     optional uint32 num = 2;
 }
 
+// 更新金币
+message GW2C_UpdateGold {
+    optional uint32 num = 1;
+}
+
 // 更新元宝
 message GW2C_UpdateYuanbao {
     optional uint32 num = 1;

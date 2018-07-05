@@ -28,19 +28,22 @@ message TBallGiftDefine
 	optional uint32 Num = 3; // 数量
 	
 	
-	optional string Path = 4; // 路径
+	optional uint32 ItemId = 4; // 道具id
 	
 	
-	optional int32 Pro = 5; // 概率万分比
+	optional string Path = 5; // 路径
 	
 	
-	optional int32 PushBag = 6; // 1进包裹2加金币
+	optional int32 Pro = 6; // 概率万分比
 	
 	
-	optional string Info = 7; 
+	optional int32 PushBag = 7; // 1进包裹2加金币
 	
 	
-	optional int32 Cost = 8; // 价值
+	optional string Info = 8; 
+	
+	
+	optional int32 Cost = 9; // 价值
 
 }
 

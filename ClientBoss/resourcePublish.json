@@ -555,34 +555,6 @@
 		},
 		{
 			"compress":false,
-			"key":"item/1"
-		},
-		{
-			"compress":false,
-			"key":"item/10"
-		},
-		{
-			"compress":false,
-			"key":"item/12"
-		},
-		{
-			"compress":false,
-			"key":"item/2"
-		},
-		{
-			"compress":false,
-			"key":"item/3"
-		},
-		{
-			"compress":false,
-			"key":"item/6"
-		},
-		{
-			"compress":false,
-			"key":"item/8"
-		},
-		{
-			"compress":false,
 			"key":"lucky/bagBtn"
 		},
 		{
@@ -764,6 +736,34 @@
 		{
 			"compress":false,
 			"key":"user/userBg"
+		},
+		{
+			"compress":false,
+			"key":"item/1001"
+		},
+		{
+			"compress":false,
+			"key":"item/2004"
+		},
+		{
+			"compress":false,
+			"key":"item/2006"
+		},
+		{
+			"compress":false,
+			"key":"item/3018"
+		},
+		{
+			"compress":false,
+			"key":"item/5003"
+		},
+		{
+			"compress":false,
+			"key":"item/5004"
+		},
+		{
+			"compress":false,
+			"key":"item/6004"
 		}
 	]
 }
