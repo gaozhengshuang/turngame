@@ -404,7 +404,7 @@ func on_C2GW_PlatformRechargeDone(session network.IBaseNetSession, message inter
 	//user.QueryPlatformCoins()
 }
 
-
+// 绑定微信openid
 func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_SendWechatAuthCode)
 	user := ExtractSessionUser(session)
@@ -489,37 +489,7 @@ func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}
 		return
 	}
 
-	// 检查消耗
-	cost := uint32(tbl.Game.LuckDrawPrice)
-	if user.GetMoney() < cost {
-		user.SendNotify("金币不足")
-		return
-	}
-	user.RemoveMoney(cost, "幸运抽奖")
-
-	//
-	giftweight := make([]util.WeightOdds, 0)
-	for k ,v := range tbl.TBallGiftbase.TBallGiftById {
-		giftweight = append(giftweight, util.WeightOdds{Weight:v.Pro, Uid:int64(k)})
-	}
-	index := util.SelectByWeightOdds(giftweight)
-	if index < 0 || index >= int32(len(giftweight)) {
-		log.Error("[%d %s] 抽奖异常，无法获取抽奖id", user.Id(), user.Name())
-		return
-	}
-
-	uid := giftweight[index].Uid
-	gift, find := tbl.TBallGiftbase.TBallGiftById[uint32(uid)]
-	if find == false {
-		log.Error("[%d %s] 无效的奖励id[%d]", user.Id(), user.Name(), uid)
-		return
-	}
-
-	user.AddItem(gift.ItemId, gift.Num, "幸运抽奖")
-
-	// feedback
-	send := &msg.GW2C_LuckyDrawHit{Id:pb.Int32(int32(uid))}
-	user.SendMsg(send)
+	user.LuckyDraw()
 }
 
 
