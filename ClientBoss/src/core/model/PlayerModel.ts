@@ -52,6 +52,7 @@ module game {
 
         public setScore(count: number) {
             this.userInfo.money = count;
+            this.postNotification(PlayerModel.SCORE_UPDATE);
         }
 
         public getScore() {

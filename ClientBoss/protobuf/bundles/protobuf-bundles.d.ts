@@ -1659,6 +1659,102 @@ declare namespace msg {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a FreePresentMoney. */
+    interface IFreePresentMoney {
+
+        /** FreePresentMoney count */
+        count?: (number|null);
+
+        /** FreePresentMoney tmrecord */
+        tmrecord?: (number|Long|null);
+    }
+
+    /** Represents a FreePresentMoney. */
+    class FreePresentMoney implements IFreePresentMoney {
+
+        /**
+         * Constructs a new FreePresentMoney.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: msg.IFreePresentMoney);
+
+        /** FreePresentMoney count. */
+        public count: number;
+
+        /** FreePresentMoney tmrecord. */
+        public tmrecord: (number|Long);
+
+        /**
+         * Creates a new FreePresentMoney instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns FreePresentMoney instance
+         */
+        public static create(properties?: msg.IFreePresentMoney): msg.FreePresentMoney;
+
+        /**
+         * Encodes the specified FreePresentMoney message. Does not implicitly {@link msg.FreePresentMoney.verify|verify} messages.
+         * @param message FreePresentMoney message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: msg.IFreePresentMoney, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified FreePresentMoney message, length delimited. Does not implicitly {@link msg.FreePresentMoney.verify|verify} messages.
+         * @param message FreePresentMoney message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: msg.IFreePresentMoney, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a FreePresentMoney message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns FreePresentMoney
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.FreePresentMoney;
+
+        /**
+         * Decodes a FreePresentMoney message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns FreePresentMoney
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.FreePresentMoney;
+
+        /**
+         * Verifies a FreePresentMoney message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a FreePresentMoney message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns FreePresentMoney
+         */
+        public static fromObject(object: { [k: string]: any }): msg.FreePresentMoney;
+
+        /**
+         * Creates a plain object from a FreePresentMoney message. Also converts values to other types if specified.
+         * @param message FreePresentMoney
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: msg.FreePresentMoney, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this FreePresentMoney to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a UserWechat. */
     interface IUserWechat {
 
@@ -1796,6 +1892,9 @@ declare namespace msg {
 
         /** UserBase invitationcode */
         invitationcode?: (string|null);
+
+        /** UserBase freepresent */
+        freepresent?: (msg.IFreePresentMoney|null);
     }
 
     /** Represents a UserBase. */
@@ -1851,6 +1950,9 @@ declare namespace msg {
 
         /** UserBase invitationcode. */
         public invitationcode: string;
+
+        /** UserBase freepresent. */
+        public freepresent?: (msg.IFreePresentMoney|null);
 
         /**
          * Creates a new UserBase instance using the specified properties.
@@ -9712,6 +9814,96 @@ declare namespace msg {
 
         /**
          * Converts this GW2C_LuckyDrawHit to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a GW2C_FreePresentNotify. */
+    interface IGW2C_FreePresentNotify {
+
+        /** GW2C_FreePresentNotify money */
+        money?: (number|null);
+    }
+
+    /** Represents a GW2C_FreePresentNotify. */
+    class GW2C_FreePresentNotify implements IGW2C_FreePresentNotify {
+
+        /**
+         * Constructs a new GW2C_FreePresentNotify.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: msg.IGW2C_FreePresentNotify);
+
+        /** GW2C_FreePresentNotify money. */
+        public money: number;
+
+        /**
+         * Creates a new GW2C_FreePresentNotify instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GW2C_FreePresentNotify instance
+         */
+        public static create(properties?: msg.IGW2C_FreePresentNotify): msg.GW2C_FreePresentNotify;
+
+        /**
+         * Encodes the specified GW2C_FreePresentNotify message. Does not implicitly {@link msg.GW2C_FreePresentNotify.verify|verify} messages.
+         * @param message GW2C_FreePresentNotify message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: msg.IGW2C_FreePresentNotify, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified GW2C_FreePresentNotify message, length delimited. Does not implicitly {@link msg.GW2C_FreePresentNotify.verify|verify} messages.
+         * @param message GW2C_FreePresentNotify message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: msg.IGW2C_FreePresentNotify, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a GW2C_FreePresentNotify message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GW2C_FreePresentNotify
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.GW2C_FreePresentNotify;
+
+        /**
+         * Decodes a GW2C_FreePresentNotify message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GW2C_FreePresentNotify
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.GW2C_FreePresentNotify;
+
+        /**
+         * Verifies a GW2C_FreePresentNotify message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GW2C_FreePresentNotify message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GW2C_FreePresentNotify
+         */
+        public static fromObject(object: { [k: string]: any }): msg.GW2C_FreePresentNotify;
+
+        /**
+         * Creates a plain object from a GW2C_FreePresentNotify message. Also converts values to other types if specified.
+         * @param message GW2C_FreePresentNotify
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: msg.GW2C_FreePresentNotify, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GW2C_FreePresentNotify to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

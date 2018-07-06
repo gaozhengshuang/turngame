@@ -51,3 +51,8 @@ message C2GW_StartLuckyDraw {
 message GW2C_LuckyDrawHit {
     optional int32 id = 1;
 }
+
+// 免费赠送金币
+message GW2C_FreePresentNotify {
+    optional int32 money = 1;
+}
