@@ -253,7 +253,7 @@ module game {
 
         public guideFinish() {
             if (egret.localStorage.getItem("guide")) {
-                return true
+                return true;
             } else {
                 return false;
             }

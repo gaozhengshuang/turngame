@@ -401,7 +401,9 @@ module game {
             let y = event.stageY - 88;
             if (y >= this._paddle.y) return;
             if (DataManager.playerModel.getScore() < _paddlePrice) {
-                showTips("您的炮弹不足!", true);
+                showDialog("您的金币不足!", "充值", function () {
+                    showTips("暂未开放,敬请期待...", true);
+                });
                 return;
             }
             if(this._spCool == 0){ //无限火力不扣子弹
