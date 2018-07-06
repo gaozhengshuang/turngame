@@ -331,6 +331,8 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	bin.Base = &msg.UserBase{}
 	bin.Base.Scounter = &msg.SimpleCounter{}
 	bin.Base.Wechat = &msg.UserWechat{}
+	bin.Base.Addrlist = make([]*msg.UserAddress,0)
+	bin.Base.Freepresent = &msg.FreePresentMoney{}
 
 	userbase := bin.GetBase()
 	userbase.Tmlogin = pb.Int64(this.tm_login)

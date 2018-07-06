@@ -94,6 +94,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_SendWechatInfo{})
 	this.msgparser.RegistSendProto(msg.GW2C_LuckyDrawHit{})
 	this.msgparser.RegistSendProto(msg.GW2C_SendDeliveryAddressList{})
+	this.msgparser.RegistSendProto(msg.GW2C_FreePresentNotify{})
 
 	// Room
 	this.msgparser.RegistSendProto(msg.BT_GameInit{})

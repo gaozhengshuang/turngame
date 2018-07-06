@@ -102,7 +102,8 @@ export var ProtoId : table.IProtoIdDefine[] = [
 		{ Id : 97, Name : "msg.C2GW_PlatformRechargeDone" 	},
 		{ Id : 98, Name : "msg.GW2C_SendWechatInfo" 	},
 		{ Id : 99, Name : "msg.C2GW_StartLuckyDraw" 	},
-		{ Id : 100, Name : "msg.GW2C_LuckyDrawHit" 	}
+		{ Id : 100, Name : "msg.GW2C_LuckyDrawHit" 	},
+		{ Id : 101, Name : "msg.GW2C_FreePresentNotify" 	}
 	]
 
 

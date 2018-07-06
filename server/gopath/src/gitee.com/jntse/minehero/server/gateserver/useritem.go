@@ -545,9 +545,14 @@ func (this *GateUser) CheckFreePresentMoney(syn bool) {
 		}
 	}
 
-	this.AddMoney(uint32(tbl.Game.FreePresentRule.Money), "每日免费赠送", syn)
+	money := tbl.Game.FreePresentRule.Money
+	this.AddMoney(uint32(money), "每日免费赠送", syn)
 	this.presentcount += 1
 	this.presentrecord = curtime
+
+	// 客户端界面展示
+	send := &msg.GW2C_FreePresentNotify{Money:pb.Int32(int32(money))}
+	this.SendMsg(send)
 }
 
 
