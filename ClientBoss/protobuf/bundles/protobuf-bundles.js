@@ -13420,6 +13420,504 @@ $root.msg = (function() {
         return RS2GW_RetUserDisconnect;
     })();
 
+    msg.GW2RS_MsgTransfer = (function() {
+
+        /**
+         * Properties of a GW2RS_MsgTransfer.
+         * @memberof msg
+         * @interface IGW2RS_MsgTransfer
+         * @property {number|Long|null} [uid] GW2RS_MsgTransfer uid
+         * @property {string|null} [name] GW2RS_MsgTransfer name
+         * @property {Uint8Array|null} [buf] GW2RS_MsgTransfer buf
+         */
+
+        /**
+         * Constructs a new GW2RS_MsgTransfer.
+         * @memberof msg
+         * @classdesc Represents a GW2RS_MsgTransfer.
+         * @implements IGW2RS_MsgTransfer
+         * @constructor
+         * @param {msg.IGW2RS_MsgTransfer=} [properties] Properties to set
+         */
+        function GW2RS_MsgTransfer(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2RS_MsgTransfer uid.
+         * @member {number|Long} uid
+         * @memberof msg.GW2RS_MsgTransfer
+         * @instance
+         */
+        GW2RS_MsgTransfer.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * GW2RS_MsgTransfer name.
+         * @member {string} name
+         * @memberof msg.GW2RS_MsgTransfer
+         * @instance
+         */
+        GW2RS_MsgTransfer.prototype.name = "";
+
+        /**
+         * GW2RS_MsgTransfer buf.
+         * @member {Uint8Array} buf
+         * @memberof msg.GW2RS_MsgTransfer
+         * @instance
+         */
+        GW2RS_MsgTransfer.prototype.buf = $util.newBuffer([]);
+
+        /**
+         * Creates a new GW2RS_MsgTransfer instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {msg.IGW2RS_MsgTransfer=} [properties] Properties to set
+         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer instance
+         */
+        GW2RS_MsgTransfer.create = function create(properties) {
+            return new GW2RS_MsgTransfer(properties);
+        };
+
+        /**
+         * Encodes the specified GW2RS_MsgTransfer message. Does not implicitly {@link msg.GW2RS_MsgTransfer.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {msg.IGW2RS_MsgTransfer} message GW2RS_MsgTransfer message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2RS_MsgTransfer.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.uid);
+            if (message.name != null && message.hasOwnProperty("name"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.buf);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2RS_MsgTransfer message, length delimited. Does not implicitly {@link msg.GW2RS_MsgTransfer.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {msg.IGW2RS_MsgTransfer} message GW2RS_MsgTransfer message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2RS_MsgTransfer.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2RS_MsgTransfer message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2RS_MsgTransfer.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2RS_MsgTransfer();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.uid = reader.uint64();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                case 3:
+                    message.buf = reader.bytes();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2RS_MsgTransfer message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2RS_MsgTransfer.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2RS_MsgTransfer message.
+         * @function verify
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2RS_MsgTransfer.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (!$util.isInteger(message.uid) && !(message.uid && $util.isInteger(message.uid.low) && $util.isInteger(message.uid.high)))
+                    return "uid: integer|Long expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                if (!(message.buf && typeof message.buf.length === "number" || $util.isString(message.buf)))
+                    return "buf: buffer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2RS_MsgTransfer message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
+         */
+        GW2RS_MsgTransfer.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2RS_MsgTransfer)
+                return object;
+            var message = new $root.msg.GW2RS_MsgTransfer();
+            if (object.uid != null)
+                if ($util.Long)
+                    (message.uid = $util.Long.fromValue(object.uid)).unsigned = true;
+                else if (typeof object.uid === "string")
+                    message.uid = parseInt(object.uid, 10);
+                else if (typeof object.uid === "number")
+                    message.uid = object.uid;
+                else if (typeof object.uid === "object")
+                    message.uid = new $util.LongBits(object.uid.low >>> 0, object.uid.high >>> 0).toNumber(true);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.buf != null)
+                if (typeof object.buf === "string")
+                    $util.base64.decode(object.buf, message.buf = $util.newBuffer($util.base64.length(object.buf)), 0);
+                else if (object.buf.length)
+                    message.buf = object.buf;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2RS_MsgTransfer message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {msg.GW2RS_MsgTransfer} message GW2RS_MsgTransfer
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2RS_MsgTransfer.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.uid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.uid = options.longs === String ? "0" : 0;
+                object.name = "";
+                object.buf = options.bytes === String ? "" : [];
+            }
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (typeof message.uid === "number")
+                    object.uid = options.longs === String ? String(message.uid) : message.uid;
+                else
+                    object.uid = options.longs === String ? $util.Long.prototype.toString.call(message.uid) : options.longs === Number ? new $util.LongBits(message.uid.low >>> 0, message.uid.high >>> 0).toNumber(true) : message.uid;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                object.buf = options.bytes === String ? $util.base64.encode(message.buf, 0, message.buf.length) : options.bytes === Array ? Array.prototype.slice.call(message.buf) : message.buf;
+            return object;
+        };
+
+        /**
+         * Converts this GW2RS_MsgTransfer to JSON.
+         * @function toJSON
+         * @memberof msg.GW2RS_MsgTransfer
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2RS_MsgTransfer.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2RS_MsgTransfer;
+    })();
+
+    msg.RS2GW_MsgTransfer = (function() {
+
+        /**
+         * Properties of a RS2GW_MsgTransfer.
+         * @memberof msg
+         * @interface IRS2GW_MsgTransfer
+         * @property {number|Long|null} [uid] RS2GW_MsgTransfer uid
+         * @property {string|null} [name] RS2GW_MsgTransfer name
+         * @property {Uint8Array|null} [buf] RS2GW_MsgTransfer buf
+         */
+
+        /**
+         * Constructs a new RS2GW_MsgTransfer.
+         * @memberof msg
+         * @classdesc Represents a RS2GW_MsgTransfer.
+         * @implements IRS2GW_MsgTransfer
+         * @constructor
+         * @param {msg.IRS2GW_MsgTransfer=} [properties] Properties to set
+         */
+        function RS2GW_MsgTransfer(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RS2GW_MsgTransfer uid.
+         * @member {number|Long} uid
+         * @memberof msg.RS2GW_MsgTransfer
+         * @instance
+         */
+        RS2GW_MsgTransfer.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * RS2GW_MsgTransfer name.
+         * @member {string} name
+         * @memberof msg.RS2GW_MsgTransfer
+         * @instance
+         */
+        RS2GW_MsgTransfer.prototype.name = "";
+
+        /**
+         * RS2GW_MsgTransfer buf.
+         * @member {Uint8Array} buf
+         * @memberof msg.RS2GW_MsgTransfer
+         * @instance
+         */
+        RS2GW_MsgTransfer.prototype.buf = $util.newBuffer([]);
+
+        /**
+         * Creates a new RS2GW_MsgTransfer instance using the specified properties.
+         * @function create
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {msg.IRS2GW_MsgTransfer=} [properties] Properties to set
+         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer instance
+         */
+        RS2GW_MsgTransfer.create = function create(properties) {
+            return new RS2GW_MsgTransfer(properties);
+        };
+
+        /**
+         * Encodes the specified RS2GW_MsgTransfer message. Does not implicitly {@link msg.RS2GW_MsgTransfer.verify|verify} messages.
+         * @function encode
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {msg.IRS2GW_MsgTransfer} message RS2GW_MsgTransfer message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RS2GW_MsgTransfer.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.uid);
+            if (message.name != null && message.hasOwnProperty("name"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.buf);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RS2GW_MsgTransfer message, length delimited. Does not implicitly {@link msg.RS2GW_MsgTransfer.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {msg.IRS2GW_MsgTransfer} message RS2GW_MsgTransfer message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RS2GW_MsgTransfer.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RS2GW_MsgTransfer message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RS2GW_MsgTransfer.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.RS2GW_MsgTransfer();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.uid = reader.uint64();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                case 3:
+                    message.buf = reader.bytes();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RS2GW_MsgTransfer message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RS2GW_MsgTransfer.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RS2GW_MsgTransfer message.
+         * @function verify
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RS2GW_MsgTransfer.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (!$util.isInteger(message.uid) && !(message.uid && $util.isInteger(message.uid.low) && $util.isInteger(message.uid.high)))
+                    return "uid: integer|Long expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                if (!(message.buf && typeof message.buf.length === "number" || $util.isString(message.buf)))
+                    return "buf: buffer expected";
+            return null;
+        };
+
+        /**
+         * Creates a RS2GW_MsgTransfer message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
+         */
+        RS2GW_MsgTransfer.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.RS2GW_MsgTransfer)
+                return object;
+            var message = new $root.msg.RS2GW_MsgTransfer();
+            if (object.uid != null)
+                if ($util.Long)
+                    (message.uid = $util.Long.fromValue(object.uid)).unsigned = true;
+                else if (typeof object.uid === "string")
+                    message.uid = parseInt(object.uid, 10);
+                else if (typeof object.uid === "number")
+                    message.uid = object.uid;
+                else if (typeof object.uid === "object")
+                    message.uid = new $util.LongBits(object.uid.low >>> 0, object.uid.high >>> 0).toNumber(true);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.buf != null)
+                if (typeof object.buf === "string")
+                    $util.base64.decode(object.buf, message.buf = $util.newBuffer($util.base64.length(object.buf)), 0);
+                else if (object.buf.length)
+                    message.buf = object.buf;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RS2GW_MsgTransfer message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {msg.RS2GW_MsgTransfer} message RS2GW_MsgTransfer
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RS2GW_MsgTransfer.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.uid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.uid = options.longs === String ? "0" : 0;
+                object.name = "";
+                object.buf = options.bytes === String ? "" : [];
+            }
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (typeof message.uid === "number")
+                    object.uid = options.longs === String ? String(message.uid) : message.uid;
+                else
+                    object.uid = options.longs === String ? $util.Long.prototype.toString.call(message.uid) : options.longs === Number ? new $util.LongBits(message.uid.low >>> 0, message.uid.high >>> 0).toNumber(true) : message.uid;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                object.buf = options.bytes === String ? $util.base64.encode(message.buf, 0, message.buf.length) : options.bytes === Array ? Array.prototype.slice.call(message.buf) : message.buf;
+            return object;
+        };
+
+        /**
+         * Converts this RS2GW_MsgTransfer to JSON.
+         * @function toJSON
+         * @memberof msg.RS2GW_MsgTransfer
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RS2GW_MsgTransfer.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return RS2GW_MsgTransfer;
+    })();
+
     msg.C2GW_BuyItem = (function() {
 
         /**
@@ -21584,6 +22082,8 @@ $root.msg = (function() {
          * Properties of a C2GW_StartLuckyDraw.
          * @memberof msg
          * @interface IC2GW_StartLuckyDraw
+         * @property {number|null} [phone] C2GW_StartLuckyDraw phone
+         * @property {string|null} [text] C2GW_StartLuckyDraw text
          */
 
         /**
@@ -21600,6 +22100,22 @@ $root.msg = (function() {
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
+
+        /**
+         * C2GW_StartLuckyDraw phone.
+         * @member {number} phone
+         * @memberof msg.C2GW_StartLuckyDraw
+         * @instance
+         */
+        C2GW_StartLuckyDraw.prototype.phone = 0;
+
+        /**
+         * C2GW_StartLuckyDraw text.
+         * @member {string} text
+         * @memberof msg.C2GW_StartLuckyDraw
+         * @instance
+         */
+        C2GW_StartLuckyDraw.prototype.text = "";
 
         /**
          * Creates a new C2GW_StartLuckyDraw instance using the specified properties.
@@ -21625,6 +22141,10 @@ $root.msg = (function() {
         C2GW_StartLuckyDraw.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.phone != null && message.hasOwnProperty("phone"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.phone);
+            if (message.text != null && message.hasOwnProperty("text"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.text);
             return writer;
         };
 
@@ -21659,6 +22179,12 @@ $root.msg = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
+                case 1:
+                    message.phone = reader.int32();
+                    break;
+                case 2:
+                    message.text = reader.string();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -21694,6 +22220,12 @@ $root.msg = (function() {
         C2GW_StartLuckyDraw.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.phone != null && message.hasOwnProperty("phone"))
+                if (!$util.isInteger(message.phone))
+                    return "phone: integer expected";
+            if (message.text != null && message.hasOwnProperty("text"))
+                if (!$util.isString(message.text))
+                    return "text: string expected";
             return null;
         };
 
@@ -21708,7 +22240,12 @@ $root.msg = (function() {
         C2GW_StartLuckyDraw.fromObject = function fromObject(object) {
             if (object instanceof $root.msg.C2GW_StartLuckyDraw)
                 return object;
-            return new $root.msg.C2GW_StartLuckyDraw();
+            var message = new $root.msg.C2GW_StartLuckyDraw();
+            if (object.phone != null)
+                message.phone = object.phone | 0;
+            if (object.text != null)
+                message.text = String(object.text);
+            return message;
         };
 
         /**
@@ -21720,8 +22257,19 @@ $root.msg = (function() {
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        C2GW_StartLuckyDraw.toObject = function toObject() {
-            return {};
+        C2GW_StartLuckyDraw.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.phone = 0;
+                object.text = "";
+            }
+            if (message.phone != null && message.hasOwnProperty("phone"))
+                object.phone = message.phone;
+            if (message.text != null && message.hasOwnProperty("text"))
+                object.text = message.text;
+            return object;
         };
 
         /**

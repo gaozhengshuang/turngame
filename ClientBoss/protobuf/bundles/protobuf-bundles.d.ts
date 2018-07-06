@@ -5655,6 +5655,210 @@ declare namespace msg {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a GW2RS_MsgTransfer. */
+    interface IGW2RS_MsgTransfer {
+
+        /** GW2RS_MsgTransfer uid */
+        uid?: (number|Long|null);
+
+        /** GW2RS_MsgTransfer name */
+        name?: (string|null);
+
+        /** GW2RS_MsgTransfer buf */
+        buf?: (Uint8Array|null);
+    }
+
+    /** Represents a GW2RS_MsgTransfer. */
+    class GW2RS_MsgTransfer implements IGW2RS_MsgTransfer {
+
+        /**
+         * Constructs a new GW2RS_MsgTransfer.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: msg.IGW2RS_MsgTransfer);
+
+        /** GW2RS_MsgTransfer uid. */
+        public uid: (number|Long);
+
+        /** GW2RS_MsgTransfer name. */
+        public name: string;
+
+        /** GW2RS_MsgTransfer buf. */
+        public buf: Uint8Array;
+
+        /**
+         * Creates a new GW2RS_MsgTransfer instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GW2RS_MsgTransfer instance
+         */
+        public static create(properties?: msg.IGW2RS_MsgTransfer): msg.GW2RS_MsgTransfer;
+
+        /**
+         * Encodes the specified GW2RS_MsgTransfer message. Does not implicitly {@link msg.GW2RS_MsgTransfer.verify|verify} messages.
+         * @param message GW2RS_MsgTransfer message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: msg.IGW2RS_MsgTransfer, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified GW2RS_MsgTransfer message, length delimited. Does not implicitly {@link msg.GW2RS_MsgTransfer.verify|verify} messages.
+         * @param message GW2RS_MsgTransfer message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: msg.IGW2RS_MsgTransfer, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a GW2RS_MsgTransfer message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GW2RS_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.GW2RS_MsgTransfer;
+
+        /**
+         * Decodes a GW2RS_MsgTransfer message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GW2RS_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.GW2RS_MsgTransfer;
+
+        /**
+         * Verifies a GW2RS_MsgTransfer message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GW2RS_MsgTransfer message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GW2RS_MsgTransfer
+         */
+        public static fromObject(object: { [k: string]: any }): msg.GW2RS_MsgTransfer;
+
+        /**
+         * Creates a plain object from a GW2RS_MsgTransfer message. Also converts values to other types if specified.
+         * @param message GW2RS_MsgTransfer
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: msg.GW2RS_MsgTransfer, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GW2RS_MsgTransfer to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a RS2GW_MsgTransfer. */
+    interface IRS2GW_MsgTransfer {
+
+        /** RS2GW_MsgTransfer uid */
+        uid?: (number|Long|null);
+
+        /** RS2GW_MsgTransfer name */
+        name?: (string|null);
+
+        /** RS2GW_MsgTransfer buf */
+        buf?: (Uint8Array|null);
+    }
+
+    /** Represents a RS2GW_MsgTransfer. */
+    class RS2GW_MsgTransfer implements IRS2GW_MsgTransfer {
+
+        /**
+         * Constructs a new RS2GW_MsgTransfer.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: msg.IRS2GW_MsgTransfer);
+
+        /** RS2GW_MsgTransfer uid. */
+        public uid: (number|Long);
+
+        /** RS2GW_MsgTransfer name. */
+        public name: string;
+
+        /** RS2GW_MsgTransfer buf. */
+        public buf: Uint8Array;
+
+        /**
+         * Creates a new RS2GW_MsgTransfer instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RS2GW_MsgTransfer instance
+         */
+        public static create(properties?: msg.IRS2GW_MsgTransfer): msg.RS2GW_MsgTransfer;
+
+        /**
+         * Encodes the specified RS2GW_MsgTransfer message. Does not implicitly {@link msg.RS2GW_MsgTransfer.verify|verify} messages.
+         * @param message RS2GW_MsgTransfer message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: msg.IRS2GW_MsgTransfer, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified RS2GW_MsgTransfer message, length delimited. Does not implicitly {@link msg.RS2GW_MsgTransfer.verify|verify} messages.
+         * @param message RS2GW_MsgTransfer message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: msg.IRS2GW_MsgTransfer, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a RS2GW_MsgTransfer message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RS2GW_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.RS2GW_MsgTransfer;
+
+        /**
+         * Decodes a RS2GW_MsgTransfer message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RS2GW_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.RS2GW_MsgTransfer;
+
+        /**
+         * Verifies a RS2GW_MsgTransfer message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RS2GW_MsgTransfer message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RS2GW_MsgTransfer
+         */
+        public static fromObject(object: { [k: string]: any }): msg.RS2GW_MsgTransfer;
+
+        /**
+         * Creates a plain object from a RS2GW_MsgTransfer message. Also converts values to other types if specified.
+         * @param message RS2GW_MsgTransfer
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: msg.RS2GW_MsgTransfer, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RS2GW_MsgTransfer to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a C2GW_BuyItem. */
     interface IC2GW_BuyItem {
 
@@ -9335,6 +9539,12 @@ declare namespace msg {
 
     /** Properties of a C2GW_StartLuckyDraw. */
     interface IC2GW_StartLuckyDraw {
+
+        /** C2GW_StartLuckyDraw phone */
+        phone?: (number|null);
+
+        /** C2GW_StartLuckyDraw text */
+        text?: (string|null);
     }
 
     /** Represents a C2GW_StartLuckyDraw. */
@@ -9345,6 +9555,12 @@ declare namespace msg {
          * @param [properties] Properties to set
          */
         constructor(properties?: msg.IC2GW_StartLuckyDraw);
+
+        /** C2GW_StartLuckyDraw phone. */
+        public phone: number;
+
+        /** C2GW_StartLuckyDraw text. */
+        public text: string;
 
         /**
          * Creates a new C2GW_StartLuckyDraw instance using the specified properties.

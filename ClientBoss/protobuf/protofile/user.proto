@@ -45,6 +45,8 @@ message GW2C_SendWechatInfo {
 
 // 抽奖
 message C2GW_StartLuckyDraw {
+    optional int32  phone = 1;
+    optional string text = 2;
 }
 
 message GW2C_LuckyDrawHit {

@@ -9,6 +9,7 @@ module game {
         ballButton1: IconButton;
         ballButton2: IconButton;
         luckyButton: IconButton;
+        backButton: IconButton;
         scoreLabel: eui.Label;
         ball1Price: eui.Label;
         ball2Price: eui.Label;
@@ -85,6 +86,7 @@ module game {
         //private _debugDraw: p2DebugDraw;
         debugGroup: eui.Group;
         private _currentFrame: number;
+        private _curMoney: number = 0;
         private _lootList;
         private _topColumn: number[];
         private _blackHoleList: BattleBlackHole[];
@@ -125,6 +127,7 @@ module game {
             this.buffLootList = table.TBirckItem;
             this._buffList = [];
             this.luckyButton.icon = "lucky/luckyGo";
+            this.backButton.icon = "ui/gameBack";
             this.ballButton1.icon = "ball/1";
             this.ballButton2.icon = "ball/2";
             this.ball1Price.text = `价值:${table.TBallById[1].Price}炮弹`;
@@ -306,6 +309,7 @@ module game {
                 {target: this.ballButton1, callBackFunc: this.ballHandle},
                 {target: this.ballButton2, callBackFunc: this.ballHandle},
                 {target: this.luckyButton, callBackFunc: this.luckyGoHandle},
+                {target: this.backButton, callBackFunc: this.backHandle},
             ];
             this._notify = [
                 {
@@ -596,11 +600,14 @@ module game {
             this._moneySyn++;
             if (this._moneySyn > 100) {
                 this._moneySyn = 0;
-                sendMessage("msg.BT_UpdateMoney", msg.BT_UpdateMoney.encode({
-                    roomid: BattleManager.getInstance().getRoomId(),
-                    userid: DataManager.playerModel.getUserId(),
-                    money: DataManager.playerModel.getScore()
-                }));
+                if (this._curMoney != DataManager.playerModel.getScore()) {
+                    sendMessage("msg.BT_UpdateMoney", msg.BT_UpdateMoney.encode({
+                        roomid: BattleManager.getInstance().getRoomId(),
+                        userid: DataManager.playerModel.getUserId(),
+                        money: DataManager.playerModel.getScore()
+                    }));
+                    this._curMoney = DataManager.playerModel.getScore();
+                }
             }
 
             if (this._doubleTime > 0) {
@@ -1241,6 +1248,18 @@ module game {
 
         private luckyGoHandle() {
             openPanel(PanelType.lucky);
+        }
+
+        private backHandle() {
+            egret.stopTick(this.updateView, this);
+            this._firewallPool.destroyAllObject();
+            
+            sendMessage("msg.BT_ReqQuitGameRoom", msg.BT_ReqQuitGameRoom.encode({
+                roomid: BattleManager.getInstance().getRoomId(),
+                userid: DataManager.playerModel.getUserId(),
+            }));
+
+            SceneManager.changeScene(SceneType.main);
         }
 
         private static _instance: BattleScene;
