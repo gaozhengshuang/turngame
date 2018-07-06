@@ -41,17 +41,18 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.BT_ReqEnterRoom{}, on_BT_ReqEnterRoom)
 	this.msgparser.RegistProtoMsg(msg.BT_ReqQuitGameRoom{}, on_BT_ReqQuitGameRoom)
 	this.msgparser.RegistProtoMsg(msg.BT_UpdateMoney{}, on_BT_UpdateMoney)
+	this.msgparser.RegistProtoMsg(msg.C2GW_StartLuckyDraw{}, on_C2GW_StartLuckyDraw)
 
 
 	// 发
 	this.msgparser.RegistSendProto(msg.RS2GW_ReqRegist{})
 	this.msgparser.RegistSendProto(msg.RS2GW_RetUserDisconnect{})
 	this.msgparser.RegistSendProto(msg.RS2GW_MsgTransfer{})
-	this.msgparser.RegistSendProto(msg.BT_GameInit{})
-	this.msgparser.RegistSendProto(msg.BT_SendBattleUser{})
-	this.msgparser.RegistSendProto(msg.BT_GameStart{})
+	//this.msgparser.RegistSendProto(msg.BT_GameInit{})
+	//this.msgparser.RegistSendProto(msg.BT_SendBattleUser{})
+	//this.msgparser.RegistSendProto(msg.BT_GameStart{})
 	this.msgparser.RegistSendProto(msg.BT_GameEnd{})
-	this.msgparser.RegistSendProto(msg.BT_PickItem{})
+	//this.msgparser.RegistSendProto(msg.BT_PickItem{})
 
 	// 发Gate
 	this.msgparser.RegistSendProto(msg.GW2C_MsgNotify{})
@@ -96,15 +97,6 @@ func on_GW2RS_UserDisconnect(session network.IBaseNetSession, message interface{
 
 func on_GW2RS_MsgTransfer(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2RS_MsgTransfer)
-	//switch tmsg.GetName() {
-	//case "msg.C2GW_StartLuckyDraw":
-	//	gmsg, user := &msg.C2GW_StartLuckyDraw{}, UserMgr().FindUser(tmsg.GetUid())
-	//	if user != nil && gmsg.Unmarshal(tmsg.GetBuf()) == nil {
-	//		user.LuckyDraw(gmsg)
-	//	}
-	//	break
-	//}
-
 	msg_type := pb.MessageType(tmsg.GetName())
 	if msg_type == nil {
 		log.Fatal("消息转发解析失败，找不到proto msg=%s" , tmsg.GetName())
@@ -167,5 +159,15 @@ func on_BT_UpdateMoney(session network.IBaseNetSession, message interface{}) {
 	}
 
 	room.owner.SetMoney(uint32(money), "同步客户端")
+}
+
+func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_StartLuckyDraw)
+	user := UserMgr().FindUser(tmsg.GetUserid())
+	if user == nil { 
+		log.Error("C2GW_StartLuckyDraw 玩家[%d]没有在Room中", tmsg.GetUserid())
+		return 
+	}
+	user.LuckyDraw()
 }
 

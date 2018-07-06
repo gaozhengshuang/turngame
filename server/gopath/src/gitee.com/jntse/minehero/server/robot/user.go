@@ -285,7 +285,7 @@ func (this *User) Recharge() {
 
 // 抽奖
 func (this *User) LuckyDraw() {
-	send := &msg.C2GW_StartLuckyDraw{Phone:pb.Int32(136816269), Text:pb.String("xiejian")}
+	send := &msg.C2GW_StartLuckyDraw{ Userid:pb.Uint64(this.Id())}
 	this.SendGateMsg(send)
 }
 

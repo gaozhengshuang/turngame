@@ -9,7 +9,7 @@ import (
 	"gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
-	"gitee.com/jntse/minehero/server/def"
+	_"gitee.com/jntse/minehero/server/def"
 	pb "github.com/gogo/protobuf/proto"
 	//"gitee.com/jntse/minehero/server/def"
 	_"github.com/go-redis/redis"
@@ -421,7 +421,7 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 func (this *GateUser) Syn(){
 	this.SendUserBase()
 	this.SendSign()
-	this.CheckGiveFreeStep(util.CURTIME(), "上线跨整点")
+	//this.CheckGiveFreeStep(util.CURTIME(), "上线跨整点")
 	this.CheckHaveCompensation()
 	this.SyncBigRewardPickNum()
 	//this.QueryPlatformCoins()
@@ -437,7 +437,7 @@ func (this *GateUser) OnDisconnect() {
 	this.client = nil
 	this.tm_disconnect = util.CURTIMEMS()
 	if this.IsInRoom() == true { this.SendRsUserDisconnect() }
-	this.PlatformPushUserOnlineTime()
+	//this.PlatformPushUserOnlineTime()
 }
 
 // 服务器下线玩家
@@ -451,7 +451,7 @@ func (this *GateUser) KickOut(way string) {
 	this.client = nil
 	this.tm_disconnect = util.CURTIMEMS()
 	if this.IsInRoom() == true { this.SendRsUserDisconnect() }
-	this.PlatformPushUserOnlineTime()
+	//this.PlatformPushUserOnlineTime()
 }
 
 // 检查下线存盘
@@ -627,7 +627,7 @@ func (this *GateUser) GameEnd(bin *msg.Serialize, reason string) {
 		this.OnLoadDB("房间结束")
 		if this.IsOnline() { 
 			this.SendUserBase()
-			this.CheckGiveFreeStep(util.CURTIME(), "回大厅跨整点")
+			//this.CheckGiveFreeStep(util.CURTIME(), "回大厅跨整点")
 			this.SyncBigRewardPickNum()
 			//this.QueryPlatformCoins()
 		}
@@ -643,64 +643,64 @@ func (this *GateUser) SendRsUserDisconnect() {
 	log.Info("玩家[%d %s] 通知RoomServer关闭房间", this.Id(), this.Name())
 }
 
-
-// 赠送每日免费次数，在房间中不要执行
-// 每小时赠送免费次数，在房间中不要执行，退出房间再执行
-func (this *GateUser) CheckGiveFreeStep(now int64, reason string) {
-	if this.IsInRoom() == true { return }           // 退出房间再执行
-	floor_clock := util.FloorIntClock(now)
-	if floor_clock == this.givestep {   // 同一个整点
-		return
-	}
-	this.SetFreeStep(int32(tbl.Global.PresentFreeStep), reason)
-	this.givestep = floor_clock
-}
-
 // 插入新异步事件
 func (this *GateUser) AsynEventInsert(event eventque.IEvent) {
 	this.asynev.Push(event)
 }
 
+
+// 赠送每日免费次数，在房间中不要执行
+// 每小时赠送免费次数，在房间中不要执行，退出房间再执行
+//func (this *GateUser) CheckGiveFreeStep(now int64, reason string) {
+//	if this.IsInRoom() == true { return }           // 退出房间再执行
+//	floor_clock := util.FloorIntClock(now)
+//	if floor_clock == this.givestep {   // 同一个整点
+//		return
+//	}
+//	this.SetFreeStep(int32(tbl.Global.PresentFreeStep), reason)
+//	this.givestep = floor_clock
+//}
+//
 // 获取平台金币
 //func (this *GateUser) QueryPlatformCoins() {
 //	event := NewQueryPlatformCoinsEvent(this.SyncPlatformCoins)
 //	this.AsynEventInsert(event)
 //}
-
-func (this *GateUser) SyncPlatformCoins () {
-	errcode, coins, _ := def.HttpRequestFinanceQuery(this.Id(), this.Token(), this.Account())
-	if errcode != "" {
-		return
-	}
-
-	send := &msg.GW2C_SendUserPlatformMoney{Coins:pb.Int32(coins)}
-	this.SendMsg(send)
-}
-
-// 推送资源消耗
-func (this *GateUser) PlatformPushConsumeMoney(yuanbao float32) {
-	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
-	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
-	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceConsumeArglist, nil)
-	this.AsynEventInsert(event)
-}
-
-// 推送资源获取
-func (this *GateUser) PlatformPushLootMoney(yuanbao float32) {
-	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
-	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
-	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceEarnArglist, nil)
-	this.AsynEventInsert(event)
-}
-
-// 推送在线时长
-func (this *GateUser) PlatformPushUserOnlineTime() {
-	tm_onlinestay := (util.CURTIME() - this.tm_login) / 60
-	if tm_onlinestay <= 0 { return }
-
-	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), int64(tm_onlinestay)}
-	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserOnlineTimeArglist, nil)
-	this.AsynEventInsert(event)
-}
+//
+//func (this *GateUser) SyncPlatformCoins () {
+//	errcode, coins, _ := def.HttpRequestFinanceQuery(this.Id(), this.Token(), this.Account())
+//	if errcode != "" {
+//		return
+//	}
+//
+//	send := &msg.GW2C_SendUserPlatformMoney{Coins:pb.Int32(coins)}
+//	this.SendMsg(send)
+//}
+//
+//// 推送资源消耗
+//func (this *GateUser) PlatformPushConsumeMoney(yuanbao float32) {
+//	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
+//	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
+//	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceConsumeArglist, nil)
+//	this.AsynEventInsert(event)
+//}
+//
+//// 推送资源获取
+//func (this *GateUser) PlatformPushLootMoney(yuanbao float32) {
+//	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
+//	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
+//	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceEarnArglist, nil)
+//	this.AsynEventInsert(event)
+//}
+//
+//// 推送在线时长
+//func (this *GateUser) PlatformPushUserOnlineTime() {
+//	tm_onlinestay := (util.CURTIME() - this.tm_login) / 60
+//	if tm_onlinestay <= 0 { return }
+//
+//	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), int64(tm_onlinestay)}
+//	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserOnlineTimeArglist, nil)
+//	this.AsynEventInsert(event)
+//}
 
 

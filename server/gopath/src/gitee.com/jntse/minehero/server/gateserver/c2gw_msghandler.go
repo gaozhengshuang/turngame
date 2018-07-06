@@ -171,6 +171,11 @@ func on_BT_ReqEnterRoom(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 
+	if !user.IsInRoom() {
+		user.SendNotify("房间不存在")
+		return
+	}
+
 	// 进入游戏房间
 	log.Info("玩家[%d] 开始进入房间[%d] ts[%d]", user.Id(), user.RoomId(), util.CURTIMEMS())
 	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
@@ -322,29 +327,29 @@ func on_C2GW_ReqDeliveryGoods(session network.IBaseNetSession, message interface
 }
 
 func on_C2GW_ReqDeliveryDiamond(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.C2GW_ReqDeliveryDiamond)
+	//tmsg := message.(*msg.C2GW_ReqDeliveryDiamond)
 
-	user := ExtractSessionUser(session)
-	if user == nil {
-		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
+	//user := ExtractSessionUser(session)
+	//if user == nil {
+	//	log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+	//	session.Close()
+	//	return
+	//}
 
-	if user.IsOnline() == false {
-		log.Error("玩家[%s %d]没有登陆Gate成功", user.Name(), user.Id())
-		session.Close()
-		return
-	}
+	//if user.IsOnline() == false {
+	//	log.Error("玩家[%s %d]没有登陆Gate成功", user.Name(), user.Id())
+	//	session.Close()
+	//	return
+	//}
 
-	// 提钻石
-	if tbl.Global.IntranetFlag {
-		user.SendNotify("本版本暂不可用")
-		return
-	}else {
-		event := NewDeliveryGoodsEvent(tmsg.GetList(), tmsg.GetToken(), user.DeliveryDiamond)
-		user.AsynEventInsert(event)
-	}
+	//// 提钻石
+	//if tbl.Global.IntranetFlag {
+	//	user.SendNotify("本版本暂不可用")
+	//	return
+	//}else {
+	//	event := NewDeliveryGoodsEvent(tmsg.GetList(), tmsg.GetToken(), user.DeliveryDiamond)
+	//	user.AsynEventInsert(event)
+	//}
 }
 
 func on_C2GW_UseBagItem(session network.IBaseNetSession, message interface{}) {
@@ -486,8 +491,7 @@ func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}
 	}
 	
 	if user.IsInRoom() {
-		//user.SendNotify("游戏中不能抽奖")
-		user.TransferRoomMsg(tmsg)
+		user.SendRoomMsg(tmsg)
 		return
 	}
 

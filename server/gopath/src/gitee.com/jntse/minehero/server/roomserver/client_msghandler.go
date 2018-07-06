@@ -3,7 +3,7 @@ import (
 	"reflect"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
-	"gitee.com/jntse/minehero/pbmsg"
+	_"gitee.com/jntse/minehero/pbmsg"
 	//"gitee.com/jntse/minehero/server/tbl"
 	pb "github.com/gogo/protobuf/proto"
 	_"github.com/go-redis/redis"
@@ -29,7 +29,7 @@ func (this *ClientMsgHandler) Init() {
 	this.msghandler = make(map[string]ClientMsgFunHandler)
 
 	// 消息注册
-	this.Regist(msg.C2GW_StartLuckyDraw{}, on_C2GW_StartLuckyDraw)
+	//this.Regist(msg.C2GW_StartLuckyDraw{}, on_C2GW_StartLuckyDraw)
 }
 
 func (this *ClientMsgHandler) Regist(message interface{} , fn ClientMsgFunHandler) {
@@ -48,10 +48,13 @@ func (this *ClientMsgHandler) Handler(session network.IBaseNetSession, message i
 	fn(session, message, uid)
 }
 
-func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}, uid uint64) {
-	//tmsg := message.(*msg.C2GW_StartLuckyDraw)
-	user := UserMgr().FindUser(uid)
-	if user == nil { return }
-	user.LuckyDraw()
-}
+//func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}, uid uint64) {
+//	//tmsg := message.(*msg.C2GW_StartLuckyDraw)
+//	user := UserMgr().FindUser(uid)
+//	if user == nil { 
+//		log.Error("C2GW_StartLuckyDraw 玩家[%d]没有在Room中", uid)
+//		return 
+//	}
+//	user.LuckyDraw()
+//}
 
