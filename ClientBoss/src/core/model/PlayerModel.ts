@@ -21,6 +21,7 @@ module game {
             NotificationCenter.addObserver(this, this.OnGW2C_UpdateGold, "msg.GW2C_UpdateGold");
             NotificationCenter.addObserver(this, this.OnGW2C_AddPackageItem, "msg.GW2C_AddPackageItem");
             NotificationCenter.addObserver(this, this.OnGW2C_RemovePackageItem, "msg.GW2C_RemovePackageItem");
+            NotificationCenter.addObserver(this, this.OnGW2C_FreePresentNotify, "msg.GW2C_FreePresentNotify");
         }
 
         private OnGW2C_RetUserInfo(data: msg.IGW2C_SendUserInfo) {
@@ -48,6 +49,10 @@ module game {
         private OnGW2C_RemovePackageItem(data: msg.GW2C_RemovePackageItem) {
             this.deleteBag(data.itemid, data.num);
             NotificationCenter.postNotification(PlayerModel.BAG_UPDATE);
+        }
+
+        private OnGW2C_FreePresentNotify(data: msg.GW2C_FreePresentNotify) {
+            LoginReward.getInstance().show();
         }
 
         public setScore(count: number) {

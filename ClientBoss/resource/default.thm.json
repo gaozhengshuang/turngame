@@ -30,6 +30,7 @@
 		"resource/eui_skins/component/ImageButtonSkin.exml",
 		"resource/eui_skins/component/LoadProgressBar.exml",
 		"resource/eui_skins/component/ToggleButtonSkin.exml",
+		"resource/eui_skins/login/LoginRewardSkin.exml",
 		"resource/eui_skins/login/LoginSceneSkin.exml",
 		"resource/eui_skins/login/RegisterPanelSkin.exml",
 		"resource/eui_skins/main/MainSceneSkin.exml",

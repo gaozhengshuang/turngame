@@ -69,6 +69,7 @@
 		"bin-debug/core/GlobalFunction.js",
 		"bin-debug/core/Lang.js",
 		"bin-debug/core/scenes/component/ToggleButton.js",
+		"bin-debug/core/scenes/login/LoginReward.js",
 		"bin-debug/core/scenes/login/LoginScene.js",
 		"bin-debug/core/scenes/login/RegisterPanel.js",
 		"bin-debug/core/scenes/main/MainScene.js",
