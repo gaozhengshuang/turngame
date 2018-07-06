@@ -1,5 +1,6 @@
-{
-	"groups":[
+﻿{
+	"groups":
+	[
 		{
 			"keys":"ball/1,ball/2,1",
 			"name":"loading"
@@ -9,7 +10,8 @@
 			"name":"preload"
 		}
 	],
-	"resources":[
+	"resources":
+	[
 		{
 			"name":"1",
 			"type":"image",
@@ -861,6 +863,11 @@
 			"url":"assets/ui/dialogBg.png"
 		},
 		{
+			"name":"ui/dialogMBg",
+			"type":"image",
+			"url":"assets/ui/dialogMBg.png"
+		},
+		{
 			"name":"ui/duanxian",
 			"type":"image",
 			"url":"assets/ui/duanxian.png"
@@ -874,6 +881,11 @@
 			"name":"ui/gold",
 			"type":"image",
 			"url":"assets/ui/gold.png"
+		},
+		{
+			"name":"ui/loginRewardGold",
+			"type":"image",
+			"url":"assets/ui/loginRewardGold.png"
 		},
 		{
 			"name":"ui/moreFire",
