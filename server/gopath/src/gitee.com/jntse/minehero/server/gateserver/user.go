@@ -64,6 +64,8 @@ type DBUserData struct {
 	freestep	  int32
 	givestep	  int64
 	wechatopenid  string
+	presentcount  int32
+	presentrecord int64
 }
 
 // --------------------------------------------------------------------------
@@ -306,6 +308,7 @@ func (this *GateUser) OnLoadDB(way string) {
 	if this.bin.Base.Wechat == nil { this.bin.Base.Wechat = &msg.UserWechat{} }
 	if this.bin.Item == nil { this.bin.Item = &msg.ItemBin{} }
 	if this.bin.Base.Addrlist == nil { this.bin.Base.Addrlist = make([]*msg.UserAddress,0) }
+	if this.bin.Base.Freepresent == nil { this.bin.Base.Freepresent = &msg.FreePresentMoney{} }
 
 	// 加载二进制
 	this.LoadBin()
@@ -345,6 +348,8 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.GetScounter().Freestep = pb.Int32(this.freestep)
 	userbase.GetScounter().Givestep = pb.Int64(this.givestep)
 	userbase.Wechat.Openid = pb.String(this.wechatopenid)
+	userbase.GetFreepresent().Count = pb.Int32(this.presentcount)
+	userbase.GetFreepresent().Tmrecord = pb.Int64(this.presentrecord)
 
 	// 道具信息
 	this.bag.PackBin(bin)
@@ -375,6 +380,9 @@ func (this *GateUser) LoadBin() {
 	this.freestep = userbase.GetScounter().GetFreestep()
 	this.givestep = userbase.GetScounter().GetGivestep()
 	this.wechatopenid = userbase.GetWechat().GetOpenid()
+	this.presentcount = userbase.GetFreepresent().GetCount()
+	this.presentrecord = userbase.GetFreepresent().GetTmrecord()
+
 
 	// 道具信息
 	this.bag.Clean()
@@ -422,6 +430,9 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	this.savedone = false
 	this.roomdata.Reset()
 	log.Info("Sid[%d] 账户[%s] 玩家[%d] 名字[%s] 登录成功", this.Sid(), this.account, this.Id(), this.Name())
+
+	// 免费赠送金币
+	this.CheckFreePresentMoney(false)
 
 	// 同步数据到客户端
 	this.Syn()

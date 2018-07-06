@@ -158,7 +158,7 @@ func on_BT_UpdateMoney(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 
-	room.owner.SetMoney(uint32(money), "同步客户端")
+	room.owner.SetMoney(uint32(money), "同步客户端", true)
 }
 
 func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}) {

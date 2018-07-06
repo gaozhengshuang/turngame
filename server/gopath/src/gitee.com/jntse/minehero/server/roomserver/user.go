@@ -251,12 +251,14 @@ func (this *RoomUser) GetMoney() uint32 {
 	return this.UserBase().GetMoney()
 }
 
-func (this *RoomUser) RemoveMoney(gold uint32, reason string) bool {
+func (this *RoomUser) RemoveMoney(gold uint32, reason string, syn bool) bool {
 	if this.GetMoney() > gold {
 		userbase := this.UserBase()
 		userbase.Money = pb.Uint32(this.GetMoney() - gold)
-		send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
-		this.SendClientMsg(send)
+		if syn {
+			send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+			this.SendClientMsg(send)
+		}
 		log.Info("玩家[%d] 扣除金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 
 		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Gold), gold)
@@ -266,19 +268,23 @@ func (this *RoomUser) RemoveMoney(gold uint32, reason string) bool {
 	return false
 }
 
-func (this *RoomUser) AddMoney(gold uint32, reason string) {
+func (this *RoomUser) AddMoney(gold uint32, reason string, syn bool) {
 	userbase := this.UserBase()
 	userbase.Money = pb.Uint32(this.GetMoney() + gold)
-	send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
-	this.SendClientMsg(send)
+	if syn {
+		send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+		this.SendClientMsg(send)
+	}
 	log.Info("玩家[%d] 添加金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 }
 
-func (this *RoomUser) SetMoney(gold uint32, reason string) {
+func (this *RoomUser) SetMoney(gold uint32, reason string, syn bool) {
 	userbase := this.UserBase()
 	userbase.Money = pb.Uint32(gold)
-	send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
-	this.SendClientMsg(send)
+	if syn {
+		send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+		this.SendClientMsg(send)
+	}
 	log.Info("玩家[%d] 设置金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 }
 
@@ -340,7 +346,7 @@ func (this *RoomUser) AddItem(item uint32, num uint32, reason string) {
     if item == uint32(msg.ItemId_YuanBao) {
         this.AddYuanbao(num, reason)
     }else if item == uint32(msg.ItemId_Gold) {
-        this.AddMoney(num, reason)
+        this.AddMoney(num, reason, true)
     }else if item == uint32(msg.ItemId_Coupon) {
 		this.AddCoupon(num, reason)
 	}else if item == uint32(msg.ItemId_FreeStep) {
@@ -485,7 +491,7 @@ func (this *RoomUser) LuckyDraw() {
 		this.SendNotify("金币不足")
 		return
 	}
-	this.RemoveMoney(cost, "幸运抽奖")
+	this.RemoveMoney(cost, "幸运抽奖", true)
 
 	//
 	giftweight := make([]util.WeightOdds, 0)

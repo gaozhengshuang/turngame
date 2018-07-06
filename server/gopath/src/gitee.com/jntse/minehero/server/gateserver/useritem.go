@@ -23,7 +23,7 @@ func (this *GateUser) AddItem(item uint32, num uint32, reason string) {
 	if item == uint32(msg.ItemId_YuanBao) {
 		this.AddYuanbao(num, reason)
 	}else if item == uint32(msg.ItemId_Gold) {
-		this.AddMoney(num, reason)
+		this.AddMoney(num, reason, true)
 	}else if item == uint32(msg.ItemId_Coupon) {
 		this.AddCoupon(num, reason)
 	}else if item == uint32(msg.ItemId_FreeStep) {
@@ -42,18 +42,22 @@ func (this *GateUser) RemoveItem(item uint32, num uint32, reason string) bool{
 
 // 金币
 func (this *GateUser) GetMoney() uint32   { return this.money }
-func (this *GateUser) AddMoney(gold uint32, reason string) {
+func (this *GateUser) AddMoney(gold uint32, reason string, syn bool) {
 	this.money = this.GetMoney() + gold
-	send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
-	this.SendMsg(send)
+	if syn {
+		send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+		this.SendMsg(send)
+	}
 	log.Info("玩家[%d] 添加金币[%d] 库存[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 }
-func (this *GateUser) RemoveMoney(gold uint32, reason string) bool {
+func (this *GateUser) RemoveMoney(gold uint32, reason string, syn bool) bool {
 	if this.GetMoney() > gold {
 		userbase := this.UserBase()
 		userbase.Money = pb.Uint32(this.GetMoney() - gold)
-		send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
-		this.SendMsg(send)
+		if syn {
+			send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+			this.SendMsg(send)
+		}
 		log.Info("玩家[%d] 扣除金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Gold), gold)
 		return true
@@ -500,7 +504,7 @@ func (this *GateUser) LuckyDraw() {
 		this.SendNotify("金币不足")
 		return
 	}
-	this.RemoveMoney(cost, "幸运抽奖")
+	this.RemoveMoney(cost, "幸运抽奖", true)
 
 	//
 	giftweight := make([]util.WeightOdds, 0)
@@ -525,6 +529,25 @@ func (this *GateUser) LuckyDraw() {
 	// feedback
 	send := &msg.GW2C_LuckyDrawHit{Id:pb.Int32(int32(uid))}
 	this.SendMsg(send)
+}
+
+func (this *GateUser) CheckFreePresentMoney(syn bool) {
+	if this.GetMoney() >= uint32(tbl.Game.FreePresentRule.FloorTrigger) {
+		return
+	}
+
+	curtime := util.CURTIME()
+	if this.presentcount >= int32(tbl.Game.FreePresentRule.Count) {
+		if util.IsSameDay(this.presentrecord, curtime) {
+			return
+		}else {
+			this.presentcount = 0;
+		}
+	}
+
+	this.AddMoney(uint32(tbl.Game.FreePresentRule.Money), "每日免费赠送", syn)
+	this.presentcount += 1
+	this.presentrecord = curtime
 }
 
 
