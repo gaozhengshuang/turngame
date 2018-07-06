@@ -9540,11 +9540,8 @@ declare namespace msg {
     /** Properties of a C2GW_StartLuckyDraw. */
     interface IC2GW_StartLuckyDraw {
 
-        /** C2GW_StartLuckyDraw phone */
-        phone?: (number|null);
-
-        /** C2GW_StartLuckyDraw text */
-        text?: (string|null);
+        /** C2GW_StartLuckyDraw userid */
+        userid?: (number|Long|null);
     }
 
     /** Represents a C2GW_StartLuckyDraw. */
@@ -9556,11 +9553,8 @@ declare namespace msg {
          */
         constructor(properties?: msg.IC2GW_StartLuckyDraw);
 
-        /** C2GW_StartLuckyDraw phone. */
-        public phone: number;
-
-        /** C2GW_StartLuckyDraw text. */
-        public text: string;
+        /** C2GW_StartLuckyDraw userid. */
+        public userid: (number|Long);
 
         /**
          * Creates a new C2GW_StartLuckyDraw instance using the specified properties.

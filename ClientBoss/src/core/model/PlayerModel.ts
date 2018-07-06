@@ -242,6 +242,15 @@ module game {
             this.postNotification(PlayerModel.TOP_UPDATE);
         }
 
+        public async getPlayerGoods() {
+            let r = <string>await ajax(`${$goodsIp}${$goodsPath}`, {uid: this.getUserId(), state: 0}, "POST");
+            let json = JSON.parse(r);
+            if (json.code == "200" || json.descrp == "success") {
+                return json.data;
+            }
+            return [];
+        }
+
         public guideFinish() {
             if (egret.localStorage.getItem("guide")) {
                 return true

@@ -22082,8 +22082,7 @@ $root.msg = (function() {
          * Properties of a C2GW_StartLuckyDraw.
          * @memberof msg
          * @interface IC2GW_StartLuckyDraw
-         * @property {number|null} [phone] C2GW_StartLuckyDraw phone
-         * @property {string|null} [text] C2GW_StartLuckyDraw text
+         * @property {number|Long|null} [userid] C2GW_StartLuckyDraw userid
          */
 
         /**
@@ -22102,20 +22101,12 @@ $root.msg = (function() {
         }
 
         /**
-         * C2GW_StartLuckyDraw phone.
-         * @member {number} phone
+         * C2GW_StartLuckyDraw userid.
+         * @member {number|Long} userid
          * @memberof msg.C2GW_StartLuckyDraw
          * @instance
          */
-        C2GW_StartLuckyDraw.prototype.phone = 0;
-
-        /**
-         * C2GW_StartLuckyDraw text.
-         * @member {string} text
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @instance
-         */
-        C2GW_StartLuckyDraw.prototype.text = "";
+        C2GW_StartLuckyDraw.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Creates a new C2GW_StartLuckyDraw instance using the specified properties.
@@ -22141,10 +22132,8 @@ $root.msg = (function() {
         C2GW_StartLuckyDraw.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.phone);
-            if (message.text != null && message.hasOwnProperty("text"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.text);
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
             return writer;
         };
 
@@ -22180,10 +22169,7 @@ $root.msg = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.phone = reader.int32();
-                    break;
-                case 2:
-                    message.text = reader.string();
+                    message.userid = reader.uint64();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -22220,12 +22206,9 @@ $root.msg = (function() {
         C2GW_StartLuckyDraw.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                if (!$util.isInteger(message.phone))
-                    return "phone: integer expected";
-            if (message.text != null && message.hasOwnProperty("text"))
-                if (!$util.isString(message.text))
-                    return "text: string expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
             return null;
         };
 
@@ -22241,10 +22224,15 @@ $root.msg = (function() {
             if (object instanceof $root.msg.C2GW_StartLuckyDraw)
                 return object;
             var message = new $root.msg.C2GW_StartLuckyDraw();
-            if (object.phone != null)
-                message.phone = object.phone | 0;
-            if (object.text != null)
-                message.text = String(object.text);
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
             return message;
         };
 
@@ -22261,14 +22249,17 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults) {
-                object.phone = 0;
-                object.text = "";
-            }
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                object.phone = message.phone;
-            if (message.text != null && message.hasOwnProperty("text"))
-                object.text = message.text;
+            if (options.defaults)
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
             return object;
         };
 
