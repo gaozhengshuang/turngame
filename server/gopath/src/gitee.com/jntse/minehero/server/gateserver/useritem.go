@@ -297,15 +297,11 @@ func (this *GateUser) DeliveryGoods(list []*msg.DeliveryGoods, token string) {
 
 	// 玩家收货地址为空，从红包获取一次
 	if this.GetAddressSize() == 0 {
-		receiver, phone, address := RequestUserHomeAddress(this.Account(), token)
-		if address == "" || phone == "" || receiver == "" {
-			this.SendNotify("提货失败，没有收货地址")
-			log.Error("[提货] 玩家[%s %d] 没有收货地址", this.Name(), this.Id())
-			return
-		}
-		this.AddAddress(receiver, phone, address)
-		//this.AddAddress("谢谢", "13681626939", "上海市闵行区1333弄28号31栋901")
+		this.SendNotify("提货失败，没有收货地址")
+		log.Error("[提货] 玩家[%s %d] 没有收货地址", this.Name(), this.Id())
+		return
 	}
+
 
 	// 检查
 	for _, item := range list {
@@ -338,6 +334,8 @@ func (this *GateUser) DeliveryGoods(list []*msg.DeliveryGoods, token string) {
 		Address		string		`json:"playerAddr"`
 		Nonce		string		`json:"nonce"`
 		Sign		string		`json:"sign"`
+		GameId		string		`json:"gameid"`
+		Dev			string		`json:"dev"`
 		Items		[]OrderItem	`json:"itemlist"`
 	}
 
@@ -347,13 +345,14 @@ func (this *GateUser) DeliveryGoods(list []*msg.DeliveryGoods, token string) {
 
 	address := this.GetDefaultAddress();
 	order := &DeliveryOrder{ Id:this.Id(), Way: "0", Name:address.GetReceiver(), Phone:address.GetPhone(), Address:address.GetAddress()}
+	order.GameId = tbl.Global.Delivery.GameID
+	order.Dev = tbl.Global.Delivery.Dev		// 测试标记
 	for _, item := range list {
 		base := FindItemBase(item.GetItemid())
 		if base == nil { log.Error("[提货] 玩家[%s %d] 道具[%d]配置无效", this.Name(), this.Id(), item.GetItemid()); continue }
 		orderitem := OrderItem{Id:base.Id, Desc:base.Name, Count:item.GetNum()}
 		order.Items = append(order.Items, orderitem)
 	}
-
 	order.Nonce = strconv.FormatInt(int64(this.Id()), 10) + "_" + strconv.FormatInt(util.CURTIMEUS(), 10)
 	signbytes := []byte(key1 + order.Nonce + key2)
 	md5array  := md5.Sum(signbytes)

@@ -152,13 +152,11 @@ func (this *GateUser) SetToken(t string) {
 }
 
 func (this *GateUser) GetDefaultAddress() *msg.UserAddress {
-	if this.GetAddressSize() != 0 {
-		return this.addrlist[0]
-	}
+	if this.GetAddressSize() != 0 { return this.addrlist[0] }
 	return nil
 }
 
-func (this *GateUser) SetDefaultAddress(addr string) {
+func (this *GateUser) SetDefaultAddress(index int32) {
 	//this.address = addr
 }
 
@@ -167,8 +165,20 @@ func (this *GateUser) AddAddress(receiver, phone, address string) {
 	this.addrlist = append(this.addrlist, addr)
 }
 
+func (this *GateUser) ClearAddress() {
+	this.addrlist = make([]*msg.UserAddress, 0)
+}
+
 func (this *GateUser) GetAddressSize() uint32 {
 	return uint32(len(this.addrlist))
+}
+
+func (this *GateUser) SendAddress() {
+	send := &msg.GW2C_SendDeliveryAddressList{ List:make([]*msg.UserAddress, 0) }
+	for _ ,v := range this.addrlist {
+		send.List = append(send.List, v)
+	}
+	this.SendMsg(send)
 }
 
 func (this *GateUser) Verifykey() string {
@@ -295,6 +305,7 @@ func (this *GateUser) OnLoadDB(way string) {
 	if this.bin.Base.Scounter == nil { this.bin.Base.Scounter = &msg.SimpleCounter{} }
 	if this.bin.Base.Wechat == nil { this.bin.Base.Wechat = &msg.UserWechat{} }
 	if this.bin.Item == nil { this.bin.Item = &msg.ItemBin{} }
+	if this.bin.Base.Addrlist == nil { this.bin.Base.Addrlist = make([]*msg.UserAddress,0) }
 
 	// 加载二进制
 	this.LoadBin()
