@@ -6,8 +6,8 @@ module game {
     export var $isWx: boolean = false;
 
     //发货IP
-    export var $goodsIp: string = "http://103.244.233.249:80";
-    export var $goodsPath: string = "/Api/V8/ReqPlayerItemInfo_PP";
+    export var $goodsIp: string = "http://logistics.giantfun.cn:8083";
+    export var $goodsPath: string = "/v1/logistics/query";
 
     //外网IP
     // export var $registIp: string = "http://210.73.214.67:18010";

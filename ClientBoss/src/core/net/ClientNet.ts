@@ -162,7 +162,7 @@ module game {
     }
 
 
-    export function ajaxJson(url, params, method = "GET") {
+    export function ajaxJson(url, params) {
         let d = defer();
         var x = new XMLHttpRequest();
         x.open('POST', url);

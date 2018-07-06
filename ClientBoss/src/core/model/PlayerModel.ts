@@ -243,9 +243,9 @@ module game {
         }
 
         public async getPlayerGoods() {
-            let r = <string>await ajax(`${$goodsIp}${$goodsPath}`, {uid: this.getUserId(), state: 0}, "POST");
+            let r = <string>await ajax(`${$goodsIp}${$goodsPath}`, {uid: this.getUserId(), state: 0, gameid: 10002});
             let json = JSON.parse(r);
-            if (json.code == "200" || json.descrp == "success") {
+            if (json.code == 0 || json.msg == "操作成功") {
                 return json.data;
             }
             return [];
