@@ -97,7 +97,9 @@ module game {
             }
 
             if (DataManager.playerModel.getScore() >= _buyLucky) {
-                sendMessage("msg.C2GW_StartLuckyDraw", msg.C2GW_StartLuckyDraw.encode({}));
+                sendMessage("msg.C2GW_StartLuckyDraw", msg.C2GW_StartLuckyDraw.encode({
+                    userid: DataManager.playerModel.getUserId()
+                }));
             } else {
                 showTips("需要消耗"+_buyLucky+"金币抽奖一次");
             }

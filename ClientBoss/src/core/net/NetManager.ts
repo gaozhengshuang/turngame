@@ -5,6 +5,10 @@ module game {
     export var $kaiIp: string = "http://192.168.30.206:30002";
     export var $isWx: boolean = false;
 
+    //发货IP
+    export var $goodsIp: string = "http://logistics.giantfun.cn:8083";
+    export var $goodsPath: string = "/v1/logistics/query";
+
     //外网IP
     // export var $registIp: string = "http://210.73.214.67:18010";
     // export var _netIp: string = "210.73.214.67";
@@ -14,6 +18,7 @@ module game {
     export var $registIp: string = "http://192.168.30.203:18010";
     export var _netIp: string = "192.168.30.203";
     export var _netPort: string = "17020";
+    
 
     export interface IUpdateScore {
         openid: string;
