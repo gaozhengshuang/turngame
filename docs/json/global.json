@@ -39,10 +39,13 @@
 
     "//":"发货API，运费，几个包邮",
     "Delivery" : {
-        "UrlAPITest":"http://210.73.214.214:80/Api/V8/ReqDeliveryItem_PP",
-        "UrlAPI":"http://103.244.233.249:80/Api/V8/ReqDeliveryItem_PP",
+        "UrlAPIJumpTest":"http://210.73.214.214:80/Api/V8/ReqDeliveryItem_PP",
+        "UrlAPIJump":"http://103.244.233.249:80/Api/V8/ReqDeliveryItem_PP",
+        "UrlAPI":"http://logistics.giantfun.cn:8083/v1/logistics/delivery",
         "Cost":100,
-        "Freelimit":2
+        "Freelimit":2,
+        "GameId":"10002",
+        "Dev":"1"
     },
 
     "//":"拾取元宝全服公告",

@@ -109,16 +109,20 @@ func TestVariableArguments() {
 	fmt.Println("----VariableArgu----")
 	vByte, vStr := make([]byte, 0), make([]string, 0)
 	ByteFun := func(i ...byte) {
+		if len(i) == 0 { fmt.Printf("可变参数是空 i=%#v \n", i) }
 		vByte = append(vByte, i...)
 	}
+	fmt.Printf("VariableArgu vByte=%#v\n", vByte);
 	ByteFun()					// 无参数
 	ByteFun(1)					// 单类型
 	ByteFun([]byte{2,3,4,5}...)	// slice类型
 	fmt.Printf("VariableArgu vByte=%#v\n", vByte);
 
 	StrFun := func(s ...string) {
+		if s == nil { fmt.Printf("可变参数是空 s=%#v \n", s) }
 		vStr = append(vStr, s...)
 	}
+	fmt.Printf("VariableArgu vByte=%#v\n", vStr);
 	StrFun()
 	StrFun("how")
 	StrFun([]string{"are","you"}...)
