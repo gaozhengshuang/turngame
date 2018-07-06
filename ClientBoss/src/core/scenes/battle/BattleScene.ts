@@ -85,6 +85,7 @@ module game {
         //private _debugDraw: p2DebugDraw;
         debugGroup: eui.Group;
         private _currentFrame: number;
+        private _curMoney: number = 0;
         private _lootList;
         private _topColumn: number[];
         private _blackHoleList: BattleBlackHole[];
@@ -596,11 +597,14 @@ module game {
             this._moneySyn++;
             if (this._moneySyn > 100) {
                 this._moneySyn = 0;
-                sendMessage("msg.BT_UpdateMoney", msg.BT_UpdateMoney.encode({
-                    roomid: BattleManager.getInstance().getRoomId(),
-                    userid: DataManager.playerModel.getUserId(),
-                    money: DataManager.playerModel.getScore()
-                }));
+                if (this._curMoney != DataManager.playerModel.getScore()) {
+                    sendMessage("msg.BT_UpdateMoney", msg.BT_UpdateMoney.encode({
+                        roomid: BattleManager.getInstance().getRoomId(),
+                        userid: DataManager.playerModel.getUserId(),
+                        money: DataManager.playerModel.getScore()
+                    }));
+                    this._curMoney = DataManager.playerModel.getScore();
+                }
             }
 
             if (this._doubleTime > 0) {
