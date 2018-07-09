@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginRewardSkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:game="game.*" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+	<w:Declarations>
+		<tween:TweenGroup id="open_tip">
+			<tween:TweenItem target="{group}">
+				<tween:Set>
+					<tween:props>
+						<e:Object scaleX="{0}" scaleY="{0}" y="{572}" x="{320}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="300">
+					<tween:props>
+						<e:Object scaleX="{1}" scaleY="{1}" x="{0}" y="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object x="{58}" y="{119}" scaleX="{0.95}" scaleY="{0.95}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object scaleX="{1}" scaleY="{1}" x="{0}" y="{0}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
+	<e:Group id="group" width="640" height="1136" touchEnabled="false" horizontalCenter="0" verticalCenter="0">
+		<e:Image id="image" horizontalCenter="-3" verticalCenter="-61.5" anchorOffsetY="0" height="430" anchorOffsetX="0" width="670" source="ui/loginRewardGold"/>
+		<game:LabelButton id="btn_ok" skinName="NormalLabelButtonSkin" verticalCenter="-139" anchorOffsetX="0" width="174" anchorOffsetY="0" height="72" y="637" scaleX="1" scaleY="1" horizontalCenter="0"/>
+	</e:Group>
+</e:Skin>

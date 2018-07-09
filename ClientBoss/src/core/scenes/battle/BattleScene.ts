@@ -272,7 +272,7 @@ module game {
         }
 
         protected beforeShow() {
-            this.curSpaceFire = _spaceFire;
+            this.curSpaceFire = _spaceFire + DataManager.playerModel.getScore();
             let paddle = this._paddlePool.createObject();
             paddle.setData(1);
             paddle.resetPosition(this.mainGroup.y);
