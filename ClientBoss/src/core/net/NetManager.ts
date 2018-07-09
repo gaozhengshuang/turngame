@@ -10,14 +10,14 @@ module game {
     export var $goodsPath: string = "/v1/logistics/query";
 
     //外网IP
-    // export var $registIp: string = "http://210.73.214.67:18010";
+    // export var $registIp: string = "http://210.73.214.67:7003";
     // export var _netIp: string = "210.73.214.67";
-    // export var _netPort: string = "17020";
+    // export var _netPort: string = "7002";
 
     //内网IP
-    export var $registIp: string = "http://192.168.30.203:18010";
+    export var $registIp: string = "http://192.168.30.203:7003";
     export var _netIp: string = "192.168.30.203";
-    export var _netPort: string = "17020";
+    export var _netPort: string = "7002";
     
 
     export interface IUpdateScore {

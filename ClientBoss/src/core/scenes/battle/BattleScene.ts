@@ -9,6 +9,9 @@ module game {
         ballButton1: IconButton;
         ballButton2: IconButton;
         luckyButton: IconButton;
+        userButton: IconButton;
+        rechargeButton: IconButton;
+        bagButton: IconButton;
         backButton: IconButton;
         scoreLabel: eui.Label;
         ball1Price: eui.Label;
@@ -126,7 +129,10 @@ module game {
             //this.brickList = [];
             this.buffLootList = table.TBirckItem;
             this._buffList = [];
+            this.userButton.icon = "ui/userGo";
+            this.rechargeButton.icon = "ui/rechargeGo";
             this.luckyButton.icon = "lucky/luckyGo";
+            this.bagButton.icon = "ui/bagGo";
             this.backButton.icon = "ui/gameBack";
             this.ballButton1.icon = "ball/1";
             this.ballButton2.icon = "ball/2";
@@ -308,7 +314,10 @@ module game {
             this._touchEvent = [
                 {target: this.ballButton1, callBackFunc: this.ballHandle},
                 {target: this.ballButton2, callBackFunc: this.ballHandle},
+                {target: this.userButton, callBackFunc: this.userGoHandle},
                 {target: this.luckyButton, callBackFunc: this.luckyGoHandle},
+                {target: this.rechargeButton, callBackFunc: this.rechargeGoHandle},
+                {target: this.bagButton, callBackFunc: this.bagGoHandle},
                 {target: this.backButton, callBackFunc: this.backHandle},
             ];
             this._notify = [
@@ -1248,8 +1257,20 @@ module game {
             egret.Tween.get(blackHole2).to({x: end2X, y: end2Y}, 300);
         }
 
+        private userGoHandle() {
+            openPanel(PanelType.user);
+        }
+
         private luckyGoHandle() {
             openPanel(PanelType.lucky);
+        }
+
+        private rechargeGoHandle() {
+            showTips("暂未开放,敬请期待...", true);
+        }
+        
+        private bagGoHandle() {
+            openPanel(PanelType.bag);
         }
 
         private backHandle() {

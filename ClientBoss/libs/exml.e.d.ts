@@ -40,6 +40,8 @@ declare class BattleTimeBoomSkin extends eui.Skin{
 }
 declare class NewFile extends eui.Skin{
 }
+declare class AvatarSkin extends eui.Skin{
+}
 declare class CloseButtonSkin extends eui.Skin{
 }
 declare class IconButtonSkin extends eui.Skin{
@@ -53,8 +55,6 @@ declare class LuckyItemSkin extends eui.Skin{
 declare class NormalLabelButtonSkin extends eui.Skin{
 }
 declare class ToggleButtonSkin extends eui.Skin{
-}
-declare class AvatarSkin extends eui.Skin{
 }
 declare class LoginRewardSkin extends eui.Skin{
 }

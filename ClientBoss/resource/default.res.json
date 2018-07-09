@@ -863,6 +863,11 @@
 			"url":"assets/paddle/wave/00009.png"
 		},
 		{
+			"name":"ui/bagGo",
+			"type":"image",
+			"url":"assets/ui/bagGo.png"
+		},
+		{
 			"name":"ui/bg",
 			"type":"image",
 			"url":"assets/ui/bg.png"
@@ -888,6 +893,11 @@
 			"url":"assets/ui/gameBack.png"
 		},
 		{
+			"name":"ui/gameBtnBg",
+			"type":"image",
+			"url":"assets/ui/gameBtnBg.png"
+		},
+		{
 			"name":"ui/gold",
 			"type":"image",
 			"url":"assets/ui/gold.png"
@@ -901,6 +911,11 @@
 			"name":"ui/moreFire",
 			"type":"image",
 			"url":"assets/ui/moreFire.png"
+		},
+		{
+			"name":"ui/rechargeGo",
+			"type":"image",
+			"url":"assets/ui/rechargeGo.png"
 		},
 		{
 			"name":"ui/sp",
@@ -926,6 +941,11 @@
 			"name":"ui/topBg",
 			"type":"image",
 			"url":"assets/ui/topBg.png"
+		},
+		{
+			"name":"ui/userGo",
+			"type":"image",
+			"url":"assets/ui/userGo.png"
 		},
 		{
 			"name":"ui/yindao",
