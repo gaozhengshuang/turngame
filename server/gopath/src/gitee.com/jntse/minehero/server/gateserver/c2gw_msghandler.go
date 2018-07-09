@@ -483,6 +483,8 @@ func on_C2GW_SendWechatAuthCode(session network.IBaseNetSession, message interfa
 		// 转账给新用户
 		def.HttpWechatCompanyPay(respok.Openid, 1)
 
+		// 完成任务
+
 		log.Info("玩家[%d] 绑定wechat openid[%s]", user.Id(), respok.Openid)
 	}
 }
