@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"net/http"
 	"encoding/json"
-	"github.com/go-redis/redis"
+	_"github.com/go-redis/redis"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/server/def"
@@ -26,6 +26,7 @@ type HttpArguRegitstAccount struct {
 	Passwd 		string
 	Authcode 	string
 	Invitationcode string
+	Nickname	string
 }
 
 // TODO：回调函数有http底层单独的协程调用，想要单线程处理可以将数据push到主线程chan中
@@ -146,42 +147,18 @@ func HttpRegistAccount(body []byte) string {
 	}
 
 	errcode, phone, passwd, authcode, invitationcode := "", objcmd.Phone, objcmd.Passwd, objcmd.Authcode, objcmd.Invitationcode
+	nickname, account := objcmd.Nickname, phone
+
 	switch {
 	default:
-		if phone == "" {
-			errcode = "手机号不能为空"
-			break
-		}
-
-		if authcode == "" {
-			errcode = "请填写验证码"
-			break
-		}
-
-		if passwd == "" {
-			errcode = "密码不能为空"
-			break
-		}
-
-		key := fmt.Sprintf("regist_phone_%s", phone)
-		svrauthcode , err := Redis().Get(key).Result()
-		if err == redis.Nil {
-			errcode = "无效的验证码"
-			break
-		}else if err != nil {
-			errcode = "redis暂时不可用"
-			log.Error("检查账户是否存在 Redis错误:%s", err)
-			break
-		}
-		
-		if svrauthcode != authcode {
-			errcode = "验证码错误"
+		if errcode = RegistAccountCheck(account, passwd, invitationcode, authcode, nickname); errcode != "" {
 			break
 		}
 
 		// 验证通过
-		account := phone
-		errcode = registAccount(account, passwd, invitationcode, "")
+		if errcode = RegistAccount(account, passwd, invitationcode, "", nickname); errcode != "" {
+			break
+		}
 	}
 
 	// 回复客户端

@@ -75,6 +75,7 @@ func (this *UserBase) NewRegistAccountMsg() *msg.C2L_ReqRegistAccount {
 		Passwd: pb.String(this.passwd),
 		Authcode: pb.String("robot@free@regist"),
 		Invitationcode: pb.String(""),
+		Nickname: pb.String(this.account),
 	}
 	return msg
 }

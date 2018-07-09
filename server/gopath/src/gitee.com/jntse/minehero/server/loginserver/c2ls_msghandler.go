@@ -111,57 +111,19 @@ func GetRegistAuthCode(phone string) string {
 func on_C2L_ReqRegistAccount(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2L_ReqRegistAccount)
 	errcode, phone, passwd, authcode, invitationcode := "", tmsg.GetPhone(), tmsg.GetPasswd(), tmsg.GetAuthcode(), tmsg.GetInvitationcode()
+	nickname, account := tmsg.GetNickname(), phone
+
 	switch {
 	default:
-		if phone == "" {
-			errcode = "手机号不能为空"
+		if errcode = RegistAccountCheck(account, passwd, invitationcode, authcode, nickname); errcode != "" {
 			break
 		}
 
-		if authcode == "" {
-			errcode = "请填写验证码"
+		if errcode = RegistAccount(account, passwd, invitationcode, "", nickname); errcode != "" {
 			break
 		}
-
-		if passwd == "" {
-			errcode = "密码不能为空"
-			break
-		}
-
-		// 是否是机器人注册
-		if authcode == "robot@free@regist" {
-			freeregist , _ := Redis().Get(authcode).Int64()		// Robot自由注册redis标记
-			if freeregist == 0  {
-				errcode = "使用了机器人自由注册码，但服务器没有Robot自由注册标记"
-				break
-			}
-		}else {
-			key := fmt.Sprintf("regist_phone_%s", phone)
-			svrauthcode , err := Redis().Get(key).Result()
-			if err == redis.Nil {
-				errcode = "请先获取验证码"
-				break
-			}else if err != nil {
-				errcode = "redis暂时不可用"
-				log.Error("检查账户是否存在 Redis错误:%s", err)
-				break
-			}
-
-			if svrauthcode == "" {
-				errcode = "验证码已过期"
-				break
-			}
-
-			if svrauthcode != authcode {
-				errcode = "验证码错误"
-				break
-			}
-		}
-
-		// 验证通过
-		account := phone
-		errcode = registAccount(account, passwd, invitationcode, "")
 	}
+
 
 	// 回复
 	send := &msg.L2C_RetRegistAccount{Errcode : pb.String(errcode) }
@@ -169,6 +131,73 @@ func on_C2L_ReqRegistAccount(session network.IBaseNetSession, message interface{
 	if errcode != "" { log.Info("[注册] 账户[%s] 注册失败[%s]", phone, errcode) }
 }
 
+func RegistAccountCheck(phone, passwd, invitationcode, authcode, nickname string) (errcode string) {
+	if phone == "" {
+		errcode = "手机号不能为空"
+		return
+	}
+
+	if authcode == "" {
+		errcode = "请填写验证码"
+		return
+	}
+
+	if passwd == "" {
+		errcode = "密码不能为空"
+		return
+	}
+
+	if nickname == "" {
+		errcode = "昵称不能为空"
+		return
+	}
+
+	// 是否是机器人注册
+	if authcode == "robot@free@regist" {
+		freeregist , _ := Redis().Get(authcode).Int64()		// Robot自由注册redis标记
+		if freeregist == 0  {
+			errcode = "使用了机器人自由注册码，但服务器没有Robot自由注册标记"
+			return
+		}
+	}else {
+		key := fmt.Sprintf("regist_phone_%s", phone)
+		svrauthcode , err := Redis().Get(key).Result()
+		if err == redis.Nil {
+			errcode = "请先获取验证码"
+			return
+		}else if err != nil {
+			errcode = "redis暂时不可用"
+			log.Error("检查账户是否存在 Redis错误:%s", err)
+			return
+		}
+
+		if svrauthcode == "" {
+			errcode = "验证码已过期"
+			return
+		}
+
+		if svrauthcode != authcode {
+			errcode = "验证码错误"
+			return
+		}
+	}
+
+	// 昵称是否重复
+	keynickname := fmt.Sprintf("accounts_nickname")
+	keyvalue, err := Redis().SIsMember(keynickname, nickname).Result()
+	if err != nil && err != redis.Nil {
+		errcode = "redis暂时不可用"
+		log.Error("检查昵称是否重复 Redis错误:%s", err)
+		return
+	}
+
+	if keyvalue == true {
+		errcode = "昵称重复"
+		return
+	}
+	
+	return ""
+}
 
 // --------------------------------------------------------------------------
 /// @brief 注册账户
@@ -180,25 +209,33 @@ func on_C2L_ReqRegistAccount(session network.IBaseNetSession, message interface{
 ///
 /// @return 
 // --------------------------------------------------------------------------
-func registAccount(account, passwd, invitationcode, token string) (errcode string) {
+func RegistAccount(account, passwd, invitationcode, token , nickname string) (errcode string) {
 	errcode = ""
 	switch {
 	default:
 		// 账户检查重复
-		key := fmt.Sprintf("accounts_%s", account)
-		bexist, _ := Redis().Exists(key).Result()
+		keyaccount := fmt.Sprintf("accounts_%s", account)
+		bexist, _ := Redis().Exists(keyaccount).Result()
 		if bexist == 1 {
 			errcode = "账户已经存在"
-			break
+			return
 		}
 
 		// 保存密码
 		passwdkey := fmt.Sprintf("accounts_passwd_%s", account)
-		if _, err := Redis().Set(passwdkey, passwd, 0).Result(); err != nil {
+		if _, errpasswd := Redis().Set(passwdkey, passwd, 0).Result(); errpasswd != nil {
 			errcode = "缓存账户密码失败"
-			break
+			return
 		}
 
+		// 保存昵称
+		keynickname := fmt.Sprintf("accounts_nickname")
+		_, errnick := Redis().SAdd(keynickname, nickname).Result()
+		if errnick != nil {
+			errcode = "redis暂时不可用"
+			log.Error("保存全局昵称 Redis错误:%s", errnick)
+			return
+		}
 
 		// 实名认证
 		// 生成唯一userid
@@ -215,16 +252,16 @@ func registAccount(account, passwd, invitationcode, token string) (errcode strin
 			Userid: pb.Uint64(userid),
 		}
 
-		if err := utredis.SetProtoBin(Redis(), key, info); err != nil {
+		if errsetbin := utredis.SetProtoBin(Redis(), keyaccount, info); errsetbin != nil {
 			errcode = "插入账户数据失败"
-			log.Error("新建账户%s失败，err: %s", account, err)
+			log.Error("新建账户%s失败，err: %s", account, errsetbin)
 			break
 		}
 		
 		// 初始元宝和金卷
 		Yuanbao := uint32(tbl.Global.Newuser.Yuanbao)
 		userinfo := &msg.Serialize {
-			Entity : &msg.EntityBase{ Id:pb.Uint64(userid), Name:pb.String(""), Face:pb.String(""), Account:pb.String(account) },
+			Entity : &msg.EntityBase{ Id:pb.Uint64(userid), Name:pb.String(nickname), Face:pb.String(""), Account:pb.String(account) },
 			Base : &msg.UserBase{Money: pb.Uint32(1000), Invitationcode:pb.String(invitationcode), Yuanbao:pb.Uint32(Yuanbao), Level:pb.Uint32(1)},
 			Item : &msg.ItemBin{},
 		}
