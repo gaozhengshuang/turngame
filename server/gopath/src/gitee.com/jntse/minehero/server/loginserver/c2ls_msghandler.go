@@ -152,6 +152,11 @@ func RegistAccountCheck(phone, passwd, invitationcode, authcode, nickname string
 		return
 	}
 
+	if util.ContainsSpecialCharacter(nickname) == true {
+		errcode = "昵称不能包含特殊字符"
+		return
+	}
+
 	// 账户检查重复
 	keyaccount := fmt.Sprintf("accounts_%s", phone)
 	bexist, _ := Redis().Exists(keyaccount).Result()
