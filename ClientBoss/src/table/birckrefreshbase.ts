@@ -3,7 +3,7 @@
 
 module table {
 export var TBirckRefresh : table.ITBirckRefreshDefine[] = [
-		{ Id : 1, Min : 0, Max : 99999999, Pro : "1-400;2-200;3-200;4-100;5-40;21-6", Limitnum : 0 	}
+		{ Id : 1, Min : 0, Max : 99999999, Pro : "1-400;2-200;3-200;4-100;5-40;21-6", Limitnum : 10 	}
 	]
 
 
