@@ -12,19 +12,19 @@
 
 
 
-		<e:Label id="btn_login" text="&lt;&lt;登录账号" touchEnabled="true" scaleX="1" scaleY="1" size="30" verticalCenter="485" textColor="0x8c5eda" bold="true" horizontalCenter="0"/>
-		<game:IconButton id="registerButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" verticalCenter="387.5" horizontalCenter="0"/>
+		<e:Label id="btn_login" text="&lt;&lt;登录账号" touchEnabled="true" scaleX="1" scaleY="1" size="30" verticalCenter="501" textColor="0x8c5eda" bold="true" horizontalCenter="0"/>
+		<game:IconButton id="registerButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" verticalCenter="422.5" horizontalCenter="0.5"/>
 
 
 
-		<e:Group id="username" width="517" height="75" y="332" anchorOffsetX="0" horizontalCenter="0">
+		<e:Group id="phone" width="517" height="75" y="315.32" anchorOffsetX="0" horizontalCenter="-1.5">
 
 			<e:Image source="login/loginInput" x="0" y="0" anchorOffsetX="0" width="517" scaleX="1" scaleY="1"/>
 			<e:Image source="login/phoneicon" x="24" verticalCenter="0"/>
-			<e:EditableText id="nameLabel" width="376" height="51.51" x="93" y="9.75" anchorOffsetX="0" anchorOffsetY="0" textAlign="left" verticalAlign="middle" scaleX="1" scaleY="1" size="24" prompt="请输入手机号" promptColor="0x9a9a9a" textColor="0x595959"/>
+			<e:EditableText id="phoneLabel" width="376" height="51.51" x="93" y="9.75" anchorOffsetX="0" anchorOffsetY="0" textAlign="left" verticalAlign="middle" scaleX="1" scaleY="1" size="24" prompt="请输入手机号" promptColor="0x9a9a9a" textColor="0x595959"/>
 
 		</e:Group>
-		<e:Group id="authCode" width="517" height="75" y="432" anchorOffsetX="0" horizontalCenter="0">
+		<e:Group id="authCode" width="517" height="75" y="415.32" anchorOffsetX="0" horizontalCenter="0.5">
 			<e:Image source="login/loginInput" x="0" y="0" anchorOffsetX="0" width="517" scaleX="1" scaleY="1"/>
 			<e:Image x="24" source="login/yzmicon" verticalCenter="0"/>
 			<game:IconButton id="btn_authCode" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="150" verticalCenter="0"/>
@@ -33,17 +33,22 @@
 			<e:EditableText id="authCodeLabel" width="168" height="51.51" x="93" y="9.75" anchorOffsetX="0" anchorOffsetY="0" textAlign="left" verticalAlign="middle" scaleX="1" scaleY="1" size="24" prompt="请输入验证码" promptColor="0x9a9a9a" textColor="0x595959"/>
 
 		</e:Group>
-		<e:Group id="password" width="517" height="75" y="532" anchorOffsetX="0" horizontalCenter="0">
+		<e:Group id="username" width="517" height="75" y="515.32" anchorOffsetX="0" horizontalCenter="0.5">
+			<e:Image source="login/loginInput" x="0" y="0" anchorOffsetX="0" width="517" scaleX="1" scaleY="1"/>
+			<e:Image x="24" verticalCenter="0" source="login/nicknameImg"/>
+			<e:EditableText id="nameLabel" width="376" height="51.51" x="93" y="9.75" anchorOffsetX="0" anchorOffsetY="0" textAlign="left" verticalAlign="middle" scaleX="1" scaleY="1" size="24" prompt="请输入昵称" promptColor="0x9A9A9A" textColor="0x595959"/>
+		</e:Group>
+		<e:Group id="password" width="517" height="75" y="615.32" anchorOffsetX="0" horizontalCenter="0.5">
 			<e:Image source="login/loginInput" x="0" y="0" anchorOffsetX="0" width="517" scaleX="1" scaleY="1"/>
 			<e:Image x="24" source="login/passwdicon" verticalCenter="0"/>
 			<e:EditableText id="passwordLabel" width="368" height="51.51" x="93" y="9.75" anchorOffsetX="0" anchorOffsetY="0" textAlign="left" verticalAlign="middle" scaleX="1" scaleY="1" size="24" prompt="请输入密码" promptColor="0x9a9a9a" textColor="0x595959"/>
 		</e:Group>
-		<e:Group id="passwordok" width="517" height="75" y="632" anchorOffsetX="0" horizontalCenter="0">
+		<e:Group id="passwordok" width="517" height="75" y="715.32" anchorOffsetX="0" horizontalCenter="0.5">
 			<e:Image source="login/loginInput" x="0" y="0" anchorOffsetX="0" width="517" scaleX="1" scaleY="1"/>
 			<e:Image source="login/passwdicon" x="24" verticalCenter="0"/>
 			<e:EditableText id="passwordokLabel" width="366" height="51.51" x="93" y="9.75" anchorOffsetX="0" anchorOffsetY="0" textAlign="left" verticalAlign="middle" scaleX="1" scaleY="1" size="24" promptColor="0x9a9a9a" prompt="请确认密码" textColor="0x595959"/>
 		</e:Group>
-		<e:Group id="comeon" width="517" height="75" y="732" anchorOffsetX="0" horizontalCenter="0">
+		<e:Group id="comeon" width="517" height="75" y="815.32" anchorOffsetX="0" horizontalCenter="0.5">
 			<e:Image source="login/loginInput" x="0" y="0" anchorOffsetX="0" width="517" scaleX="1" scaleY="1"/>
 			<e:Image x="24" source="login/yqmicon" verticalCenter="0"/>
 			<e:EditableText id="comeonLabel" width="366" height="51.51" x="93" y="9.75" anchorOffsetX="0" anchorOffsetY="0" textAlign="left" verticalAlign="middle" scaleX="1" scaleY="1" size="24" prompt="请输入邀请码 没有可不填写" promptColor="0x9a9a9a" textColor="0x595959"/>

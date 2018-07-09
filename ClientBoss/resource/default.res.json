@@ -508,6 +508,16 @@
 			"url":"assets/login/loginTitle.png"
 		},
 		{
+			"name":"login/nicknameImg",
+			"type":"image",
+			"url":"assets/login/nicknameImg.png"
+		},
+		{
+			"name":"login/notreachImg",
+			"type":"image",
+			"url":"assets/login/notreachImg.png"
+		},
+		{
 			"name":"login/passwdicon",
 			"type":"image",
 			"url":"assets/login/passwdicon.png"
@@ -923,9 +933,24 @@
 			"url":"assets/ui/yindao.png"
 		},
 		{
+			"name":"ui/main/common_luckyBtnBg",
+			"type":"image",
+			"url":"assets/ui/main/common_luckyBtnBg.png"
+		},
+		{
+			"name":"ui/main/common_userBtnBg",
+			"type":"image",
+			"url":"assets/ui/main/common_userBtnBg.png"
+		},
+		{
 			"name":"ui/main/guangquan",
 			"type":"image",
 			"url":"assets/ui/main/guangquan.png"
+		},
+		{
+			"name":"ui/main/luckMainBtn",
+			"type":"image",
+			"url":"assets/ui/main/luckMainBtn.png"
 		},
 		{
 			"name":"ui/main/paihang",
@@ -946,6 +971,11 @@
 			"name":"ui/main/tou",
 			"type":"image",
 			"url":"assets/ui/main/tou.png"
+		},
+		{
+			"name":"ui/main/userMainBtn",
+			"type":"image",
+			"url":"assets/ui/main/userMainBtn.png"
 		},
 		{
 			"name":"ui/rank/bg",

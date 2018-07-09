@@ -3779,6 +3779,9 @@ declare namespace msg {
 
         /** C2L_ReqRegistAccount invitationcode */
         invitationcode?: (string|null);
+
+        /** C2L_ReqRegistAccount nickname */
+        nickname?: (string|null);
     }
 
     /** Represents a C2L_ReqRegistAccount. */
@@ -3801,6 +3804,9 @@ declare namespace msg {
 
         /** C2L_ReqRegistAccount invitationcode. */
         public invitationcode: string;
+
+        /** C2L_ReqRegistAccount nickname. */
+        public nickname: string;
 
         /**
          * Creates a new C2L_ReqRegistAccount instance using the specified properties.
