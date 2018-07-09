@@ -56,3 +56,8 @@ message GW2C_LuckyDrawHit {
 message GW2C_FreePresentNotify {
     optional int32 money = 1;
 }
+
+// 发送任务列表
+message GW2C_SendTaskList {
+    repeated msg.TaskData tasks = 1;
+}

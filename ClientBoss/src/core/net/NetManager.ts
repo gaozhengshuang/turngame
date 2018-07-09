@@ -11,7 +11,7 @@ module game {
 
     //外网IP
     // export var $registIp: string = "http://210.73.214.67:7003";
-    // export var _netIp: string = "210.73.214.67";
+    // export var _netIp: string = "210.73.214.68";
     // export var _netPort: string = "7002";
 
     //内网IP

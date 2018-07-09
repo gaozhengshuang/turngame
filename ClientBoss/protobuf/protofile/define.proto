@@ -39,4 +39,10 @@ message PairNumItem {
     optional uint32 num = 2;
 }
 
+enum TaskId {
+    RegistAccount       = 1001; // 注册账户
+    RegisterTopScore    = 1002; // 达到目标分数
+    InviteeTopScore     = 1003; // 被邀请人达到目标分数
+}
+
 

@@ -28,6 +28,6 @@
 	</w:Declarations>
 	<e:Group id="group" width="640" height="1136" touchEnabled="false" horizontalCenter="0" verticalCenter="0">
 		<e:Image id="image" horizontalCenter="-3" verticalCenter="-61.5" anchorOffsetY="0" height="430" anchorOffsetX="0" width="670" source="ui/loginRewardGold"/>
-		<game:LabelButton id="btn_ok" skinName="NormalLabelButtonSkin" verticalCenter="-139" anchorOffsetX="0" width="174" anchorOffsetY="0" height="72" y="637" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<game:LabelButton id="btn_ok" verticalCenter="-81" anchorOffsetX="0" width="174" anchorOffsetY="0" height="72" y="637" scaleX="1" scaleY="1" horizontalCenter="0" skinName="IconButtonSkin"/>
 	</e:Group>
 </e:Skin>

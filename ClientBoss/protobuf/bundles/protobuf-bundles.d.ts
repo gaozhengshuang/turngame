@@ -1845,6 +1845,198 @@ declare namespace msg {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a UserTask. */
+    interface IUserTask {
+
+        /** UserTask tasks */
+        tasks?: (msg.ITaskData[]|null);
+    }
+
+    /** Represents a UserTask. */
+    class UserTask implements IUserTask {
+
+        /**
+         * Constructs a new UserTask.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: msg.IUserTask);
+
+        /** UserTask tasks. */
+        public tasks: msg.ITaskData[];
+
+        /**
+         * Creates a new UserTask instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UserTask instance
+         */
+        public static create(properties?: msg.IUserTask): msg.UserTask;
+
+        /**
+         * Encodes the specified UserTask message. Does not implicitly {@link msg.UserTask.verify|verify} messages.
+         * @param message UserTask message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: msg.IUserTask, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified UserTask message, length delimited. Does not implicitly {@link msg.UserTask.verify|verify} messages.
+         * @param message UserTask message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: msg.IUserTask, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a UserTask message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns UserTask
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.UserTask;
+
+        /**
+         * Decodes a UserTask message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns UserTask
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.UserTask;
+
+        /**
+         * Verifies a UserTask message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a UserTask message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns UserTask
+         */
+        public static fromObject(object: { [k: string]: any }): msg.UserTask;
+
+        /**
+         * Creates a plain object from a UserTask message. Also converts values to other types if specified.
+         * @param message UserTask
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: msg.UserTask, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this UserTask to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a TaskData. */
+    interface ITaskData {
+
+        /** TaskData id */
+        id?: (number|null);
+
+        /** TaskData progress */
+        progress?: (number|null);
+
+        /** TaskData completed */
+        completed?: (number|null);
+    }
+
+    /** Represents a TaskData. */
+    class TaskData implements ITaskData {
+
+        /**
+         * Constructs a new TaskData.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: msg.ITaskData);
+
+        /** TaskData id. */
+        public id: number;
+
+        /** TaskData progress. */
+        public progress: number;
+
+        /** TaskData completed. */
+        public completed: number;
+
+        /**
+         * Creates a new TaskData instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns TaskData instance
+         */
+        public static create(properties?: msg.ITaskData): msg.TaskData;
+
+        /**
+         * Encodes the specified TaskData message. Does not implicitly {@link msg.TaskData.verify|verify} messages.
+         * @param message TaskData message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: msg.ITaskData, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified TaskData message, length delimited. Does not implicitly {@link msg.TaskData.verify|verify} messages.
+         * @param message TaskData message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: msg.ITaskData, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a TaskData message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns TaskData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.TaskData;
+
+        /**
+         * Decodes a TaskData message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns TaskData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.TaskData;
+
+        /**
+         * Verifies a TaskData message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a TaskData message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns TaskData
+         */
+        public static fromObject(object: { [k: string]: any }): msg.TaskData;
+
+        /**
+         * Creates a plain object from a TaskData message. Also converts values to other types if specified.
+         * @param message TaskData
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: msg.TaskData, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this TaskData to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a UserBase. */
     interface IUserBase {
 
@@ -1895,6 +2087,9 @@ declare namespace msg {
 
         /** UserBase freepresent */
         freepresent?: (msg.IFreePresentMoney|null);
+
+        /** UserBase task */
+        task?: (msg.IUserTask|null);
     }
 
     /** Represents a UserBase. */
@@ -1953,6 +2148,9 @@ declare namespace msg {
 
         /** UserBase freepresent. */
         public freepresent?: (msg.IFreePresentMoney|null);
+
+        /** UserBase task. */
+        public task?: (msg.IUserTask|null);
 
         /**
          * Creates a new UserBase instance using the specified properties.
@@ -4183,6 +4381,13 @@ declare namespace msg {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+    }
+
+    /** TaskId enum. */
+    enum TaskId {
+        RegistAccount = 1001,
+        RegisterTopScore = 1002,
+        InviteeTopScore = 1003
     }
 
     /** Properties of a GW2L_ReqRegist. */
@@ -9910,6 +10115,96 @@ declare namespace msg {
 
         /**
          * Converts this GW2C_FreePresentNotify to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a GW2C_SendTaskList. */
+    interface IGW2C_SendTaskList {
+
+        /** GW2C_SendTaskList tasks */
+        tasks?: (msg.ITaskData[]|null);
+    }
+
+    /** Represents a GW2C_SendTaskList. */
+    class GW2C_SendTaskList implements IGW2C_SendTaskList {
+
+        /**
+         * Constructs a new GW2C_SendTaskList.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: msg.IGW2C_SendTaskList);
+
+        /** GW2C_SendTaskList tasks. */
+        public tasks: msg.ITaskData[];
+
+        /**
+         * Creates a new GW2C_SendTaskList instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GW2C_SendTaskList instance
+         */
+        public static create(properties?: msg.IGW2C_SendTaskList): msg.GW2C_SendTaskList;
+
+        /**
+         * Encodes the specified GW2C_SendTaskList message. Does not implicitly {@link msg.GW2C_SendTaskList.verify|verify} messages.
+         * @param message GW2C_SendTaskList message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: msg.IGW2C_SendTaskList, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified GW2C_SendTaskList message, length delimited. Does not implicitly {@link msg.GW2C_SendTaskList.verify|verify} messages.
+         * @param message GW2C_SendTaskList message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: msg.IGW2C_SendTaskList, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a GW2C_SendTaskList message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GW2C_SendTaskList
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): msg.GW2C_SendTaskList;
+
+        /**
+         * Decodes a GW2C_SendTaskList message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GW2C_SendTaskList
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): msg.GW2C_SendTaskList;
+
+        /**
+         * Verifies a GW2C_SendTaskList message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GW2C_SendTaskList message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GW2C_SendTaskList
+         */
+        public static fromObject(object: { [k: string]: any }): msg.GW2C_SendTaskList;
+
+        /**
+         * Creates a plain object from a GW2C_SendTaskList message. Also converts values to other types if specified.
+         * @param message GW2C_SendTaskList
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: msg.GW2C_SendTaskList, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GW2C_SendTaskList to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

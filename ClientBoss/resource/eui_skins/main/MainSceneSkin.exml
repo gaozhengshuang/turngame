@@ -13,6 +13,8 @@
 		<game:IconButton id="playButton" skinName="IconButtonSkin" verticalCenter="187.5" horizontalCenter="0.5" x="220.00000000000003" y="410.00000000000006"/>
 		<game:IconButton id="luckyButton" skinName="IconButtonSkin" verticalCenter="187.5" horizontalCenter="256.5"/>
 		<game:IconButton id="userButton" skinName="IconButtonSkin" verticalCenter="187.5" horizontalCenter="-255.5"/>
+		<e:Label text="个人信息" size="24" textColor="0xb453fd" textAlign="center" horizontalCenter="-255" verticalCenter="277"/>
+		<e:Label text="抽奖" textColor="0x31b7f5" size="24" textAlign="center" horizontalCenter="257" verticalCenter="277"/>
 		<e:Image source="user/getMoneyImg" verticalCenter="145" horizontalCenter="-189"/>
 		<game:IconButton id="rankButton" skinName="IconButtonSkin" verticalCenter="388" y="430.00000000000006" horizontalCenter="0" visible="false"/>
 		<e:Label id="rankLabel" text="排行榜&gt;&gt;" y="971" textColor="0x504D5E" touchEnabled="true" anchorOffsetX="0" width="224" anchorOffsetY="0" height="58" horizontalCenter="-148" verticalAlign="middle" textAlign="center" visible="false"/>
