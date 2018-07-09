@@ -265,11 +265,11 @@ func (this *UserManager) PickBroadcastMsg(uid uint64) pb.Message {
 
 
 // TODO:整点赠送免费步数，异步事件处理
-func (this *UserManager) GiveFreeStep(now int64) {
-	for _, user := range this.accounts {
-		event := NewGiveFreeStepEvent(now, "整点在线获得", user.CheckGiveFreeStep)
-		user.AsynEventInsert(event)
-	}
-}
+//func (this *UserManager) GiveFreeStep(now int64) {
+//	for _, user := range this.accounts {
+//		event := NewGiveFreeStepEvent(now, "整点在线获得", user.CheckGiveFreeStep)
+//		user.AsynEventInsert(event)
+//	}
+//}
 
 

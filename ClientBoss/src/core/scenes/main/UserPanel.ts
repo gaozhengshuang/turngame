@@ -7,6 +7,10 @@ module game {
         img_gameTask: eui.Image;
         img_becomeonTask: eui.Image;
 
+        img_nocomeTask: eui.Image;
+        img_nogameTask: eui.Image;
+        img_nobecomeonTask: eui.Image;
+
         img_wxybd: eui.Image;
         labelName: eui.Label;
         labelId: eui.Label;
@@ -37,8 +41,9 @@ module game {
 
         private initUser() {
             let userInfo = DataManager.playerModel.userInfo;
-            this.labelId.text = `${userInfo.userid}`;
+            this.labelId.text = `ID  ${userInfo.userid}`;
             this.labelInvitationcode.text = "TJ"+userInfo.userid;
+            this.labelName.text = userInfo.name;
 
             this.img_wxybd.visible = DataManager.playerModel.getOpenId() != "";
             this.wxButton.visible = DataManager.playerModel.getOpenId() == "";

@@ -26,21 +26,24 @@
 		<e:Label text="任务：邀请好友得现金，用邀请码邀请好友注册" size="22" textColor="0x808080" scaleX="1" scaleY="1" verticalCenter="-16.545" textAlign="left" left="58"/>
 		<e:Label text="奖励：注册成功立刻获得1元现金" size="24" textColor="0xff8b26" bold="true" scaleX="1" scaleY="1" verticalCenter="23.455" x="58" textAlign="left"/>
 		<e:Image id="img_comeTask" source="user/userOk" horizontalCenter="260" verticalCenter="-0.045000000000001705"/>
-		<e:Label text="未完成" x="574.37" textColor="0x565454" bold="true" verticalCenter="0"/>
+		<e:Image id="img_nocomeTask" horizontalCenter="260" verticalCenter="-0.045000000000001705" source="login/notreachImg"/>
+
 	</e:Group>
 	<e:Group id="taskGroup2" width="720" height="109.09" anchorOffsetY="0" verticalCenter="354.5" horizontalCenter="0">
 		<e:Image source="lucky/bagline" y="-0.4699999999999136" horizontalCenter="0" x="65" scaleX="1" scaleY="1"/>
 		<e:Label text="任务：玩游戏得现金，单局游戏内最高金币数达到1万" size="22" textColor="0x808080" scaleX="1" scaleY="1" left="58" verticalCenter="-16.545" textAlign="left"/>
 		<e:Label text="奖励：立刻获得1元现金" size="24" textColor="0xFF8B26" bold="true" scaleX="1" scaleY="1" textAlign="left" verticalCenter="23.455" x="58"/>
 		<e:Image id="img_gameTask" source="user/userOk" horizontalCenter="260" x="581" scaleX="1" scaleY="1" verticalCenter="0"/>
-		<e:Label text="未完成" x="574.37" textColor="0x565454" bold="true" verticalCenter="0" y="-315" scaleX="1" scaleY="1"/>
+		<e:Image id="img_nogameTask" horizontalCenter="260" verticalCenter="-0.045000000000001705" source="login/notreachImg" x="581" y="-338" scaleX="1" scaleY="1"/>
+
 	</e:Group>
 	<e:Group id="taskGroup3" width="720" height="109.09" anchorOffsetY="0" verticalCenter="464.5" horizontalCenter="0">
 		<e:Image source="lucky/bagline" y="-0.4699999999999136" horizontalCenter="0" x="65" scaleX="1" scaleY="1"/>
 		<e:Label text="任务：被邀请的人单局游戏内最高金币数达到1万" size="22" textColor="0x808080" scaleX="1" scaleY="1" left="58" verticalCenter="-16.545" textAlign="left"/>
 		<e:Label text="奖励：立刻获得1元现金" size="24" textColor="0xFF8B26" bold="true" scaleX="1" scaleY="1" textAlign="left" verticalCenter="23.455" x="58"/>
 		<e:Image id="img_becomeonTask" source="user/userOk" horizontalCenter="260" verticalCenter="0"/>
-		<e:Label text="未完成" x="574.37" textColor="0x565454" bold="true" verticalCenter="0" y="-425" scaleX="1" scaleY="1"/>
+		<e:Image id="img_nobecomeonTask" horizontalCenter="260" verticalCenter="-0.045000000000001705" source="login/notreachImg" x="581" y="-448" scaleX="1" scaleY="1"/>
+
 	</e:Group>
 
 

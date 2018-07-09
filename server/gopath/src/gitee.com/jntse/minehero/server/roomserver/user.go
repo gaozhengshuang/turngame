@@ -2,7 +2,7 @@ package main
 import (
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
-	"gitee.com/jntse/minehero/server/def"
+	_"gitee.com/jntse/minehero/server/def"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/util"
@@ -66,6 +66,11 @@ func (this *RoomUser) Account() string {
 func (this *RoomUser) Face() string {
 	return this.Entity().GetFace()
 }
+
+func (this *RoomUser) RoomId() int64 {
+	return this.roomid
+}
+
 
 func (this *RoomUser) DiamondRoomCost() int64 {
 	userbase := this.UserBase()
@@ -155,9 +160,9 @@ func (this *RoomUser) OnLevelUp() {
 	if ok == true { this.AddYuanbao(uint32(lvlbase.Reward), "升级奖元宝") }
 
 	// 临时
-	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(this.Level())}
-	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserLevelArglist, nil)
-	this.AsynEventInsert(event)
+	//arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(this.Level())}
+	//event := eventque.NewCommonEvent(arglist, def.HttpRequestUserLevelArglist, nil)
+	//this.AsynEventInsert(event)
 }
 
 // 打包二进制数据
@@ -191,8 +196,25 @@ func (this *RoomUser) OnEnd(now int64) {
 	//this.bin = this.PackBin()
 }
 
-func (this *RoomUser) SendMsg(msg pb.Message) bool {
-	return RoomSvr().SendMsg(this.sid_gate , msg)
+func (this *RoomUser) SendMsg(m pb.Message) bool {
+	return RoomSvr().SendMsg(this.sid_gate , m)
+}
+
+// 转发消息到gate
+func (this *RoomUser) SendClientMsg(m pb.Message) bool {
+	name := pb.MessageName(m)
+	if name == "" { 
+		log.Fatal("SendClientMsg 获取proto名字失败[%s]", m)
+		return false 
+	}
+	msgbuf, err := pb.Marshal(m)
+	if err != nil { 
+		log.Fatal("SendClientMsg 序列化proto失败[%s][%s]", name, err)
+		return false 
+	}
+
+	send := &msg.RS2GW_MsgTransfer{ Uid:pb.Uint64(this.Id()), Name:pb.String(name), Buf:msgbuf }
+	return this.SendMsg(send)
 }
 
 func (this *RoomUser) SidGate() int {
@@ -208,31 +230,35 @@ func (this *RoomUser) UpdateCoins(amount uint32) {
 }
 
 // 获取平台金币
-func (this *RoomUser) QueryPlatformCoins() {
-	event := NewQueryPlatformCoinsEvent(this, this.SyncPlatformCoins)
-	this.AsynEventInsert(event)
-}
+//func (this *RoomUser) QueryPlatformCoins() {
+//	event := NewQueryPlatformCoinsEvent(this, this.SyncPlatformCoins)
+//	this.AsynEventInsert(event)
+//}
 
 // 同步平台金币
-func (this *RoomUser) SyncPlatformCoins() {
-	//
-	tvmid := this.Account()
-	errcode, coins, _ := def.HttpRequestFinanceQuery(this.Id(), this.Token(), tvmid)
-	if errcode != "" {
-		return
-	}
-	this.UpdateCoins(uint32(coins))
-	this.SendBattleUser()	// 同步玩家数据
-}
+//func (this *RoomUser) SyncPlatformCoins() {
+//	//
+//	tvmid := this.Account()
+//	errcode, coins, _ := def.HttpRequestFinanceQuery(this.Id(), this.Token(), tvmid)
+//	if errcode != "" {
+//		return
+//	}
+//	this.UpdateCoins(uint32(coins))
+//	this.SendBattleUser()	// 同步玩家数据
+//}
 
 func (this *RoomUser) GetMoney() uint32 {
 	return this.UserBase().GetMoney()
 }
 
-func (this *RoomUser) RemoveMoney(gold uint32, reason string) bool {
+func (this *RoomUser) RemoveMoney(gold uint32, reason string, syn bool) bool {
 	if this.GetMoney() > gold {
 		userbase := this.UserBase()
 		userbase.Money = pb.Uint32(this.GetMoney() - gold)
+		if syn {
+			send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+			this.SendClientMsg(send)
+		}
 		log.Info("玩家[%d] 扣除金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 
 		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Gold), gold)
@@ -242,15 +268,23 @@ func (this *RoomUser) RemoveMoney(gold uint32, reason string) bool {
 	return false
 }
 
-func (this *RoomUser) AddMoney(gold uint32, reason string) {
+func (this *RoomUser) AddMoney(gold uint32, reason string, syn bool) {
 	userbase := this.UserBase()
 	userbase.Money = pb.Uint32(this.GetMoney() + gold)
+	if syn {
+		send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+		this.SendClientMsg(send)
+	}
 	log.Info("玩家[%d] 添加金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 }
 
-func (this *RoomUser) SetMoney(gold uint32, reason string) {
+func (this *RoomUser) SetMoney(gold uint32, reason string, syn bool) {
 	userbase := this.UserBase()
 	userbase.Money = pb.Uint32(gold)
+	if syn {
+		send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetMoney())}
+		this.SendClientMsg(send)
+	}
 	log.Info("玩家[%d] 设置金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 }
 
@@ -264,7 +298,7 @@ func (this *RoomUser) AddYuanbao(yuanbao uint32, reason string) {
 	userbase := this.bin.GetBase()
 	userbase.Yuanbao = pb.Uint32(userbase.GetYuanbao() + yuanbao)
 	RCounter().IncrByDate("room_output", uint32(this.roomkind), yuanbao)
-	this.PlatformPushLootMoney(float32(yuanbao))
+	//this.PlatformPushLootMoney(float32(yuanbao))
 	log.Info("玩家[%d] 添加元宝[%d] 剩余[%d] 原因[%s]", this.Id(), yuanbao, userbase.GetYuanbao(), reason) 
 }
 
@@ -274,7 +308,7 @@ func (this *RoomUser) RemoveYuanbao(yuanbao uint32, reason string) bool {
 		userbase.Yuanbao = pb.Uint32(this.GetYuanbao() - yuanbao)
 		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_YuanBao), yuanbao)
 		RCounter().IncrByDate("room_income", uint32(this.roomkind), yuanbao)
-		this.PlatformPushConsumeMoney(float32(yuanbao))
+		//this.PlatformPushConsumeMoney(float32(yuanbao))
 		log.Info("玩家[%d] 扣除元宝[%d] 库存[%d] 原因[%s]", this.Id(), yuanbao, this.GetYuanbao(), reason)
 		return true
 	}
@@ -312,16 +346,13 @@ func (this *RoomUser) AddItem(item uint32, num uint32, reason string) {
     if item == uint32(msg.ItemId_YuanBao) {
         this.AddYuanbao(num, reason)
     }else if item == uint32(msg.ItemId_Gold) {
-        this.AddMoney(num, reason)
+        this.AddMoney(num, reason, true)
     }else if item == uint32(msg.ItemId_Coupon) {
 		this.AddCoupon(num, reason)
 	}else if item == uint32(msg.ItemId_FreeStep) {
 		this.AddFreeStep(num, reason)
 	}else{
-		base, ok := tbl.ItemBase.ItemBaseDataById[item]
-		if ok && this.bag.AddItem(item, num, reason) != nil {
-			this.PlatformPushLootMoney(float32(base.RealPrice) * float32(num))
-		}
+		this.bag.AddItem(item, num, reason)
 	}
 	RCounter().IncrByDate("item_add", item, num)
 
@@ -329,12 +360,7 @@ func (this *RoomUser) AddItem(item uint32, num uint32, reason string) {
 
 // 扣除道具
 func (this *RoomUser) RemoveItem(item uint32, num uint32, reason string) bool{
-	base, ok := tbl.ItemBase.ItemBaseDataById[item]
-	if ok && this.bag.RemoveItem(item, num, reason) {
-		this.PlatformPushConsumeMoney(float32(base.RealPrice) * float32(num))
-		return true
-	}
-	return false
+	return this.bag.RemoveItem(item, num, reason)
 }
 
 func (this *RoomUser) GetFreeStep() int32 {
@@ -365,7 +391,7 @@ func (this *RoomUser) SendBattleUser() {
 		Freestep:pb.Int32(this.GetFreeStep()),
 		Gold:pb.Uint32(this.GetMoney()),
 	}
-	this.SendMsg(send)
+	this.SendClientMsg(send)
 }
 
 
@@ -443,20 +469,52 @@ func (this *RoomUser) AsynEventInsert(event eventque.IEvent) {
 }
 
 // 推送资源消耗
-func (this *RoomUser) PlatformPushConsumeMoney(yuanbao float32) {
-	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
-	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
-	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceConsumeArglist, nil)
-	this.AsynEventInsert(event)
+//func (this *RoomUser) PlatformPushConsumeMoney(yuanbao float32) {
+//	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
+//	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
+//	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceConsumeArglist, nil)
+//	this.AsynEventInsert(event)
+//}
+//
+//// 推送资源获取
+//func (this *RoomUser) PlatformPushLootMoney(yuanbao float32) {
+//	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
+//	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
+//	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceEarnArglist, nil)
+//	this.AsynEventInsert(event)
+//}
+
+func (this *RoomUser) LuckyDraw() {
+	// 检查消耗
+	cost := uint32(tbl.Game.LuckDrawPrice)
+	if this.GetMoney() < cost {
+		this.SendNotify("金币不足")
+		return
+	}
+	this.RemoveMoney(cost, "幸运抽奖", true)
+
+	//
+	giftweight := make([]util.WeightOdds, 0)
+	for k ,v := range tbl.TBallGiftbase.TBallGiftById {
+		giftweight = append(giftweight, util.WeightOdds{Weight:v.Pro, Uid:int64(k)})
+	}
+	index := util.SelectByWeightOdds(giftweight)
+	if index < 0 || index >= int32(len(giftweight)) {
+		log.Error("[%d %s] 抽奖异常，无法获取抽奖id", this.Id(), this.Name())
+		return
+	}
+
+	uid := giftweight[index].Uid
+	gift, find := tbl.TBallGiftbase.TBallGiftById[uint32(uid)]
+	if find == false {
+		log.Error("[%d %s] 无效的奖励id[%d]", this.Id(), this.Name(), uid)
+		return
+	}
+
+	this.AddItem(gift.ItemId, gift.Num, "幸运抽奖")
+
+	// feedback
+	send := &msg.GW2C_LuckyDrawHit{Id:pb.Int32(int32(uid))}
+	this.SendClientMsg(send)
 }
 
-// 推送资源获取
-func (this *RoomUser) PlatformPushLootMoney(yuanbao float32) {
-	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
-	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
-	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceEarnArglist, nil)
-	this.AsynEventInsert(event)
-}
-
-func (this *RoomUser) LuckyDraw(tmsg *msg.C2GW_StartLuckyDraw) {
-}

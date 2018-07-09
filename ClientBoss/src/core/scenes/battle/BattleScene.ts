@@ -9,6 +9,10 @@ module game {
         ballButton1: IconButton;
         ballButton2: IconButton;
         luckyButton: IconButton;
+        userButton: IconButton;
+        rechargeButton: IconButton;
+        bagButton: IconButton;
+        backButton: IconButton;
         scoreLabel: eui.Label;
         ball1Price: eui.Label;
         ball2Price: eui.Label;
@@ -85,6 +89,7 @@ module game {
         //private _debugDraw: p2DebugDraw;
         debugGroup: eui.Group;
         private _currentFrame: number;
+        private _curMoney: number = 0;
         private _lootList;
         private _topColumn: number[];
         private _blackHoleList: BattleBlackHole[];
@@ -124,7 +129,11 @@ module game {
             //this.brickList = [];
             this.buffLootList = table.TBirckItem;
             this._buffList = [];
+            this.userButton.icon = "ui/userGo";
+            this.rechargeButton.icon = "ui/rechargeGo";
             this.luckyButton.icon = "lucky/luckyGo";
+            this.bagButton.icon = "ui/bagGo";
+            this.backButton.icon = "ui/gameBack";
             this.ballButton1.icon = "ball/1";
             this.ballButton2.icon = "ball/2";
             this.ball1Price.text = `价值:${table.TBallById[1].Price}炮弹`;
@@ -269,7 +278,7 @@ module game {
         }
 
         protected beforeShow() {
-            this.curSpaceFire = _spaceFire;
+            this.curSpaceFire = _spaceFire + DataManager.playerModel.getScore();
             let paddle = this._paddlePool.createObject();
             paddle.setData(1);
             paddle.resetPosition(this.mainGroup.y);
@@ -305,7 +314,11 @@ module game {
             this._touchEvent = [
                 {target: this.ballButton1, callBackFunc: this.ballHandle},
                 {target: this.ballButton2, callBackFunc: this.ballHandle},
+                {target: this.userButton, callBackFunc: this.userGoHandle},
                 {target: this.luckyButton, callBackFunc: this.luckyGoHandle},
+                {target: this.rechargeButton, callBackFunc: this.rechargeGoHandle},
+                {target: this.bagButton, callBackFunc: this.bagGoHandle},
+                {target: this.backButton, callBackFunc: this.backHandle},
             ];
             this._notify = [
                 {
@@ -397,7 +410,9 @@ module game {
             let y = event.stageY - 88;
             if (y >= this._paddle.y) return;
             if (DataManager.playerModel.getScore() < _paddlePrice) {
-                showTips("您的炮弹不足!", true);
+                showDialog("您的金币不足!", "充值", function () {
+                    showTips("暂未开放,敬请期待...", true);
+                });
                 return;
             }
             if(this._spCool == 0){ //无限火力不扣子弹
@@ -596,11 +611,14 @@ module game {
             this._moneySyn++;
             if (this._moneySyn > 100) {
                 this._moneySyn = 0;
-                sendMessage("msg.BT_UpdateMoney", msg.BT_UpdateMoney.encode({
-                    roomid: BattleManager.getInstance().getRoomId(),
-                    userid: DataManager.playerModel.getUserId(),
-                    money: DataManager.playerModel.getScore()
-                }));
+                if (this._curMoney != DataManager.playerModel.getScore()) {
+                    sendMessage("msg.BT_UpdateMoney", msg.BT_UpdateMoney.encode({
+                        roomid: BattleManager.getInstance().getRoomId(),
+                        userid: DataManager.playerModel.getUserId(),
+                        money: DataManager.playerModel.getScore()
+                    }));
+                    this._curMoney = DataManager.playerModel.getScore();
+                }
             }
 
             if (this._doubleTime > 0) {
@@ -1239,8 +1257,42 @@ module game {
             egret.Tween.get(blackHole2).to({x: end2X, y: end2Y}, 300);
         }
 
+        private userGoHandle() {
+            openPanel(PanelType.user);
+        }
+
         private luckyGoHandle() {
             openPanel(PanelType.lucky);
+        }
+
+        private rechargeGoHandle() {
+            showTips("暂未开放,敬请期待...", true);
+        }
+
+        private bagGoHandle() {
+            openPanel(PanelType.bag);
+        }
+
+        private backHandle() {
+            let backFunc : Function = function () {
+                egret.stopTick(this.updateView, this);
+                this._firewallPool.destroyAllObject();
+                
+                sendMessage("msg.BT_ReqQuitGameRoom", msg.BT_ReqQuitGameRoom.encode({
+                    roomid: BattleManager.getInstance().getRoomId(),
+                    userid: DataManager.playerModel.getUserId(),
+                }));
+
+                SceneManager.changeScene(SceneType.main);
+            }.bind(this);
+
+            if (this._nowSp >= _maxSp/2) {
+                showDialog("退出将不保存现有能量！", "确定", function () {
+                    backFunc();
+                });
+            } else {
+                backFunc();
+            }
         }
 
         private static _instance: BattleScene;

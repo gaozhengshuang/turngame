@@ -55,6 +55,7 @@
 	<e:Image id="topBg" source="ui/topBg" x="0" scale9Grid="90,10,540,45" y="0" touchEnabled="false"/>
 	<e:Group id="touchGroup" width="720" height="100%"/>
 	<e:Group id="mainGroup" width="720" height="100%" touchChildren="true" touchEnabled="false">
+		<e:Image source="ui/gameBtnBg" verticalCenter="445.5" horizontalCenter="0"/>
 		<e:Group id="buffGroup" width="720" height="876" anchorOffsetX="0" touchChildren="false" touchEnabled="false" x="0" scaleX="1" scaleY="1" top="88"/>
 		<e:Group id="showGroup" width="720" height="876" anchorOffsetX="0" touchChildren="false" touchEnabled="false" x="0" scaleX="1" scaleY="1" top="88">
 		</e:Group>
@@ -63,6 +64,10 @@
 			<e:Image id="moreFireImg" source="ui/moreFire" verticalCenter="-39" horizontalCenter="0" touchEnabled="false" visible="false"/>
 		</e:Group>
 		<e:Group id="debugGroup" width="720" height="876" anchorOffsetX="0" touchChildren="false" touchEnabled="false" x="0" scaleX="1" scaleY="1" top="88" visible="false"/>
+		<game:IconButton id="luckyButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="181.5" verticalCenter="493.5" x="547" y="1005"/>
+		<game:IconButton id="userButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="-300.5" verticalCenter="493.5" x="557" y="1015"/>
+		<game:IconButton id="rechargeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="-174.5" verticalCenter="493.5" x="567" y="1025"/>
+		<game:IconButton id="bagButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="303.5" verticalCenter="495.5" x="577" y="1035"/>
 	</e:Group>
 	<e:Group id="penetrationGroup" touchChildren="false" touchEnabled="false" left="5" bottom="30" height="100" width="100" visible="false">
 		<e:Image id="penetrationBallImage" source="ball/3" y="61" x="190"/>
@@ -76,7 +81,8 @@
 		<e:Label id="ball2Price" text="Label" size="20" horizontalCenter="0.5" verticalCenter="121"/>
 	</e:Group>
 	<e:Label id="scoreLabel" text="分数:0" strokeColor="0xFFFFFF" textAlign="center" verticalAlign="middle" anchorOffsetX="0" width="344" size="34" horizontalCenter="0" y="26" textColor="0xffffff"/>
-	<game:IconButton id="luckyButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="213.5" verticalCenter="481.5"/>
+
+	<game:IconButton id="backButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="-302.5" verticalCenter="-507.5"/>
 	<e:Label id="hitLabel" text="" stroke="2" strokeColor="0xFFFFFF" right="20" top="20" textColor="0x898989" visible="false"/>
 	<e:Label id="noticeLabel" text="" y="92" textColor="0xff678e" horizontalCenter="0"/>
 	<e:Group id="guideGroup" width="720" height="100%" touchChildren="false" touchEnabled="true">

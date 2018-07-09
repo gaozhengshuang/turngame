@@ -88,7 +88,7 @@ func (this *GameRoom) OnStart() {
 		Ownerid:pb.Uint64(this.ownerid),
 		Gamekind:pb.Int32(this.Kind()), 
 	}
-	this.SendMsg(msginit)
+	this.SendClientMsg(msginit)
 
 
 	// 同步玩家数据
@@ -96,7 +96,7 @@ func (this *GameRoom) OnStart() {
 
 	// 游戏开始
 	msgstart := &msg.BT_GameStart{Roomid:pb.Int64(this.Id()), Ownerid:pb.Uint64(this.ownerid)}
-	this.SendMsg(msgstart)
+	this.SendClientMsg(msgstart)
 }
 
 // 加载玩家

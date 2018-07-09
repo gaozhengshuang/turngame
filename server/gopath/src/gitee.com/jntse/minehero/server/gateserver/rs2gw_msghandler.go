@@ -1,6 +1,6 @@
 package main
 import (
-	_"reflect"
+	"reflect"
 	"fmt"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
@@ -36,13 +36,13 @@ func (this* RS2GWMsgHandler) Init() {
 	// 收
 	this.msgparser.RegistProtoMsg(msg.RS2GW_ReqRegist{}, on_RS2GW_ReqRegist)
 	this.msgparser.RegistProtoMsg(msg.RS2GW_RetUserDisconnect{}, on_RS2GW_RetUserDisconnect)
+	this.msgparser.RegistProtoMsg(msg.RS2GW_MsgTransfer{}, on_RS2GW_MsgTransfer)
 	this.msgparser.RegistProtoMsg(msg.GW2C_MsgNotify{}, on_GW2C_MsgNotify)
-	this.msgparser.RegistProtoMsg(msg.BT_GameInit{}, on_BT_GameInit)
-	this.msgparser.RegistProtoMsg(msg.BT_SendBattleUser{}, on_BT_SendBattleUser)
-	this.msgparser.RegistProtoMsg(msg.BT_GameStart{}, on_BT_GameStart)
+	//this.msgparser.RegistProtoMsg(msg.BT_GameInit{}, on_BT_GameInit)
+	//this.msgparser.RegistProtoMsg(msg.BT_SendBattleUser{}, on_BT_SendBattleUser)
+	//this.msgparser.RegistProtoMsg(msg.BT_GameStart{}, on_BT_GameStart)
 	this.msgparser.RegistProtoMsg(msg.BT_GameEnd{}, on_BT_GameEnd)
-	this.msgparser.RegistProtoMsg(msg.BT_PickItem{}, on_BT_PickItem)
-	this.msgparser.RegistProtoMsg(msg.GW2C_LuckyDrawHit{}, on_GW2C_LuckyDrawHit)
+	//this.msgparser.RegistProtoMsg(msg.BT_PickItem{}, on_BT_PickItem)
 
 	// 发
 	this.msgparser.RegistSendProto(msg.GW2RS_RetRegist{})
@@ -52,6 +52,7 @@ func (this* RS2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
 	this.msgparser.RegistSendProto(msg.BT_ReqQuitGameRoom{})
 	this.msgparser.RegistSendProto(msg.BT_UpdateMoney{})
+	this.msgparser.RegistSendProto(msg.C2GW_StartLuckyDraw{})
 }
 
 func on_RS2GW_ReqRegist(session network.IBaseNetSession, message interface{}) {
@@ -147,7 +148,24 @@ func on_RS2GW_RetUserDisconnect(session network.IBaseNetSession, message interfa
 	}
 }
 
-func on_GW2C_LuckyDrawHit(session network.IBaseNetSession, message interface{}) {
+func on_RS2GW_MsgTransfer(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.RS2GW_MsgTransfer)
+	msg_type := pb.MessageType(tmsg.GetName())
+	if msg_type == nil {
+		log.Fatal("消息转发解析失败，找不到proto msg=%s" , tmsg.GetName())
+		return
+	}
+
+	protomsg := reflect.New(msg_type.Elem()).Interface()
+	err := pb.Unmarshal(tmsg.GetBuf(), protomsg.(pb.Message))
+	if err != nil {
+		log.Fatal("消息转发解析失败，Unmarshal失败 msg=%s" , tmsg.GetName())
+		return
+	}
+
+	user := UserMgr().FindById(tmsg.GetUid())
+	if user == nil { return }
+	user.SendMsg(protomsg.(pb.Message))
 }
 
 

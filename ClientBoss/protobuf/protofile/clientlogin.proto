@@ -29,6 +29,7 @@ message C2L_ReqRegistAccount {
     optional string passwd = 2;
     optional string authcode = 3;
     optional string invitationcode = 4;
+    optional string nickname = 5;
 }
 
 

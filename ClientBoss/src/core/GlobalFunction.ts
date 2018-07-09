@@ -375,4 +375,8 @@ module game {
     export function clamp(x, min, max) {
         return x < min ? min : x > max ? max : x;
     }
+
+    export function showDialog(contentTxt: string, btnTxt: string, func: Function = null) {
+        CommonDialog.getInstance().OnShowPanel(contentTxt, btnTxt, func);
+    }
 }

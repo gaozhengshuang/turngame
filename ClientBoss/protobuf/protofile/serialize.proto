@@ -16,6 +16,11 @@ message SimpleCounter {
     optional int64 diamond_room_step = 5;       // 钻石场计数
 }
 
+message FreePresentMoney {
+    optional int32 count = 1;
+    optional int64 tmrecord = 2;
+}
+
 message UserWechat {
     optional string openid = 1;
 }
@@ -36,6 +41,7 @@ message UserBase {
     optional SimpleCounter scounter = 13;   // 简单计数器
     optional UserWechat wechat = 14;
     optional string     invitationcode = 15;    // 邀请码
+    optional FreePresentMoney freepresent = 16;
 }
 
 message UserAddress {

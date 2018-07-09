@@ -11,8 +11,7 @@
 			"name": "GateListener",
 			"parser": "GW2MS_MsgParser",
 			"host": {
-				"ip": "192.168.30.203",
-				"port": 17110
+				"ip": "192.168.30.203", "port": 8001
 			},
             "verify": 0,
             "svrchannel":true
@@ -21,8 +20,7 @@
 			"name": "RoomListener",
 			"parser": "RS2MS_MsgParser",
 			"host": {
-				"ip": "192.168.30.203",
-				"port": 17120
+				"ip": "192.168.30.203", "port": 8002
 			},
             "verify": 0,
             "svrchannel":true
@@ -32,8 +30,7 @@
 		{
 			"name": "GmCmdListener",
 			"host": {
-				"ip": "192.168.30.203",
-				"port": 19010
+				"ip": "192.168.30.203", "port": 8003
 			}
 		}
     ],
@@ -41,8 +38,7 @@
         "passwd": "",
         "db": 0,
         "host": {
-            "ip": "192.168.30.203",
-            "port": 6377
+            "ip": "192.168.30.203", "port": 6377
         }
     }
 }

@@ -45,9 +45,14 @@ message GW2C_SendWechatInfo {
 
 // 抽奖
 message C2GW_StartLuckyDraw {
-    optional int32 uid = 1;
+    optional uint64 userid = 1;
 }
 
 message GW2C_LuckyDrawHit {
     optional int32 id = 1;
+}
+
+// 免费赠送金币
+message GW2C_FreePresentNotify {
+    optional int32 money = 1;
 }

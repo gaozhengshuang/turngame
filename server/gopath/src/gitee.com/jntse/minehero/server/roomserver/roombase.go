@@ -86,6 +86,14 @@ func (this *GameRoom) SendMsg(msg pb.Message) {
 	this.owner.SendMsg(msg)
 }
 
+func (this *GameRoom) SendClientMsg(msg pb.Message) {
+	if this.owner == nil {
+		log.Error("房间[%d] Owner数据未初始化", this.id)
+		return
+	}
+	this.owner.SendClientMsg(msg)
+}
+
 // 房间参数初始化
 func (this *GameRoom) Init() (errcode string) {
 	switch{

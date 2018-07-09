@@ -4165,6 +4165,230 @@ $root.msg = (function() {
         return SimpleCounter;
     })();
 
+    msg.FreePresentMoney = (function() {
+
+        /**
+         * Properties of a FreePresentMoney.
+         * @memberof msg
+         * @interface IFreePresentMoney
+         * @property {number|null} [count] FreePresentMoney count
+         * @property {number|Long|null} [tmrecord] FreePresentMoney tmrecord
+         */
+
+        /**
+         * Constructs a new FreePresentMoney.
+         * @memberof msg
+         * @classdesc Represents a FreePresentMoney.
+         * @implements IFreePresentMoney
+         * @constructor
+         * @param {msg.IFreePresentMoney=} [properties] Properties to set
+         */
+        function FreePresentMoney(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * FreePresentMoney count.
+         * @member {number} count
+         * @memberof msg.FreePresentMoney
+         * @instance
+         */
+        FreePresentMoney.prototype.count = 0;
+
+        /**
+         * FreePresentMoney tmrecord.
+         * @member {number|Long} tmrecord
+         * @memberof msg.FreePresentMoney
+         * @instance
+         */
+        FreePresentMoney.prototype.tmrecord = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new FreePresentMoney instance using the specified properties.
+         * @function create
+         * @memberof msg.FreePresentMoney
+         * @static
+         * @param {msg.IFreePresentMoney=} [properties] Properties to set
+         * @returns {msg.FreePresentMoney} FreePresentMoney instance
+         */
+        FreePresentMoney.create = function create(properties) {
+            return new FreePresentMoney(properties);
+        };
+
+        /**
+         * Encodes the specified FreePresentMoney message. Does not implicitly {@link msg.FreePresentMoney.verify|verify} messages.
+         * @function encode
+         * @memberof msg.FreePresentMoney
+         * @static
+         * @param {msg.IFreePresentMoney} message FreePresentMoney message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FreePresentMoney.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.count != null && message.hasOwnProperty("count"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.count);
+            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.tmrecord);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified FreePresentMoney message, length delimited. Does not implicitly {@link msg.FreePresentMoney.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.FreePresentMoney
+         * @static
+         * @param {msg.IFreePresentMoney} message FreePresentMoney message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FreePresentMoney.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a FreePresentMoney message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.FreePresentMoney
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.FreePresentMoney} FreePresentMoney
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FreePresentMoney.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.FreePresentMoney();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.count = reader.int32();
+                    break;
+                case 2:
+                    message.tmrecord = reader.int64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a FreePresentMoney message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.FreePresentMoney
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.FreePresentMoney} FreePresentMoney
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FreePresentMoney.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a FreePresentMoney message.
+         * @function verify
+         * @memberof msg.FreePresentMoney
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        FreePresentMoney.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.count != null && message.hasOwnProperty("count"))
+                if (!$util.isInteger(message.count))
+                    return "count: integer expected";
+            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
+                if (!$util.isInteger(message.tmrecord) && !(message.tmrecord && $util.isInteger(message.tmrecord.low) && $util.isInteger(message.tmrecord.high)))
+                    return "tmrecord: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a FreePresentMoney message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.FreePresentMoney
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.FreePresentMoney} FreePresentMoney
+         */
+        FreePresentMoney.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.FreePresentMoney)
+                return object;
+            var message = new $root.msg.FreePresentMoney();
+            if (object.count != null)
+                message.count = object.count | 0;
+            if (object.tmrecord != null)
+                if ($util.Long)
+                    (message.tmrecord = $util.Long.fromValue(object.tmrecord)).unsigned = false;
+                else if (typeof object.tmrecord === "string")
+                    message.tmrecord = parseInt(object.tmrecord, 10);
+                else if (typeof object.tmrecord === "number")
+                    message.tmrecord = object.tmrecord;
+                else if (typeof object.tmrecord === "object")
+                    message.tmrecord = new $util.LongBits(object.tmrecord.low >>> 0, object.tmrecord.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a FreePresentMoney message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.FreePresentMoney
+         * @static
+         * @param {msg.FreePresentMoney} message FreePresentMoney
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        FreePresentMoney.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.count = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.tmrecord = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.tmrecord = options.longs === String ? "0" : 0;
+            }
+            if (message.count != null && message.hasOwnProperty("count"))
+                object.count = message.count;
+            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
+                if (typeof message.tmrecord === "number")
+                    object.tmrecord = options.longs === String ? String(message.tmrecord) : message.tmrecord;
+                else
+                    object.tmrecord = options.longs === String ? $util.Long.prototype.toString.call(message.tmrecord) : options.longs === Number ? new $util.LongBits(message.tmrecord.low >>> 0, message.tmrecord.high >>> 0).toNumber() : message.tmrecord;
+            return object;
+        };
+
+        /**
+         * Converts this FreePresentMoney to JSON.
+         * @function toJSON
+         * @memberof msg.FreePresentMoney
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        FreePresentMoney.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return FreePresentMoney;
+    })();
+
     msg.UserWechat = (function() {
 
         /**
@@ -4373,6 +4597,7 @@ $root.msg = (function() {
          * @property {msg.ISimpleCounter|null} [scounter] UserBase scounter
          * @property {msg.IUserWechat|null} [wechat] UserBase wechat
          * @property {string|null} [invitationcode] UserBase invitationcode
+         * @property {msg.IFreePresentMoney|null} [freepresent] UserBase freepresent
          */
 
         /**
@@ -4512,6 +4737,14 @@ $root.msg = (function() {
         UserBase.prototype.invitationcode = "";
 
         /**
+         * UserBase freepresent.
+         * @member {msg.IFreePresentMoney|null|undefined} freepresent
+         * @memberof msg.UserBase
+         * @instance
+         */
+        UserBase.prototype.freepresent = null;
+
+        /**
          * Creates a new UserBase instance using the specified properties.
          * @function create
          * @memberof msg.UserBase
@@ -4566,6 +4799,8 @@ $root.msg = (function() {
                 $root.msg.UserWechat.encode(message.wechat, writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 writer.uint32(/* id 15, wireType 2 =*/122).string(message.invitationcode);
+            if (message.freepresent != null && message.hasOwnProperty("freepresent"))
+                $root.msg.FreePresentMoney.encode(message.freepresent, writer.uint32(/* id 16, wireType 2 =*/130).fork()).ldelim();
             return writer;
         };
 
@@ -4646,6 +4881,9 @@ $root.msg = (function() {
                     break;
                 case 15:
                     message.invitationcode = reader.string();
+                    break;
+                case 16:
+                    message.freepresent = $root.msg.FreePresentMoney.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4737,6 +4975,11 @@ $root.msg = (function() {
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 if (!$util.isString(message.invitationcode))
                     return "invitationcode: string expected";
+            if (message.freepresent != null && message.hasOwnProperty("freepresent")) {
+                var error = $root.msg.FreePresentMoney.verify(message.freepresent);
+                if (error)
+                    return "freepresent." + error;
+            }
             return null;
         };
 
@@ -4810,6 +5053,11 @@ $root.msg = (function() {
             }
             if (object.invitationcode != null)
                 message.invitationcode = String(object.invitationcode);
+            if (object.freepresent != null) {
+                if (typeof object.freepresent !== "object")
+                    throw TypeError(".msg.UserBase.freepresent: object expected");
+                message.freepresent = $root.msg.FreePresentMoney.fromObject(object.freepresent);
+            }
             return message;
         };
 
@@ -4851,6 +5099,7 @@ $root.msg = (function() {
                 object.scounter = null;
                 object.wechat = null;
                 object.invitationcode = "";
+                object.freepresent = null;
             }
             if (message.level != null && message.hasOwnProperty("level"))
                 object.level = message.level;
@@ -4891,6 +5140,8 @@ $root.msg = (function() {
                 object.wechat = $root.msg.UserWechat.toObject(message.wechat, options);
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 object.invitationcode = message.invitationcode;
+            if (message.freepresent != null && message.hasOwnProperty("freepresent"))
+                object.freepresent = $root.msg.FreePresentMoney.toObject(message.freepresent, options);
             return object;
         };
 
@@ -8881,6 +9132,7 @@ $root.msg = (function() {
          * @property {string|null} [passwd] C2L_ReqRegistAccount passwd
          * @property {string|null} [authcode] C2L_ReqRegistAccount authcode
          * @property {string|null} [invitationcode] C2L_ReqRegistAccount invitationcode
+         * @property {string|null} [nickname] C2L_ReqRegistAccount nickname
          */
 
         /**
@@ -8931,6 +9183,14 @@ $root.msg = (function() {
         C2L_ReqRegistAccount.prototype.invitationcode = "";
 
         /**
+         * C2L_ReqRegistAccount nickname.
+         * @member {string} nickname
+         * @memberof msg.C2L_ReqRegistAccount
+         * @instance
+         */
+        C2L_ReqRegistAccount.prototype.nickname = "";
+
+        /**
          * Creates a new C2L_ReqRegistAccount instance using the specified properties.
          * @function create
          * @memberof msg.C2L_ReqRegistAccount
@@ -8962,6 +9222,8 @@ $root.msg = (function() {
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.authcode);
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.invitationcode);
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.nickname);
             return writer;
         };
 
@@ -9007,6 +9269,9 @@ $root.msg = (function() {
                     break;
                 case 4:
                     message.invitationcode = reader.string();
+                    break;
+                case 5:
+                    message.nickname = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -9055,6 +9320,9 @@ $root.msg = (function() {
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 if (!$util.isString(message.invitationcode))
                     return "invitationcode: string expected";
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                if (!$util.isString(message.nickname))
+                    return "nickname: string expected";
             return null;
         };
 
@@ -9078,6 +9346,8 @@ $root.msg = (function() {
                 message.authcode = String(object.authcode);
             if (object.invitationcode != null)
                 message.invitationcode = String(object.invitationcode);
+            if (object.nickname != null)
+                message.nickname = String(object.nickname);
             return message;
         };
 
@@ -9099,6 +9369,7 @@ $root.msg = (function() {
                 object.passwd = "";
                 object.authcode = "";
                 object.invitationcode = "";
+                object.nickname = "";
             }
             if (message.phone != null && message.hasOwnProperty("phone"))
                 object.phone = message.phone;
@@ -9108,6 +9379,8 @@ $root.msg = (function() {
                 object.authcode = message.authcode;
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 object.invitationcode = message.invitationcode;
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                object.nickname = message.nickname;
             return object;
         };
 
@@ -13418,6 +13691,504 @@ $root.msg = (function() {
         };
 
         return RS2GW_RetUserDisconnect;
+    })();
+
+    msg.GW2RS_MsgTransfer = (function() {
+
+        /**
+         * Properties of a GW2RS_MsgTransfer.
+         * @memberof msg
+         * @interface IGW2RS_MsgTransfer
+         * @property {number|Long|null} [uid] GW2RS_MsgTransfer uid
+         * @property {string|null} [name] GW2RS_MsgTransfer name
+         * @property {Uint8Array|null} [buf] GW2RS_MsgTransfer buf
+         */
+
+        /**
+         * Constructs a new GW2RS_MsgTransfer.
+         * @memberof msg
+         * @classdesc Represents a GW2RS_MsgTransfer.
+         * @implements IGW2RS_MsgTransfer
+         * @constructor
+         * @param {msg.IGW2RS_MsgTransfer=} [properties] Properties to set
+         */
+        function GW2RS_MsgTransfer(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2RS_MsgTransfer uid.
+         * @member {number|Long} uid
+         * @memberof msg.GW2RS_MsgTransfer
+         * @instance
+         */
+        GW2RS_MsgTransfer.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * GW2RS_MsgTransfer name.
+         * @member {string} name
+         * @memberof msg.GW2RS_MsgTransfer
+         * @instance
+         */
+        GW2RS_MsgTransfer.prototype.name = "";
+
+        /**
+         * GW2RS_MsgTransfer buf.
+         * @member {Uint8Array} buf
+         * @memberof msg.GW2RS_MsgTransfer
+         * @instance
+         */
+        GW2RS_MsgTransfer.prototype.buf = $util.newBuffer([]);
+
+        /**
+         * Creates a new GW2RS_MsgTransfer instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {msg.IGW2RS_MsgTransfer=} [properties] Properties to set
+         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer instance
+         */
+        GW2RS_MsgTransfer.create = function create(properties) {
+            return new GW2RS_MsgTransfer(properties);
+        };
+
+        /**
+         * Encodes the specified GW2RS_MsgTransfer message. Does not implicitly {@link msg.GW2RS_MsgTransfer.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {msg.IGW2RS_MsgTransfer} message GW2RS_MsgTransfer message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2RS_MsgTransfer.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.uid);
+            if (message.name != null && message.hasOwnProperty("name"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.buf);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2RS_MsgTransfer message, length delimited. Does not implicitly {@link msg.GW2RS_MsgTransfer.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {msg.IGW2RS_MsgTransfer} message GW2RS_MsgTransfer message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2RS_MsgTransfer.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2RS_MsgTransfer message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2RS_MsgTransfer.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2RS_MsgTransfer();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.uid = reader.uint64();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                case 3:
+                    message.buf = reader.bytes();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2RS_MsgTransfer message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2RS_MsgTransfer.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2RS_MsgTransfer message.
+         * @function verify
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2RS_MsgTransfer.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (!$util.isInteger(message.uid) && !(message.uid && $util.isInteger(message.uid.low) && $util.isInteger(message.uid.high)))
+                    return "uid: integer|Long expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                if (!(message.buf && typeof message.buf.length === "number" || $util.isString(message.buf)))
+                    return "buf: buffer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2RS_MsgTransfer message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
+         */
+        GW2RS_MsgTransfer.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2RS_MsgTransfer)
+                return object;
+            var message = new $root.msg.GW2RS_MsgTransfer();
+            if (object.uid != null)
+                if ($util.Long)
+                    (message.uid = $util.Long.fromValue(object.uid)).unsigned = true;
+                else if (typeof object.uid === "string")
+                    message.uid = parseInt(object.uid, 10);
+                else if (typeof object.uid === "number")
+                    message.uid = object.uid;
+                else if (typeof object.uid === "object")
+                    message.uid = new $util.LongBits(object.uid.low >>> 0, object.uid.high >>> 0).toNumber(true);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.buf != null)
+                if (typeof object.buf === "string")
+                    $util.base64.decode(object.buf, message.buf = $util.newBuffer($util.base64.length(object.buf)), 0);
+                else if (object.buf.length)
+                    message.buf = object.buf;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2RS_MsgTransfer message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2RS_MsgTransfer
+         * @static
+         * @param {msg.GW2RS_MsgTransfer} message GW2RS_MsgTransfer
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2RS_MsgTransfer.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.uid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.uid = options.longs === String ? "0" : 0;
+                object.name = "";
+                object.buf = options.bytes === String ? "" : [];
+            }
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (typeof message.uid === "number")
+                    object.uid = options.longs === String ? String(message.uid) : message.uid;
+                else
+                    object.uid = options.longs === String ? $util.Long.prototype.toString.call(message.uid) : options.longs === Number ? new $util.LongBits(message.uid.low >>> 0, message.uid.high >>> 0).toNumber(true) : message.uid;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                object.buf = options.bytes === String ? $util.base64.encode(message.buf, 0, message.buf.length) : options.bytes === Array ? Array.prototype.slice.call(message.buf) : message.buf;
+            return object;
+        };
+
+        /**
+         * Converts this GW2RS_MsgTransfer to JSON.
+         * @function toJSON
+         * @memberof msg.GW2RS_MsgTransfer
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2RS_MsgTransfer.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2RS_MsgTransfer;
+    })();
+
+    msg.RS2GW_MsgTransfer = (function() {
+
+        /**
+         * Properties of a RS2GW_MsgTransfer.
+         * @memberof msg
+         * @interface IRS2GW_MsgTransfer
+         * @property {number|Long|null} [uid] RS2GW_MsgTransfer uid
+         * @property {string|null} [name] RS2GW_MsgTransfer name
+         * @property {Uint8Array|null} [buf] RS2GW_MsgTransfer buf
+         */
+
+        /**
+         * Constructs a new RS2GW_MsgTransfer.
+         * @memberof msg
+         * @classdesc Represents a RS2GW_MsgTransfer.
+         * @implements IRS2GW_MsgTransfer
+         * @constructor
+         * @param {msg.IRS2GW_MsgTransfer=} [properties] Properties to set
+         */
+        function RS2GW_MsgTransfer(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RS2GW_MsgTransfer uid.
+         * @member {number|Long} uid
+         * @memberof msg.RS2GW_MsgTransfer
+         * @instance
+         */
+        RS2GW_MsgTransfer.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * RS2GW_MsgTransfer name.
+         * @member {string} name
+         * @memberof msg.RS2GW_MsgTransfer
+         * @instance
+         */
+        RS2GW_MsgTransfer.prototype.name = "";
+
+        /**
+         * RS2GW_MsgTransfer buf.
+         * @member {Uint8Array} buf
+         * @memberof msg.RS2GW_MsgTransfer
+         * @instance
+         */
+        RS2GW_MsgTransfer.prototype.buf = $util.newBuffer([]);
+
+        /**
+         * Creates a new RS2GW_MsgTransfer instance using the specified properties.
+         * @function create
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {msg.IRS2GW_MsgTransfer=} [properties] Properties to set
+         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer instance
+         */
+        RS2GW_MsgTransfer.create = function create(properties) {
+            return new RS2GW_MsgTransfer(properties);
+        };
+
+        /**
+         * Encodes the specified RS2GW_MsgTransfer message. Does not implicitly {@link msg.RS2GW_MsgTransfer.verify|verify} messages.
+         * @function encode
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {msg.IRS2GW_MsgTransfer} message RS2GW_MsgTransfer message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RS2GW_MsgTransfer.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.uid);
+            if (message.name != null && message.hasOwnProperty("name"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.buf);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RS2GW_MsgTransfer message, length delimited. Does not implicitly {@link msg.RS2GW_MsgTransfer.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {msg.IRS2GW_MsgTransfer} message RS2GW_MsgTransfer message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RS2GW_MsgTransfer.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RS2GW_MsgTransfer message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RS2GW_MsgTransfer.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.RS2GW_MsgTransfer();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.uid = reader.uint64();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                case 3:
+                    message.buf = reader.bytes();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RS2GW_MsgTransfer message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RS2GW_MsgTransfer.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RS2GW_MsgTransfer message.
+         * @function verify
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RS2GW_MsgTransfer.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (!$util.isInteger(message.uid) && !(message.uid && $util.isInteger(message.uid.low) && $util.isInteger(message.uid.high)))
+                    return "uid: integer|Long expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                if (!(message.buf && typeof message.buf.length === "number" || $util.isString(message.buf)))
+                    return "buf: buffer expected";
+            return null;
+        };
+
+        /**
+         * Creates a RS2GW_MsgTransfer message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
+         */
+        RS2GW_MsgTransfer.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.RS2GW_MsgTransfer)
+                return object;
+            var message = new $root.msg.RS2GW_MsgTransfer();
+            if (object.uid != null)
+                if ($util.Long)
+                    (message.uid = $util.Long.fromValue(object.uid)).unsigned = true;
+                else if (typeof object.uid === "string")
+                    message.uid = parseInt(object.uid, 10);
+                else if (typeof object.uid === "number")
+                    message.uid = object.uid;
+                else if (typeof object.uid === "object")
+                    message.uid = new $util.LongBits(object.uid.low >>> 0, object.uid.high >>> 0).toNumber(true);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.buf != null)
+                if (typeof object.buf === "string")
+                    $util.base64.decode(object.buf, message.buf = $util.newBuffer($util.base64.length(object.buf)), 0);
+                else if (object.buf.length)
+                    message.buf = object.buf;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RS2GW_MsgTransfer message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.RS2GW_MsgTransfer
+         * @static
+         * @param {msg.RS2GW_MsgTransfer} message RS2GW_MsgTransfer
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RS2GW_MsgTransfer.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.uid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.uid = options.longs === String ? "0" : 0;
+                object.name = "";
+                object.buf = options.bytes === String ? "" : [];
+            }
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (typeof message.uid === "number")
+                    object.uid = options.longs === String ? String(message.uid) : message.uid;
+                else
+                    object.uid = options.longs === String ? $util.Long.prototype.toString.call(message.uid) : options.longs === Number ? new $util.LongBits(message.uid.low >>> 0, message.uid.high >>> 0).toNumber(true) : message.uid;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.buf != null && message.hasOwnProperty("buf"))
+                object.buf = options.bytes === String ? $util.base64.encode(message.buf, 0, message.buf.length) : options.bytes === Array ? Array.prototype.slice.call(message.buf) : message.buf;
+            return object;
+        };
+
+        /**
+         * Converts this RS2GW_MsgTransfer to JSON.
+         * @function toJSON
+         * @memberof msg.RS2GW_MsgTransfer
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RS2GW_MsgTransfer.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return RS2GW_MsgTransfer;
     })();
 
     msg.C2GW_BuyItem = (function() {
@@ -21584,6 +22355,7 @@ $root.msg = (function() {
          * Properties of a C2GW_StartLuckyDraw.
          * @memberof msg
          * @interface IC2GW_StartLuckyDraw
+         * @property {number|Long|null} [userid] C2GW_StartLuckyDraw userid
          */
 
         /**
@@ -21600,6 +22372,14 @@ $root.msg = (function() {
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
+
+        /**
+         * C2GW_StartLuckyDraw userid.
+         * @member {number|Long} userid
+         * @memberof msg.C2GW_StartLuckyDraw
+         * @instance
+         */
+        C2GW_StartLuckyDraw.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Creates a new C2GW_StartLuckyDraw instance using the specified properties.
@@ -21625,6 +22405,8 @@ $root.msg = (function() {
         C2GW_StartLuckyDraw.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
             return writer;
         };
 
@@ -21659,6 +22441,9 @@ $root.msg = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
+                case 1:
+                    message.userid = reader.uint64();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -21694,6 +22479,9 @@ $root.msg = (function() {
         C2GW_StartLuckyDraw.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
             return null;
         };
 
@@ -21708,7 +22496,17 @@ $root.msg = (function() {
         C2GW_StartLuckyDraw.fromObject = function fromObject(object) {
             if (object instanceof $root.msg.C2GW_StartLuckyDraw)
                 return object;
-            return new $root.msg.C2GW_StartLuckyDraw();
+            var message = new $root.msg.C2GW_StartLuckyDraw();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            return message;
         };
 
         /**
@@ -21720,8 +22518,22 @@ $root.msg = (function() {
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        C2GW_StartLuckyDraw.toObject = function toObject() {
-            return {};
+        C2GW_StartLuckyDraw.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            return object;
         };
 
         /**
@@ -21923,6 +22735,193 @@ $root.msg = (function() {
         };
 
         return GW2C_LuckyDrawHit;
+    })();
+
+    msg.GW2C_FreePresentNotify = (function() {
+
+        /**
+         * Properties of a GW2C_FreePresentNotify.
+         * @memberof msg
+         * @interface IGW2C_FreePresentNotify
+         * @property {number|null} [money] GW2C_FreePresentNotify money
+         */
+
+        /**
+         * Constructs a new GW2C_FreePresentNotify.
+         * @memberof msg
+         * @classdesc Represents a GW2C_FreePresentNotify.
+         * @implements IGW2C_FreePresentNotify
+         * @constructor
+         * @param {msg.IGW2C_FreePresentNotify=} [properties] Properties to set
+         */
+        function GW2C_FreePresentNotify(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_FreePresentNotify money.
+         * @member {number} money
+         * @memberof msg.GW2C_FreePresentNotify
+         * @instance
+         */
+        GW2C_FreePresentNotify.prototype.money = 0;
+
+        /**
+         * Creates a new GW2C_FreePresentNotify instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_FreePresentNotify
+         * @static
+         * @param {msg.IGW2C_FreePresentNotify=} [properties] Properties to set
+         * @returns {msg.GW2C_FreePresentNotify} GW2C_FreePresentNotify instance
+         */
+        GW2C_FreePresentNotify.create = function create(properties) {
+            return new GW2C_FreePresentNotify(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_FreePresentNotify message. Does not implicitly {@link msg.GW2C_FreePresentNotify.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_FreePresentNotify
+         * @static
+         * @param {msg.IGW2C_FreePresentNotify} message GW2C_FreePresentNotify message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_FreePresentNotify.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.money != null && message.hasOwnProperty("money"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.money);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_FreePresentNotify message, length delimited. Does not implicitly {@link msg.GW2C_FreePresentNotify.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_FreePresentNotify
+         * @static
+         * @param {msg.IGW2C_FreePresentNotify} message GW2C_FreePresentNotify message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_FreePresentNotify.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_FreePresentNotify message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_FreePresentNotify
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_FreePresentNotify} GW2C_FreePresentNotify
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_FreePresentNotify.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_FreePresentNotify();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.money = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_FreePresentNotify message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_FreePresentNotify
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_FreePresentNotify} GW2C_FreePresentNotify
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_FreePresentNotify.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_FreePresentNotify message.
+         * @function verify
+         * @memberof msg.GW2C_FreePresentNotify
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_FreePresentNotify.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.money != null && message.hasOwnProperty("money"))
+                if (!$util.isInteger(message.money))
+                    return "money: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_FreePresentNotify message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_FreePresentNotify
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_FreePresentNotify} GW2C_FreePresentNotify
+         */
+        GW2C_FreePresentNotify.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_FreePresentNotify)
+                return object;
+            var message = new $root.msg.GW2C_FreePresentNotify();
+            if (object.money != null)
+                message.money = object.money | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_FreePresentNotify message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_FreePresentNotify
+         * @static
+         * @param {msg.GW2C_FreePresentNotify} message GW2C_FreePresentNotify
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_FreePresentNotify.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.money = 0;
+            if (message.money != null && message.hasOwnProperty("money"))
+                object.money = message.money;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_FreePresentNotify to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_FreePresentNotify
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_FreePresentNotify.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_FreePresentNotify;
     })();
 
     return msg;

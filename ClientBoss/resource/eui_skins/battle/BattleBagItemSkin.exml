@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BattleBagItemSkin" width="591" height="164" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*">
+<e:Skin class="BattleBagItemSkin" width="646" height="160" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*">
 	<e:Image source="lucky/bagshopbg" horizontalCenter="0" verticalCenter="0"/>
-	<e:Image id="itemImg" width="126" height="126" anchorOffsetX="63" anchorOffsetY="63" x="79" y="84" mask="itemMask" source="item/6003"/>
-	<e:Image id="itemMask" anchorOffsetX="63" anchorOffsetY="63" horizontalCenter="-216.5" verticalCenter="2" source="lucky/shopbg"/>
-	<e:Image id="shoplight" anchorOffsetX="82" anchorOffsetY="82" source="lucky/shoplight" x="79" y="84"/>
+	<e:Image id="itemImg" width="126" height="126" anchorOffsetX="63" anchorOffsetY="63" mask="itemMask" source="item/6003" verticalCenter="4" horizontalCenter="-240"/>
+	<e:Image id="itemMask" anchorOffsetX="63" anchorOffsetY="63" source="lucky/shopbg" verticalCenter="4" horizontalCenter="-240"/>
+	<e:Image id="shoplight" anchorOffsetX="82" anchorOffsetY="82" source="lucky/shoplight" verticalCenter="4" horizontalCenter="-240"/>
 	<e:Label id="itemName" text="道具名" size="26" textAlign="left" anchorOffsetX="0" verticalCenter="-43" bold="true" textColor="0x8c5eda" strokeColor="0xdcadff" left="160"/>
+	<e:Label id="itemDesc" text="商品描述：巴拉巴拉" size="18" textAlign="left" anchorOffsetX="0" verticalCenter="11" strokeColor="0xDCADFF" left="160" textColor="0x4d4d4d" width="350" anchorOffsetY="0" height="52"/>
 	<e:Label id="itemMoney" text="价值：100RMB" textColor="0x47b3fc" bold="true" size="20" verticalCenter="56" textAlign="left" x="160"/>
 
 	<game:IconButton id="getButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" verticalCenter="46.5" horizontalCenter="227"/>
-	<e:Image id="itemNumBg" x="367.5" y="25" source="lucky/shopnumbg" touchEnabled="false"/>
+	<e:Image id="itemNumBg" source="lucky/shopnumbg" touchEnabled="false" horizontalCenter="97.5" verticalCenter="-42"/>
 	<e:Label id="itemNum" text="X50" size="18" anchorOffsetX="0" textColor="0xffffff" textAlign="center" horizontalCenter="98" verticalCenter="-43" touchEnabled="false"/>
 </e:Skin>

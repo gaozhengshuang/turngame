@@ -2,7 +2,7 @@
 <e:Skin width="720" height="1100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*" class="BattleBagSkin">
 	<e:Rect width="720" height="100%" fillColor="0xEEEEEE" fillAlpha="0" y="-1" strokeColor="0xffffff"/>
 	<e:Group id="luckyGroup" width="720" height="1100" horizontalCenter="0" verticalCenter="0">
-		<e:Image verticalCenter="0" horizontalCenter="0" source="lucky/luckyBg"/>
+		<e:Image verticalCenter="0" horizontalCenter="0" source="user/userBg"/>
 
 
 
@@ -29,22 +29,22 @@
 
 
 
-		<game:IconButton id="luckyButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="0.5" verticalCenter="302.5"/>
-		<e:Label text="返回抽奖" y="833" horizontalCenter="0.5" touchEnabled="false" x="301" scaleX="1" scaleY="1"/>
-		<e:Label id="nogiftTips" text="您还没有获得战利品!" y="470" horizontalCenter="0.5" touchEnabled="false" x="311" scaleX="1" scaleY="1"/>
-		<game:IconButton id="closeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="620.5" y="157"/>
+		<game:IconButton id="luckyButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="0.5" verticalCenter="454.5"/>
+		<e:Label text="返回抽奖" y="985" horizontalCenter="1" touchEnabled="false" x="301" scaleX="1" scaleY="1"/>
+		<e:Label id="nogiftTips" text="您还没有获得战利品!" touchEnabled="false" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
+		<game:IconButton id="closeButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" x="638" y="23"/>
 
 
-		<e:Scroller id="bagScr" width="591" height="550" horizontalCenter="-2" verticalCenter="-50">
+		<e:Scroller id="bagScr" width="646" height="821.21" horizontalCenter="-1.5" verticalCenter="-26.5" anchorOffsetY="0">
 			<e:List id="bagList" x="141" y="188" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1" itemRendererSkinName="BattleBagItemSkin" height="556" useVirtualLayout="true">
 				<e:layout>
 				<e:TileLayout horizontalGap="6" verticalGap="22"/>
 				</e:layout>
 			</e:List>
 		</e:Scroller>
-		<e:Image source="lucky/bagline" y="779" scaleX="1" scaleY="1" horizontalCenter="0" x="65"/>
-		<e:Image source="lucky/bagline" y="217" scaleX="1" scaleY="1" horizontalCenter="0" x="65"/>
-		<e:Image source="lucky/bagtitle" y="122" horizontalCenter="0" x="222" scaleX="1" scaleY="1"/>
+		<e:Image source="lucky/bagline" y="933.07" scaleX="1" scaleY="1" horizontalCenter="0" x="65"/>
+		<e:Image source="lucky/bagline" y="107.62" scaleX="1" scaleY="1" horizontalCenter="0" x="65"/>
+		<e:Image source="lucky/bagtitle" y="-10" horizontalCenter="0" x="222" scaleX="1" scaleY="1"/>
 
 
 

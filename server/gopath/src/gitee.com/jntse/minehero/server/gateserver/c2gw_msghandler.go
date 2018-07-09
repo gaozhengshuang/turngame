@@ -60,8 +60,12 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_SellBagItem{}, on_C2GW_SellBagItem)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqDeliveryDiamond{}, on_C2GW_ReqDeliveryDiamond)
 	this.msgparser.RegistProtoMsg(msg.C2GW_PlatformRechargeDone{}, on_C2GW_PlatformRechargeDone)
+
 	this.msgparser.RegistProtoMsg(msg.C2GW_SendWechatAuthCode{}, on_C2GW_SendWechatAuthCode)
 	this.msgparser.RegistProtoMsg(msg.C2GW_StartLuckyDraw{}, on_C2GW_StartLuckyDraw)
+	//this.msgparser.RegistProtoMsg(msg.C2GW_AddDeliveryAddress{}, on_C2GW_AddDeliveryAddress)
+	//this.msgparser.RegistProtoMsg(msg.C2GW_DelDeliveryAddress{}, on_C2GW_DelDeliveryAddress)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ChangeDeliveryAddress{}, on_C2GW_ChangeDeliveryAddress)
 
 	// 收战场消息
 	this.msgparser.RegistProtoMsg(msg.BT_ReqEnterRoom{}, on_BT_ReqEnterRoom)
@@ -86,8 +90,11 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_UpdateFreeStep{})
 	this.msgparser.RegistSendProto(msg.GW2C_SendUserPlatformMoney{})
 	this.msgparser.RegistSendProto(msg.GW2C_RetDeliveryDiamond{})
+
 	this.msgparser.RegistSendProto(msg.GW2C_SendWechatInfo{})
 	this.msgparser.RegistSendProto(msg.GW2C_LuckyDrawHit{})
+	this.msgparser.RegistSendProto(msg.GW2C_SendDeliveryAddressList{})
+	this.msgparser.RegistSendProto(msg.GW2C_FreePresentNotify{})
 
 	// Room
 	this.msgparser.RegistSendProto(msg.BT_GameInit{})
@@ -168,6 +175,11 @@ func on_BT_ReqEnterRoom(session network.IBaseNetSession, message interface{}) {
 	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
 		session.Close()
+		return
+	}
+
+	if !user.IsInRoom() {
+		user.SendNotify("房间不存在")
 		return
 	}
 
@@ -322,29 +334,29 @@ func on_C2GW_ReqDeliveryGoods(session network.IBaseNetSession, message interface
 }
 
 func on_C2GW_ReqDeliveryDiamond(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.C2GW_ReqDeliveryDiamond)
+	//tmsg := message.(*msg.C2GW_ReqDeliveryDiamond)
 
-	user := ExtractSessionUser(session)
-	if user == nil {
-		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-		session.Close()
-		return
-	}
+	//user := ExtractSessionUser(session)
+	//if user == nil {
+	//	log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+	//	session.Close()
+	//	return
+	//}
 
-	if user.IsOnline() == false {
-		log.Error("玩家[%s %d]没有登陆Gate成功", user.Name(), user.Id())
-		session.Close()
-		return
-	}
+	//if user.IsOnline() == false {
+	//	log.Error("玩家[%s %d]没有登陆Gate成功", user.Name(), user.Id())
+	//	session.Close()
+	//	return
+	//}
 
-	// 提钻石
-	if tbl.Global.IntranetFlag {
-		user.SendNotify("本版本暂不可用")
-		return
-	}else {
-		event := NewDeliveryGoodsEvent(tmsg.GetList(), tmsg.GetToken(), user.DeliveryDiamond)
-		user.AsynEventInsert(event)
-	}
+	//// 提钻石
+	//if tbl.Global.IntranetFlag {
+	//	user.SendNotify("本版本暂不可用")
+	//	return
+	//}else {
+	//	event := NewDeliveryGoodsEvent(tmsg.GetList(), tmsg.GetToken(), user.DeliveryDiamond)
+	//	user.AsynEventInsert(event)
+	//}
 }
 
 func on_C2GW_UseBagItem(session network.IBaseNetSession, message interface{}) {
@@ -486,12 +498,31 @@ func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}
 	}
 	
 	if user.IsInRoom() {
-		user.SendNotify("游戏中不能抽奖")
-		user.TransferRoomMsg(tmsg)
+		user.SendRoomMsg(tmsg)
 		return
 	}
 
 	user.LuckyDraw()
+}
+
+// --------------------------------------------------------------------------
+/// @brief 前暂时只有一个收货地址，设置和修改都使用这个
+/// @return 
+// --------------------------------------------------------------------------
+func on_C2GW_ChangeDeliveryAddress(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ChangeDeliveryAddress)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	user.ClearAddress()
+	Addr := tmsg.GetInfo()
+	user.AddAddress(Addr.GetReceiver(), Addr.GetPhone(), Addr.GetAddress())
+	user.SendAddress()
+	log.Info("玩家[%s %d] 修改收货地址，新地址[%s %s %s]", user.Name(), user.Id(), Addr.GetReceiver(), Addr.GetPhone(), Addr.GetAddress())
 }
 
 

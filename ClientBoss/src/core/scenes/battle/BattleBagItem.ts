@@ -4,6 +4,7 @@ module game {
         itemMask: eui.Image;
         itemName: eui.Label;
         itemNum: eui.Label;
+        itemDesc: eui.Label;
         itemMoney: eui.Label;
         getButton: IconButton;
         data;
@@ -19,7 +20,8 @@ module game {
         }
 
         private getHandle() {
-            
+            let list: msg.IDeliveryGoods[] = [{itemid: this.data.id, num: this.data.num}];
+            sendMessage("msg.C2GW_ReqDeliveryGoods", msg.C2GW_ReqDeliveryGoods.encode({list: list, token: ""}));
         }
 
         protected dataChanged() {
@@ -32,6 +34,7 @@ module game {
 
             this.itemImg.source = getItemIconSource(_data.Id);
             this.itemName.text = _data.Name;
+            this.itemDesc.text = _data.Desc;
             if (_data.Id == 6003) { //(代表这是金币)
                 this.itemMoney.text = "";
             } else {
