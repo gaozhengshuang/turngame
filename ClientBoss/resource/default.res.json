@@ -508,6 +508,16 @@
 			"url":"assets/login/loginTitle.png"
 		},
 		{
+			"name":"login/nicknameImg",
+			"type":"image",
+			"url":"assets/login/nicknameImg.png"
+		},
+		{
+			"name":"login/notreachImg",
+			"type":"image",
+			"url":"assets/login/notreachImg.png"
+		},
+		{
 			"name":"login/passwdicon",
 			"type":"image",
 			"url":"assets/login/passwdicon.png"

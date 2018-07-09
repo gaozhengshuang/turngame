@@ -1,6 +1,7 @@
 module game {
     export class RegisterPanel extends PanelComponent {
         nameLabel: eui.EditableText;
+        phoneLabel: eui.EditableText;
         authCodeLabel: eui.EditableText;
         passwordLabel: eui.EditableText;
         passwordokLabel: eui.EditableText;
@@ -34,13 +35,18 @@ module game {
         }
 
         private async registerHandle() {
-            if (deleteBlank(this.nameLabel.text) == "") {
+            if (deleteBlank(this.phoneLabel.text) == "") {
                 showTips("请输入您的手机号!", true);
                 return;
             }
 
             if (deleteBlank(this.authCodeLabel.text) == "") {
                 showTips("请输入您的验证码!", true);
+                return;
+            }
+
+            if (deleteBlank(this.nameLabel.text) == "") {
+                showTips("请输入您的用户名!", true);
                 return;
             }
 
@@ -56,9 +62,10 @@ module game {
             
             let strJson = JSON.stringify({
                 "gmcmd": "registaccount",
-                "phone": this.nameLabel.text,
+                "phone": this.phoneLabel.text,
                 "passwd": this.passwordLabel.text,
                 "authcode": this.authCodeLabel.text,
+                "nickname": this.nameLabel.text,
                 "invitationcode": this.comeonLabel.text,
             });
             let r = await postHttpByJson($registIp, strJson);
@@ -66,25 +73,25 @@ module game {
                 this.closeHandle();
 
                 loginUserInfo = {
-                    account: this.nameLabel.text,
+                    account: this.phoneLabel.text,
                     passwd: this.passwordLabel.text
                 };
                 LoginManager.getInstance().login();
 
-                egret.localStorage.setItem("userName", this.nameLabel.text);
+                egret.localStorage.setItem("userName", this.phoneLabel.text);
                 egret.localStorage.setItem("password", this.passwordLabel.text);
             }
         }
 
         private async authCodeHandle() {
-            if (deleteBlank(this.nameLabel.text) == "") {
+            if (deleteBlank(this.phoneLabel.text) == "") {
                 showTips("请输入您的手机号!", true);
                 return;
             }
 
             let strJson = JSON.stringify({
                 "gmcmd": "registauthcode",
-                "phone": this.nameLabel.text
+                "phone": this.phoneLabel.text
             });
 
             this.yzmbtnLabel.text = `${59}s后重新获取`;

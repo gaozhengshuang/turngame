@@ -9132,6 +9132,7 @@ $root.msg = (function() {
          * @property {string|null} [passwd] C2L_ReqRegistAccount passwd
          * @property {string|null} [authcode] C2L_ReqRegistAccount authcode
          * @property {string|null} [invitationcode] C2L_ReqRegistAccount invitationcode
+         * @property {string|null} [nickname] C2L_ReqRegistAccount nickname
          */
 
         /**
@@ -9182,6 +9183,14 @@ $root.msg = (function() {
         C2L_ReqRegistAccount.prototype.invitationcode = "";
 
         /**
+         * C2L_ReqRegistAccount nickname.
+         * @member {string} nickname
+         * @memberof msg.C2L_ReqRegistAccount
+         * @instance
+         */
+        C2L_ReqRegistAccount.prototype.nickname = "";
+
+        /**
          * Creates a new C2L_ReqRegistAccount instance using the specified properties.
          * @function create
          * @memberof msg.C2L_ReqRegistAccount
@@ -9213,6 +9222,8 @@ $root.msg = (function() {
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.authcode);
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.invitationcode);
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.nickname);
             return writer;
         };
 
@@ -9258,6 +9269,9 @@ $root.msg = (function() {
                     break;
                 case 4:
                     message.invitationcode = reader.string();
+                    break;
+                case 5:
+                    message.nickname = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -9306,6 +9320,9 @@ $root.msg = (function() {
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 if (!$util.isString(message.invitationcode))
                     return "invitationcode: string expected";
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                if (!$util.isString(message.nickname))
+                    return "nickname: string expected";
             return null;
         };
 
@@ -9329,6 +9346,8 @@ $root.msg = (function() {
                 message.authcode = String(object.authcode);
             if (object.invitationcode != null)
                 message.invitationcode = String(object.invitationcode);
+            if (object.nickname != null)
+                message.nickname = String(object.nickname);
             return message;
         };
 
@@ -9350,6 +9369,7 @@ $root.msg = (function() {
                 object.passwd = "";
                 object.authcode = "";
                 object.invitationcode = "";
+                object.nickname = "";
             }
             if (message.phone != null && message.hasOwnProperty("phone"))
                 object.phone = message.phone;
@@ -9359,6 +9379,8 @@ $root.msg = (function() {
                 object.authcode = message.authcode;
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 object.invitationcode = message.invitationcode;
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                object.nickname = message.nickname;
             return object;
         };
 
