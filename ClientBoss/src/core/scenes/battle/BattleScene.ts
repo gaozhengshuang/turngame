@@ -1267,27 +1267,27 @@ module game {
         }
 
         public openBadBox(_score: number) {
-            let goldImg = new eui.Image();
-            goldImg.source = `lucky/goldAni/0000`;
-            goldImg.anchorOffsetX = 350;
-            goldImg.anchorOffsetY = 150;
-            goldImg.x = gameConfig.curWidth() / 2;
-            goldImg.y = gameConfig.curHeight() / 2;
-            this.addChild(goldImg);
+            // let goldImg = new eui.Image();
+            // goldImg.source = `lucky/goldAni/0000`;
+            // goldImg.anchorOffsetX = 350;
+            // goldImg.anchorOffsetY = 150;
+            // goldImg.x = gameConfig.curWidth() / 2;
+            // goldImg.y = gameConfig.curHeight() / 2;
+            // this.addChild(goldImg);
             
-            let _currentIndex = 0;
-            let _playInterval = egret.setInterval(() => {
-                goldImg.source = `lucky/goldAni/000${_currentIndex}`;
+            // let _currentIndex = 0;
+            // let _playInterval = egret.setInterval(() => {
+            //     goldImg.source = `lucky/goldAni/000${_currentIndex}`;
 
-                _currentIndex++;
-                if (_currentIndex > 6) {
-                    this.removeChild(goldImg);
-                    egret.clearInterval(_playInterval);
-                    _playInterval = null;
-                }
-            }, this, 150);
+            //     _currentIndex++;
+            //     if (_currentIndex > 6) {
+            //         this.removeChild(goldImg);
+            //         egret.clearInterval(_playInterval);
+            //         _playInterval = null;
+            //     }
+            // }, this, 150);
 
-            showTips("奖励：" + _score + "金币");
+            showTips("奖励：" + _score + "金币", true, 40);
         }
 
         public setBadPower(power: number) {

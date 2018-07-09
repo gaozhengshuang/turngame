@@ -11450,6 +11450,204 @@ declare namespace table {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a TGiftProbase. */
+    interface ITGiftProbase {
+
+        /** TGiftProbase TGiftPro */
+        TGiftPro?: (table.ITGiftProDefine[]|null);
+    }
+
+    /** Represents a TGiftProbase. */
+    class TGiftProbase implements ITGiftProbase {
+
+        /**
+         * Constructs a new TGiftProbase.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: table.ITGiftProbase);
+
+        /** TGiftProbase TGiftPro. */
+        public TGiftPro: table.ITGiftProDefine[];
+
+        /**
+         * Creates a new TGiftProbase instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns TGiftProbase instance
+         */
+        public static create(properties?: table.ITGiftProbase): table.TGiftProbase;
+
+        /**
+         * Encodes the specified TGiftProbase message. Does not implicitly {@link table.TGiftProbase.verify|verify} messages.
+         * @param message TGiftProbase message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: table.ITGiftProbase, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified TGiftProbase message, length delimited. Does not implicitly {@link table.TGiftProbase.verify|verify} messages.
+         * @param message TGiftProbase message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: table.ITGiftProbase, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a TGiftProbase message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns TGiftProbase
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): table.TGiftProbase;
+
+        /**
+         * Decodes a TGiftProbase message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns TGiftProbase
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): table.TGiftProbase;
+
+        /**
+         * Verifies a TGiftProbase message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a TGiftProbase message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns TGiftProbase
+         */
+        public static fromObject(object: { [k: string]: any }): table.TGiftProbase;
+
+        /**
+         * Creates a plain object from a TGiftProbase message. Also converts values to other types if specified.
+         * @param message TGiftProbase
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: table.TGiftProbase, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this TGiftProbase to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a TGiftProDefine. */
+    interface ITGiftProDefine {
+
+        /** TGiftProDefine Id */
+        Id?: (number|null);
+
+        /** TGiftProDefine Limitmin */
+        Limitmin?: (number|null);
+
+        /** TGiftProDefine Limitmax */
+        Limitmax?: (number|null);
+
+        /** TGiftProDefine Pro */
+        Pro?: (string[]|null);
+    }
+
+    /** Represents a TGiftProDefine. */
+    class TGiftProDefine implements ITGiftProDefine {
+
+        /**
+         * Constructs a new TGiftProDefine.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: table.ITGiftProDefine);
+
+        /** TGiftProDefine Id. */
+        public Id: number;
+
+        /** TGiftProDefine Limitmin. */
+        public Limitmin: number;
+
+        /** TGiftProDefine Limitmax. */
+        public Limitmax: number;
+
+        /** TGiftProDefine Pro. */
+        public Pro: string[];
+
+        /**
+         * Creates a new TGiftProDefine instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns TGiftProDefine instance
+         */
+        public static create(properties?: table.ITGiftProDefine): table.TGiftProDefine;
+
+        /**
+         * Encodes the specified TGiftProDefine message. Does not implicitly {@link table.TGiftProDefine.verify|verify} messages.
+         * @param message TGiftProDefine message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: table.ITGiftProDefine, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Encodes the specified TGiftProDefine message, length delimited. Does not implicitly {@link table.TGiftProDefine.verify|verify} messages.
+         * @param message TGiftProDefine message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: table.ITGiftProDefine, writer?: protobuf.Writer): protobuf.Writer;
+
+        /**
+         * Decodes a TGiftProDefine message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns TGiftProDefine
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): table.TGiftProDefine;
+
+        /**
+         * Decodes a TGiftProDefine message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns TGiftProDefine
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: (protobuf.Reader|Uint8Array)): table.TGiftProDefine;
+
+        /**
+         * Verifies a TGiftProDefine message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a TGiftProDefine message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns TGiftProDefine
+         */
+        public static fromObject(object: { [k: string]: any }): table.TGiftProDefine;
+
+        /**
+         * Creates a plain object from a TGiftProDefine message. Also converts values to other types if specified.
+         * @param message TGiftProDefine
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: table.TGiftProDefine, options?: protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this TGiftProDefine to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of an ItemBase. */
     interface IItemBase {
 

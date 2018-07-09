@@ -20,7 +20,7 @@ module game {
     export var _goodBuffPro: number[] = [0.8, 0.2, 0, 0, 0];        //增益事件个数出现概率(总和为1即100%)
     export var _badBuffPro: number[] = [0.35, 0.35, 0.15, 0.10, 0.05];         //减益事件个数出现概率(总和为1即100%)
 
-    export var _breakBadBuffMax: number = 1;   //击碎负面事件拿奖励的个数
+    export var _breakBadBuffMax: number = 10;   //击碎负面事件拿奖励的个数
     export var _breakBadBuffAdd: number[] = [100, 200, 500, 1000, 2000, 3000];   //负面事件宝箱金币数
     export var _breakBadBuffAddPro: number[] = [0.4, 0.3, 0.2, 0.05, 0.03, 0.02];   //负面事件宝箱金币数概率
 

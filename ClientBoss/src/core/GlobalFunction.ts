@@ -25,10 +25,10 @@ module game {
     export let TipsPool: ObjectPool<egret.TextField> = new ObjectPool<egret.TextField>(egret.TextField);
     export let TipsImagePool: ObjectPool<eui.Image> = new ObjectPool<eui.Image>(eui.Image);
 
-    export function showTips(str: string = "", isWarning: boolean = false, moveY: number = 220, y?: number, textColor?: number): void {
+    export function showTips(str: string = "", isWarning: boolean = false, fonzSize: number = 30, moveY: number = 220, y?: number, textColor?: number): void {
         let effectTips = TipsPool.createObject();
 
-        effectTips.size = 30;
+        effectTips.size = fonzSize;
         if (y) {
             effectTips.y = y;
         } else {
