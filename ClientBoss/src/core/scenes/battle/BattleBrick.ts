@@ -382,6 +382,10 @@ module game {
         public isGoldShark() {
             return this.buffType == BrickType.goldShark;
         }
+
+        public isBadBuff() {
+            return this._brickInfoData.kind == 2;
+        }
     }
 
     export const enum BrickType {

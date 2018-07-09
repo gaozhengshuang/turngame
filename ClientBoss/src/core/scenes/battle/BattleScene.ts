@@ -79,6 +79,7 @@ module game {
         public hitCount: number;
         private curSpaceFire: number = 0;
         private curScoreTimeSp: number = 0;
+        private _breakBad: number;
 
         private buffLootList: Array<table.ITBirckItemDefine>;
         //private brickList: BattleBrick[];
@@ -309,6 +310,7 @@ module game {
             this._boomBrick = [];
             this._doubleTime = 0;
             this._currentFrame = 0;
+            this._breakBad = 0;
             //this.brickList = [];
             this._breakCount = 0;
             this._touchEvent = [
@@ -1157,9 +1159,6 @@ module game {
             let score = brick.getBreakScore();
             let type = brick.getBuffType();
             if (price) {
-                // if (this._doubleTime > 0) {
-                //     price *= 2;
-                // }
                 DataManager.playerModel.addGold(price);
                 let y = score ? -70 : -40;
                 this.showBattleText(price, brick, 1, y, this._rewardBallPool.createObject());
@@ -1205,13 +1204,11 @@ module game {
             if (brick.brickInfo.row == 0) {
                 this._topColumn.push(brick.brickInfo.column);
             }
-            // if (this._breakCount == this._missionMapData.length) {
-            //     this.gameEnd();
-            //     SceneManager.changeScene(SceneType.win);
-            // } else {
-            //     //let buff: any = loot(this.buffLootList);
-            //     //this.addBuff(brick, buff);
-            // }
+            
+            if (brick.isBadBuff()) {
+                this._breakBad += 1;
+                this.showBadPower();
+            }
         }
 
         private async playBreakAnim(brick: BattleBrick) {
@@ -1255,6 +1252,10 @@ module game {
             brick.blackHoleList.push(blackHole1, blackHole2);
             egret.Tween.get(blackHole1).to({x: end1X, y: end1Y}, 300);
             egret.Tween.get(blackHole2).to({x: end2X, y: end2Y}, 300);
+        }
+
+        private showBadPower() {
+            
         }
 
         private userGoHandle() {
