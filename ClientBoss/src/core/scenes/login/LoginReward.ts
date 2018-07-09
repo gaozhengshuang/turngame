@@ -1,17 +1,16 @@
 module game {
     export class LoginReward extends PanelComponent {
-        btn_ok: LabelButton;
+        btn_ok: IconButton;
 
         protected getSkinName() {
             return LoginRewardSkin;
         }
 
         protected init() {
-            this.btn_ok.bg = "lucky/luckyBtn";
+            this.btn_ok.icon = "lucky/loginrewardBtn";
             this._touchEvent = [
                 {target: this.btn_ok, callBackFunc: this.OnClickOk},
             ];
-            this.btn_ok.label = "领取";
         }
 
         private OnClickOk() {

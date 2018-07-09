@@ -626,12 +626,6 @@ module game {
                     }));
                     this._curMoney = DataManager.playerModel.getScore();
                 }
-
-                if (this._breakBad < _breakBadBuffMax) {
-                    this.badbuffPanel.startShake();
-                } else {
-                    this.badbuffPanel.stopShake();
-                }
             }
 
             if (this._doubleTime > 0) {
@@ -1272,6 +1266,34 @@ module game {
             this.badbuffPanel.refreshView(this._breakBad);
         }
 
+        public openBadBox(_score: number) {
+            // let goldImg = new eui.Image();
+            // goldImg.source = `lucky/goldAni/0000`;
+            // goldImg.anchorOffsetX = 350;
+            // goldImg.anchorOffsetY = 150;
+            // goldImg.x = gameConfig.curWidth() / 2;
+            // goldImg.y = gameConfig.curHeight() / 2;
+            // this.addChild(goldImg);
+            
+            // let _currentIndex = 0;
+            // let _playInterval = egret.setInterval(() => {
+            //     goldImg.source = `lucky/goldAni/000${_currentIndex}`;
+
+            //     _currentIndex++;
+            //     if (_currentIndex > 6) {
+            //         this.removeChild(goldImg);
+            //         egret.clearInterval(_playInterval);
+            //         _playInterval = null;
+            //     }
+            // }, this, 150);
+
+            showTips("奖励：" + _score + "金币", true, 40);
+        }
+
+        public setBadPower(power: number) {
+            this._breakBad = power;
+        }
+
         private userGoHandle() {
             openPanel(PanelType.user);
         }
@@ -1302,7 +1324,7 @@ module game {
             }.bind(this);
 
             if (this._nowSp >= _maxSp/2 || this._breakBad >= _breakBadBuffMax) {
-                showDialog("退出将不保存现有能量！", "确定", function () {
+                showDialog("现在退出游戏，能量将不保存哦！", "确定", function () {
                     backFunc();
                 });
             } else {

@@ -8,7 +8,6 @@ module game {
     export var wxState: string = "";
 
     //游戏内配置支持
-    export var _breakBadBuffMax: number = 10;   //击碎负面事件拿奖励的个数
     export var _buyLucky: number = 2000;    //转一次奖消耗金币数量
     export var _maxSp: number = 250;       //大招点击次数
     export var _paddlePrice: number = 20;      //每发子弹消耗的金币数
@@ -20,6 +19,10 @@ module game {
     export var _eventDifferent: number = 0.5;   //出现增益事件的概率 1=100%
     export var _goodBuffPro: number[] = [0.8, 0.2, 0, 0, 0];        //增益事件个数出现概率(总和为1即100%)
     export var _badBuffPro: number[] = [0.35, 0.35, 0.15, 0.10, 0.05];         //减益事件个数出现概率(总和为1即100%)
+
+    export var _breakBadBuffMax: number = 10;   //击碎负面事件拿奖励的个数
+    export var _breakBadBuffAdd: number[] = [100, 200, 500, 1000, 2000, 3000];   //负面事件宝箱金币数
+    export var _breakBadBuffAddPro: number[] = [0.4, 0.3, 0.2, 0.05, 0.03, 0.02];   //负面事件宝箱金币数概率
 
     //临时配置
     export var _eventCdByMoney: number[] = [0, 10000, 20000];  //Cd时间根据当前分数设置(分数和时间的内容长短要保持一致)

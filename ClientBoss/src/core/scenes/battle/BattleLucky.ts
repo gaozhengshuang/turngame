@@ -108,7 +108,7 @@ module game {
         private showStartLucky(giftId: number) {
             let lastGiftIndex = this._giftIndex;
             this._giftIndex = giftId;
-            let posIndex = this._giftIndex + (this._giftPro.length * (Math.floor(Math.random() * 3) + 5)) + (this._giftPro.length - lastGiftIndex); 
+            let posIndex = this._giftIndex + (this._giftPro.length * (Math.floor(Math.random() * 2) + 2)) + (this._giftPro.length - lastGiftIndex); 
             let _currentIndex = 0;
             
             let space = 200;
