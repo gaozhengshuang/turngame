@@ -46,6 +46,15 @@ func main() {
 	log.Info("初始键盘输入完成")
 
 
+	// 特殊符合检查
+	fmt.Println("ContainsSpecialCharacter = ", util.ContainsSpecialCharacter("helloworld"))
+	fmt.Println("ContainsSpecialCharacter = ", util.ContainsSpecialCharacter("中文名称测试"))
+	fmt.Println("ContainsSpecialCharacter = ", util.ContainsSpecialCharacter("—…（）。，！￥；：“”‘’？、、《》"))
+	fmt.Println("ContainsSpecialCharacter = ", util.ContainsSpecialCharacter("[~!@#$%^&*()/\\|,.<>?\"'();:_+-={} "))
+	fmt.Println("ContainsSpecialCharacter = ", util.ContainsSpecialCharacter("①⑴㈠"))
+	return
+
+
 	//
 	var reflectvar interface{} = "reflect test"
 	fmt.Printf("reflectvar=%v kind=%s\n", reflectvar, reflect.TypeOf(reflectvar).String())
