@@ -152,6 +152,14 @@ func RegistAccountCheck(phone, passwd, invitationcode, authcode, nickname string
 		return
 	}
 
+	// 账户检查重复
+	keyaccount := fmt.Sprintf("accounts_%s", phone)
+	bexist, _ := Redis().Exists(keyaccount).Result()
+	if bexist == 1 {
+		errcode = "账户已经存在"
+		return
+	}
+
 	// 是否是机器人注册
 	if authcode == "robot@free@regist" {
 		freeregist , _ := Redis().Get(authcode).Int64()		// Robot自由注册redis标记
@@ -213,13 +221,6 @@ func RegistAccount(account, passwd, invitationcode, token , nickname string) (er
 	errcode = ""
 	switch {
 	default:
-		// 账户检查重复
-		keyaccount := fmt.Sprintf("accounts_%s", account)
-		bexist, _ := Redis().Exists(keyaccount).Result()
-		if bexist == 1 {
-			errcode = "账户已经存在"
-			return
-		}
 
 		// 保存密码
 		passwdkey := fmt.Sprintf("accounts_passwd_%s", account)
@@ -252,6 +253,7 @@ func RegistAccount(account, passwd, invitationcode, token , nickname string) (er
 			Userid: pb.Uint64(userid),
 		}
 
+		keyaccount := fmt.Sprintf("accounts_%s", account)
 		if errsetbin := utredis.SetProtoBin(Redis(), keyaccount, info); errsetbin != nil {
 			errcode = "插入账户数据失败"
 			log.Error("新建账户%s失败，err: %s", account, errsetbin)
