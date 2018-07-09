@@ -1268,21 +1268,31 @@ module game {
         private rechargeGoHandle() {
             showTips("暂未开放,敬请期待...", true);
         }
-        
+
         private bagGoHandle() {
             openPanel(PanelType.bag);
         }
 
         private backHandle() {
-            egret.stopTick(this.updateView, this);
-            this._firewallPool.destroyAllObject();
-            
-            sendMessage("msg.BT_ReqQuitGameRoom", msg.BT_ReqQuitGameRoom.encode({
-                roomid: BattleManager.getInstance().getRoomId(),
-                userid: DataManager.playerModel.getUserId(),
-            }));
+            let backFunc : Function = function () {
+                egret.stopTick(this.updateView, this);
+                this._firewallPool.destroyAllObject();
+                
+                sendMessage("msg.BT_ReqQuitGameRoom", msg.BT_ReqQuitGameRoom.encode({
+                    roomid: BattleManager.getInstance().getRoomId(),
+                    userid: DataManager.playerModel.getUserId(),
+                }));
 
-            SceneManager.changeScene(SceneType.main);
+                SceneManager.changeScene(SceneType.main);
+            }.bind(this);
+
+            if (this._nowSp >= _maxSp/2) {
+                showDialog("退出将不保存现有能量！", "确定", function () {
+                    backFunc();
+                });
+            } else {
+                backFunc();
+            }
         }
 
         private static _instance: BattleScene;
