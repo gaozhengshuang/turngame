@@ -77,7 +77,7 @@
 	</e:Group>
 	<e:Label id="scoreLabel" text="分数:0" strokeColor="0xFFFFFF" textAlign="center" verticalAlign="middle" anchorOffsetX="0" width="344" size="34" horizontalCenter="0" y="26" textColor="0xffffff"/>
 	<game:IconButton id="luckyButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="213.5" verticalCenter="481.5"/>
-	<game:IconButton id="backButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="295.5" verticalCenter="-507.5"/>
+	<game:IconButton id="backButton" skinName="IconButtonSkin" scaleX="1" scaleY="1" touchEnabled="true" horizontalCenter="-298.5" verticalCenter="-507.5"/>
 	<e:Label id="hitLabel" text="" stroke="2" strokeColor="0xFFFFFF" right="20" top="20" textColor="0x898989" visible="false"/>
 	<e:Label id="noticeLabel" text="" y="92" textColor="0xff678e" horizontalCenter="0"/>
 	<e:Group id="guideGroup" width="720" height="100%" touchChildren="false" touchEnabled="true">

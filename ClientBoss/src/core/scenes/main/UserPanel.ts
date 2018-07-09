@@ -41,7 +41,7 @@ module game {
 
         private initUser() {
             let userInfo = DataManager.playerModel.userInfo;
-            this.labelId.text = `${userInfo.userid}`;
+            this.labelId.text = `ID  ${userInfo.userid}`;
             this.labelInvitationcode.text = "TJ"+userInfo.userid;
             this.labelName.text = userInfo.name;
 

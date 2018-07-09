@@ -7,12 +7,17 @@
 		<e:Image id="titleImage" source="ui/main/tantanle" x="122" scaleX="1" scaleY="1" touchEnabled="false" y="85"/>
 	</e:Group>
 	<e:Group touchEnabled="false" touchChildren="true" width="720" height="1100" bottom="0">
-		<e:Image id="lightImage" source="ui/main/guangquan" anchorOffsetX="205" anchorOffsetY="204.5" scaleX="1" scaleY="1" touchEnabled="false" x="360" y="712.5"/>
-		<game:IconButton id="playButton" skinName="IconButtonSkin" verticalCenter="162" horizontalCenter="0" x="220.00000000000003" y="410.00000000000006"/>
+		<e:Image id="lightImage" source="ui/main/guangquan" anchorOffsetX="205" anchorOffsetY="204.5" scaleX="1" scaleY="1" touchEnabled="false" x="360" y="745.75"/>
+		<e:Image source="ui/main/common_luckyBtnBg" verticalCenter="188" horizontalCenter="172"/>
+		<e:Image source="ui/main/common_userBtnBg" verticalCenter="188" horizontalCenter="-172"/>
+		<game:IconButton id="playButton" skinName="IconButtonSkin" verticalCenter="187.5" horizontalCenter="0.5" x="220.00000000000003" y="410.00000000000006"/>
+		<game:IconButton id="luckyButton" skinName="IconButtonSkin" verticalCenter="187.5" horizontalCenter="256.5"/>
+		<game:IconButton id="userButton" skinName="IconButtonSkin" verticalCenter="187.5" horizontalCenter="-255.5"/>
+		<e:Image source="user/getMoneyImg" verticalCenter="145" horizontalCenter="-189"/>
 		<game:IconButton id="rankButton" skinName="IconButtonSkin" verticalCenter="388" y="430.00000000000006" horizontalCenter="0" visible="false"/>
 		<e:Label id="rankLabel" text="排行榜&gt;&gt;" y="971" textColor="0x504D5E" touchEnabled="true" anchorOffsetX="0" width="224" anchorOffsetY="0" height="58" horizontalCenter="-148" verticalAlign="middle" textAlign="center" visible="false"/>
-		<e:Label id="userButton" text="个人信息&gt;&gt;" y="971" textColor="0x504D5E" touchEnabled="true" anchorOffsetX="0" width="224" anchorOffsetY="0" height="58" verticalAlign="middle" textAlign="center" horizontalCenter="0"/>
-		<e:Image source="user/getMoneyImg" x="413.64" y="956.96"/>
+
+
 	</e:Group>
 	<e:Label id="costLabel" text="5" y="134.5" size="35" textAlign="center" width="227" anchorOffsetX="0" horizontalCenter="0" touchEnabled="false" fontFamily="DynoBold" visible="false"/>
 </e:Skin>
