@@ -11,8 +11,7 @@
 			"name": "GateListener",
 			"parser": "GW2LS_MsgParser",
 			"host": {
-				"ip": "192.168.30.203",
-				"port": 17010
+				"ip": "192.168.30.203", "port": 7001
 			},
             "verify": 0,
             "svrchannel":true
@@ -23,8 +22,7 @@
 			"name": "ClientListener",
 			"parser": "C2LS_MsgParser",
 			"host": {
-				"ip": "192.168.30.203",
-				"port": 17020
+				"ip": "192.168.30.203", "port": 7002
 			},
             "verify": 1,
             "svrchannel":false
@@ -34,8 +32,7 @@
 		{
 			"name": "TestHttpListener1",
 			"host": {
-				"ip": "192.168.30.203",
-				"port": 18010
+				"ip": "192.168.30.203", "port": 7003
 			}
 		}
     ],
@@ -43,8 +40,7 @@
         "passwd": "",
         "db": 0,
         "host": {
-            "ip": "192.168.30.203",
-            "port": 6377
+            "ip": "192.168.30.203", "port": 6377
         }
     }
 }
