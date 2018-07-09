@@ -116,7 +116,7 @@ func (this *User) OnConnect(session network.IBaseNetSession)	{
 		//log.Trace("OnConnect loginsession:%+v", session)
 		session.SetUserDefData(this)
 		this.SetLoginSession(session)
-		//this.SendLogin()
+		this.SendLogin()
 		//this.RegistAccount()
 	case "GateConnector":
 		//log.Trace("OnConnect gatesession:%+v", session)
