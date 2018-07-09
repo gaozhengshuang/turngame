@@ -34,6 +34,7 @@ module game {
         topBg: eui.Image;
         mainGroup: eui.Group;
         moreFireImg: eui.Image;
+        badbuffPanel: BadBuff;
 
         private _nowSp: number = 0;
         private _spCool: number = 0;
@@ -126,6 +127,7 @@ module game {
                     this._badBuff.push({id: info.Id, pro: info.Pro/10000});
                 }
             }
+
             //this._noticeList = [];
             //this.brickList = [];
             this.buffLootList = table.TBirckItem;
@@ -368,6 +370,9 @@ module game {
                 this.guideGroup.visible = true;
                 this.guideGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, this.finishGuide, this);
             }
+
+            //初始化消除事件进度条
+            this.badbuffPanel.initView();
         }
 
         private finishGuide() {
@@ -620,6 +625,12 @@ module game {
                         money: DataManager.playerModel.getScore()
                     }));
                     this._curMoney = DataManager.playerModel.getScore();
+                }
+
+                if (this._breakBad < _breakBadBuffMax) {
+                    this.badbuffPanel.startShake();
+                } else {
+                    this.badbuffPanel.stopShake();
                 }
             }
 
@@ -1255,7 +1266,10 @@ module game {
         }
 
         private showBadPower() {
-            
+            if (this._breakBad > _breakBadBuffMax) {
+                this._breakBad = _breakBadBuffMax;
+            }
+            this.badbuffPanel.refreshView(this._breakBad);
         }
 
         private userGoHandle() {
@@ -1287,7 +1301,7 @@ module game {
                 SceneManager.changeScene(SceneType.main);
             }.bind(this);
 
-            if (this._nowSp >= _maxSp/2) {
+            if (this._nowSp >= _maxSp/2 || this._breakBad >= _breakBadBuffMax) {
                 showDialog("退出将不保存现有能量！", "确定", function () {
                     backFunc();
                 });

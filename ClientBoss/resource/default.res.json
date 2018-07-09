@@ -863,6 +863,16 @@
 			"url":"assets/paddle/wave/00009.png"
 		},
 		{
+			"name":"ui/badBuffProgress",
+			"type":"image",
+			"url":"assets/ui/badBuffProgress.png"
+		},
+		{
+			"name":"ui/badBuffProgressBg",
+			"type":"image",
+			"url":"assets/ui/badBuffProgressBg.png"
+		},
+		{
 			"name":"ui/bagGo",
 			"type":"image",
 			"url":"assets/ui/bagGo.png"
@@ -871,6 +881,26 @@
 			"name":"ui/bg",
 			"type":"image",
 			"url":"assets/ui/bg.png"
+		},
+		{
+			"name":"ui/boxBuff1",
+			"type":"image",
+			"url":"assets/ui/boxBuff1.png"
+		},
+		{
+			"name":"ui/boxBuff2.png",
+			"type":"image",
+			"url":"assets/ui/boxBuff2.png.png"
+		},
+		{
+			"name":"ui/boxBuff3",
+			"type":"image",
+			"url":"assets/ui/boxBuff3.png"
+		},
+		{
+			"name":"ui/boxBuffBg",
+			"type":"image",
+			"url":"assets/ui/boxBuffBg.png"
 		},
 		{
 			"name":"ui/dialogBg",

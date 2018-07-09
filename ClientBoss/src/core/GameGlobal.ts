@@ -8,6 +8,7 @@ module game {
     export var wxState: string = "";
 
     //游戏内配置支持
+    export var _breakBadBuffMax: number = 10;   //击碎负面事件拿奖励的个数
     export var _buyLucky: number = 2000;    //转一次奖消耗金币数量
     export var _maxSp: number = 250;       //大招点击次数
     export var _paddlePrice: number = 20;      //每发子弹消耗的金币数
