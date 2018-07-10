@@ -157,8 +157,8 @@ func on_BT_UpdateMoney(session network.IBaseNetSession, message interface{}) {
 		log.Error("BT_UpdateMoney 游戏房间[%d]不存在 玩家[%d]", roomid, userid)
 		return
 	}
-
-	room.owner.SetMoney(uint32(money), "同步客户端", true)
+	
+	room.UpdateMoneyByClient(money)
 }
 
 func on_C2GW_StartLuckyDraw(session network.IBaseNetSession, message interface{}) {
