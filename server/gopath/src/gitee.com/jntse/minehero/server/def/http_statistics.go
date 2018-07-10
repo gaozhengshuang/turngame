@@ -763,7 +763,7 @@ func HttpRequestCheckWechatBound(charid uint64, token, tvmid string) {
 
 // 企业微信支付到个人
 func HttpWechatCompanyPay(openid string, amount int64) string {
-	if openid != "" {
+	if openid == "" {
 		return "玩家微信openid是空"
 	}
 

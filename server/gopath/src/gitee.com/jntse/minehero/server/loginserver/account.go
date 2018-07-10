@@ -154,7 +154,7 @@ func ProcessInvitationUser(charid uint64, invitationcode string) {
 	}
 
 	invitation_user := invitationcode[2:]
-	invitkey := fmt.Sprintf("user_%d_invitation", charid)
+	invitkey := fmt.Sprintf("user_%d_inviter", charid)
 	Redis().Set(invitkey, invitation_user, 0)
 
 	// 转账给邀请人

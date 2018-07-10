@@ -239,10 +239,17 @@ func (this *GateUser) WechatOpenId() string {
 	return this.wechatopenid
 }
 
+// 自己邀请码
+func (this *GateUser) MyInvitationCode() string {
+	return fmt.Sprintf("TJ%d",this.Id())
+}
+
+// 邀请人邀请码
 func (this *GateUser) InvitationCode() string {
 	return this.invitationcode
 }
 
+// 邀请人
 func (this *GateUser) Inviter() uint64 {
 	if code := this.InvitationCode(); len(code) > 2 {
 		inviter , _ := strconv.ParseUint(code[2:], 10, 64)
@@ -458,18 +465,8 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	// 免费赠送金币
 	this.CheckFreePresentMoney(false)
 
-	// 账户注册任务
-	if this.task.IsTaskFinish(int32(msg.TaskId_RegistAccount)) == false {
-		this.task.TaskFinish(int32(msg.TaskId_RegistAccount))
-	}
-
-	//
-	keyinviter := fmt.Sprintf("TaskInviteeTopScoreFinish_%d", this.Inviter())
-	sumfinish, _ := Redis().SCard(keyinviter).Result()
-	if sumfinish != 0 && this.task.IsTaskFinish(int32(msg.TaskId_InviteeTopScore)) == false {
-		this.task.TaskFinish(int32(msg.TaskId_InviteeTopScore))
-	}
-
+	// 上线任务检查
+	this.OnlineTaskCheck()
 
 	// 同步数据到客户端
 	this.Syn()
@@ -707,58 +704,17 @@ func (this *GateUser) AsynEventInsert(event eventque.IEvent) {
 	this.asynev.Push(event)
 }
 
+// 上线任务检查
+func (this *GateUser) OnlineTaskCheck() {
+	// 账户注册任务
+	if this.task.IsTaskFinish(int32(msg.TaskId_RegistAccount)) == false {
+		this.task.TaskFinish(int32(msg.TaskId_RegistAccount))
+	}
 
-// 赠送每日免费次数，在房间中不要执行
-// 每小时赠送免费次数，在房间中不要执行，退出房间再执行
-//func (this *GateUser) CheckGiveFreeStep(now int64, reason string) {
-//	if this.IsInRoom() == true { return }           // 退出房间再执行
-//	floor_clock := util.FloorIntClock(now)
-//	if floor_clock == this.givestep {   // 同一个整点
-//		return
-//	}
-//	this.SetFreeStep(int32(tbl.Global.PresentFreeStep), reason)
-//	this.givestep = floor_clock
-//}
-//
-// 获取平台金币
-//func (this *GateUser) QueryPlatformCoins() {
-//	event := NewQueryPlatformCoinsEvent(this.SyncPlatformCoins)
-//	this.AsynEventInsert(event)
-//}
-//
-//func (this *GateUser) SyncPlatformCoins () {
-//	errcode, coins, _ := def.HttpRequestFinanceQuery(this.Id(), this.Token(), this.Account())
-//	if errcode != "" {
-//		return
-//	}
-//
-//	send := &msg.GW2C_SendUserPlatformMoney{Coins:pb.Int32(coins)}
-//	this.SendMsg(send)
-//}
-//
-//// 推送资源消耗
-//func (this *GateUser) PlatformPushConsumeMoney(yuanbao float32) {
-//	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
-//	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
-//	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceConsumeArglist, nil)
-//	this.AsynEventInsert(event)
-//}
-//
-//// 推送资源获取
-//func (this *GateUser) PlatformPushLootMoney(yuanbao float32) {
-//	rmbcent := 100.0 * yuanbao / float32(tbl.Room.RmbToYuanbao)
-//	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), uint32(rmbcent)}
-//	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserResourceEarnArglist, nil)
-//	this.AsynEventInsert(event)
-//}
-//
-//// 推送在线时长
-//func (this *GateUser) PlatformPushUserOnlineTime() {
-//	tm_onlinestay := (util.CURTIME() - this.tm_login) / 60
-//	if tm_onlinestay <= 0 { return }
-//
-//	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), int64(tm_onlinestay)}
-//	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserOnlineTimeArglist, nil)
-//	this.AsynEventInsert(event)
-//}
-
+	// 被自己邀请人达成积分任务
+	keyinviter := fmt.Sprintf("TaskInviteeTopScoreFinish_%d", this.Id())
+	sumfinish, _ := Redis().SCard(keyinviter).Result()
+	if sumfinish != 0 && this.task.IsTaskFinish(int32(msg.TaskId_InviteeTopScore)) == false {
+		this.task.TaskFinish(int32(msg.TaskId_InviteeTopScore))
+	}
+}

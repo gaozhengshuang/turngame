@@ -80,14 +80,16 @@ func (this *RoomUser) WechatOpenId() string {
 	return userbase.GetWechat().GetOpenid()
 }
 
+// 邀请人邀请码
 func (this *RoomUser) InvitationCode() string {
 	userbase := this.UserBase()
 	return userbase.GetInvitationcode()
 }
 
+// 邀请人
 func (this *RoomUser) Inviter() uint64 {
 	if code := this.InvitationCode(); len(code) > 2 {
-		inviter , _ := strconv.ParseUint(code[1:], 10, 64)
+		inviter , _ := strconv.ParseUint(code[2:], 10, 64)
 		return inviter
 	}
 	return 0
