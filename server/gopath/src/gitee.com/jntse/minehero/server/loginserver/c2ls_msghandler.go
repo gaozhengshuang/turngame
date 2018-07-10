@@ -162,9 +162,6 @@ func RegistAccountCheck(phone, passwd, invitationcode, authcode, nickname string
 		return
 	}
 
-	errcode = "昵称通过验证"
-	return
-
 	// 账户检查重复
 	keyaccount := fmt.Sprintf("accounts_%s", phone)
 	bexist, _ := Redis().Exists(keyaccount).Result()

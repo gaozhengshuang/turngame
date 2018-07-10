@@ -21,6 +21,7 @@ var TBirckItembase = table.InsTBirckItembaseTable
 var TbirckInfobase = table.InsTbirckInfobaseTable
 var SignBase = table.InsSignBaseTable
 var ProtoMsgIndex = table.InsProtoMsgIndexTable
+var TaskBase = table.InsTaskBaseTable
 var NameBase = table.InsNameBaseTable
 var TBirckBase = table.InsTBirckBaseTable
 var TBallGiftbase = table.InsTBallGiftbaseTable
