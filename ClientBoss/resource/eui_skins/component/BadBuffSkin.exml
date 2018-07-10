@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BadBuffSkinSkin" width="200" height="200" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*" >
+<e:Skin class="BadBuffSkin" width="200" height="200" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*" >
 	<w:Declarations>
 		<tween:TweenGroup id="boxshake">
 			<tween:TweenItem target="{boxBuffImg}">
@@ -32,7 +32,7 @@
 	</w:Declarations>
 	<e:Image source="ui/boxBuffBg" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" touchEnabled="false"/>
 	<e:Image id="boxBuffImg" source="ui/boxBuff1" scaleX="1" scaleY="1" touchEnabled="true" anchorOffsetX="100" height="200" anchorOffsetY="100" horizontalCenter="3" verticalCenter="-5"/>
-	<e:ProgressBar id="badBuffProgressBar" width="94" height="25" skinName="BadBuffProgressBar" horizontalCenter="0" x="-246" scaleX="1" scaleY="1" verticalCenter="65" touchEnabled="false"/>
+	<e:ProgressBar id="badBuffProgressBar" width="94" height="25" horizontalCenter="0" x="-246" scaleX="1" scaleY="1" verticalCenter="65" touchEnabled="false" skinName="BadBuffProgressBar"/>
 	<e:Label text="拆弹奖励" textColor="0xB14DDC" italic="true" size="18" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="85.5" touchEnabled="false"/>
 
 

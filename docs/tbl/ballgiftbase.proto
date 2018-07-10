@@ -40,10 +40,7 @@ message TBallGiftDefine
 	optional int32 PushBag = 7; // 1进包裹2加金币
 	
 	
-	optional string Info = 8; 
-	
-	
-	optional int32 Cost = 9; // 价值
+	optional int32 Cost = 8; // 价值
 
 }
 

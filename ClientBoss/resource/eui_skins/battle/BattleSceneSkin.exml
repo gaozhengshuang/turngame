@@ -89,6 +89,6 @@
 		<e:Image source="ui/yindao" scaleX="1" scaleY="1" horizontalCenter="0.5" verticalCenter="-220.5"/>
 	</e:Group>
 	<e:Group id="badBuffGroup" width="150" height="200" horizontalCenter="282" verticalCenter="309" anchorOffsetY="0" touchEnabled="false" touchThrough="false">
-		<game:BadBuff id="badbuffPanel" width="20" height="20" scaleX="1" scaleY="1" skinName="BadBuffSkinSkin" horizontalCenter="0" verticalCenter="0"/>
+		<game:BadBuff id="badbuffPanel" width="20" height="20" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" skinName="BadBuffSkin"/>
 	</e:Group>
 </e:Skin>
