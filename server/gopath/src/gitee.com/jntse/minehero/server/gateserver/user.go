@@ -464,7 +464,7 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	}
 
 	//
-	keyinviter := fmt.Sprintf("Inviter_%d_TaskInviteeTopScoreFinish", this.Inviter())
+	keyinviter := fmt.Sprintf("TaskInviteeTopScoreFinish_%d", this.Inviter())
 	sumfinish, _ := Redis().SCard(keyinviter).Result()
 	if sumfinish != 0 && this.task.IsTaskFinish(int32(msg.TaskId_InviteeTopScore)) == false {
 		this.task.TaskFinish(int32(msg.TaskId_InviteeTopScore))
