@@ -132,30 +132,38 @@ func on_C2L_ReqRegistAccount(session network.IBaseNetSession, message interface{
 }
 
 func RegistAccountCheck(phone, passwd, invitationcode, authcode, nickname string) (errcode string) {
-	if phone == "" {
-		errcode = "手机号不能为空"
-		return
-	}
+	//if phone == "" {
+	//	errcode = "手机号不能为空"
+	//	return
+	//}
 
-	if authcode == "" {
-		errcode = "请填写验证码"
-		return
-	}
+	//if authcode == "" {
+	//	errcode = "请填写验证码"
+	//	return
+	//}
 
-	if passwd == "" {
-		errcode = "密码不能为空"
-		return
-	}
+	//if passwd == "" {
+	//	errcode = "密码不能为空"
+	//	return
+	//}
 
-	if nickname == "" {
-		errcode = "昵称不能为空"
+	//if nickname == "" {
+	//	errcode = "昵称不能为空"
+	//	return
+	//}
+
+	if strings.Count(nickname, "") - 1 > 8 {
+		errcode = "昵称长度不能大于8个字符"
 		return
 	}
 
 	if util.ContainsSpecialCharacter(nickname) == true {
-		errcode = "昵称不能包含特殊字符"
+		errcode = "昵称不能含有标点和特殊字符"
 		return
 	}
+
+	errcode = "昵称通过验证"
+	return
 
 	// 账户检查重复
 	keyaccount := fmt.Sprintf("accounts_%s", phone)
