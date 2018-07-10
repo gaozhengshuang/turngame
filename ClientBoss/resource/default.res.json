@@ -1,5 +1,6 @@
-{
-	"groups":[
+﻿{
+	"groups":
+	[
 		{
 			"keys":"ball/1,ball/2,1",
 			"name":"loading"
@@ -9,7 +10,8 @@
 			"name":"preload"
 		}
 	],
-	"resources":[
+	"resources":
+	[
 		{
 			"name":"1",
 			"type":"image",
