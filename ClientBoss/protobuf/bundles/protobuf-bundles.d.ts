@@ -10520,9 +10520,6 @@ declare namespace table {
         /** TBallGiftDefine PushBag */
         PushBag?: (number|null);
 
-        /** TBallGiftDefine Info */
-        Info?: (string|null);
-
         /** TBallGiftDefine Cost */
         Cost?: (number|null);
     }
@@ -10556,9 +10553,6 @@ declare namespace table {
 
         /** TBallGiftDefine PushBag. */
         public PushBag: number;
-
-        /** TBallGiftDefine Info. */
-        public Info: string;
 
         /** TBallGiftDefine Cost. */
         public Cost: number;
