@@ -1,9 +1,13 @@
 package main
 
 import (
+	"strings"
+	"strconv"
 	pb "github.com/gogo/protobuf/proto"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/gotoolkit/log"
+	"gitee.com/jntse/minehero/server/tbl"
+	"gitee.com/jntse/minehero/server/def"
 )
 
 type UserTask struct {
@@ -44,6 +48,8 @@ func (this *UserTask) TaskFinish(id int32) {
 		}
 		task.Completed = pb.Int32(1)
 	}
+
+	this.GiveTaskReward(id)
 	log.Info("玩家[%s %d] 完成任务[%d]", this.owner.Name(), this.owner.Id(), id)
 }
 
@@ -63,4 +69,25 @@ func (this *UserTask) IsTaskFinish(id int32) bool {
 	return false
 }
 
+func (this *UserTask) GiveTaskReward(id int32) {
+	taskbase, find := tbl.TaskBase.TTaskById[uint32(id)]
+	if find == false {
+		log.Error("玩家[%s %d] 找不到任务配置[%d]", this.owner.Name(), this.owner.Id(), id)
+		return
+	}
+
+	// 任务奖励
+	rewardpair := strings.Split(taskbase.Reward, "-")
+	if len(rewardpair) != 2 {
+		log.Error("玩家[%s %d] 解析任务奖励失败[%d]", this.owner.Name(), this.owner.Id(), id)
+		return
+	}
+	//reward, _ := strconv.ParseInt(rewardpair[0], 10, 32)
+	count,  _ := strconv.ParseInt(rewardpair[1], 10, 32)
+	
+	// 
+	if id == int32(msg.TaskId_RegistAccount) || id == int32(msg.TaskId_RegisterTopScore) {
+		def.HttpWechatCompanyPay(this.owner.WechatOpenId(), count)
+	}
+}
 

@@ -5,8 +5,8 @@
 package table;
 
 
-// Defined in table: TTaskbase
-message TTaskbase
+// Defined in table: TaskBase
+message TaskBase
 {	
 	
 	
