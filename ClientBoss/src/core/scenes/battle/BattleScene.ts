@@ -1267,27 +1267,48 @@ module game {
         }
 
         public openBadBox(_score: number) {
-            // let goldImg = new eui.Image();
-            // goldImg.source = `lucky/goldAni/0000`;
-            // goldImg.anchorOffsetX = 350;
-            // goldImg.anchorOffsetY = 150;
-            // goldImg.x = gameConfig.curWidth() / 2;
-            // goldImg.y = gameConfig.curHeight() / 2;
-            // this.addChild(goldImg);
+            let goldImg = new eui.Image();
+            goldImg.source = `lucky/goldAni/0000`;
+            this.addChild(goldImg);
+
+            goldImg.anchorOffsetX = goldImg.width / 2;
+            goldImg.anchorOffsetY = goldImg.height / 2;
+            goldImg.x = gameConfig.curWidth() / 2;
+            goldImg.y = gameConfig.curHeight() / 2 - 150;
+
+            let goldTxt = new eui.Label();
+            goldTxt.text = `${_score}金币`;
+            goldTxt.textColor = 0xfffb83;
+            goldTxt.strokeColor = 0xf47606;
+            goldTxt.stroke = 3;
+            goldTxt.textAlign = egret.HorizontalAlign.CENTER;
+            goldTxt.size = 36;
+            goldTxt.bold = true;
+            this.addChild(goldTxt);
             
-            // let _currentIndex = 0;
-            // let _playInterval = egret.setInterval(() => {
-            //     goldImg.source = `lucky/goldAni/000${_currentIndex}`;
+            goldTxt.anchorOffsetX = goldTxt.width / 2;
+            goldTxt.anchorOffsetY = goldTxt.height / 2;
+            goldTxt.x = gameConfig.curWidth() / 2;
+            goldTxt.y = gameConfig.curHeight() / 2 - 90;
+            goldTxt.scaleX = 0;
+            goldTxt.scaleY = 0;
 
-            //     _currentIndex++;
-            //     if (_currentIndex > 6) {
-            //         this.removeChild(goldImg);
-            //         egret.clearInterval(_playInterval);
-            //         _playInterval = null;
-            //     }
-            // }, this, 150);
+            let _currentIndex = 0;
+            let _playInterval = egret.setInterval(() => {
+                _currentIndex++;
+                if (_currentIndex > 7) {
+                    egret.setTimeout(() => {
+                        this.removeChild(goldImg);
+                        this.removeChild(goldTxt);
+                    }, this, 700);
+                    egret.clearInterval(_playInterval);
+                    _playInterval = null;
+                } else {
+                    goldImg.source = `lucky/goldAni/000${_currentIndex}`;
+                }
+            }, this, 150);
 
-            showTips("奖励：" + _score + "金币", true, 40);
+            egret.Tween.get(goldTxt).to({scaleX: 1.2, scaleY: 1.2}, 500).to({scaleX: 1, scaleY:1}, 200);
         }
 
         public setBadPower(power: number) {

@@ -24288,7 +24288,6 @@ $root.table = (function() {
          * @property {string|null} [Path] TBallGiftDefine Path
          * @property {number|null} [Pro] TBallGiftDefine Pro
          * @property {number|null} [PushBag] TBallGiftDefine PushBag
-         * @property {string|null} [Info] TBallGiftDefine Info
          * @property {number|null} [Cost] TBallGiftDefine Cost
          */
 
@@ -24364,14 +24363,6 @@ $root.table = (function() {
         TBallGiftDefine.prototype.PushBag = 0;
 
         /**
-         * TBallGiftDefine Info.
-         * @member {string} Info
-         * @memberof table.TBallGiftDefine
-         * @instance
-         */
-        TBallGiftDefine.prototype.Info = "";
-
-        /**
          * TBallGiftDefine Cost.
          * @member {number} Cost
          * @memberof table.TBallGiftDefine
@@ -24417,10 +24408,8 @@ $root.table = (function() {
                 writer.uint32(/* id 6, wireType 0 =*/48).int32(message.Pro);
             if (message.PushBag != null && message.hasOwnProperty("PushBag"))
                 writer.uint32(/* id 7, wireType 0 =*/56).int32(message.PushBag);
-            if (message.Info != null && message.hasOwnProperty("Info"))
-                writer.uint32(/* id 8, wireType 2 =*/66).string(message.Info);
             if (message.Cost != null && message.hasOwnProperty("Cost"))
-                writer.uint32(/* id 9, wireType 0 =*/72).int32(message.Cost);
+                writer.uint32(/* id 8, wireType 0 =*/64).int32(message.Cost);
             return writer;
         };
 
@@ -24477,9 +24466,6 @@ $root.table = (function() {
                     message.PushBag = reader.int32();
                     break;
                 case 8:
-                    message.Info = reader.string();
-                    break;
-                case 9:
                     message.Cost = reader.int32();
                     break;
                 default:
@@ -24538,9 +24524,6 @@ $root.table = (function() {
             if (message.PushBag != null && message.hasOwnProperty("PushBag"))
                 if (!$util.isInteger(message.PushBag))
                     return "PushBag: integer expected";
-            if (message.Info != null && message.hasOwnProperty("Info"))
-                if (!$util.isString(message.Info))
-                    return "Info: string expected";
             if (message.Cost != null && message.hasOwnProperty("Cost"))
                 if (!$util.isInteger(message.Cost))
                     return "Cost: integer expected";
@@ -24573,8 +24556,6 @@ $root.table = (function() {
                 message.Pro = object.Pro | 0;
             if (object.PushBag != null)
                 message.PushBag = object.PushBag | 0;
-            if (object.Info != null)
-                message.Info = String(object.Info);
             if (object.Cost != null)
                 message.Cost = object.Cost | 0;
             return message;
@@ -24601,7 +24582,6 @@ $root.table = (function() {
                 object.Path = "";
                 object.Pro = 0;
                 object.PushBag = 0;
-                object.Info = "";
                 object.Cost = 0;
             }
             if (message.Id != null && message.hasOwnProperty("Id"))
@@ -24618,8 +24598,6 @@ $root.table = (function() {
                 object.Pro = message.Pro;
             if (message.PushBag != null && message.hasOwnProperty("PushBag"))
                 object.PushBag = message.PushBag;
-            if (message.Info != null && message.hasOwnProperty("Info"))
-                object.Info = message.Info;
             if (message.Cost != null && message.hasOwnProperty("Cost"))
                 object.Cost = message.Cost;
             return object;
