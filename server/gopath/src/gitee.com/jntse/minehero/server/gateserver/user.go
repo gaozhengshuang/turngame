@@ -13,7 +13,7 @@ import (
 	pb "github.com/gogo/protobuf/proto"
 	//"gitee.com/jntse/minehero/server/def"
 	_"github.com/go-redis/redis"
-	_"strconv"
+	"strconv"
 	_"strings"
 	_"time"
 )
@@ -66,6 +66,7 @@ type DBUserData struct {
 	wechatopenid  string
 	presentcount  int32
 	presentrecord int64
+	invitationcode string
 }
 
 // --------------------------------------------------------------------------
@@ -238,6 +239,18 @@ func (this *GateUser) WechatOpenId() string {
 	return this.wechatopenid
 }
 
+func (this *GateUser) InvitationCode() string {
+	return this.invitationcode
+}
+
+func (this *GateUser) Inviter() uint64 {
+	if code := this.InvitationCode(); len(code) > 2 {
+		inviter , _ := strconv.ParseUint(code[2:], 10, 64)
+		return inviter
+	}
+	return 0
+}
+
 func (this *GateUser) IsCleanUp() bool {
 	return this.cleanup
 }
@@ -355,6 +368,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.Wechat.Openid = pb.String(this.wechatopenid)
 	userbase.GetFreepresent().Count = pb.Int32(this.presentcount)
 	userbase.GetFreepresent().Tmrecord = pb.Int64(this.presentrecord)
+	userbase.Invitationcode = pb.String(this.invitationcode)
 
 	// 道具信息
 	this.bag.PackBin(bin)
@@ -388,6 +402,7 @@ func (this *GateUser) LoadBin() {
 	this.wechatopenid = userbase.GetWechat().GetOpenid()
 	this.presentcount = userbase.GetFreepresent().GetCount()
 	this.presentrecord = userbase.GetFreepresent().GetTmrecord()
+	this.invitationcode = userbase.GetInvitationcode()
 
 
 	// 道具信息
@@ -447,6 +462,14 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	if this.task.IsTaskFinish(int32(msg.TaskId_RegistAccount)) == false {
 		this.task.TaskFinish(int32(msg.TaskId_RegistAccount))
 	}
+
+	//
+	keyinviter := fmt.Sprintf("Inviter_%d_TaskInviteeTopScoreFinish", this.Inviter())
+	sumfinish, _ := Redis().SCard(keyinviter).Result()
+	if sumfinish != 0 && this.task.IsTaskFinish(int32(msg.TaskId_InviteeTopScore)) == false {
+		this.task.TaskFinish(int32(msg.TaskId_InviteeTopScore))
+	}
+
 
 	// 同步数据到客户端
 	this.Syn()

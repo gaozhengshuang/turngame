@@ -30,6 +30,7 @@ type RoomUser struct {
 	ticker1s  	*util.GameTicker
 	ticker10ms  *util.GameTicker
 	asynev      eventque.AsynEventQueue // 异步事件处理
+	invitationcode string
 }
 
 func NewRoomUser(rid int64, b *msg.Serialize, gate network.IBaseNetSession, roomkind int32) *RoomUser {
@@ -72,6 +73,24 @@ func (this *RoomUser) Face() string {
 
 func (this *RoomUser) RoomId() int64 {
 	return this.roomid
+}
+
+func (this *RoomUser) WechatOpenId() string {
+	userbase := this.UserBase()
+	return userbase.GetWechat().GetOpenid()
+}
+
+func (this *RoomUser) InvitationCode() string {
+	userbase := this.UserBase()
+	return userbase.GetInvitationcode()
+}
+
+func (this *RoomUser) Inviter() uint64 {
+	if code := this.InvitationCode(); len(code) > 2 {
+		inviter , _ := strconv.ParseUint(code[1:], 10, 64)
+		return inviter
+	}
+	return 0
 }
 
 
