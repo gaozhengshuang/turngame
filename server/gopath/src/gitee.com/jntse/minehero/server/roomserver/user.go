@@ -24,6 +24,7 @@ type RoomUser struct {
 	sid_gate  	int
 	bin 		*msg.Serialize
 	bag 		UserBag
+	task       	UserTask
 	token		string
 	coins		uint32
 	ticker1s  	*util.GameTicker
@@ -38,7 +39,9 @@ func NewRoomUser(rid int64, b *msg.Serialize, gate network.IBaseNetSession, room
 	user.ticker1s.Start()
 	user.ticker10ms.Start()
 	user.bag.Init(user)
+	user.task.Init(user)
 	user.bag.LoadBin(b)
+	user.task.LoadBin(b)
 	user.asynev.Start(int64(user.Id()), 10)
 	return user
 }
@@ -180,6 +183,7 @@ func (this *RoomUser) PackBin() *msg.Serialize {
 
 	// 背包
 	this.bag.PackBin(bin)
+	this.task.PackBin(bin)
 
 
 	return bin
