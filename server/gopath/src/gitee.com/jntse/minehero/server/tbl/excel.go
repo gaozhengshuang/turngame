@@ -23,6 +23,7 @@ var SignBase = table.InsSignBaseTable
 var ProtoMsgIndex = table.InsProtoMsgIndexTable
 var NameBase = table.InsNameBaseTable
 var TBirckBase = table.InsTBirckBaseTable
+var TTaskbase = table.InsTTaskbaseTable
 var TBallGiftbase = table.InsTBallGiftbaseTable
 var NoticeBase = table.InsNoticeBaseTable
 var ShopBase = table.InsShopBaseTable

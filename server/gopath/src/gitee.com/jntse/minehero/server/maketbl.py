@@ -220,6 +220,7 @@ gen.maketbl_excel('TbirckRefreshbase', 'birckrefreshbase', 'TBirckRefresh.xlsx')
 gen.maketbl_excel('TbirckInfobase', 'birckinfobase', 'TBirckInfo.xlsx')
 gen.maketbl_excel('TBallGiftbase', 'ballgiftbase', 'TBallGift.xlsx')
 gen.maketbl_excel('TGiftProbase', 'giftprobase', 'TGiftPro.xlsx')
+gen.maketbl_excel('TTaskbase', 'taskbase', 'TTask.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')
