@@ -1,0 +1,25 @@
+package msg;
+
+//客户端开始扔
+message C2GW_StartThrow
+{
+    optional string token = 1;          //红包令牌
+}
+
+//客户端发送命中目标
+message C2GW_TargetItem
+{
+    repeated uint32 itemid = 1;         //勾中道具id
+}
+
+//返回是否命中
+message GW2C_HitTarget
+{
+    repeated uint32 itemid = 1;         //最终得到的道具
+}
+
+//每天第一脚打折
+message GW2C_FreeThrow
+{
+    optional uint32 cost = 1;           //消费金币
+}
