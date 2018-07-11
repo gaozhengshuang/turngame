@@ -48,10 +48,12 @@ func (t *UserTicker) Stop() {
 
 func (this *UserTicker) Run(now int64) {
 	// 嵌套节省
-	this.ticker10ms.Run(now)
-	this.ticker100ms.Run(now)
-	if this.ticker1s.Run(now) {
-		if this.ticker5s.Run(now) { this.ticker1m.Run(now) }
+	if this.ticker10ms.Run(now)	{
+		if this.ticker100ms.Run(now) { 
+			if this.ticker1s.Run(now) {
+				if this.ticker5s.Run(now) { this.ticker1m.Run(now) }
+			}
+		}
 	}
 }
 
@@ -60,12 +62,6 @@ func (this *GateUser) OnTicker10ms(now int64) {
 }
 
 func (this *GateUser) OnTicker100ms(now int64) {
-	if len(this.broadcastbuffer) != 0 {
-		uuid := this.broadcastbuffer[0]
-		msg  := UserMgr().PickBroadcastMsg(uuid)
-		if msg != nil { this.SendMsg(msg) }
-		this.broadcastbuffer= this.broadcastbuffer[1:]
-	}
 	this.CheckOffline(now)
 	this.CheckDisconnectTimeOut(now)
 }
@@ -121,7 +117,7 @@ func (this *GateUser) SetHeartBeat(now int64) {
 	this.tm_heartbeat = now
 	if tm_delay < 1000 {
 		//log.Warn("玩家[%s %d] 心跳太过频繁[%d ms]", this.Name(), this.Id(), tm_delay)
-	}else if tm_delay > 6000 {
+	}else if tm_delay > 15000 {
 		log.Warn("玩家[%s %d] 心跳延迟了[%d ms]，网络不好?", this.Name(), this.Id(), tm_delay)
 	}
 }

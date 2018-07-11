@@ -8,7 +8,7 @@ import (
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
-	pb "github.com/gogo/protobuf/proto"
+	pb "github.com/golang/protobuf/proto"
 )
 
 
@@ -235,7 +235,7 @@ func (this *User) OnTicker1s(now int64) {
 	// 随机跳跳
 	if this.gate != nil && this.do_jump {
 		if util.SelectPercent(10) == true {
-			//this.JumpStep()
+			this.JumpStep()
 		}
 	}
 }
@@ -255,16 +255,17 @@ func (this *User) SendLogin() {
 }
 
 func (this *User) StartGame() {
-	this.SendGateMsg(&msg.C2GW_ReqStartGame{Gamekind:pb.Int32(30)})
+	this.SendGateMsg(&msg.C2GW_ReqStartGame{Gamekind:pb.Int32(30), Gridnum:pb.Int32(12)})
 }
 
 func (this *User) LeaveGame() {
 	this.SendGateMsg(&msg.BT_ReqQuitGameRoom{})
 }
 
-//func (this *User) JumpStep() {
-//	this.SendGateMsg(&msg.BT_JumpPreCheck{})
-//}
+func (this *User) JumpStep() {
+	this.SendGateMsg(&msg.BT_JumpPreCheck{})
+	//this.SendGateMsg(&msg.BT_ReqJumpStep{Stepnum:pb.Int32(1)})
+}
 
 func (this *User) BuyItem() {
 	this.SendGateMsg(&msg.C2GW_BuyItem{Productid:pb.Uint32(7), Num:pb.Uint32(1)})
@@ -273,8 +274,8 @@ func (this *User) BuyItem() {
 func (this *User) DeliveryGoods() {
 	send := &msg.C2GW_ReqDeliveryGoods{}
 	send.List = append(send.List, &msg.DeliveryGoods{Itemid:pb.Uint32(7001), Num:pb.Uint32(1)})
-	send.List = append(send.List, &msg.DeliveryGoods{Itemid:pb.Uint32(7002), Num:pb.Uint32(2)})
-	send.List = append(send.List, &msg.DeliveryGoods{Itemid:pb.Uint32(7003), Num:pb.Uint32(3)})
+	send.List = append(send.List, &msg.DeliveryGoods{Itemid:pb.Uint32(2006), Num:pb.Uint32(2)})
+	send.List = append(send.List, &msg.DeliveryGoods{Itemid:pb.Uint32(5001), Num:pb.Uint32(3)})
 	this.SendGateMsg(send)
 }
 
@@ -282,20 +283,6 @@ func (this *User) Recharge() {
 	send := &msg.C2GW_ReqRechargeMoney{Amount:pb.Uint32(10)}
 	this.SendGateMsg(send)
 }
-
-// 抽奖
-func (this *User) LuckyDraw() {
-	send := &msg.C2GW_StartLuckyDraw{ Userid:pb.Uint64(this.Id())}
-	this.SendGateMsg(send)
-}
-
-// 设置抽奖地址
-func (this *User) ChangeDeliveryAddress() {
-	addr := &msg.UserAddress{Receiver:pb.String("机器人"), Phone:pb.String("188888888"), Address:pb.String("中国上海闵行区新龙路1333弄28号31栋901")}
-	send := &msg.C2GW_ChangeDeliveryAddress{ Index:pb.Uint32(0), Info:addr }
-	this.SendGateMsg(send)
-}
-
 
 //func (this *User) ReqMatch() {
 //	this.SendGateMsg(this.NewReqMatchMsg(int(msg.GameMode_Normal_1v1)))
@@ -316,6 +303,7 @@ func (this *User) DoInputCmd(cmd string) {
 	case "leave":
 		this.LeaveGame()
 	case "jump":
+		//this.JumpStep()
 		this.do_jump = !this.do_jump
 	case "buy":
 		this.BuyItem()
@@ -325,10 +313,6 @@ func (this *User) DoInputCmd(cmd string) {
 		this.Recharge()
 	case "heart":
 		this.do_heart = !this.do_heart
-	case "luckydraw":
-		this.LuckyDraw()
-	case "address":
-		this.ChangeDeliveryAddress()
 	}
 }
 

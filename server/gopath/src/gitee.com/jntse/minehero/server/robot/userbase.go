@@ -3,7 +3,7 @@ import (
 	"gitee.com/jntse/gotoolkit/log"
 	_"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/minehero/pbmsg"
-	pb "github.com/gogo/protobuf/proto"
+	pb "github.com/golang/protobuf/proto"
 )
 
 type IBaseUser interface {
@@ -71,11 +71,10 @@ func (this *UserBase) LoadUserData(tmsg *msg.GW2C_SendUserInfo) {
 
 func (this *UserBase) NewRegistAccountMsg() *msg.C2L_ReqRegistAccount {
 	msg := &msg.C2L_ReqRegistAccount{
-		Phone: pb.String(this.account),
+		Account: pb.String(this.account),
 		Passwd: pb.String(this.passwd),
-		Authcode: pb.String("robot@free@regist"),
-		Invitationcode: pb.String(""),
-		Nickname: pb.String(this.account),
+		Name: pb.String(""),
+		Face: pb.String(""),
 	}
 	return msg
 }
@@ -83,7 +82,7 @@ func (this *UserBase) NewRegistAccountMsg() *msg.C2L_ReqRegistAccount {
 func (this *UserBase) NewReqLoginMsg() *msg.C2L_ReqLogin {
 	msg := &msg.C2L_ReqLogin {
 		Account:pb.String(this.account),
-		Passwd:pb.String(this.passwd),
+		//Passwd:pb.String(this.passwd),
 	}
 	return msg
 }

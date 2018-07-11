@@ -1,11 +1,2 @@
 package msg;
 
-message C2GW_StartTiger
-{
-    optional uint32 type = 1;       //参加消耗 1 1000金 2 2000金 3 3000金
-}
-
-message GW2C_GameResult
-{
-    repeated uint32 nums = 1;       //3个数字
-}

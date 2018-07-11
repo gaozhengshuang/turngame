@@ -9,7 +9,7 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/minehero/pbmsg"
-	pb"github.com/gogo/protobuf/proto"
+	pb"github.com/golang/protobuf/proto"
 	"github.com/go-redis/redis"
 )
 
@@ -222,7 +222,7 @@ func GenerateRoomId() (id int64, errcode string ) {
 	return id, ""
 }
 
-func (this *RoomSvrManager) CreateGameRoom(kind int32, now int64, sid_gate int, userid uint64) (string) {
+func (this *RoomSvrManager) CreateGameRoom(kind int32, gridnum int32, now int64, sid_gate int, userid uint64) (string) {
 
 	tm1 := util.CURTIMEUS()
 	agent := this.FindLowLoadRoom()
@@ -253,13 +253,14 @@ func (this *RoomSvrManager) CreateGameRoom(kind int32, now int64, sid_gate int, 
 	rmsg := &msg.MS2RS_CreateRoom { 
 		Roomid : pb.Int64(roomid), 
 		Gamekind: pb.Int32(kind), 
+		Gridnum: pb.Int32(gridnum), 
 		Sidgate: pb.Int(sid_gate), 
 		Userid: pb.Uint64(userid),
 		Quotaflag: pb.Bool(left_quota > 0),
 	}
 	agent.SendMsg(rmsg)
 	tm2 := util.CURTIMEUS()
-	log.Info("向RS请求创建房间[%d]，玩家[%d] 模式[%d] 创建耗时[%dus] ts[%d]", roomid, userid, kind, tm2-tm1, util.CURTIMEMS())
+	log.Info("向RS请求创建房间[%d]，玩家[%d] 模式[%d] 格子数[%d] 创建耗时[%dus] ts[%d]", roomid, userid, kind, gridnum, tm2-tm1, util.CURTIMEMS())
 	return ""
 }
 
