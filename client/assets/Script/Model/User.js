@@ -86,7 +86,7 @@ UserModel.prototype.onGW2C_SendUserPlatformMoney = function (msgid, data) {
 UserModel.prototype.onGW2C_RetDeliveryDiamond = function (msgid, data) {
     let content = '提取钻石:' + data.diamond + '个，提取钻石券:' + data.diamondparts + '个，折算钻石' + (data.total - data.diamond) +
         '个，本次共提取钻石' + data.total + '个';
-    NotificationController.postNotification(Define.EVENT_KEY.TIP_TIPS, { text: content, alive: 5 });
+    NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, { text: content, alive: 5 });
 }
 
 module.exports = new UserModel();

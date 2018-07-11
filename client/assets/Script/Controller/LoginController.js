@@ -1,6 +1,7 @@
 import async from 'async';
 
 import NetWorkController from './NetWorkController';
+import NotificationController from './NotificationController';
 import Tools from "../Util/Tools";
 import moment from "moment/moment";
 import Define from "../Util/Define";
@@ -20,9 +21,9 @@ var LoginController = function () {
 LoginController.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_HeartBeat', this.onGW2C_HeartBeat.bind(this));
     NetWorkController.AddListener('msg.L2C_RetLogin', this.onL2C_RetLogin.bind(this));
-    cc.systemEvent.on(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this.onLoginedToGate, this);
-    cc.systemEvent.on(Define.EVENT_KEY.NET_OPEN, this.onNetOpen, this);
-    cc.systemEvent.on(Define.EVENT_KEY.NET_CLOSE, this.onNetClose, this);
+    NotificationController.On(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onLoginedToGate);
+    NotificationController.On(Define.EVENT_KEY.NET_OPEN, this, this.onNetOpen);
+    NotificationController.On(Define.EVENT_KEY.NET_CLOSE, this, this.onNetClose);
     Tools.InvokeCallback(cb, null);
 }
 

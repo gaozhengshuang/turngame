@@ -4,6 +4,7 @@ let Game = {
     _: require('lodash'),
 
     Define: require('./Util/Define'),
+    TurnDefine: require('./Util/TurnGameDefine'),
     Tools: require('./Util/Tools'),
     HttpUtil: require('./Util/HttpUtil'),
     Platform: require('./Util/Platform'),

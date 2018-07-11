@@ -4,6 +4,7 @@ import moment from 'moment';
 import Define from '../Util/Define';
 import Tools from '../Util/Tools';
 import ConfigController from './ConfigController';
+import NotificationController from './NotificationController';
 import ProtoMsg from '../Util/ProtoMsg';
 import { stringify } from 'querystring';
 
@@ -155,20 +156,20 @@ NetWorkController.prototype.onClose = function () {
     this.sock = null;
     Tools.InvokeCallback(this.closeedCallback);
     this.closeedCallback = null;
-    cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.NET_CLOSE));
+    NotificationController.Emit(Define.EVENT_KEY.NET_CLOSE);
 }
 
 NetWorkController.prototype.onOpen = function (info) {
     console.log(new Date() + '[网络消息] socket opend ' + stringify(info));
     Tools.InvokeCallback(this.connectedCallback);
     this.connectedCallback = null;
-    cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.NET_OPEN));
+    NotificationController.Emit(Define.EVENT_KEY.NET_OPEN);
 }
 
 NetWorkController.prototype.onError = function (err) {
     console.log(new Date() + '[网络消息] socket error ' + err);
     this.connectedCallback = null;
-    cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.NET_CLOSE));
+    NotificationController.Emit(Define.EVENT_KEY.NET_CLOSE);
 }
 
 module.exports = new NetWorkController();
