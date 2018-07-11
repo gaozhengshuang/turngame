@@ -1,8 +1,0 @@
-package msg;
-
-// MatchServer 广播消息到其他服务器
-message MS2Server_BroadCast {
-    optional string cmd = 1;
-}
-
-

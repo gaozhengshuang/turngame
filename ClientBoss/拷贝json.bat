@@ -1,1 +1,0 @@
-node ../../tools/egret/json2ts/app.js ../docs/json/ ./src/json/

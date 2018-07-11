@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="WinRankItemSkin" width="116" xmlns:e="http://ns.egret.com/eui" xmlns:game="game.*" xmlns:w="http://ns.egret.com/wing" height="214">
-	<game:Avatar id="avatar" skinName="AvatarSkin" y="44"/>
-	<e:Label id="rankLabel" text="1" size="36" textColor="0x9d5df6" width="116" textAlign="center" horizontalCenter="0"/>
-	<e:Label id="nameLabel" text="玩家名" y="161" size="24" textColor="0x514e5f" anchorOffsetX="0" width="123" horizontalCenter="0" textAlign="center" height="24"/>
-	<e:Label id="scoreLabel" text="10000" y="189.69" size="24" textColor="0x514E5F" horizontalCenter="0"/>
-</e:Skin>

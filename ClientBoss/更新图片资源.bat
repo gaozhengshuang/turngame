@@ -1,1 +1,0 @@
-..\..\tools\egret\ScanRes\ScanRes.exe %cd%\
