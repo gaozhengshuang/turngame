@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "carShaderYellow",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.4166666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "18dc6552-c369-45d7-822b-43d436707ba1"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "ae6bee65-546e-4983-9676-6ab41cc6c007"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "562b3f39-2399-4e80-91d0-f64ca89292c9"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "a17b465a-8d93-4c2a-9042-2c676a4aea06"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "18dc6552-c369-45d7-822b-43d436707ba1"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

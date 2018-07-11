@@ -1,0 +1,18 @@
+{
+    "name": "切换发布环境",
+    "version": "0.0.1",
+    "description": "The package template for getting started.",
+    "author": "Cocos Creator",
+    "main": "main.js",
+    "main-menu": {
+        "切换发布环境/切换内网测试": {
+            "message": "切换发布环境:checkInnerTest"
+        },
+        "切换发布环境/切换电视红包测试": {
+            "message": "切换发布环境:checkTVPacketTest"
+        },
+        "切换发布环境/切换外网测试": {
+            "message": "切换发布环境:checkOuterTest"
+        }
+    }
+}

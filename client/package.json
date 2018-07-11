@@ -1,0 +1,29 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "Hello world new project template.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Franky",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "bytebuffer": "^5.0.1",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "protobufjs": "^6.8.6",
+    "scp2": "^0.5.0",
+    "ssh2": "^0.6.1",
+    "whatwg-fetch": "^2.0.4",
+    "xls-to-json": "^0.5.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-file-inline": "^1.4.0",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-javascript-obfuscator": "^1.1.4"
+  }
+}

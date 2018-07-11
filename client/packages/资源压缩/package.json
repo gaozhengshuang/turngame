@@ -1,0 +1,12 @@
+{
+    "name": "资源压缩",
+    "version": "0.0.1",
+    "description": "The package template for getting started.",
+    "author": "Cocos Creator",
+    "main": "main.js",
+    "main-menu": {
+        "资源压缩/压缩资源": {
+            "message": "资源压缩:minAssets"
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "name": "打包上传",
+    "version": "0.0.1",
+    "description": "The package template for getting started.",
+    "author": "Cocos Creator",
+    "main": "main.js",
+    "main-menu": {
+        "打包上传/外网普通测试": {
+            "message": "打包上传:uploadOutNormalTest"
+        },
+        "打包上传/外网红包测试": {
+            "message": "打包上传:uploadOutTVPacketTest"
+        },
+        "打包上传/外网红包正式": {
+            "message": "打包上传:uploadOutTVPacketRelease"
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "appKey": "",
+  "appSecret": "",
+  "encryptJs": true,
+  "excludeScenes": [],
+  "includeAnySDK": false,
+  "includeSDKBox": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
+  "md5Cache": true,
+  "mergeStartScene": false,
+  "oauthLoginServer": "",
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.WorldCup",
+  "privateKey": "",
+  "renderMode": "0",
+  "startScene": "639f958c-8a3c-44aa-b596-1732aaeec635",
+  "title": "WorldCup",
+  "webOrientation": "auto",
+  "wechatgame": {
+    "appid": "wx6ac3f5090a6b99c5",
+    "orientation": "portrait"
+  },
+  "xxteaKey": "e5fd54e9-26fd-42",
+  "zipCompressJs": true
+}
