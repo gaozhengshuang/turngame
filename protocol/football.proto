@@ -1,0 +1,35 @@
+// --------------------------------------------------------------------------
+/// @brief 足球游戏协议
+// --------------------------------------------------------------------------
+package msg;
+
+//刷新道具
+message C2GW_ReFreshItems
+{
+}
+
+message FootballItem
+{
+    optional int32 uid = 1;         //格子id （1-9）
+    optional int32 itemid = 2;      //道具id
+    optional int32 itemnum = 3;     //道具数量
+}
+
+//返回道具
+message GW2C_RetReFreshItems
+{
+    repeated FootballItem list = 1;     //道具列表
+}
+
+//踢球
+message C2GW_KickFootBall
+{
+    optional int32 uid = 1;             //格子id
+    optional string token = 2;          //令牌
+}
+
+//返回结果
+message GW2C_RetKickFootBall
+{
+    optional int32 uid = 1;             //不命中 则发0
+}

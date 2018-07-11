@@ -1,7 +1,7 @@
 package main
 import "gitee.com/jntse/minehero/pbmsg"
 import "gitee.com/jntse/gotoolkit/log"
-import pb "github.com/gogo/protobuf/proto"
+import pb "github.com/golang/protobuf/proto"
 import "gitee.com/jntse/minehero/server/tbl"
 import "gitee.com/jntse/minehero/server/tbl/excel"
 
@@ -127,8 +127,6 @@ func (this *UserBag) AddItem(id uint32, num uint32, reason string) *Item {
 		this.names[item.Name()] = item
 	}
 
-	send := &msg.GW2C_AddPackageItem{Itemid:pb.Uint32(id), Num:pb.Uint32(num) }
-	this.owner.SendClientMsg(send)
 	log.Info("玩家[%d] 添加道具[%d] 数量[%d] 库存[%d] 原因[%s]", this.owner.Id(), id, num, item.Num(), reason)
 	return item
 }

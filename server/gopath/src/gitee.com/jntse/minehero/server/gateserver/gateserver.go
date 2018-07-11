@@ -12,7 +12,7 @@ import (
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/server/def"
-	pb "github.com/gogo/protobuf/proto"
+	pb "github.com/golang/protobuf/proto"
 	"github.com/go-redis/redis"
 )
 
@@ -146,7 +146,7 @@ func (this *GateServer) OnClose(session network.IBaseNetSession) {
 		break
 	case "TaskClient":
 		log.Info("sid[%d] 和客户端连接断开", sid)
-		user := ExtractSessionUser(session)
+		user := this.GetUserBySession(session)
 		if user != nil { user.OnDisconnect() }
 	default:
 		log.Error("OnClose error not regist session:%+v", sid)
@@ -238,7 +238,6 @@ func (this *GateServer) InitMsgHandler() {
 	this.msghandlers = append(this.msghandlers, NewLS2GMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewMS2GWMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewRS2GWMsgHandler())
-
 }
 
 
@@ -256,7 +255,7 @@ func (this *GateServer) StartRedis() bool {
 		return false
 	}
 
-	log.Info("连接Redis[%s]成功", this.netconf.Redis.Host.String())
+	log.Info("连接Redis成功")
 	return true
 }
 
@@ -404,21 +403,15 @@ func (this *GateServer) RegistRoomServer(agent *RoomAgent) {
 	log.Info("注册房间服 id=%d [%s] 当前总数:%d", agent.Id(), agent.name, this.roomsvrmgr.Num())
 }
 
-//func (this *GateServer) GetUserBySession(session network.IBaseNetSession) *GateUser {
-//	defdata := session.UserDefData()
-//	if defdata == nil {
-//		log.Error("客户端Session没有绑定账户数据 sid[%d]", session.Id())
-//		return nil
-//	}
-//
-//	account, ok := defdata.(string)
-//	if ok == false {
-//		log.Error("客户端Session绑定了错误的数据")
-//		return nil
-//	}
-//
-//	return UserMgr().FindByAccount(account)
-//}
+func (this *GateServer) GetUserBySession(session network.IBaseNetSession) *GateUser {
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return nil
+	}
+	return user
+}
 
 // 通用公告
 func (this *GateServer) SendNotice(face string, ty msg.NoticeType, subtext ...string) {
@@ -450,6 +443,7 @@ func UnBindingAccountGateWay(account string) {
 	key = fmt.Sprintf("%s_%s:%d", def.RedisKeyGateAccounts, ip, port)
 	Redis().SRem(key, account)
 }
+
 
 func ZeroHourClockCallback(now int64) {
 	log.Info("==========零点回调开始===========")

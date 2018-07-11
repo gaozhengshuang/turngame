@@ -39,7 +39,7 @@ message BT_GameInit {
     optional int64  roomid = 1;
     optional uint64 ownerid = 2;
     optional int32  gamekind = 3;
-    //repeated GridItem listitem = 4;
+    repeated GridItem listitem = 4;
 }
 
 
@@ -74,11 +74,41 @@ message BT_GameOver {
     optional int64 roomid = 1;
 }
 
+// C2R 起跳检查
+message BT_JumpPreCheck {
+    optional int64 roomid = 1;
+    optional uint64 userid = 2;
+    optional string token = 3;
+}
+
+// R2C 返回起跳检查
+message BT_RetJumpPreCheck {
+    optional uint64 userid = 1;
+    optional string errcode = 2;
+    optional int32  dice = 3;
+}
+
+// C2R 请求行进, 参数客户端留空
+message BT_ReqJumpStep {
+    optional int64 roomid = 1;
+    optional uint64 userid = 2;
+    optional int32 stepnum = 3;
+}
+
+// R2C 返回行进结果
+message BT_RetJumpStep {
+    //optional int64 roomid = 1;
+    optional uint64 userid = 1;
+    optional int32 stepindex = 2;
+    repeated int32 fakelist = 3;      // 更新作假列表
+}
+
 // C2R 退出游戏房间，游戏结束,参数客户端留空
 message BT_ReqQuitGameRoom {
     optional int64 roomid = 1;
     optional uint64 userid = 2;
 }
+
 
 // R2C 获得道具
 message BT_PickItem {
@@ -86,11 +116,10 @@ message BT_PickItem {
     optional GridItem item = 2;
 }
 
-// C2R 更新money
-message BT_UpdateMoney {
-    optional uint64 userid = 1;
-    optional int64  roomid = 2;
-    optional uint64 money  = 3;
-}
+// R2C升级
+//message BT_LevelUp {
+//    optional uint64 userid = 1;
+//    optional uint32 level = 2;
+//}
 
 

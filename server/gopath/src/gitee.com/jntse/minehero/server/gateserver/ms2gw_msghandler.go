@@ -6,7 +6,7 @@ import (
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/util"
-	//pb"github.com/gogo/protobuf/proto"
+	//pb"github.com/golang/protobuf/proto"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
 )
@@ -74,8 +74,7 @@ func on_MS2GW_HeartBeat(session network.IBaseNetSession, message interface{}) {
 func on_MS2GW_MsgNotice(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.MS2GW_MsgNotice)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	//UserMgr().BroadcastMsg(tmsg.GetNotice())
-	UserMgr().BroadcastMsgFaster(tmsg.GetNotice())
+	UserMgr().BroadcastMsg(tmsg.GetNotice())
 }
 
 func on_MS2GW_RetCreateRoom(session network.IBaseNetSession, message interface{}) {

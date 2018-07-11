@@ -8,35 +8,12 @@ message EntityBase {
     optional string account = 5;
 }
 
-// 简单计数器
 message SimpleCounter {
     optional int32 freestep = 1;
     optional int64 givestep = 2;
     optional int64 diamond_room_cost = 3;       // 钻石场消费
     optional int64 diamond_room_income = 4;     // 钻石场收入
     optional int64 diamond_room_step = 5;       // 钻石场计数
-}
-
-// 免费赠送金币
-message FreePresentMoney {
-    optional int32 count = 1;
-    optional int64 tmrecord = 2;
-}
-
-// 微信相关
-message UserWechat {
-    optional string openid = 1;
-}
-
-// 玩家任务
-message UserTask {
-    repeated TaskData tasks = 1;
-}
-
-message TaskData {
-    optional int32 id = 1;         // 任务id
-    optional int32 progress = 2;   // 本次完成进度
-    optional int32 completed = 3;  // 完成标记
 }
 
 message UserBase {
@@ -53,16 +30,21 @@ message UserBase {
     optional uint32     signtime    = 11;   // 签到时间
     repeated UserAddress addrlist   = 12;   // 地址列表
     optional SimpleCounter scounter = 13;   // 简单计数器
-    optional UserWechat wechat = 14;
-    optional string     invitationcode = 15;    // 邀请码
-    optional FreePresentMoney freepresent = 16;
-    optional UserTask   task = 17;      // 任务
+    repeated FootBallItem fbitem    = 14;   // 足球道具
+    optional uint32     freetime    = 15;   // 每天免费标示
+    optional uint32     freetype    = 16;   // 引导类型
+    optional uint32     sumget      = 17;   // 总获得
 }
 
 message UserAddress {
     optional string receiver = 1;
     optional string phone = 2;
     optional string address = 3;
+}
+
+message FootBallItem {
+    optional int32 index = 1;
+    optional int32 itemid = 2;
 }
 
 // 道具位置

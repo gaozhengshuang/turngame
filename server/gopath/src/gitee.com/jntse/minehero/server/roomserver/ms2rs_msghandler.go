@@ -8,7 +8,7 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/pbmsg"
-	pb "github.com/gogo/protobuf/proto"
+	pb "github.com/golang/protobuf/proto"
 	"encoding/json"
 )
 
@@ -99,7 +99,7 @@ func on_MS2RS_GateInfo(session network.IBaseNetSession, message interface{}) {
 
 func on_MS2RS_CreateRoom(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.MS2RS_CreateRoom)
-	userid, roomid, gamekind, errcode := tmsg.GetUserid(), tmsg.GetRoomid(), tmsg.GetGamekind(), ""
+	userid, roomid, gamekind, gridnum, errcode := tmsg.GetUserid(), tmsg.GetRoomid(), tmsg.GetGamekind(), tmsg.GetGridnum(), ""
 
 	switch {
 	default:
@@ -109,7 +109,7 @@ func on_MS2RS_CreateRoom(session network.IBaseNetSession, message interface{}) {
 		}
 
 		// 初始化房间
-		room := NewGameRoom(userid, roomid, gamekind, tmsg.GetQuotaflag())
+		room := NewGameRoom(userid, roomid, gamekind, gridnum, tmsg.GetQuotaflag())
 		if errcode = room.Init(); errcode != "" {
 			break
 		}

@@ -14,8 +14,8 @@ message IpHost {
 // 道具id规则 = 类型 * 1000 + id
 enum ItemId {
     YuanBao = 6001;         // 元宝
-    Coupon = 6002;          // 人民币
-    Gold = 6003;            // 金币
+    Coupon = 6002;          // 金卷, 也不使用了
+    Gold = 6003;            // 暂时没有使用
     FreeStep = 6005;        // 免费步数
     Diamond = 10001;        // 钻石
     DiamondParts = 10002;   // 钻石碎片
@@ -37,12 +37,6 @@ enum ItemType {
 message PairNumItem {
     optional uint32 itemid = 1;
     optional uint32 num = 2;
-}
-
-enum TaskId {
-    RegistAccount       = 1001; // 注册账户
-    RegisterTopScore    = 1002; // 达到目标分数
-    InviteeTopScore     = 1003; // 被邀请人达到目标分数
 }
 
 

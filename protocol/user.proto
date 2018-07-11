@@ -37,27 +37,3 @@ message GW2C_RetRechargeMoney {
 // 红包平台充值完成通知
 message C2GW_PlatformRechargeDone {
 }
-
-// 同步玩家绑定微信信息
-message GW2C_SendWechatInfo {
-    optional string openid = 1;
-}
-
-// 抽奖
-message C2GW_StartLuckyDraw {
-    optional uint64 userid = 1;
-}
-
-message GW2C_LuckyDrawHit {
-    optional int32 id = 1;
-}
-
-// 免费赠送金币
-message GW2C_FreePresentNotify {
-    optional int32 money = 1;
-}
-
-// 发送任务列表
-message GW2C_SendTaskList {
-    repeated msg.TaskData tasks = 1;
-}

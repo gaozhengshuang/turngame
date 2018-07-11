@@ -12,7 +12,7 @@ import (
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/server/tbl/excel"
 	"gitee.com/jntse/minehero/server/def"
-	pb "github.com/gogo/protobuf/proto"
+	pb "github.com/golang/protobuf/proto"
 	"github.com/go-redis/redis"
 )
 
@@ -48,15 +48,13 @@ type RoomServer struct {
 	hredis			*redis.Client
 	gatemgr			GateManager
 	roommgr			RoomManager
-	usermgr			UserManager
 	//sessions		map[int]network.IBaseNetSession     // 及时删除，没有任何地方引用golang才会GC
 	msghandlers		[]network.IBaseMsgHandler
-	clienthandler	*ClientMsgHandler
 	tblloader		*tbl.TblLoader
 	//countmgr		  CountManager
 	rcounter		util.RedisCounter
 	ticker1m		*util.GameTicker
-	ticker5s		*util.GameTicker
+	ticker10s		*util.GameTicker
 	ticker100ms		*util.GameTicker
 	runtimestamp 	int64
 	quit_graceful 	bool
@@ -64,6 +62,9 @@ type RoomServer struct {
 	noticepause 	int64
 	itembase		[]*table.ItemBaseDataDefine
 	namebase		[]*table.TNameDefine
+	footballbase	[]*table.TFootBallDefine
+	rewardnum		[8]int32
+	costnum			[3]int32
 }
 
 var g_RoomServer *RoomServer = nil
@@ -88,16 +89,8 @@ func RoomMgr() *RoomManager {
 	return &RoomSvr().roommgr
 }
 
-func UserMgr() *UserManager {
-	return &RoomSvr().usermgr
-}
-
 func Redis() *redis.Client {
 	return RoomSvr().hredis
-}
-
-func CMHandler() *ClientMsgHandler {
-	return RoomSvr().clienthandler
 }
 
 //func CountMgr() *CountManager {
@@ -195,15 +188,14 @@ func (this *RoomServer) Init(fileconf string) bool {
 	//this.sessions = make(map[int]network.IBaseNetSession)
 	this.gatemgr.Init()
 	this.roommgr.Init()
-	this.usermgr.Init()
 
 	//this.countmgr.Init()
 	this.ticker1m = util.NewGameTicker(60 * time.Second, this.Handler1mTick)
-	this.ticker5s = util.NewGameTicker(05 * time.Second, this.Handler5sTick)
+	this.ticker10s = util.NewGameTicker(10 * time.Second, this.Handler10sTick)
 	this.ticker100ms = util.NewGameTicker(100 * time.Millisecond, this.Handler100msTick)
 
 	this.ticker1m.Start()
-	this.ticker5s.Start()
+	this.ticker10s.Start()
 	this.ticker100ms.Start()
 
 	//初始道具和名字slice
@@ -212,8 +204,15 @@ func (this *RoomServer) Init(fileconf string) bool {
 	this.namebase = make([]*table.TNameDefine,0)
 	for _, v := range tbl.NameBase.TNameById { this.namebase = append(this.namebase, v) }
 
+	//初始化足球表
+	this.footballbase = make([]*table.TFootBallDefine,0)
+	for _, v := range tbl.FootBall.TFootBallById {this.footballbase = append(this.footballbase, v)}
 	//
 	this.runtimestamp = 0
+
+	this.rewardnum = [8]int32{2,3,4,6,8,12,18,27}
+	this.costnum = [3]int32{1000,2000,5000}
+
 	return true
 }
 
@@ -222,8 +221,8 @@ func (this *RoomServer) Handler1mTick(now int64) {
 	this.rcounter.BatchSave(10)
 }
 
-func (this *RoomServer) Handler5sTick(now int64) {
-	//this.TickCacheNotice(now)
+func (this *RoomServer) Handler10sTick(now int64) {
+	this.TickCacheNotice(now)
 }
 
 func (this *RoomServer) Handler100msTick(now int64) {
@@ -236,7 +235,6 @@ func (this *RoomServer) InitMsgHandler() {
 	if this.tblloader == nil { panic("should init 'tblloader' first") }
 	this.msghandlers = append(this.msghandlers, NewC2GWMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewMS2RSMsgHandler())
-	this.clienthandler = NewClientMsgHandler()
 }
 
 // 启动redis
@@ -253,7 +251,7 @@ func (this *RoomServer) StartRedis() bool {
 		return false
 	}
 
-	log.Info("连接Redis[%s]成功", this.netconf.Redis.Host.String())
+	log.Info("连接Redis成功")
 	return true
 }
 
@@ -289,7 +287,7 @@ func (this *RoomServer) OnStart() {
 // 程序退出最后清理
 func (this *RoomServer) OnStop() {
 	this.ticker1m.Stop()
-	this.ticker5s.Stop()
+	this.ticker10s.Stop()
 	this.ticker100ms.Stop()
 }
 
@@ -325,12 +323,11 @@ func (this *RoomServer) Run() {
 
 	//
 	this.roommgr.Tick(now)
-	this.usermgr.Tick(now)
 	tm_roomticker := util.CURTIMEMS()
 
 	//
 	this.ticker1m.Run(now)
-	this.ticker5s.Run(now)
+	this.ticker10s.Run(now)
 	this.ticker100ms.Run(now)
 	tm_svrticker := util.CURTIMEMS()
 
@@ -429,12 +426,17 @@ func (this *RoomServer) TickCacheNotice(now int64) {
 		imageindex := util.RandBetween(0, 1200)
 		faceurl := fmt.Sprintf("http://jump.cdn.giantfun.cn/cdn/jumphead/tx (%d).jpg",imageindex)
 
-		itemname, username := "钻石", this.GetRandNickName()
-		if util.SelectPercent(50) == true { itemname = this.GetRandItemName() }
-		if itemname == "" || username == "" { return }
+		username := this.GetRandNickName()
+		if username == "" { return }
+		
+		num := util.RandBetween(0,7)
+		cost := util.RandBetween(0,2)
+		reward := this.rewardnum[num] * this.costnum[cost]
+		txt := fmt.Sprintf("%d倍奖励 %d金币", this.rewardnum[num], reward)
+
 		subtext := []string	{
-			def.MakeNoticeText("恭喜","#ffffff", 26), def.MakeNoticeText(username,"#ffffff", 26),
-			def.MakeNoticeText("获得","#fffc00", 26), def.MakeNoticeText(itemname,"#ffffff", 26),
+			def.MakeNoticeText("恭喜","#FFFFFF", 26), def.MakeNoticeText(username,"#A6E5FF", 26),
+			def.MakeNoticeText("获得","#FFFFFF", 26), def.MakeNoticeText(txt,"#ECFF94", 26),
 		}
 
 		noticemsg.Face, noticemsg.Text = pb.String(faceurl), pb.String(strings.Join(subtext, ""))
@@ -450,17 +452,19 @@ func (this *RoomServer) TickCacheNotice(now int64) {
 }
 
 func (this *RoomServer) GetRandItemName() string {
-	lenlist := int32(len(this.itembase))
+	lenlist := int32(len(this.footballbase))
 	if lenlist <= 0 {
-		return ""
+		return "钻石"
 	}
 
 	rnd := util.RandBetween(0, lenlist-1)
 	if rnd >= 0 && rnd < lenlist {
-		return this.itembase[rnd].Name
+		itemid := this.footballbase[rnd].Id
+		item := tbl.ItemBase.ItemBaseDataById[itemid]
+		return item.Name
 	}
 
-	return ""
+	return "钻石"
 }
 
 func (this *RoomServer) GetRandNickName() string {

@@ -13,7 +13,7 @@ import (
 	"gitee.com/jntse/minehero/server/def"
 	"gitee.com/jntse/minehero/server/tbl"
 	"github.com/go-redis/redis"
-	pb "github.com/gogo/protobuf/proto"
+	pb "github.com/golang/protobuf/proto"
 	"gitee.com/jntse/minehero/pbmsg"
 )
 
@@ -219,7 +219,7 @@ func (this *MatchServer) StartRedis() bool {
 		return false
 	}
 
-	log.Info("连接Redis[%s]成功", this.netconf.Redis.Host.String())
+	log.Info("连接Redis成功")
 	return true
 }
 
