@@ -32,6 +32,8 @@ message UserBase {
     optional SimpleCounter scounter = 13;   // 简单计数器
     repeated FootBallItem fbitem    = 14;   // 足球道具
     optional uint32     freetime    = 15;   // 每天免费标示
+    optional uint32     freetype    = 16;   // 引导类型
+    optional uint32     sumget      = 17;   // 总获得
 }
 
 message UserAddress {
