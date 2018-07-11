@@ -1,15 +1,15 @@
-import Define from '../Util/Define';
-import Tools from '../Util/Tools';
-
-
-var ConfigController = function () {
-    this.configs = {};
-}
-
-ConfigController.prototype.init = function (cb) {
+import Tools from '../util/Tools';
+let ConfigController = function () {
+    this._configs = {};
+};
+/**
+ * 
+ * @param {Function} cb 
+ */
+ConfigController.prototype.Init = function (cb) {
     cc.loader.loadResDir('Json/', function (err, datas) {
         if (err) {
-            Tools.invokeCallback(cb, err);
+            Tools.InvokeCallback(cb, err);
             return;
         }
         for (let i = 0; i < datas.length; i++) {
@@ -17,27 +17,15 @@ ConfigController.prototype.init = function (cb) {
             delete data.Tool;
             delete data.Version;
             for (let j in data) {
-                this.configs[j] = data[j];
+                this._configs[j] = data[j];
             }
         }
-        Tools.invokeCallback(cb, null);
-
-    }.bind(this))
+        Tools.InvokeCallback(cb, null);
+    }.bind(this));
 };
 
 ConfigController.prototype.GetConfig = function (key) {
-    return this.configs[key];
+    return this._configs[key];
 }
 
-ConfigController.prototype.GetConfigByIndex = function (key, index) {
-    if (this.configs[key] == null) {
-        return null;
-    }
-    return this.configs[key][index];
-}
-
-var ctl = null;
-if (ctl == null) {
-    ctl = new ConfigController();
-}
-module.exports = ctl;
+module.exports = new ConfigController();

@@ -1,15 +1,9 @@
-import async from 'async';
 import _ from 'lodash';
 
 import Define from '../Util/Define';
 import Tools from '../Util/Tools';
-import NotificationController from '../Controller/NotificationController';
+import NotificationController from './NotificationController';
 
-const audioName = [
-    'Bg',
-    'Congratulation',
-    'Fire'
-];
 let AudioController = function () {
     this.audioClips = {};
     this.audio = null;
@@ -19,32 +13,22 @@ let AudioController = function () {
     this.audioName = '';
 };
 
-AudioController.prototype.init = function (cb) {
-    NotificationController.addNotification(Define.EVENT_KEY.MUSIC_CHANGE, this.onChangeMusic.bind(this));
-    NotificationController.addNotification(Define.EVENT_KEY.EFFECT_CHANGE, this.onChangeEffect.bind(this));
-    async.timesSeries(audioName.length, function (n, tnext) {
-        cc.loader.loadRes('Audio/' + audioName[n], cc.AudioClip, function (err, res) {
-            if (err) {
-                tnext(err);
-            } else {
-                this.audioClips[audioName[n]] = res;
-                tnext(null);
+AudioController.prototype.Init = function (cb) {
+    NotificationController.On(Define.EVENT_KEY.MUSIC_CHANGE, this, this.onChangeMusic);
+    NotificationController.On(Define.EVENT_KEY.EFFECT_CHANGE, this, this.onChangeEffect.bind(this));
+    cc.loader.loadResDir('Audio/', cc.AudioClip, function (err, ress, urls) {
+        if (err) {
+            console.log('[严重错误] 奖励资源加载错误 ' + err);
+        } else {
+            for (let i = 0; i < ress.length; i++) {
+                this.audioClips[urls[i]] = ress[i];
             }
-        }.bind(this));
-    }.bind(this), function (err) {
-        Tools.invokeCallback(cb, err);
+        }
+        Tools.InvokeCallback(cb, err);
     }.bind(this));
 }
 
-AudioController.prototype.update = function (dt) {
-    let audiostate = cc.audioEngine.getState(this.audio);
-    if (audiostate == cc.audioEngine.AudioState.PAUSED || audiostate == cc.audioEngine.AudioState.ERROR) {
-        cc.audioEngine.stop(this.audio);
-        this.audio == null;
-    }
-}
-
-AudioController.prototype.playAudio = function (name) {
+AudioController.prototype.PlayMusic = function (name) {
     this.audioName = name;
     if (this.disableMusic) {
         return;
@@ -53,7 +37,7 @@ AudioController.prototype.playAudio = function (name) {
     cc.audioEngine.setFinishCallback(this.audio, this._onMusicFinish.bind(this));
 }
 
-AudioController.prototype.playEffect = function (name) {
+AudioController.prototype.PlayEffect = function (name) {
     if (this.disableEffect) {
         return;
     }

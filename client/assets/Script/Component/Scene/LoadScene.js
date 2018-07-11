@@ -1,17 +1,11 @@
-import NetWorkController from '../../Controller/NetWorkController';
-import LoginController from '../../Controller/LoginController';
-import GameController from '../../Controller/GameController';
-import UserModel from '../../Model/User';
-import Define from '../../Util/Define';
-import Platform from '../../Util/Platform';
+import Game from '../../Game';
 
-var GameComponent = require('../GameComponent');
 cc.Class({
-    extends: GameComponent,
+    extends: cc.Component,
 
     properties: {
         percentLabel: { default: null, type: cc.Label },
-        loadingScene: { default: false, type: Boolean },
+        loaded: { default: [], type: cc.Boolean },
         targetCanvas: { default: null, type: cc.Canvas },
         loadProgressBar: { default: null, type: cc.ProgressBar },
     },
@@ -29,61 +23,52 @@ cc.Class({
             canvas.fitWidth = true
         }
 
-        this.loadingScene = false;
-        this.loginComplete = this.onLoginComplete.bind(this);
-        cc.systemEvent.on(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this.loginComplete);
-        cc.systemEvent.on(Define.EVENT_KEY.LOADED_COMPLETE, this.onLoadedComplete, this);
+        this.loaded = false;
+
+        Game.NotificationController.On(Game.Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onLoginComplete);
     },
 
     onDestroy() {
-        cc.systemEvent.off(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this.loginComplete);
-        cc.systemEvent.off(Define.EVENT_KEY.LOADED_COMPLETE, this.onLoadedComplete, this);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onLoginComplete);
     },
 
     start() {
     },
 
     update(dt) {
-        if (GameController.totalLoading == 0 || this.loadingScene) {
+        if (Game.GameInstance == null || Game.GameInstance.totalCount == 0 || this.loaded) {
             return;
         }
-        let percent = (GameController.loaded / GameController.totalLoading).toFixed(2);
+        let percent = (Game.GameInstance.loadingCount / Game.GameInstance.totalCount).toFixed(2);
         this.percentLabel.string = Math.ceil(percent * 100) + '%';
         this.loadProgressBar.progress = percent;
-        if (GameController.loaded == GameController.totalLoading) {
+        if (Game.GameInstance.loadingCount == Game.GameInstance.totalCount) {
             //加载完了
-            this.loadingScene = true;
-            if (Platform.PLATFORM == 'Normal') {
+            this.loaded = true;
+            if (Game.Platform.PLATFORM == 'Normal') {
                 cc.director.loadScene("LoginScene");
             } else {
-                cc.director.loadScene("GameScene");
+                var tvmTimeout = setTimeout(function () {
+                    Game.LoginController._showNetFailed();
+                }.bind(this), 2000);
+                Game.UserModel.GetUser(function (usr) {
+                    clearTimeout(tvmTimeout);
+                    if (usr == null) {
+                        cc.director.loadScene("LoginScene");
+                        return;
+                    }
+                    let loginInfo = { token: usr.token, account: usr.tvmid, face: usr.avatar, nickname: usr.nickname }
+                    Game.UserModel.loginInfo = loginInfo;
+                    Game.LoginController.ConnectToLoginServer(function () {
+                        Game.NetWorkController.Send('msg.C2L_ReqLogin', loginInfo);
+                    }.bind(this));
+                }.bind(this));
             }
 
         }
     },
 
-    onLoadedComplete(event) {
-        if (Platform.PLATFORM != 'Normal') {
-            var tvmTimeout = setTimeout(function () {
-                LoginController.showNetFailed();
-            }.bind(this), 2000);
-            UserModel.getUser(function (usr) {
-                console.log('dddddddddddddddddd');
-                clearTimeout(tvmTimeout);
-                if (usr == null) {
-                    cc.director.loadScene("LoginScene");
-                    return;
-                }
-                let loginInfo = { token: usr.token, account: usr.tvmid, face: usr.avatar, nickname: usr.nickname }
-                UserModel.loginInfo = loginInfo;
-                LoginController.connectToLoginServer(function () {
-                    NetWorkController.send('msg.C2L_ReqLogin', loginInfo);
-                }.bind(this));
-            }.bind(this));
-        }
-    },
-
     onLoginComplete() {
-        GameController.LoadedComplete();
+        cc.director.loadScene("GameScene");
     },
 });
