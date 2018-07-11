@@ -528,7 +528,7 @@
     "percentLabel": {
       "__id__": 12
     },
-    "loadingScene": false,
+    "loaded": false,
     "targetCanvas": {
       "__id__": 13
     },
@@ -598,7 +598,10 @@
     "node": {
       "__id__": 15
     },
-    "_enabled": true
+    "_enabled": true,
+    "loadingCount": 0,
+    "totalCount": 0,
+    "loaded": []
   },
   {
     "__type__": "cc.Widget",

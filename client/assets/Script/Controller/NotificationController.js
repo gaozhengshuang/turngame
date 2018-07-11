@@ -1,42 +1,50 @@
-import Tools from '../Util/Tools';
+import _ from 'lodash';
 
+import Tools from '../util/Tools';
 var NotificationController = function () {
-    this.notifiEvent = [];
+    this._eventHandlesList = {};
 }
 
-NotificationController.prototype.init = function (cb) {
-    Tools.invokeCallback(cb, null);
+NotificationController.prototype.Init = function (cb) {
+    Tools.InvokeCallback(cb, null);
 };
-
-NotificationController.prototype.addNotification = function (event, func) {
-    var _func = function (event) {
-        if (event.detail != "" || event.detail != null) {
-            func(event.detail);
-        } else {
-            func();
-        }
+/**
+ * 注册事件
+ * @param {Number} type 
+ * @param {Object} caller 
+ * @param {Function} handler 
+ */
+NotificationController.prototype.On = function (type, caller, handler) {
+    let handlers = this._eventHandlesList[type];
+    if (handlers == null) {
+        handlers = [];
+        this._eventHandlesList[type] = handlers;
     }
-    this.notifiEvent.push({ event: event, func: func, _func: _func });
-
-    cc.systemEvent.on(event, _func);
+    handlers.push({ caller, handler });
 };
-
-NotificationController.prototype.removeNotification = function (event, func) {
-    for (i = 0; i < this.notifiEvent.length; i++) {
-        var notifi = this.notifiEvent[i];
-        if (notifi.event == event && notifi.func == func) {
-            cc.systemEvent.off(event, notifi._func);
-            break;
-        }
+/**
+ * 移除注册
+ * @param {Number} type 
+ * @param {Object} caller 
+ * @param {Function} handler 
+ */
+NotificationController.prototype.Off = function (type, caller, handler) {
+    let handlers = this._eventHandlesList[type];
+    if (handlers != null) {
+        let result = _.remove(handlers, function (h) {
+            return h.caller == caller && h.handler == handler;
+        });
     }
 }
 
-NotificationController.prototype.postNotification = function (event, data) {
-    let eventCustom = new cc.Event.EventCustom(event);
-    if (data != null) {
-        eventCustom.detail = data;
+NotificationController.prototype.Emit = function (type, ...args) {
+    let handlers = this._eventHandlesList[type];
+    if (handlers == null) {
+        return;
     }
-    cc.systemEvent.dispatchEvent(eventCustom);
-};
-
+    for (let i = 0; i < handlers.length; i++) {
+        let handler = handlers[i];
+        handler.handler.apply(handler.caller, args);
+    }
+}
 module.exports = new NotificationController();

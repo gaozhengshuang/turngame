@@ -5,8 +5,6 @@ var Define = {
     },
     EVENT_KEY: {
         CHANGE_GAMESTATE: '0',
-        CHANGE_COSTSTRING: '1',
-        BAG_SELECTITEM: '4',
         LOADED_COMPLETE: '5',
 
         CONNECT_TO_GATESERVER: '100',
@@ -32,12 +30,6 @@ var Define = {
     HEART_BEAT: {
         INTERVAL: 10,
         TIMEOUT: 30,
-    },
-    ITEM_TYPE: {
-        TYPE_NONE: 0,
-        TYPE_VIRTUAL: 1,
-        TYPE_ENTITY: 2,
-        TYPE_DIAMOND: 3,
     }
 }
 

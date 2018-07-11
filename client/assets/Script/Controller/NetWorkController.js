@@ -17,15 +17,15 @@ var NetWorkController = function () {
     this.closeedCallback = null;
 }
 
-NetWorkController.prototype.init = function (cb) {
+NetWorkController.prototype.Init = function (cb) {
     let protoIndexs = ConfigController.GetConfig('ProtoId');
     if (protoIndexs == null) {
-        Tools.invokeCallback(cb, 'proto配置错误');
+        Tools.InvokeCallback(cb, 'proto配置错误');
         return;
     }
     for (let i = 0; i < protoIndexs.length; i++) {
         let index = protoIndexs[i];
-        let checks = Tools.checkParams(index, ['Id', 'Name']);
+        let checks = Tools.CheckParams(index, ['Id', 'Name']);
         if (checks.length > 0) {
             console.log('proto Index 参数检查失败 ' + index);
             continue;
@@ -33,10 +33,10 @@ NetWorkController.prototype.init = function (cb) {
         this.protoIndexById[index.Id] = index.Name;
         this.protoIndexByName[index.Name] = index.Id;
     }
-    Tools.invokeCallback(cb, null);
+    Tools.InvokeCallback(cb, null);
 };
 
-NetWorkController.prototype.connect = function (url, cb) {
+NetWorkController.prototype.Connect = function (url, cb) {
     this.connectedCallback = cb;
     this.sock = new WebSocket(url);
     this.sock.onmessage = this.onMessage.bind(this);
@@ -45,23 +45,23 @@ NetWorkController.prototype.connect = function (url, cb) {
     this.sock.onclose = this.onClose.bind(this);
 }
 
-NetWorkController.prototype.send = function (name, obj, cb) {
+NetWorkController.prototype.Send = function (name, obj, cb) {
     if (this.sock == null || this.sock.readyState != WebSocket.OPEN) {
         return;
     }
     if (this.protoIndexByName[name] == null) {
-        Tools.invokeCallback(cb, '没找到消息 ' + name);
+        Tools.InvokeCallback(cb, '没找到消息 ' + name);
         return;
     }
-    let proto = Tools.getValueInObj(ProtoMsg, name);
+    let proto = Tools.GetValueInObj(ProtoMsg, name);
     if (proto == null) {
-        Tools.invokeCallback(cb, '没有消息体 : ' + proto);
+        Tools.InvokeCallback(cb, '没有消息体 : ' + proto);
         return;
     }
     let message = proto.fromObject(obj);
     let result = proto.verify(message);
     if (result != null) {
-        Tools.invokeCallback(cb, '消息内容错误 : ' + result);
+        Tools.InvokeCallback(cb, '消息内容错误 : ' + result);
         return;
     }
     let msg = proto.encode(message).finish();
@@ -72,27 +72,19 @@ NetWorkController.prototype.send = function (name, obj, cb) {
     info.set(head, 0);
     info.set(msg, 4);
     this.sock.send(info);
-    Tools.invokeCallback(cb, null);
+    Tools.InvokeCallback(cb, null);
 };
 
-NetWorkController.prototype.sendTest = function (id, msg) {
-    let head = new Uint8Array([(msg.length + 4) & 0xff, (msg.length + 4) >> 8, id & 0xff, id >> 8,]);
-    let info = new Uint8Array(msg.length + 4);
-    info.set(head, 0);
-    info.set(msg, 4);
-    this.sock.send(info);
-}
-
-NetWorkController.prototype.close = function (cb) {
+NetWorkController.prototype.Close = function (cb) {
     if (this.sock == null || this.sock.readyState != WebSocket.OPEN) {
-        Tools.invokeCallback(cb, '连接不可用');
+        Tools.InvokeCallback(cb, '连接不可用');
         return;
     }
     this.closeedCallback = cb;
     this.sock.close();
 }
 
-NetWorkController.prototype.addListener = function (name, cb) {
+NetWorkController.prototype.AddListener = function (name, cb) {
     if (this.protoIndexByName[name] == null) {
         return '没找到消息 ' + name;
     }
@@ -106,7 +98,7 @@ NetWorkController.prototype.addListener = function (name, cb) {
     return null;
 }
 
-NetWorkController.prototype.removeListener = function (name, cb) {
+NetWorkController.prototype.RemoveListener = function (name, cb) {
     if (this.protoIndexByName[name] == null) {
         return '没找到消息 ' + name;
     }
@@ -138,7 +130,7 @@ NetWorkController.prototype.onMessage = function (obj) {
                 return;
             }
             //解析proto数据
-            let proto = Tools.getValueInObj(ProtoMsg, protoName);
+            let proto = Tools.GetValueInObj(ProtoMsg, protoName);
             if (proto == null) {
                 console.log('没有消息体 : ' + protoName);
                 return;
@@ -151,7 +143,7 @@ NetWorkController.prototype.onMessage = function (obj) {
             if (listenerlist != null) {
                 for (let i = 0; i < listenerlist.length; i++) {
                     let listener = listenerlist[i];
-                    Tools.invokeCallback(listener, msgid, obj);
+                    Tools.InvokeCallback(listener, msgid, obj);
                 }
             }
         }
@@ -161,14 +153,14 @@ NetWorkController.prototype.onMessage = function (obj) {
 NetWorkController.prototype.onClose = function () {
     console.log(new Date() + '[网络消息] socket closed');
     this.sock = null;
-    Tools.invokeCallback(this.closeedCallback);
+    Tools.InvokeCallback(this.closeedCallback);
     this.closeedCallback = null;
     cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.NET_CLOSE));
 }
 
 NetWorkController.prototype.onOpen = function (info) {
     console.log(new Date() + '[网络消息] socket opend ' + stringify(info));
-    Tools.invokeCallback(this.connectedCallback);
+    Tools.InvokeCallback(this.connectedCallback);
     this.connectedCallback = null;
     cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.NET_OPEN));
 }

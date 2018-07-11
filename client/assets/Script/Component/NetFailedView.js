@@ -1,18 +1,13 @@
-import UserModel from '../Model/User';
-import NetWorkController from '../Controller/NetWorkController';
-import LoginController from '../Controller/LoginController';
-import Define from '../Util/Define';
-import Platform from '../Util/Platform';
+import Game from '../Game';
 
-var GameComponent = require('./GameComponent');
 cc.Class({
-    extends: GameComponent,
+    extends: cc.Component,
 
     properties: {
     },
 
     onLoad() {
-        cc.systemEvent.on(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this.onClosePanel, this);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onClosePanel);
     },
 
     start() {
@@ -22,20 +17,20 @@ cc.Class({
     },
 
     onDestroy() {
-        cc.systemEvent.off(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this.onClosePanel);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onClosePanel);
     },
 
     onClickResetNet() {
-        if (Platform.PLATFORM == 'Normal') {
-            LoginController.connectToLoginServer(function () {
-                NetWorkController.send('msg.C2L_ReqLogin', UserModel.loginInfo);
+        if (Game.Platform.PLATFORM == 'Normal') {
+            Game.LoginController.ConnectToLoginServer(function () {
+                Game.NetWorkController.Send('msg.C2L_ReqLogin', Game.UserModel.loginInfo);
             }.bind(this));
         } else {
-            window["GetCurrentUser"](function (usr) {
+            Game.UserModel.getUser(function (usr) {
                 let loginInfo = { token: usr.token, account: usr.tvmid, face: usr.avatar, nickname: usr.nickname }
                 UserModel.loginInfo = loginInfo;
                 LoginController.connectToLoginServer(function () {
-                    NetWorkController.send('msg.C2L_ReqLogin', loginInfo);
+                    NetWorkController.Send('msg.C2L_ReqLogin', loginInfo);
                 }.bind(this));
             });
         }
