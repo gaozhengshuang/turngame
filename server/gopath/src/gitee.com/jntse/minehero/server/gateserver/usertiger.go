@@ -83,11 +83,11 @@ func (this *GateUser) RemoveCoins(token string, ctype uint32) {
 func (this *GateUser) StartTiger(removeok bool, tmpcost int32, uid int32) {
 	var cost uint32
 	cost = uint32(tmpcost)
-	if removeok == false {
-		this.SendNotify("金币不足")
-		log.Info("玩家[%d]游戏失败，扣除金子%d失败", this.Id(), cost)
-		return
-	}
+	//if removeok == false {
+	//	this.SendNotify("金币不足")
+	//	log.Info("玩家[%d]游戏失败，扣除金子%d失败", this.Id(), cost)
+	//	return
+	//}
 	if !this.RemoveYuanbao(cost, "老虎机扣除") {
 		return
 	}

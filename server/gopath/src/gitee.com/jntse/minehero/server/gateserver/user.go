@@ -328,10 +328,10 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.GetScounter().Freestep = pb.Int32(this.freestep)
 	userbase.GetScounter().Givestep = pb.Int64(this.givestep)
 
-	for index, item := range this.fbitemmap {
-		item := &msg.FootBallItem{Index:pb.Int32(index), Itemid:pb.Int32(item)}
-		userbase.Fbitem = append(userbase.Fbitem, item)
-	}
+	//for index, item := range this.fbitemmap {
+	//	item := &msg.FootBallItem{Index:pb.Int32(index), Itemid:pb.Int32(item)}
+	//	userbase.Fbitem = append(userbase.Fbitem, item)
+	//}
 
 	userbase.Freetime = pb.Uint32(this.freetime)
 	userbase.Freetype = pb.Uint32(this.freetype)
@@ -366,9 +366,9 @@ func (this *GateUser) LoadBin() {
 	this.freestep = userbase.GetScounter().GetFreestep()
 	this.givestep = userbase.GetScounter().GetGivestep()
 
-	for _, item :=  range userbase.GetFbitem(){
-		this.fbitemmap[item.GetIndex()] = item.GetItemid()
-	}
+	//for _, item :=  range userbase.GetFbitem(){
+	//	this.fbitemmap[item.GetIndex()] = item.GetItemid()
+	//}
 
 	this.freetime = userbase.GetFreetime()
 	this.freetype = userbase.GetFreetype()
