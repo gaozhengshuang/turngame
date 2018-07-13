@@ -250,8 +250,12 @@ func (this *GateUser) InitUserCardStateByNewRoundStart(nums []uint32, cost uint3
 	Nums := nums[:3]
 	//如果前两个数字都是0 那么让第一个数字非0
 	if Nums[0] == 0 && Nums[1] == 0 {
-		Nums[0] = 2
+		Nums[0] = uint32(util.RandBetween(1, 3))
 	}
+	if Nums[1] == 0 && Nums[2] == 0 {
+		Nums[1] = uint32(util.RandBetween(1, 3))
+	}
+
 	this.ClearCardState()
 	for _, v := range Nums {
 		temp := &msg.CardData{}
