@@ -2,20 +2,20 @@ package main
 
 import (
 	"fmt"
+	"gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/redis"
 	"gitee.com/jntse/gotoolkit/util"
-	"gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/minehero/pbmsg"
-	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/server/def"
+	"gitee.com/jntse/minehero/server/tbl"
 	pb "github.com/golang/protobuf/proto"
 	//"gitee.com/jntse/minehero/server/def"
-	_"github.com/go-redis/redis"
-	_"strconv"
-	_"strings"
-	_"time"
+	_ "github.com/go-redis/redis"
+	_ "strconv"
+	_ "strings"
+	_ "time"
 )
 
 //const (
@@ -29,12 +29,12 @@ import (
 /// @brief 玩家房间简单数据
 // --------------------------------------------------------------------------
 type RoomBase struct {
-	roomid      int64
-	sid_room    int
-	kind        int32
-	gridnum     int32
-	tm_closing	int64		// 房间关闭超时
-	creating	bool
+	roomid     int64
+	sid_room   int
+	kind       int32
+	gridnum    int32
+	tm_closing int64 // 房间关闭超时
+	creating   bool
 }
 
 func (this *RoomBase) Reset() {
@@ -55,16 +55,18 @@ type DBUserData struct {
 	tm_logout     int64
 	money         uint32
 	coupon        uint32
-	yuanbao		  uint32
-	level		  uint32
-	exp			  uint32
+	yuanbao       uint32
+	level         uint32
+	exp           uint32
 	continuelogin uint32
 	nocountlogin  uint32
-	signreward	  uint32
-	signtime	  uint32
-	addrlist	  []*msg.UserAddress
-	freestep	  int32
-	givestep	  int64
+	signreward    uint32
+	signtime      uint32
+	addrlist      []*msg.UserAddress
+	freestep      int32
+	givestep      int64
+	cardstate     []*msg.CardData
+	cardcost      uint32
 }
 
 // --------------------------------------------------------------------------
@@ -72,27 +74,27 @@ type DBUserData struct {
 // --------------------------------------------------------------------------
 type GateUser struct {
 	DBUserData
-	client			network.IBaseNetSession
-	account			string
-	verifykey		string
-	online			bool
-	tickers			UserTicker
-	bag				UserBag // 背包
-	tm_disconnect	int64
-	tm_heartbeat	int64    	// 心跳时间
-	tm_asynsave		int64		// 异步存盘超时
-	savedone		bool		// 存盘标记
-	cleanup			bool     	// 清理标记
-	roomdata		RoomBase 	// 房间信息
-	token			string	// token
-	asynev			eventque.AsynEventQueue	// 异步事件处理
-	fbitemmap		map[int32]int32
-	deliverystate   bool		// 发货状态
-	cartflag		uint32		// 超市游戏状态
-	freetime		uint32		// 免费
-	sumvaluemap		map[uint32]uint32
-	freetype		uint32
-	sumget			uint32
+	client        network.IBaseNetSession
+	account       string
+	verifykey     string
+	online        bool
+	tickers       UserTicker
+	bag           UserBag // 背包
+	tm_disconnect int64
+	tm_heartbeat  int64                   // 心跳时间
+	tm_asynsave   int64                   // 异步存盘超时
+	savedone      bool                    // 存盘标记
+	cleanup       bool                    // 清理标记
+	roomdata      RoomBase                // 房间信息
+	token         string                  // token
+	asynev        eventque.AsynEventQueue // 异步事件处理
+	fbitemmap     map[int32]int32
+	deliverystate bool   // 发货状态
+	cartflag      uint32 // 超市游戏状态
+	freetime      uint32 // 免费
+	sumvaluemap   map[uint32]uint32
+	freetype      uint32
+	sumget        uint32
 }
 
 func NewGateUser(account, key, token string) *GateUser {
@@ -111,6 +113,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.sumvaluemap = make(map[uint32]uint32)
 	u.freetype = 0
 	u.sumget = 0
+
 	return u
 }
 
@@ -143,7 +146,9 @@ func (this *GateUser) SetFace(f string) {
 }
 
 func (this *GateUser) Sid() int {
-	if this.client != nil { return this.client.Id() }
+	if this.client != nil {
+		return this.client.Id()
+	}
 	return 0
 }
 
@@ -175,7 +180,7 @@ func (this *GateUser) SetDefaultAddress(addr string) {
 }
 
 func (this *GateUser) AddAddress(receiver, phone, address string) {
-	addr := &msg.UserAddress{Receiver:pb.String(receiver), Phone:pb.String(phone), Address:pb.String(address)}
+	addr := &msg.UserAddress{Receiver: pb.String(receiver), Phone: pb.String(phone), Address: pb.String(address)}
 	this.addrlist = append(this.addrlist, addr)
 }
 
@@ -214,7 +219,7 @@ func (this *GateUser) IsInRoom() bool {
 }
 
 // 正在创建房间
-func (this *GateUser) IsRoomCreating() bool {	
+func (this *GateUser) IsRoomCreating() bool {
 	return this.roomdata.creating
 }
 
@@ -290,8 +295,12 @@ func (this *GateUser) OnLoadDB(way string) {
 	}
 
 	// proto对象变量初始化
-	if this.bin.Base == nil { this.bin.Base = &msg.UserBase{} }
-	if this.bin.Base.Scounter == nil { this.bin.Base.Scounter = &msg.SimpleCounter{} }
+	if this.bin.Base == nil {
+		this.bin.Base = &msg.UserBase{}
+	}
+	if this.bin.Base.Scounter == nil {
+		this.bin.Base.Scounter = &msg.SimpleCounter{}
+	}
 
 	// 加载二进制
 	this.LoadBin()
@@ -309,8 +318,12 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	// 基础信息
 	bin.Entity = pb.Clone(this.bin.GetEntity()).(*msg.EntityBase)
 
-	if bin.Base == nil { bin.Base = &msg.UserBase{} }
-	if bin.Base.Scounter == nil { bin.Base.Scounter = &msg.SimpleCounter{} }
+	if bin.Base == nil {
+		bin.Base = &msg.UserBase{}
+	}
+	if bin.Base.Scounter == nil {
+		bin.Base.Scounter = &msg.SimpleCounter{}
+	}
 
 	userbase := bin.GetBase()
 	userbase.Tmlogin = pb.Int64(this.tm_login)
@@ -322,21 +335,22 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.Exp = pb.Uint32(this.exp)
 	userbase.Continuelogin = pb.Uint32(this.continuelogin)
 	userbase.Nocountlogin = pb.Uint32(this.nocountlogin)
-	userbase.Signreward	= pb.Uint32(this.signreward)
-	userbase.Signtime	= pb.Uint32(this.signtime)
+	userbase.Signreward = pb.Uint32(this.signreward)
+	userbase.Signtime = pb.Uint32(this.signtime)
 	//userbase.Addrlist = this.addrlist[:]
 	userbase.GetScounter().Freestep = pb.Int32(this.freestep)
 	userbase.GetScounter().Givestep = pb.Int64(this.givestep)
 
-	for index, item := range this.fbitemmap {
-		item := &msg.FootBallItem{Index:pb.Int32(index), Itemid:pb.Int32(item)}
-		userbase.Fbitem = append(userbase.Fbitem, item)
-	}
+	//for index, item := range this.fbitemmap {
+	//	item := &msg.FootBallItem{Index:pb.Int32(index), Itemid:pb.Int32(item)}
+	//	userbase.Fbitem = append(userbase.Fbitem, item)
+	//}
 
 	userbase.Freetime = pb.Uint32(this.freetime)
 	userbase.Freetype = pb.Uint32(this.freetype)
 	userbase.Sumget = pb.Uint32(this.sumget)
-
+	userbase.Card = this.cardstate[:]
+	userbase.Cardcost = pb.Uint32(this.cardcost)
 	// 道具信息
 	this.bag.PackBin(bin)
 
@@ -357,23 +371,24 @@ func (this *GateUser) LoadBin() {
 	this.coupon = userbase.GetCoupon()
 	this.yuanbao = userbase.GetYuanbao()
 	this.level = userbase.GetLevel()
-	this.exp  = userbase.GetExp()
+	this.exp = userbase.GetExp()
 	this.continuelogin = userbase.GetContinuelogin()
 	this.nocountlogin = userbase.GetNocountlogin()
 	this.signreward = userbase.GetSignreward()
-	this.signtime	= userbase.GetSigntime()	
+	this.signtime = userbase.GetSigntime()
 	//this.addrlist = userbase.GetAddrlist()[:]
 	this.freestep = userbase.GetScounter().GetFreestep()
 	this.givestep = userbase.GetScounter().GetGivestep()
 
-	for _, item :=  range userbase.GetFbitem(){
-		this.fbitemmap[item.GetIndex()] = item.GetItemid()
-	}
+	//for _, item :=  range userbase.GetFbitem(){
+	//	this.fbitemmap[item.GetIndex()] = item.GetItemid()
+	//}
 
 	this.freetime = userbase.GetFreetime()
 	this.freetype = userbase.GetFreetype()
 	this.sumget = userbase.GetSumget()
-
+	this.cardstate = userbase.GetCard()[:]
+	this.cardcost = userbase.GetCardcost()
 	// 道具信息
 	this.bag.Clean()
 	this.bag.LoadBin(this.bin)
@@ -397,7 +412,7 @@ func (this *GateUser) AsynSaveFeedback() {
 }
 
 // 新用户回调
-func (this* GateUser) OnCreateNew() {
+func (this *GateUser) OnCreateNew() {
 }
 
 // 上线回调，玩家数据在LoginOk中发送
@@ -427,7 +442,7 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	return true
 }
 
-func (this *GateUser) Syn(){
+func (this *GateUser) Syn() {
 	this.SendUserBase()
 	//this.SendSign()
 	//this.CheckGiveFreeStep(util.CURTIME(), "上线跨整点")
@@ -456,7 +471,9 @@ func (this *GateUser) OnDisconnect() {
 	this.online = false
 	this.client = nil
 	this.tm_disconnect = util.CURTIMEMS()
-	if this.IsInRoom() == true { this.SendRsUserDisconnect() }
+	if this.IsInRoom() == true {
+		this.SendRsUserDisconnect()
+	}
 	this.PlatformPushUserOnlineTime()
 }
 
@@ -470,7 +487,9 @@ func (this *GateUser) KickOut(way string) {
 	this.client.Close()
 	this.client = nil
 	this.tm_disconnect = util.CURTIMEMS()
-	if this.IsInRoom() == true { this.SendRsUserDisconnect() }
+	if this.IsInRoom() == true {
+		this.SendRsUserDisconnect()
+	}
 	this.PlatformPushUserOnlineTime()
 }
 
@@ -481,7 +500,7 @@ func (this *GateUser) CheckDisconnectTimeOut(now int64) {
 	}
 
 	// 延迟存盘清理
-	if now < this.tm_disconnect + tbl.Global.Disconclean {
+	if now < this.tm_disconnect+tbl.Global.Disconclean {
 		return
 	}
 
@@ -504,7 +523,7 @@ func (this *GateUser) CheckDisconnectTimeOut(now int64) {
 	//if now < this.tm_asynsave {
 	//	return
 	//}
-	
+
 	this.Logout()
 }
 
@@ -521,7 +540,7 @@ func (this *GateUser) Logout() {
 }
 
 // logout完成，做最后清理
-func (this* GateUser) OnCleanUp() {
+func (this *GateUser) OnCleanUp() {
 	this.tickers.Stop()
 }
 
@@ -533,10 +552,9 @@ func (this *GateUser) SendNotify(text string) {
 
 //发送个人通知2
 func (this *GateUser) SendNotify2(text string) {
-	send := &msg.GW2C_MsgNotice{Userid:pb.Uint64(0), Name:pb.String(""), Face:pb.String(""), Type:pb.Int32(int32(msg.NoticeType_Marquee)), Text:pb.String(text)}
+	send := &msg.GW2C_MsgNotice{Userid: pb.Uint64(0), Name: pb.String(""), Face: pb.String(""), Type: pb.Int32(int32(msg.NoticeType_Marquee)), Text: pb.String(text)}
 	this.SendMsg(send)
 }
-
 
 // 发送房间消息
 func (this *GateUser) SendRoomMsg(msg pb.Message) {
@@ -560,14 +578,14 @@ func (this *GateUser) ReplyStartGame(err string, roomid int64) {
 func (this *GateUser) ReqStartGame(gamekind int32, gridnum int32) (errcode string) {
 
 	// 检查游戏类型是否有效
-	dunconfig , findid := tbl.DungeonsBase.TDungeonsById[gamekind]
+	dunconfig, findid := tbl.DungeonsBase.TDungeonsById[gamekind]
 	if findid == false {
 		errcode = "无效的游戏类型"
 		return
 	}
 
 	// 最小格子数检查
-	if gridnum < (dunconfig.Size * 2 + 2) {
+	if gridnum < (dunconfig.Size*2 + 2) {
 		errcode = "格子数太少了"
 		return
 	}
@@ -652,7 +670,7 @@ func (this *GateUser) GameEnd(bin *msg.Serialize, reason string) {
 	if bin != nil {
 		this.bin = pb.Clone(bin).(*msg.Serialize)
 		this.OnLoadDB("房间结束")
-		if this.IsOnline() { 
+		if this.IsOnline() {
 			this.SendUserBase()
 			this.CheckGiveFreeStep(util.CURTIME(), "回大厅跨整点")
 			this.SyncBigRewardPickNum()
@@ -663,20 +681,23 @@ func (this *GateUser) GameEnd(bin *msg.Serialize, reason string) {
 
 // 通知RS 玩家已经断开连接了
 func (this *GateUser) SendRsUserDisconnect() {
-	if this.roomdata.tm_closing != 0 { return }
+	if this.roomdata.tm_closing != 0 {
+		return
+	}
 	this.roomdata.tm_closing = util.CURTIMEMS()
 	msgclose := &msg.GW2RS_UserDisconnect{Roomid: pb.Int64(this.roomdata.roomid), Userid: pb.Uint64(this.Id())}
 	this.SendRoomMsg(msgclose)
 	log.Info("玩家[%d %s] 通知RoomServer关闭房间", this.Id(), this.Name())
 }
 
-
 // 赠送每日免费次数，在房间中不要执行
 // 每小时赠送免费次数，在房间中不要执行，退出房间再执行
 func (this *GateUser) CheckGiveFreeStep(now int64, reason string) {
-	if this.IsInRoom() == true { return }           // 退出房间再执行
+	if this.IsInRoom() == true {
+		return
+	} // 退出房间再执行
 	floor_clock := util.FloorIntClock(now)
-	if floor_clock == this.givestep {   // 同一个整点
+	if floor_clock == this.givestep { // 同一个整点
 		return
 	}
 	this.SetFreeStep(int32(tbl.Global.PresentFreeStep), reason)
@@ -694,13 +715,13 @@ func (this *GateUser) QueryPlatformCoins() {
 	this.AsynEventInsert(event)
 }
 
-func (this *GateUser) SyncPlatformCoins () {
+func (this *GateUser) SyncPlatformCoins() {
 	errcode, coins, _ := def.HttpRequestFinanceQuery(this.Id(), this.Token(), this.Account())
 	if errcode != "" {
 		return
 	}
 
-	send := &msg.GW2C_SendUserPlatformMoney{Coins:pb.Int32(coins)}
+	send := &msg.GW2C_SendUserPlatformMoney{Coins: pb.Int32(coins)}
 	this.SendMsg(send)
 }
 
@@ -743,7 +764,9 @@ func (this *GateUser) PlatformPushLootMoney(yuanbao float32) {
 // 推送在线时长
 func (this *GateUser) PlatformPushUserOnlineTime() {
 	tm_onlinestay := (util.CURTIME() - this.tm_login) / 60
-	if tm_onlinestay <= 0 { return }
+	if tm_onlinestay <= 0 {
+		return
+	}
 
 	arglist := []interface{}{this.Account(), this.Token(), uint64(this.Id()), int64(tm_onlinestay)}
 	event := eventque.NewCommonEvent(arglist, def.HttpRequestUserOnlineTimeArglist, nil)
@@ -759,3 +782,11 @@ func (this *GateUser) DeliveryState() bool {
 	return this.deliverystate
 }
 
+func (this *GateUser) GetCardState() []*msg.CardData {
+	return this.cardstate
+}
+
+func (this *GateUser) ClearCardState() {
+	this.cardstate = make([]*msg.CardData, 0) // this.cardstate[:0]
+	this.cardcost = 0
+}
