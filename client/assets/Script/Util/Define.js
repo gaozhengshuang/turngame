@@ -11,6 +11,8 @@ var Define = {
 
         USERINFO_UPDATECOINS: '200',
         USERINFO_UPDATEITEMS: '201',
+        USERINFO_UPDATECURGAIN: '202',
+        USERINFO_UPDATETOTALGAIN: '203',
 
         NET_OPEN: '300',
         NET_CLOSE: '301',

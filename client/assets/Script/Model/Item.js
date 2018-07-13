@@ -28,9 +28,9 @@ ItemModel.prototype.Init = function (cb) {
             this.maxExchange = tcart.Exchange;
         }
     }
-    NetWorkController.AddListener('msg.GW2C_SendUserInfo', this.onGW2C_SendUserInfo.bind(this));
-    NetWorkController.AddListener('msg.GW2C_AddPackageItem', this.onGW2C_AddPackageItem.bind(this));
-    NetWorkController.AddListener('msg.GW2C_RemovePackageItem', this.onGW2C_RemovePackageItem.bind(this));
+    NetWorkController.AddListener('msg.GW2C_SendUserInfo', this, this.onGW2C_SendUserInfo);
+    NetWorkController.AddListener('msg.GW2C_AddPackageItem', this, this.onGW2C_AddPackageItem);
+    NetWorkController.AddListener('msg.GW2C_RemovePackageItem', this, this.onGW2C_RemovePackageItem);
     Tools.InvokeCallback(cb);
 }
 /**

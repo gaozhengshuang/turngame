@@ -85,7 +85,7 @@ NetWorkController.prototype.Close = function (cb) {
     this.sock.close();
 }
 
-NetWorkController.prototype.AddListener = function (name, cb) {
+NetWorkController.prototype.AddListener = function (name, caller, handler) {
     if (this.protoIndexByName[name] == null) {
         return '没找到消息 ' + name;
     }
@@ -95,19 +95,19 @@ NetWorkController.prototype.AddListener = function (name, cb) {
         listenerlist = [];
         this.listeners[id] = listenerlist;
     }
-    listenerlist.push(cb);
+    listenerlist.push({ caller, handler });
     return null;
 }
 
-NetWorkController.prototype.RemoveListener = function (name, cb) {
+NetWorkController.prototype.RemoveListener = function (name, caller, handler) {
     if (this.protoIndexByName[name] == null) {
         return '没找到消息 ' + name;
     }
     let id = this.protoIndexByName[name];
     let listenerlist = this.listeners[id];
     if (listenerlist != null) {
-        _.remove(listenerlist, function (listen) {
-            return cb == listen;
+        _.remove(listenerlist, function (h) {
+            return h.caller == caller && h.handler == handler;
         })
     }
     return null;
@@ -143,8 +143,8 @@ NetWorkController.prototype.onMessage = function (obj) {
             let listenerlist = this.listeners[msgid];
             if (listenerlist != null) {
                 for (let i = 0; i < listenerlist.length; i++) {
-                    let listener = listenerlist[i];
-                    Tools.InvokeCallback(listener, msgid, obj);
+                    let handler = listenerlist[i];
+                    handler.handler.call(handler.caller, msgid, obj);
                 }
             }
         }

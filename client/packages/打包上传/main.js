@@ -26,7 +26,7 @@ module.exports = {
                     conn.on('ready', function () {
                         Editor.log('ssh 连接成功');
 
-                        conn.exec('rm -rf /var/www/html/supermarttest/*', function (err, stream) {
+                        conn.exec('rm -rf /var/www/html/turntest/*', function (err, stream) {
                             if (err) {
                                 anext(err);
                             }
@@ -57,7 +57,7 @@ module.exports = {
                         host: '210.73.214.68',
                         username: 'LiuKai',
                         password: 'Linanana456',
-                        path: '/var/www/html/supermarttest/'
+                        path: '/var/www/html/turntest/'
                     }, function (err) {
                         anext(err);
                     });

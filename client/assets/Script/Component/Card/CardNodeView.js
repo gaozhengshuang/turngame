@@ -1,5 +1,6 @@
 import Game from '../../Game';
 import NumberSpriteView from './NumberSpriteView';
+const HalfTurnTime = 0.2;
 cc.Class({
     extends: cc.Component,
 
@@ -8,7 +9,8 @@ cc.Class({
         backgroudNode: { default: null, type: cc.Node },
         frontNode: { default: null, type: cc.Node },
         value: { default: 0, type: cc.Integer },
-        index: { default: 0, type: cc.Integer }
+        index: { default: 0, type: cc.Integer },
+        isFront: { default: [], type: cc.Boolean }
     },
 
     onLoad() {
@@ -31,18 +33,21 @@ cc.Class({
             this.frontNode.active = false;
             this.node.runAction(
                 cc.sequence([
-                    cc.scaleTo(0.5, 0, 1),
+                    cc.delayTime(delay),
+                    cc.scaleTo(HalfTurnTime, 0, 1),
                     cc.callFunc(function () {
                         this.backgroudNode.active = false;
                         this.frontNode.active = true;
                     }, this),
-                    cc.scaleTo(0.5, 1, 1),
+                    cc.scaleTo(HalfTurnTime, 1, 1),
                     cc.callFunc(function () {
+                        this.isFront = true;
                         Game.Tools.InvokeCallback(cb);
-                    })
+                    }.bind(this))
                 ])
             );
         } else {
+            this.isFront = true;
             this.backgroudNode.active = false;
             this.frontNode.active = true;
             Game.Tools.InvokeCallback(cb);
@@ -54,25 +59,64 @@ cc.Class({
             this.frontNode.active = true;
             this.node.runAction(
                 cc.sequence([
-                    cc.scaleTo(0.5, 0, 1),
+                    cc.delayTime(delay),
+                    cc.scaleTo(HalfTurnTime, 0, 1),
                     cc.callFunc(function () {
                         this.backgroudNode.active = true;
                         this.frontNode.active = false;
                     }, this),
-                    cc.scaleTo(0.5, 1, 1),
+                    cc.scaleTo(HalfTurnTime, 1, 1),
                     cc.callFunc(function () {
+                        this.isFront = false;
                         Game.Tools.InvokeCallback(cb);
-                    })
+                    }.bind(this))
                 ])
             );
         } else {
+            this.isFront = false;
             this.backgroudNode.active = true;
             this.frontNode.active = false;
             Game.Tools.InvokeCallback(cb);
         }
     },
+    Shuffle(cb) {
+        let oldPos = new cc.Vec2(this.node.x, this.node.y);
+        this.node.runAction(cc.repeatForever(
+            cc.sequence([
+                cc.moveTo(0.5, 0, 0),
+                cc.moveTo(0.5, oldPos),
+                cc.callFunc(function () {
+                    if (Game.GameController.numbers.length >= 3) {
+                        //可以停了
+                        this.node.stopAllActions();
+                        Game.Tools.InvokeCallback(cb);
+                    }
+                }.bind(this))
+            ])
+        ));
+    },
+    IsFront() {
+        return this.isFront;
+    },
 
     onClickCard(event) {
+        if (Game.GameController.state != Game.TurnDefine.GAME_STATE.STATE_READY) {
+            return;
+        }
+        let value = Game.GameController.numbers[Game.GameController.turnCount];
+        this.value = value;
+        this.numberSpriteView.Init(value);
+        Game.GameController.InsertArrayValue(this.index, value, this.node.parent.convertToWorldSpaceAR(this.node.position));
+        this.TurnFront(this._turnFrontEndWhenClick.bind(this), true);
+        Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_TURNFRONT);
+        Game.GameController.turnCount++;
+    },
 
+    _turnFrontEndWhenClick() {
+        if (Game.GameController.turnCount >= 3) {
+            Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDING);
+        } else {
+            Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_READY);
+        }
     }
 });

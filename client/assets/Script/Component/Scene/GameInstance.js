@@ -10,7 +10,7 @@ cc.Class({
     },
 
     onLoad() {
-        // cc.director.setDisplayStats(false);
+        cc.director.setDisplayStats(false);
         cc.game.addPersistRootNode(this.node);
         Game.GameInstance = this;
         //初始化游戏
@@ -27,7 +27,7 @@ cc.Class({
 
         this.models = [
             Game.UserModel,
-            Game.ItemModel
+            // Game.ItemModel
         ];
         this.totalCount = this.ctls.length + this.models.length;
         Game.async.waterfall([

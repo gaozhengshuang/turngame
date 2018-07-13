@@ -1516,6 +1516,7 @@ $root.msg = (function() {
          * @property {number|Long|null} [roomid] BT_GameInit roomid
          * @property {number|Long|null} [ownerid] BT_GameInit ownerid
          * @property {number|null} [gamekind] BT_GameInit gamekind
+         * @property {Array.<msg.IGridItem>|null} [listitem] BT_GameInit listitem
          */
 
         /**
@@ -1527,6 +1528,7 @@ $root.msg = (function() {
          * @param {msg.IBT_GameInit=} [properties] Properties to set
          */
         function BT_GameInit(properties) {
+            this.listitem = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1558,6 +1560,14 @@ $root.msg = (function() {
         BT_GameInit.prototype.gamekind = 0;
 
         /**
+         * BT_GameInit listitem.
+         * @member {Array.<msg.IGridItem>} listitem
+         * @memberof msg.BT_GameInit
+         * @instance
+         */
+        BT_GameInit.prototype.listitem = $util.emptyArray;
+
+        /**
          * Creates a new BT_GameInit instance using the specified properties.
          * @function create
          * @memberof msg.BT_GameInit
@@ -1587,6 +1597,9 @@ $root.msg = (function() {
                 writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 writer.uint32(/* id 3, wireType 0 =*/24).int32(message.gamekind);
+            if (message.listitem != null && message.listitem.length)
+                for (var i = 0; i < message.listitem.length; ++i)
+                    $root.msg.GridItem.encode(message.listitem[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             return writer;
         };
 
@@ -1629,6 +1642,11 @@ $root.msg = (function() {
                     break;
                 case 3:
                     message.gamekind = reader.int32();
+                    break;
+                case 4:
+                    if (!(message.listitem && message.listitem.length))
+                        message.listitem = [];
+                    message.listitem.push($root.msg.GridItem.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1674,6 +1692,15 @@ $root.msg = (function() {
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 if (!$util.isInteger(message.gamekind))
                     return "gamekind: integer expected";
+            if (message.listitem != null && message.hasOwnProperty("listitem")) {
+                if (!Array.isArray(message.listitem))
+                    return "listitem: array expected";
+                for (var i = 0; i < message.listitem.length; ++i) {
+                    var error = $root.msg.GridItem.verify(message.listitem[i]);
+                    if (error)
+                        return "listitem." + error;
+                }
+            }
             return null;
         };
 
@@ -1709,6 +1736,16 @@ $root.msg = (function() {
                     message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
             if (object.gamekind != null)
                 message.gamekind = object.gamekind | 0;
+            if (object.listitem) {
+                if (!Array.isArray(object.listitem))
+                    throw TypeError(".msg.BT_GameInit.listitem: array expected");
+                message.listitem = [];
+                for (var i = 0; i < object.listitem.length; ++i) {
+                    if (typeof object.listitem[i] !== "object")
+                        throw TypeError(".msg.BT_GameInit.listitem: object expected");
+                    message.listitem[i] = $root.msg.GridItem.fromObject(object.listitem[i]);
+                }
+            }
             return message;
         };
 
@@ -1725,6 +1762,8 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
+            if (options.arrays || options.defaults)
+                object.listitem = [];
             if (options.defaults) {
                 if ($util.Long) {
                     var long = new $util.Long(0, 0, false);
@@ -1750,6 +1789,11 @@ $root.msg = (function() {
                     object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 object.gamekind = message.gamekind;
+            if (message.listitem && message.listitem.length) {
+                object.listitem = [];
+                for (var j = 0; j < message.listitem.length; ++j)
+                    object.listitem[j] = $root.msg.GridItem.toObject(message.listitem[j], options);
+            }
             return object;
         };
 
@@ -2805,6 +2849,1040 @@ $root.msg = (function() {
         return BT_GameOver;
     })();
 
+    msg.BT_JumpPreCheck = (function() {
+
+        /**
+         * Properties of a BT_JumpPreCheck.
+         * @memberof msg
+         * @interface IBT_JumpPreCheck
+         * @property {number|Long|null} [roomid] BT_JumpPreCheck roomid
+         * @property {number|Long|null} [userid] BT_JumpPreCheck userid
+         * @property {string|null} [token] BT_JumpPreCheck token
+         */
+
+        /**
+         * Constructs a new BT_JumpPreCheck.
+         * @memberof msg
+         * @classdesc Represents a BT_JumpPreCheck.
+         * @implements IBT_JumpPreCheck
+         * @constructor
+         * @param {msg.IBT_JumpPreCheck=} [properties] Properties to set
+         */
+        function BT_JumpPreCheck(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_JumpPreCheck roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_JumpPreCheck
+         * @instance
+         */
+        BT_JumpPreCheck.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_JumpPreCheck userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_JumpPreCheck
+         * @instance
+         */
+        BT_JumpPreCheck.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_JumpPreCheck token.
+         * @member {string} token
+         * @memberof msg.BT_JumpPreCheck
+         * @instance
+         */
+        BT_JumpPreCheck.prototype.token = "";
+
+        /**
+         * Creates a new BT_JumpPreCheck instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_JumpPreCheck
+         * @static
+         * @param {msg.IBT_JumpPreCheck=} [properties] Properties to set
+         * @returns {msg.BT_JumpPreCheck} BT_JumpPreCheck instance
+         */
+        BT_JumpPreCheck.create = function create(properties) {
+            return new BT_JumpPreCheck(properties);
+        };
+
+        /**
+         * Encodes the specified BT_JumpPreCheck message. Does not implicitly {@link msg.BT_JumpPreCheck.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_JumpPreCheck
+         * @static
+         * @param {msg.IBT_JumpPreCheck} message BT_JumpPreCheck message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_JumpPreCheck.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.userid);
+            if (message.token != null && message.hasOwnProperty("token"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.token);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_JumpPreCheck message, length delimited. Does not implicitly {@link msg.BT_JumpPreCheck.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_JumpPreCheck
+         * @static
+         * @param {msg.IBT_JumpPreCheck} message BT_JumpPreCheck message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_JumpPreCheck.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_JumpPreCheck message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_JumpPreCheck
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_JumpPreCheck} BT_JumpPreCheck
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_JumpPreCheck.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_JumpPreCheck();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                case 2:
+                    message.userid = reader.uint64();
+                    break;
+                case 3:
+                    message.token = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_JumpPreCheck message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_JumpPreCheck
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_JumpPreCheck} BT_JumpPreCheck
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_JumpPreCheck.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_JumpPreCheck message.
+         * @function verify
+         * @memberof msg.BT_JumpPreCheck
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_JumpPreCheck.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.token != null && message.hasOwnProperty("token"))
+                if (!$util.isString(message.token))
+                    return "token: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_JumpPreCheck message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_JumpPreCheck
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_JumpPreCheck} BT_JumpPreCheck
+         */
+        BT_JumpPreCheck.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_JumpPreCheck)
+                return object;
+            var message = new $root.msg.BT_JumpPreCheck();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.token != null)
+                message.token = String(object.token);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_JumpPreCheck message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_JumpPreCheck
+         * @static
+         * @param {msg.BT_JumpPreCheck} message BT_JumpPreCheck
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_JumpPreCheck.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                object.token = "";
+            }
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.token != null && message.hasOwnProperty("token"))
+                object.token = message.token;
+            return object;
+        };
+
+        /**
+         * Converts this BT_JumpPreCheck to JSON.
+         * @function toJSON
+         * @memberof msg.BT_JumpPreCheck
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_JumpPreCheck.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_JumpPreCheck;
+    })();
+
+    msg.BT_RetJumpPreCheck = (function() {
+
+        /**
+         * Properties of a BT_RetJumpPreCheck.
+         * @memberof msg
+         * @interface IBT_RetJumpPreCheck
+         * @property {number|Long|null} [userid] BT_RetJumpPreCheck userid
+         * @property {string|null} [errcode] BT_RetJumpPreCheck errcode
+         * @property {number|null} [dice] BT_RetJumpPreCheck dice
+         */
+
+        /**
+         * Constructs a new BT_RetJumpPreCheck.
+         * @memberof msg
+         * @classdesc Represents a BT_RetJumpPreCheck.
+         * @implements IBT_RetJumpPreCheck
+         * @constructor
+         * @param {msg.IBT_RetJumpPreCheck=} [properties] Properties to set
+         */
+        function BT_RetJumpPreCheck(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_RetJumpPreCheck userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_RetJumpPreCheck
+         * @instance
+         */
+        BT_RetJumpPreCheck.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_RetJumpPreCheck errcode.
+         * @member {string} errcode
+         * @memberof msg.BT_RetJumpPreCheck
+         * @instance
+         */
+        BT_RetJumpPreCheck.prototype.errcode = "";
+
+        /**
+         * BT_RetJumpPreCheck dice.
+         * @member {number} dice
+         * @memberof msg.BT_RetJumpPreCheck
+         * @instance
+         */
+        BT_RetJumpPreCheck.prototype.dice = 0;
+
+        /**
+         * Creates a new BT_RetJumpPreCheck instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_RetJumpPreCheck
+         * @static
+         * @param {msg.IBT_RetJumpPreCheck=} [properties] Properties to set
+         * @returns {msg.BT_RetJumpPreCheck} BT_RetJumpPreCheck instance
+         */
+        BT_RetJumpPreCheck.create = function create(properties) {
+            return new BT_RetJumpPreCheck(properties);
+        };
+
+        /**
+         * Encodes the specified BT_RetJumpPreCheck message. Does not implicitly {@link msg.BT_RetJumpPreCheck.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_RetJumpPreCheck
+         * @static
+         * @param {msg.IBT_RetJumpPreCheck} message BT_RetJumpPreCheck message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_RetJumpPreCheck.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
+            if (message.errcode != null && message.hasOwnProperty("errcode"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.errcode);
+            if (message.dice != null && message.hasOwnProperty("dice"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.dice);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_RetJumpPreCheck message, length delimited. Does not implicitly {@link msg.BT_RetJumpPreCheck.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_RetJumpPreCheck
+         * @static
+         * @param {msg.IBT_RetJumpPreCheck} message BT_RetJumpPreCheck message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_RetJumpPreCheck.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_RetJumpPreCheck message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_RetJumpPreCheck
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_RetJumpPreCheck} BT_RetJumpPreCheck
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_RetJumpPreCheck.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_RetJumpPreCheck();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.userid = reader.uint64();
+                    break;
+                case 2:
+                    message.errcode = reader.string();
+                    break;
+                case 3:
+                    message.dice = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_RetJumpPreCheck message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_RetJumpPreCheck
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_RetJumpPreCheck} BT_RetJumpPreCheck
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_RetJumpPreCheck.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_RetJumpPreCheck message.
+         * @function verify
+         * @memberof msg.BT_RetJumpPreCheck
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_RetJumpPreCheck.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.errcode != null && message.hasOwnProperty("errcode"))
+                if (!$util.isString(message.errcode))
+                    return "errcode: string expected";
+            if (message.dice != null && message.hasOwnProperty("dice"))
+                if (!$util.isInteger(message.dice))
+                    return "dice: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_RetJumpPreCheck message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_RetJumpPreCheck
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_RetJumpPreCheck} BT_RetJumpPreCheck
+         */
+        BT_RetJumpPreCheck.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_RetJumpPreCheck)
+                return object;
+            var message = new $root.msg.BT_RetJumpPreCheck();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.errcode != null)
+                message.errcode = String(object.errcode);
+            if (object.dice != null)
+                message.dice = object.dice | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_RetJumpPreCheck message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_RetJumpPreCheck
+         * @static
+         * @param {msg.BT_RetJumpPreCheck} message BT_RetJumpPreCheck
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_RetJumpPreCheck.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                object.errcode = "";
+                object.dice = 0;
+            }
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.errcode != null && message.hasOwnProperty("errcode"))
+                object.errcode = message.errcode;
+            if (message.dice != null && message.hasOwnProperty("dice"))
+                object.dice = message.dice;
+            return object;
+        };
+
+        /**
+         * Converts this BT_RetJumpPreCheck to JSON.
+         * @function toJSON
+         * @memberof msg.BT_RetJumpPreCheck
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_RetJumpPreCheck.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_RetJumpPreCheck;
+    })();
+
+    msg.BT_ReqJumpStep = (function() {
+
+        /**
+         * Properties of a BT_ReqJumpStep.
+         * @memberof msg
+         * @interface IBT_ReqJumpStep
+         * @property {number|Long|null} [roomid] BT_ReqJumpStep roomid
+         * @property {number|Long|null} [userid] BT_ReqJumpStep userid
+         * @property {number|null} [stepnum] BT_ReqJumpStep stepnum
+         */
+
+        /**
+         * Constructs a new BT_ReqJumpStep.
+         * @memberof msg
+         * @classdesc Represents a BT_ReqJumpStep.
+         * @implements IBT_ReqJumpStep
+         * @constructor
+         * @param {msg.IBT_ReqJumpStep=} [properties] Properties to set
+         */
+        function BT_ReqJumpStep(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_ReqJumpStep roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_ReqJumpStep
+         * @instance
+         */
+        BT_ReqJumpStep.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_ReqJumpStep userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_ReqJumpStep
+         * @instance
+         */
+        BT_ReqJumpStep.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_ReqJumpStep stepnum.
+         * @member {number} stepnum
+         * @memberof msg.BT_ReqJumpStep
+         * @instance
+         */
+        BT_ReqJumpStep.prototype.stepnum = 0;
+
+        /**
+         * Creates a new BT_ReqJumpStep instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_ReqJumpStep
+         * @static
+         * @param {msg.IBT_ReqJumpStep=} [properties] Properties to set
+         * @returns {msg.BT_ReqJumpStep} BT_ReqJumpStep instance
+         */
+        BT_ReqJumpStep.create = function create(properties) {
+            return new BT_ReqJumpStep(properties);
+        };
+
+        /**
+         * Encodes the specified BT_ReqJumpStep message. Does not implicitly {@link msg.BT_ReqJumpStep.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_ReqJumpStep
+         * @static
+         * @param {msg.IBT_ReqJumpStep} message BT_ReqJumpStep message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_ReqJumpStep.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.userid);
+            if (message.stepnum != null && message.hasOwnProperty("stepnum"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.stepnum);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_ReqJumpStep message, length delimited. Does not implicitly {@link msg.BT_ReqJumpStep.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_ReqJumpStep
+         * @static
+         * @param {msg.IBT_ReqJumpStep} message BT_ReqJumpStep message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_ReqJumpStep.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_ReqJumpStep message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_ReqJumpStep
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_ReqJumpStep} BT_ReqJumpStep
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_ReqJumpStep.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_ReqJumpStep();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                case 2:
+                    message.userid = reader.uint64();
+                    break;
+                case 3:
+                    message.stepnum = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_ReqJumpStep message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_ReqJumpStep
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_ReqJumpStep} BT_ReqJumpStep
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_ReqJumpStep.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_ReqJumpStep message.
+         * @function verify
+         * @memberof msg.BT_ReqJumpStep
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_ReqJumpStep.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.stepnum != null && message.hasOwnProperty("stepnum"))
+                if (!$util.isInteger(message.stepnum))
+                    return "stepnum: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_ReqJumpStep message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_ReqJumpStep
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_ReqJumpStep} BT_ReqJumpStep
+         */
+        BT_ReqJumpStep.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_ReqJumpStep)
+                return object;
+            var message = new $root.msg.BT_ReqJumpStep();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.stepnum != null)
+                message.stepnum = object.stepnum | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_ReqJumpStep message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_ReqJumpStep
+         * @static
+         * @param {msg.BT_ReqJumpStep} message BT_ReqJumpStep
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_ReqJumpStep.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                object.stepnum = 0;
+            }
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.stepnum != null && message.hasOwnProperty("stepnum"))
+                object.stepnum = message.stepnum;
+            return object;
+        };
+
+        /**
+         * Converts this BT_ReqJumpStep to JSON.
+         * @function toJSON
+         * @memberof msg.BT_ReqJumpStep
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_ReqJumpStep.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_ReqJumpStep;
+    })();
+
+    msg.BT_RetJumpStep = (function() {
+
+        /**
+         * Properties of a BT_RetJumpStep.
+         * @memberof msg
+         * @interface IBT_RetJumpStep
+         * @property {number|Long|null} [userid] BT_RetJumpStep userid
+         * @property {number|null} [stepindex] BT_RetJumpStep stepindex
+         * @property {Array.<number>|null} [fakelist] BT_RetJumpStep fakelist
+         */
+
+        /**
+         * Constructs a new BT_RetJumpStep.
+         * @memberof msg
+         * @classdesc Represents a BT_RetJumpStep.
+         * @implements IBT_RetJumpStep
+         * @constructor
+         * @param {msg.IBT_RetJumpStep=} [properties] Properties to set
+         */
+        function BT_RetJumpStep(properties) {
+            this.fakelist = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_RetJumpStep userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_RetJumpStep
+         * @instance
+         */
+        BT_RetJumpStep.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_RetJumpStep stepindex.
+         * @member {number} stepindex
+         * @memberof msg.BT_RetJumpStep
+         * @instance
+         */
+        BT_RetJumpStep.prototype.stepindex = 0;
+
+        /**
+         * BT_RetJumpStep fakelist.
+         * @member {Array.<number>} fakelist
+         * @memberof msg.BT_RetJumpStep
+         * @instance
+         */
+        BT_RetJumpStep.prototype.fakelist = $util.emptyArray;
+
+        /**
+         * Creates a new BT_RetJumpStep instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_RetJumpStep
+         * @static
+         * @param {msg.IBT_RetJumpStep=} [properties] Properties to set
+         * @returns {msg.BT_RetJumpStep} BT_RetJumpStep instance
+         */
+        BT_RetJumpStep.create = function create(properties) {
+            return new BT_RetJumpStep(properties);
+        };
+
+        /**
+         * Encodes the specified BT_RetJumpStep message. Does not implicitly {@link msg.BT_RetJumpStep.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_RetJumpStep
+         * @static
+         * @param {msg.IBT_RetJumpStep} message BT_RetJumpStep message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_RetJumpStep.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
+            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.stepindex);
+            if (message.fakelist != null && message.fakelist.length)
+                for (var i = 0; i < message.fakelist.length; ++i)
+                    writer.uint32(/* id 3, wireType 0 =*/24).int32(message.fakelist[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_RetJumpStep message, length delimited. Does not implicitly {@link msg.BT_RetJumpStep.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_RetJumpStep
+         * @static
+         * @param {msg.IBT_RetJumpStep} message BT_RetJumpStep message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_RetJumpStep.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_RetJumpStep message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_RetJumpStep
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_RetJumpStep} BT_RetJumpStep
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_RetJumpStep.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_RetJumpStep();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.userid = reader.uint64();
+                    break;
+                case 2:
+                    message.stepindex = reader.int32();
+                    break;
+                case 3:
+                    if (!(message.fakelist && message.fakelist.length))
+                        message.fakelist = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.fakelist.push(reader.int32());
+                    } else
+                        message.fakelist.push(reader.int32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_RetJumpStep message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_RetJumpStep
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_RetJumpStep} BT_RetJumpStep
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_RetJumpStep.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_RetJumpStep message.
+         * @function verify
+         * @memberof msg.BT_RetJumpStep
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_RetJumpStep.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
+                if (!$util.isInteger(message.stepindex))
+                    return "stepindex: integer expected";
+            if (message.fakelist != null && message.hasOwnProperty("fakelist")) {
+                if (!Array.isArray(message.fakelist))
+                    return "fakelist: array expected";
+                for (var i = 0; i < message.fakelist.length; ++i)
+                    if (!$util.isInteger(message.fakelist[i]))
+                        return "fakelist: integer[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a BT_RetJumpStep message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_RetJumpStep
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_RetJumpStep} BT_RetJumpStep
+         */
+        BT_RetJumpStep.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_RetJumpStep)
+                return object;
+            var message = new $root.msg.BT_RetJumpStep();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.stepindex != null)
+                message.stepindex = object.stepindex | 0;
+            if (object.fakelist) {
+                if (!Array.isArray(object.fakelist))
+                    throw TypeError(".msg.BT_RetJumpStep.fakelist: array expected");
+                message.fakelist = [];
+                for (var i = 0; i < object.fakelist.length; ++i)
+                    message.fakelist[i] = object.fakelist[i] | 0;
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_RetJumpStep message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_RetJumpStep
+         * @static
+         * @param {msg.BT_RetJumpStep} message BT_RetJumpStep
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_RetJumpStep.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.fakelist = [];
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                object.stepindex = 0;
+            }
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
+                object.stepindex = message.stepindex;
+            if (message.fakelist && message.fakelist.length) {
+                object.fakelist = [];
+                for (var j = 0; j < message.fakelist.length; ++j)
+                    object.fakelist[j] = message.fakelist[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this BT_RetJumpStep to JSON.
+         * @function toJSON
+         * @memberof msg.BT_RetJumpStep
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_RetJumpStep.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_RetJumpStep;
+    })();
+
     msg.BT_ReqQuitGameRoom = (function() {
 
         /**
@@ -3270,280 +4348,6 @@ $root.msg = (function() {
         };
 
         return BT_PickItem;
-    })();
-
-    msg.BT_UpdateMoney = (function() {
-
-        /**
-         * Properties of a BT_UpdateMoney.
-         * @memberof msg
-         * @interface IBT_UpdateMoney
-         * @property {number|Long|null} [userid] BT_UpdateMoney userid
-         * @property {number|Long|null} [roomid] BT_UpdateMoney roomid
-         * @property {number|Long|null} [money] BT_UpdateMoney money
-         */
-
-        /**
-         * Constructs a new BT_UpdateMoney.
-         * @memberof msg
-         * @classdesc Represents a BT_UpdateMoney.
-         * @implements IBT_UpdateMoney
-         * @constructor
-         * @param {msg.IBT_UpdateMoney=} [properties] Properties to set
-         */
-        function BT_UpdateMoney(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_UpdateMoney userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_UpdateMoney
-         * @instance
-         */
-        BT_UpdateMoney.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_UpdateMoney roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_UpdateMoney
-         * @instance
-         */
-        BT_UpdateMoney.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_UpdateMoney money.
-         * @member {number|Long} money
-         * @memberof msg.BT_UpdateMoney
-         * @instance
-         */
-        BT_UpdateMoney.prototype.money = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * Creates a new BT_UpdateMoney instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {msg.IBT_UpdateMoney=} [properties] Properties to set
-         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney instance
-         */
-        BT_UpdateMoney.create = function create(properties) {
-            return new BT_UpdateMoney(properties);
-        };
-
-        /**
-         * Encodes the specified BT_UpdateMoney message. Does not implicitly {@link msg.BT_UpdateMoney.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {msg.IBT_UpdateMoney} message BT_UpdateMoney message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_UpdateMoney.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.roomid);
-            if (message.money != null && message.hasOwnProperty("money"))
-                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.money);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_UpdateMoney message, length delimited. Does not implicitly {@link msg.BT_UpdateMoney.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {msg.IBT_UpdateMoney} message BT_UpdateMoney message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_UpdateMoney.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_UpdateMoney message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_UpdateMoney.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_UpdateMoney();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.userid = reader.uint64();
-                    break;
-                case 2:
-                    message.roomid = reader.int64();
-                    break;
-                case 3:
-                    message.money = reader.uint64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_UpdateMoney message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_UpdateMoney.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_UpdateMoney message.
-         * @function verify
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_UpdateMoney.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.money != null && message.hasOwnProperty("money"))
-                if (!$util.isInteger(message.money) && !(message.money && $util.isInteger(message.money.low) && $util.isInteger(message.money.high)))
-                    return "money: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_UpdateMoney message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
-         */
-        BT_UpdateMoney.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_UpdateMoney)
-                return object;
-            var message = new $root.msg.BT_UpdateMoney();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.money != null)
-                if ($util.Long)
-                    (message.money = $util.Long.fromValue(object.money)).unsigned = true;
-                else if (typeof object.money === "string")
-                    message.money = parseInt(object.money, 10);
-                else if (typeof object.money === "number")
-                    message.money = object.money;
-                else if (typeof object.money === "object")
-                    message.money = new $util.LongBits(object.money.low >>> 0, object.money.high >>> 0).toNumber(true);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_UpdateMoney message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {msg.BT_UpdateMoney} message BT_UpdateMoney
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_UpdateMoney.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.money = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.money = options.longs === String ? "0" : 0;
-            }
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.money != null && message.hasOwnProperty("money"))
-                if (typeof message.money === "number")
-                    object.money = options.longs === String ? String(message.money) : message.money;
-                else
-                    object.money = options.longs === String ? $util.Long.prototype.toString.call(message.money) : options.longs === Number ? new $util.LongBits(message.money.low >>> 0, message.money.high >>> 0).toNumber(true) : message.money;
-            return object;
-        };
-
-        /**
-         * Converts this BT_UpdateMoney to JSON.
-         * @function toJSON
-         * @memberof msg.BT_UpdateMoney
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_UpdateMoney.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_UpdateMoney;
     })();
 
     msg.EntityBase = (function() {
@@ -4168,857 +4972,6 @@ $root.msg = (function() {
         return SimpleCounter;
     })();
 
-    msg.FreePresentMoney = (function() {
-
-        /**
-         * Properties of a FreePresentMoney.
-         * @memberof msg
-         * @interface IFreePresentMoney
-         * @property {number|null} [count] FreePresentMoney count
-         * @property {number|Long|null} [tmrecord] FreePresentMoney tmrecord
-         */
-
-        /**
-         * Constructs a new FreePresentMoney.
-         * @memberof msg
-         * @classdesc Represents a FreePresentMoney.
-         * @implements IFreePresentMoney
-         * @constructor
-         * @param {msg.IFreePresentMoney=} [properties] Properties to set
-         */
-        function FreePresentMoney(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * FreePresentMoney count.
-         * @member {number} count
-         * @memberof msg.FreePresentMoney
-         * @instance
-         */
-        FreePresentMoney.prototype.count = 0;
-
-        /**
-         * FreePresentMoney tmrecord.
-         * @member {number|Long} tmrecord
-         * @memberof msg.FreePresentMoney
-         * @instance
-         */
-        FreePresentMoney.prototype.tmrecord = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * Creates a new FreePresentMoney instance using the specified properties.
-         * @function create
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {msg.IFreePresentMoney=} [properties] Properties to set
-         * @returns {msg.FreePresentMoney} FreePresentMoney instance
-         */
-        FreePresentMoney.create = function create(properties) {
-            return new FreePresentMoney(properties);
-        };
-
-        /**
-         * Encodes the specified FreePresentMoney message. Does not implicitly {@link msg.FreePresentMoney.verify|verify} messages.
-         * @function encode
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {msg.IFreePresentMoney} message FreePresentMoney message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        FreePresentMoney.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.count != null && message.hasOwnProperty("count"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.count);
-            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.tmrecord);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified FreePresentMoney message, length delimited. Does not implicitly {@link msg.FreePresentMoney.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {msg.IFreePresentMoney} message FreePresentMoney message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        FreePresentMoney.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a FreePresentMoney message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.FreePresentMoney} FreePresentMoney
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        FreePresentMoney.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.FreePresentMoney();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.count = reader.int32();
-                    break;
-                case 2:
-                    message.tmrecord = reader.int64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a FreePresentMoney message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.FreePresentMoney} FreePresentMoney
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        FreePresentMoney.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a FreePresentMoney message.
-         * @function verify
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        FreePresentMoney.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.count != null && message.hasOwnProperty("count"))
-                if (!$util.isInteger(message.count))
-                    return "count: integer expected";
-            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
-                if (!$util.isInteger(message.tmrecord) && !(message.tmrecord && $util.isInteger(message.tmrecord.low) && $util.isInteger(message.tmrecord.high)))
-                    return "tmrecord: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a FreePresentMoney message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.FreePresentMoney} FreePresentMoney
-         */
-        FreePresentMoney.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.FreePresentMoney)
-                return object;
-            var message = new $root.msg.FreePresentMoney();
-            if (object.count != null)
-                message.count = object.count | 0;
-            if (object.tmrecord != null)
-                if ($util.Long)
-                    (message.tmrecord = $util.Long.fromValue(object.tmrecord)).unsigned = false;
-                else if (typeof object.tmrecord === "string")
-                    message.tmrecord = parseInt(object.tmrecord, 10);
-                else if (typeof object.tmrecord === "number")
-                    message.tmrecord = object.tmrecord;
-                else if (typeof object.tmrecord === "object")
-                    message.tmrecord = new $util.LongBits(object.tmrecord.low >>> 0, object.tmrecord.high >>> 0).toNumber();
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a FreePresentMoney message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {msg.FreePresentMoney} message FreePresentMoney
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        FreePresentMoney.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.count = 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.tmrecord = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.tmrecord = options.longs === String ? "0" : 0;
-            }
-            if (message.count != null && message.hasOwnProperty("count"))
-                object.count = message.count;
-            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
-                if (typeof message.tmrecord === "number")
-                    object.tmrecord = options.longs === String ? String(message.tmrecord) : message.tmrecord;
-                else
-                    object.tmrecord = options.longs === String ? $util.Long.prototype.toString.call(message.tmrecord) : options.longs === Number ? new $util.LongBits(message.tmrecord.low >>> 0, message.tmrecord.high >>> 0).toNumber() : message.tmrecord;
-            return object;
-        };
-
-        /**
-         * Converts this FreePresentMoney to JSON.
-         * @function toJSON
-         * @memberof msg.FreePresentMoney
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        FreePresentMoney.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return FreePresentMoney;
-    })();
-
-    msg.UserWechat = (function() {
-
-        /**
-         * Properties of a UserWechat.
-         * @memberof msg
-         * @interface IUserWechat
-         * @property {string|null} [openid] UserWechat openid
-         */
-
-        /**
-         * Constructs a new UserWechat.
-         * @memberof msg
-         * @classdesc Represents a UserWechat.
-         * @implements IUserWechat
-         * @constructor
-         * @param {msg.IUserWechat=} [properties] Properties to set
-         */
-        function UserWechat(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * UserWechat openid.
-         * @member {string} openid
-         * @memberof msg.UserWechat
-         * @instance
-         */
-        UserWechat.prototype.openid = "";
-
-        /**
-         * Creates a new UserWechat instance using the specified properties.
-         * @function create
-         * @memberof msg.UserWechat
-         * @static
-         * @param {msg.IUserWechat=} [properties] Properties to set
-         * @returns {msg.UserWechat} UserWechat instance
-         */
-        UserWechat.create = function create(properties) {
-            return new UserWechat(properties);
-        };
-
-        /**
-         * Encodes the specified UserWechat message. Does not implicitly {@link msg.UserWechat.verify|verify} messages.
-         * @function encode
-         * @memberof msg.UserWechat
-         * @static
-         * @param {msg.IUserWechat} message UserWechat message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        UserWechat.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.openid != null && message.hasOwnProperty("openid"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.openid);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified UserWechat message, length delimited. Does not implicitly {@link msg.UserWechat.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.UserWechat
-         * @static
-         * @param {msg.IUserWechat} message UserWechat message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        UserWechat.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a UserWechat message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.UserWechat
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.UserWechat} UserWechat
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        UserWechat.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.UserWechat();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.openid = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a UserWechat message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.UserWechat
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.UserWechat} UserWechat
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        UserWechat.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a UserWechat message.
-         * @function verify
-         * @memberof msg.UserWechat
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        UserWechat.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.openid != null && message.hasOwnProperty("openid"))
-                if (!$util.isString(message.openid))
-                    return "openid: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a UserWechat message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.UserWechat
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.UserWechat} UserWechat
-         */
-        UserWechat.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.UserWechat)
-                return object;
-            var message = new $root.msg.UserWechat();
-            if (object.openid != null)
-                message.openid = String(object.openid);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a UserWechat message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.UserWechat
-         * @static
-         * @param {msg.UserWechat} message UserWechat
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        UserWechat.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.openid = "";
-            if (message.openid != null && message.hasOwnProperty("openid"))
-                object.openid = message.openid;
-            return object;
-        };
-
-        /**
-         * Converts this UserWechat to JSON.
-         * @function toJSON
-         * @memberof msg.UserWechat
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        UserWechat.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return UserWechat;
-    })();
-
-    msg.UserTask = (function() {
-
-        /**
-         * Properties of a UserTask.
-         * @memberof msg
-         * @interface IUserTask
-         * @property {Array.<msg.ITaskData>|null} [tasks] UserTask tasks
-         */
-
-        /**
-         * Constructs a new UserTask.
-         * @memberof msg
-         * @classdesc Represents a UserTask.
-         * @implements IUserTask
-         * @constructor
-         * @param {msg.IUserTask=} [properties] Properties to set
-         */
-        function UserTask(properties) {
-            this.tasks = [];
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * UserTask tasks.
-         * @member {Array.<msg.ITaskData>} tasks
-         * @memberof msg.UserTask
-         * @instance
-         */
-        UserTask.prototype.tasks = $util.emptyArray;
-
-        /**
-         * Creates a new UserTask instance using the specified properties.
-         * @function create
-         * @memberof msg.UserTask
-         * @static
-         * @param {msg.IUserTask=} [properties] Properties to set
-         * @returns {msg.UserTask} UserTask instance
-         */
-        UserTask.create = function create(properties) {
-            return new UserTask(properties);
-        };
-
-        /**
-         * Encodes the specified UserTask message. Does not implicitly {@link msg.UserTask.verify|verify} messages.
-         * @function encode
-         * @memberof msg.UserTask
-         * @static
-         * @param {msg.IUserTask} message UserTask message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        UserTask.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.tasks != null && message.tasks.length)
-                for (var i = 0; i < message.tasks.length; ++i)
-                    $root.msg.TaskData.encode(message.tasks[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified UserTask message, length delimited. Does not implicitly {@link msg.UserTask.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.UserTask
-         * @static
-         * @param {msg.IUserTask} message UserTask message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        UserTask.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a UserTask message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.UserTask
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.UserTask} UserTask
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        UserTask.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.UserTask();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    if (!(message.tasks && message.tasks.length))
-                        message.tasks = [];
-                    message.tasks.push($root.msg.TaskData.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a UserTask message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.UserTask
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.UserTask} UserTask
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        UserTask.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a UserTask message.
-         * @function verify
-         * @memberof msg.UserTask
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        UserTask.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.tasks != null && message.hasOwnProperty("tasks")) {
-                if (!Array.isArray(message.tasks))
-                    return "tasks: array expected";
-                for (var i = 0; i < message.tasks.length; ++i) {
-                    var error = $root.msg.TaskData.verify(message.tasks[i]);
-                    if (error)
-                        return "tasks." + error;
-                }
-            }
-            return null;
-        };
-
-        /**
-         * Creates a UserTask message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.UserTask
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.UserTask} UserTask
-         */
-        UserTask.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.UserTask)
-                return object;
-            var message = new $root.msg.UserTask();
-            if (object.tasks) {
-                if (!Array.isArray(object.tasks))
-                    throw TypeError(".msg.UserTask.tasks: array expected");
-                message.tasks = [];
-                for (var i = 0; i < object.tasks.length; ++i) {
-                    if (typeof object.tasks[i] !== "object")
-                        throw TypeError(".msg.UserTask.tasks: object expected");
-                    message.tasks[i] = $root.msg.TaskData.fromObject(object.tasks[i]);
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a UserTask message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.UserTask
-         * @static
-         * @param {msg.UserTask} message UserTask
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        UserTask.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.arrays || options.defaults)
-                object.tasks = [];
-            if (message.tasks && message.tasks.length) {
-                object.tasks = [];
-                for (var j = 0; j < message.tasks.length; ++j)
-                    object.tasks[j] = $root.msg.TaskData.toObject(message.tasks[j], options);
-            }
-            return object;
-        };
-
-        /**
-         * Converts this UserTask to JSON.
-         * @function toJSON
-         * @memberof msg.UserTask
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        UserTask.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return UserTask;
-    })();
-
-    msg.TaskData = (function() {
-
-        /**
-         * Properties of a TaskData.
-         * @memberof msg
-         * @interface ITaskData
-         * @property {number|null} [id] TaskData id
-         * @property {number|null} [progress] TaskData progress
-         * @property {number|null} [completed] TaskData completed
-         */
-
-        /**
-         * Constructs a new TaskData.
-         * @memberof msg
-         * @classdesc Represents a TaskData.
-         * @implements ITaskData
-         * @constructor
-         * @param {msg.ITaskData=} [properties] Properties to set
-         */
-        function TaskData(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * TaskData id.
-         * @member {number} id
-         * @memberof msg.TaskData
-         * @instance
-         */
-        TaskData.prototype.id = 0;
-
-        /**
-         * TaskData progress.
-         * @member {number} progress
-         * @memberof msg.TaskData
-         * @instance
-         */
-        TaskData.prototype.progress = 0;
-
-        /**
-         * TaskData completed.
-         * @member {number} completed
-         * @memberof msg.TaskData
-         * @instance
-         */
-        TaskData.prototype.completed = 0;
-
-        /**
-         * Creates a new TaskData instance using the specified properties.
-         * @function create
-         * @memberof msg.TaskData
-         * @static
-         * @param {msg.ITaskData=} [properties] Properties to set
-         * @returns {msg.TaskData} TaskData instance
-         */
-        TaskData.create = function create(properties) {
-            return new TaskData(properties);
-        };
-
-        /**
-         * Encodes the specified TaskData message. Does not implicitly {@link msg.TaskData.verify|verify} messages.
-         * @function encode
-         * @memberof msg.TaskData
-         * @static
-         * @param {msg.ITaskData} message TaskData message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        TaskData.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.id != null && message.hasOwnProperty("id"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.id);
-            if (message.progress != null && message.hasOwnProperty("progress"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.progress);
-            if (message.completed != null && message.hasOwnProperty("completed"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.completed);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified TaskData message, length delimited. Does not implicitly {@link msg.TaskData.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.TaskData
-         * @static
-         * @param {msg.ITaskData} message TaskData message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        TaskData.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a TaskData message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.TaskData
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.TaskData} TaskData
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        TaskData.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.TaskData();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.id = reader.int32();
-                    break;
-                case 2:
-                    message.progress = reader.int32();
-                    break;
-                case 3:
-                    message.completed = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a TaskData message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.TaskData
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.TaskData} TaskData
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        TaskData.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a TaskData message.
-         * @function verify
-         * @memberof msg.TaskData
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        TaskData.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.id != null && message.hasOwnProperty("id"))
-                if (!$util.isInteger(message.id))
-                    return "id: integer expected";
-            if (message.progress != null && message.hasOwnProperty("progress"))
-                if (!$util.isInteger(message.progress))
-                    return "progress: integer expected";
-            if (message.completed != null && message.hasOwnProperty("completed"))
-                if (!$util.isInteger(message.completed))
-                    return "completed: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a TaskData message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.TaskData
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.TaskData} TaskData
-         */
-        TaskData.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.TaskData)
-                return object;
-            var message = new $root.msg.TaskData();
-            if (object.id != null)
-                message.id = object.id | 0;
-            if (object.progress != null)
-                message.progress = object.progress | 0;
-            if (object.completed != null)
-                message.completed = object.completed | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a TaskData message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.TaskData
-         * @static
-         * @param {msg.TaskData} message TaskData
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        TaskData.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.id = 0;
-                object.progress = 0;
-                object.completed = 0;
-            }
-            if (message.id != null && message.hasOwnProperty("id"))
-                object.id = message.id;
-            if (message.progress != null && message.hasOwnProperty("progress"))
-                object.progress = message.progress;
-            if (message.completed != null && message.hasOwnProperty("completed"))
-                object.completed = message.completed;
-            return object;
-        };
-
-        /**
-         * Converts this TaskData to JSON.
-         * @function toJSON
-         * @memberof msg.TaskData
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        TaskData.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return TaskData;
-    })();
-
     msg.UserBase = (function() {
 
         /**
@@ -5038,10 +4991,10 @@ $root.msg = (function() {
          * @property {number|null} [signtime] UserBase signtime
          * @property {Array.<msg.IUserAddress>|null} [addrlist] UserBase addrlist
          * @property {msg.ISimpleCounter|null} [scounter] UserBase scounter
-         * @property {msg.IUserWechat|null} [wechat] UserBase wechat
-         * @property {string|null} [invitationcode] UserBase invitationcode
-         * @property {msg.IFreePresentMoney|null} [freepresent] UserBase freepresent
-         * @property {msg.IUserTask|null} [task] UserBase task
+         * @property {Array.<msg.IFootBallItem>|null} [fbitem] UserBase fbitem
+         * @property {number|null} [freetime] UserBase freetime
+         * @property {number|null} [freetype] UserBase freetype
+         * @property {number|null} [sumget] UserBase sumget
          */
 
         /**
@@ -5054,6 +5007,7 @@ $root.msg = (function() {
          */
         function UserBase(properties) {
             this.addrlist = [];
+            this.fbitem = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -5165,36 +5119,36 @@ $root.msg = (function() {
         UserBase.prototype.scounter = null;
 
         /**
-         * UserBase wechat.
-         * @member {msg.IUserWechat|null|undefined} wechat
+         * UserBase fbitem.
+         * @member {Array.<msg.IFootBallItem>} fbitem
          * @memberof msg.UserBase
          * @instance
          */
-        UserBase.prototype.wechat = null;
+        UserBase.prototype.fbitem = $util.emptyArray;
 
         /**
-         * UserBase invitationcode.
-         * @member {string} invitationcode
+         * UserBase freetime.
+         * @member {number} freetime
          * @memberof msg.UserBase
          * @instance
          */
-        UserBase.prototype.invitationcode = "";
+        UserBase.prototype.freetime = 0;
 
         /**
-         * UserBase freepresent.
-         * @member {msg.IFreePresentMoney|null|undefined} freepresent
+         * UserBase freetype.
+         * @member {number} freetype
          * @memberof msg.UserBase
          * @instance
          */
-        UserBase.prototype.freepresent = null;
+        UserBase.prototype.freetype = 0;
 
         /**
-         * UserBase task.
-         * @member {msg.IUserTask|null|undefined} task
+         * UserBase sumget.
+         * @member {number} sumget
          * @memberof msg.UserBase
          * @instance
          */
-        UserBase.prototype.task = null;
+        UserBase.prototype.sumget = 0;
 
         /**
          * Creates a new UserBase instance using the specified properties.
@@ -5247,14 +5201,15 @@ $root.msg = (function() {
                     $root.msg.UserAddress.encode(message.addrlist[i], writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
             if (message.scounter != null && message.hasOwnProperty("scounter"))
                 $root.msg.SimpleCounter.encode(message.scounter, writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
-            if (message.wechat != null && message.hasOwnProperty("wechat"))
-                $root.msg.UserWechat.encode(message.wechat, writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
-            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
-                writer.uint32(/* id 15, wireType 2 =*/122).string(message.invitationcode);
-            if (message.freepresent != null && message.hasOwnProperty("freepresent"))
-                $root.msg.FreePresentMoney.encode(message.freepresent, writer.uint32(/* id 16, wireType 2 =*/130).fork()).ldelim();
-            if (message.task != null && message.hasOwnProperty("task"))
-                $root.msg.UserTask.encode(message.task, writer.uint32(/* id 17, wireType 2 =*/138).fork()).ldelim();
+            if (message.fbitem != null && message.fbitem.length)
+                for (var i = 0; i < message.fbitem.length; ++i)
+                    $root.msg.FootBallItem.encode(message.fbitem[i], writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
+            if (message.freetime != null && message.hasOwnProperty("freetime"))
+                writer.uint32(/* id 15, wireType 0 =*/120).uint32(message.freetime);
+            if (message.freetype != null && message.hasOwnProperty("freetype"))
+                writer.uint32(/* id 16, wireType 0 =*/128).uint32(message.freetype);
+            if (message.sumget != null && message.hasOwnProperty("sumget"))
+                writer.uint32(/* id 17, wireType 0 =*/136).uint32(message.sumget);
             return writer;
         };
 
@@ -5331,16 +5286,18 @@ $root.msg = (function() {
                     message.scounter = $root.msg.SimpleCounter.decode(reader, reader.uint32());
                     break;
                 case 14:
-                    message.wechat = $root.msg.UserWechat.decode(reader, reader.uint32());
+                    if (!(message.fbitem && message.fbitem.length))
+                        message.fbitem = [];
+                    message.fbitem.push($root.msg.FootBallItem.decode(reader, reader.uint32()));
                     break;
                 case 15:
-                    message.invitationcode = reader.string();
+                    message.freetime = reader.uint32();
                     break;
                 case 16:
-                    message.freepresent = $root.msg.FreePresentMoney.decode(reader, reader.uint32());
+                    message.freetype = reader.uint32();
                     break;
                 case 17:
-                    message.task = $root.msg.UserTask.decode(reader, reader.uint32());
+                    message.sumget = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -5424,24 +5381,24 @@ $root.msg = (function() {
                 if (error)
                     return "scounter." + error;
             }
-            if (message.wechat != null && message.hasOwnProperty("wechat")) {
-                var error = $root.msg.UserWechat.verify(message.wechat);
-                if (error)
-                    return "wechat." + error;
+            if (message.fbitem != null && message.hasOwnProperty("fbitem")) {
+                if (!Array.isArray(message.fbitem))
+                    return "fbitem: array expected";
+                for (var i = 0; i < message.fbitem.length; ++i) {
+                    var error = $root.msg.FootBallItem.verify(message.fbitem[i]);
+                    if (error)
+                        return "fbitem." + error;
+                }
             }
-            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
-                if (!$util.isString(message.invitationcode))
-                    return "invitationcode: string expected";
-            if (message.freepresent != null && message.hasOwnProperty("freepresent")) {
-                var error = $root.msg.FreePresentMoney.verify(message.freepresent);
-                if (error)
-                    return "freepresent." + error;
-            }
-            if (message.task != null && message.hasOwnProperty("task")) {
-                var error = $root.msg.UserTask.verify(message.task);
-                if (error)
-                    return "task." + error;
-            }
+            if (message.freetime != null && message.hasOwnProperty("freetime"))
+                if (!$util.isInteger(message.freetime))
+                    return "freetime: integer expected";
+            if (message.freetype != null && message.hasOwnProperty("freetype"))
+                if (!$util.isInteger(message.freetype))
+                    return "freetype: integer expected";
+            if (message.sumget != null && message.hasOwnProperty("sumget"))
+                if (!$util.isInteger(message.sumget))
+                    return "sumget: integer expected";
             return null;
         };
 
@@ -5508,23 +5465,22 @@ $root.msg = (function() {
                     throw TypeError(".msg.UserBase.scounter: object expected");
                 message.scounter = $root.msg.SimpleCounter.fromObject(object.scounter);
             }
-            if (object.wechat != null) {
-                if (typeof object.wechat !== "object")
-                    throw TypeError(".msg.UserBase.wechat: object expected");
-                message.wechat = $root.msg.UserWechat.fromObject(object.wechat);
+            if (object.fbitem) {
+                if (!Array.isArray(object.fbitem))
+                    throw TypeError(".msg.UserBase.fbitem: array expected");
+                message.fbitem = [];
+                for (var i = 0; i < object.fbitem.length; ++i) {
+                    if (typeof object.fbitem[i] !== "object")
+                        throw TypeError(".msg.UserBase.fbitem: object expected");
+                    message.fbitem[i] = $root.msg.FootBallItem.fromObject(object.fbitem[i]);
+                }
             }
-            if (object.invitationcode != null)
-                message.invitationcode = String(object.invitationcode);
-            if (object.freepresent != null) {
-                if (typeof object.freepresent !== "object")
-                    throw TypeError(".msg.UserBase.freepresent: object expected");
-                message.freepresent = $root.msg.FreePresentMoney.fromObject(object.freepresent);
-            }
-            if (object.task != null) {
-                if (typeof object.task !== "object")
-                    throw TypeError(".msg.UserBase.task: object expected");
-                message.task = $root.msg.UserTask.fromObject(object.task);
-            }
+            if (object.freetime != null)
+                message.freetime = object.freetime >>> 0;
+            if (object.freetype != null)
+                message.freetype = object.freetype >>> 0;
+            if (object.sumget != null)
+                message.sumget = object.sumget >>> 0;
             return message;
         };
 
@@ -5541,8 +5497,10 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
+            if (options.arrays || options.defaults) {
                 object.addrlist = [];
+                object.fbitem = [];
+            }
             if (options.defaults) {
                 object.level = 0;
                 object.exp = 0;
@@ -5564,10 +5522,9 @@ $root.msg = (function() {
                 object.signreward = 0;
                 object.signtime = 0;
                 object.scounter = null;
-                object.wechat = null;
-                object.invitationcode = "";
-                object.freepresent = null;
-                object.task = null;
+                object.freetime = 0;
+                object.freetype = 0;
+                object.sumget = 0;
             }
             if (message.level != null && message.hasOwnProperty("level"))
                 object.level = message.level;
@@ -5604,14 +5561,17 @@ $root.msg = (function() {
             }
             if (message.scounter != null && message.hasOwnProperty("scounter"))
                 object.scounter = $root.msg.SimpleCounter.toObject(message.scounter, options);
-            if (message.wechat != null && message.hasOwnProperty("wechat"))
-                object.wechat = $root.msg.UserWechat.toObject(message.wechat, options);
-            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
-                object.invitationcode = message.invitationcode;
-            if (message.freepresent != null && message.hasOwnProperty("freepresent"))
-                object.freepresent = $root.msg.FreePresentMoney.toObject(message.freepresent, options);
-            if (message.task != null && message.hasOwnProperty("task"))
-                object.task = $root.msg.UserTask.toObject(message.task, options);
+            if (message.fbitem && message.fbitem.length) {
+                object.fbitem = [];
+                for (var j = 0; j < message.fbitem.length; ++j)
+                    object.fbitem[j] = $root.msg.FootBallItem.toObject(message.fbitem[j], options);
+            }
+            if (message.freetime != null && message.hasOwnProperty("freetime"))
+                object.freetime = message.freetime;
+            if (message.freetype != null && message.hasOwnProperty("freetype"))
+                object.freetype = message.freetype;
+            if (message.sumget != null && message.hasOwnProperty("sumget"))
+                object.sumget = message.sumget;
             return object;
         };
 
@@ -5859,6 +5819,216 @@ $root.msg = (function() {
         };
 
         return UserAddress;
+    })();
+
+    msg.FootBallItem = (function() {
+
+        /**
+         * Properties of a FootBallItem.
+         * @memberof msg
+         * @interface IFootBallItem
+         * @property {number|null} [index] FootBallItem index
+         * @property {number|null} [itemid] FootBallItem itemid
+         */
+
+        /**
+         * Constructs a new FootBallItem.
+         * @memberof msg
+         * @classdesc Represents a FootBallItem.
+         * @implements IFootBallItem
+         * @constructor
+         * @param {msg.IFootBallItem=} [properties] Properties to set
+         */
+        function FootBallItem(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * FootBallItem index.
+         * @member {number} index
+         * @memberof msg.FootBallItem
+         * @instance
+         */
+        FootBallItem.prototype.index = 0;
+
+        /**
+         * FootBallItem itemid.
+         * @member {number} itemid
+         * @memberof msg.FootBallItem
+         * @instance
+         */
+        FootBallItem.prototype.itemid = 0;
+
+        /**
+         * Creates a new FootBallItem instance using the specified properties.
+         * @function create
+         * @memberof msg.FootBallItem
+         * @static
+         * @param {msg.IFootBallItem=} [properties] Properties to set
+         * @returns {msg.FootBallItem} FootBallItem instance
+         */
+        FootBallItem.create = function create(properties) {
+            return new FootBallItem(properties);
+        };
+
+        /**
+         * Encodes the specified FootBallItem message. Does not implicitly {@link msg.FootBallItem.verify|verify} messages.
+         * @function encode
+         * @memberof msg.FootBallItem
+         * @static
+         * @param {msg.IFootBallItem} message FootBallItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FootBallItem.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.index != null && message.hasOwnProperty("index"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.index);
+            if (message.itemid != null && message.hasOwnProperty("itemid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.itemid);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified FootBallItem message, length delimited. Does not implicitly {@link msg.FootBallItem.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.FootBallItem
+         * @static
+         * @param {msg.IFootBallItem} message FootBallItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FootBallItem.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a FootBallItem message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.FootBallItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.FootBallItem} FootBallItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FootBallItem.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.FootBallItem();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.index = reader.int32();
+                    break;
+                case 2:
+                    message.itemid = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a FootBallItem message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.FootBallItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.FootBallItem} FootBallItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FootBallItem.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a FootBallItem message.
+         * @function verify
+         * @memberof msg.FootBallItem
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        FootBallItem.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.index != null && message.hasOwnProperty("index"))
+                if (!$util.isInteger(message.index))
+                    return "index: integer expected";
+            if (message.itemid != null && message.hasOwnProperty("itemid"))
+                if (!$util.isInteger(message.itemid))
+                    return "itemid: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a FootBallItem message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.FootBallItem
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.FootBallItem} FootBallItem
+         */
+        FootBallItem.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.FootBallItem)
+                return object;
+            var message = new $root.msg.FootBallItem();
+            if (object.index != null)
+                message.index = object.index | 0;
+            if (object.itemid != null)
+                message.itemid = object.itemid | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a FootBallItem message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.FootBallItem
+         * @static
+         * @param {msg.FootBallItem} message FootBallItem
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        FootBallItem.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.index = 0;
+                object.itemid = 0;
+            }
+            if (message.index != null && message.hasOwnProperty("index"))
+                object.index = message.index;
+            if (message.itemid != null && message.hasOwnProperty("itemid"))
+                object.itemid = message.itemid;
+            return object;
+        };
+
+        /**
+         * Converts this FootBallItem to JSON.
+         * @function toJSON
+         * @memberof msg.FootBallItem
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        FootBallItem.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return FootBallItem;
     })();
 
     /**
@@ -7998,6 +8168,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2GW_ReqStartGame
          * @property {number|null} [gamekind] C2GW_ReqStartGame gamekind
+         * @property {number|null} [gridnum] C2GW_ReqStartGame gridnum
          */
 
         /**
@@ -8022,6 +8193,14 @@ $root.msg = (function() {
          * @instance
          */
         C2GW_ReqStartGame.prototype.gamekind = 0;
+
+        /**
+         * C2GW_ReqStartGame gridnum.
+         * @member {number} gridnum
+         * @memberof msg.C2GW_ReqStartGame
+         * @instance
+         */
+        C2GW_ReqStartGame.prototype.gridnum = 0;
 
         /**
          * Creates a new C2GW_ReqStartGame instance using the specified properties.
@@ -8049,6 +8228,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gamekind);
+            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.gridnum);
             return writer;
         };
 
@@ -8085,6 +8266,9 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.gamekind = reader.int32();
+                    break;
+                case 2:
+                    message.gridnum = reader.int32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -8124,6 +8308,9 @@ $root.msg = (function() {
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 if (!$util.isInteger(message.gamekind))
                     return "gamekind: integer expected";
+            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
+                if (!$util.isInteger(message.gridnum))
+                    return "gridnum: integer expected";
             return null;
         };
 
@@ -8141,6 +8328,8 @@ $root.msg = (function() {
             var message = new $root.msg.C2GW_ReqStartGame();
             if (object.gamekind != null)
                 message.gamekind = object.gamekind | 0;
+            if (object.gridnum != null)
+                message.gridnum = object.gridnum | 0;
             return message;
         };
 
@@ -8157,10 +8346,14 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.gamekind = 0;
+                object.gridnum = 0;
+            }
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 object.gamekind = message.gamekind;
+            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
+                object.gridnum = message.gridnum;
             return object;
         };
 
@@ -8749,193 +8942,6 @@ $root.msg = (function() {
         return C2GW_Get7DayReward;
     })();
 
-    msg.C2GW_SendWechatAuthCode = (function() {
-
-        /**
-         * Properties of a C2GW_SendWechatAuthCode.
-         * @memberof msg
-         * @interface IC2GW_SendWechatAuthCode
-         * @property {string|null} [code] C2GW_SendWechatAuthCode code
-         */
-
-        /**
-         * Constructs a new C2GW_SendWechatAuthCode.
-         * @memberof msg
-         * @classdesc Represents a C2GW_SendWechatAuthCode.
-         * @implements IC2GW_SendWechatAuthCode
-         * @constructor
-         * @param {msg.IC2GW_SendWechatAuthCode=} [properties] Properties to set
-         */
-        function C2GW_SendWechatAuthCode(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * C2GW_SendWechatAuthCode code.
-         * @member {string} code
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @instance
-         */
-        C2GW_SendWechatAuthCode.prototype.code = "";
-
-        /**
-         * Creates a new C2GW_SendWechatAuthCode instance using the specified properties.
-         * @function create
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @static
-         * @param {msg.IC2GW_SendWechatAuthCode=} [properties] Properties to set
-         * @returns {msg.C2GW_SendWechatAuthCode} C2GW_SendWechatAuthCode instance
-         */
-        C2GW_SendWechatAuthCode.create = function create(properties) {
-            return new C2GW_SendWechatAuthCode(properties);
-        };
-
-        /**
-         * Encodes the specified C2GW_SendWechatAuthCode message. Does not implicitly {@link msg.C2GW_SendWechatAuthCode.verify|verify} messages.
-         * @function encode
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @static
-         * @param {msg.IC2GW_SendWechatAuthCode} message C2GW_SendWechatAuthCode message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        C2GW_SendWechatAuthCode.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.code != null && message.hasOwnProperty("code"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.code);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified C2GW_SendWechatAuthCode message, length delimited. Does not implicitly {@link msg.C2GW_SendWechatAuthCode.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @static
-         * @param {msg.IC2GW_SendWechatAuthCode} message C2GW_SendWechatAuthCode message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        C2GW_SendWechatAuthCode.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a C2GW_SendWechatAuthCode message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.C2GW_SendWechatAuthCode} C2GW_SendWechatAuthCode
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        C2GW_SendWechatAuthCode.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_SendWechatAuthCode();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.code = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a C2GW_SendWechatAuthCode message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.C2GW_SendWechatAuthCode} C2GW_SendWechatAuthCode
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        C2GW_SendWechatAuthCode.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a C2GW_SendWechatAuthCode message.
-         * @function verify
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        C2GW_SendWechatAuthCode.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.code != null && message.hasOwnProperty("code"))
-                if (!$util.isString(message.code))
-                    return "code: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a C2GW_SendWechatAuthCode message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.C2GW_SendWechatAuthCode} C2GW_SendWechatAuthCode
-         */
-        C2GW_SendWechatAuthCode.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.C2GW_SendWechatAuthCode)
-                return object;
-            var message = new $root.msg.C2GW_SendWechatAuthCode();
-            if (object.code != null)
-                message.code = String(object.code);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a C2GW_SendWechatAuthCode message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @static
-         * @param {msg.C2GW_SendWechatAuthCode} message C2GW_SendWechatAuthCode
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        C2GW_SendWechatAuthCode.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.code = "";
-            if (message.code != null && message.hasOwnProperty("code"))
-                object.code = message.code;
-            return object;
-        };
-
-        /**
-         * Converts this C2GW_SendWechatAuthCode to JSON.
-         * @function toJSON
-         * @memberof msg.C2GW_SendWechatAuthCode
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        C2GW_SendWechatAuthCode.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return C2GW_SendWechatAuthCode;
-    })();
-
     msg.C2L_ReqLogin = (function() {
 
         /**
@@ -8943,7 +8949,9 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2L_ReqLogin
          * @property {string|null} [account] C2L_ReqLogin account
-         * @property {string|null} [passwd] C2L_ReqLogin passwd
+         * @property {string|null} [nickname] C2L_ReqLogin nickname
+         * @property {string|null} [face] C2L_ReqLogin face
+         * @property {string|null} [token] C2L_ReqLogin token
          */
 
         /**
@@ -8970,12 +8978,28 @@ $root.msg = (function() {
         C2L_ReqLogin.prototype.account = "";
 
         /**
-         * C2L_ReqLogin passwd.
-         * @member {string} passwd
+         * C2L_ReqLogin nickname.
+         * @member {string} nickname
          * @memberof msg.C2L_ReqLogin
          * @instance
          */
-        C2L_ReqLogin.prototype.passwd = "";
+        C2L_ReqLogin.prototype.nickname = "";
+
+        /**
+         * C2L_ReqLogin face.
+         * @member {string} face
+         * @memberof msg.C2L_ReqLogin
+         * @instance
+         */
+        C2L_ReqLogin.prototype.face = "";
+
+        /**
+         * C2L_ReqLogin token.
+         * @member {string} token
+         * @memberof msg.C2L_ReqLogin
+         * @instance
+         */
+        C2L_ReqLogin.prototype.token = "";
 
         /**
          * Creates a new C2L_ReqLogin instance using the specified properties.
@@ -9003,8 +9027,12 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.account != null && message.hasOwnProperty("account"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.account);
-            if (message.passwd != null && message.hasOwnProperty("passwd"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.passwd);
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.nickname);
+            if (message.face != null && message.hasOwnProperty("face"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.face);
+            if (message.token != null && message.hasOwnProperty("token"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.token);
             return writer;
         };
 
@@ -9043,7 +9071,13 @@ $root.msg = (function() {
                     message.account = reader.string();
                     break;
                 case 2:
-                    message.passwd = reader.string();
+                    message.nickname = reader.string();
+                    break;
+                case 3:
+                    message.face = reader.string();
+                    break;
+                case 4:
+                    message.token = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -9083,9 +9117,15 @@ $root.msg = (function() {
             if (message.account != null && message.hasOwnProperty("account"))
                 if (!$util.isString(message.account))
                     return "account: string expected";
-            if (message.passwd != null && message.hasOwnProperty("passwd"))
-                if (!$util.isString(message.passwd))
-                    return "passwd: string expected";
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                if (!$util.isString(message.nickname))
+                    return "nickname: string expected";
+            if (message.face != null && message.hasOwnProperty("face"))
+                if (!$util.isString(message.face))
+                    return "face: string expected";
+            if (message.token != null && message.hasOwnProperty("token"))
+                if (!$util.isString(message.token))
+                    return "token: string expected";
             return null;
         };
 
@@ -9103,8 +9143,12 @@ $root.msg = (function() {
             var message = new $root.msg.C2L_ReqLogin();
             if (object.account != null)
                 message.account = String(object.account);
-            if (object.passwd != null)
-                message.passwd = String(object.passwd);
+            if (object.nickname != null)
+                message.nickname = String(object.nickname);
+            if (object.face != null)
+                message.face = String(object.face);
+            if (object.token != null)
+                message.token = String(object.token);
             return message;
         };
 
@@ -9123,12 +9167,18 @@ $root.msg = (function() {
             var object = {};
             if (options.defaults) {
                 object.account = "";
-                object.passwd = "";
+                object.nickname = "";
+                object.face = "";
+                object.token = "";
             }
             if (message.account != null && message.hasOwnProperty("account"))
                 object.account = message.account;
-            if (message.passwd != null && message.hasOwnProperty("passwd"))
-                object.passwd = message.passwd;
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                object.nickname = message.nickname;
+            if (message.face != null && message.hasOwnProperty("face"))
+                object.face = message.face;
+            if (message.token != null && message.hasOwnProperty("token"))
+                object.token = message.token;
             return object;
         };
 
@@ -9405,204 +9455,16 @@ $root.msg = (function() {
         return L2C_RetLogin;
     })();
 
-    msg.C2L_ReqRegistAuthCode = (function() {
-
-        /**
-         * Properties of a C2L_ReqRegistAuthCode.
-         * @memberof msg
-         * @interface IC2L_ReqRegistAuthCode
-         * @property {string|null} [phone] C2L_ReqRegistAuthCode phone
-         */
-
-        /**
-         * Constructs a new C2L_ReqRegistAuthCode.
-         * @memberof msg
-         * @classdesc Represents a C2L_ReqRegistAuthCode.
-         * @implements IC2L_ReqRegistAuthCode
-         * @constructor
-         * @param {msg.IC2L_ReqRegistAuthCode=} [properties] Properties to set
-         */
-        function C2L_ReqRegistAuthCode(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * C2L_ReqRegistAuthCode phone.
-         * @member {string} phone
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @instance
-         */
-        C2L_ReqRegistAuthCode.prototype.phone = "";
-
-        /**
-         * Creates a new C2L_ReqRegistAuthCode instance using the specified properties.
-         * @function create
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @static
-         * @param {msg.IC2L_ReqRegistAuthCode=} [properties] Properties to set
-         * @returns {msg.C2L_ReqRegistAuthCode} C2L_ReqRegistAuthCode instance
-         */
-        C2L_ReqRegistAuthCode.create = function create(properties) {
-            return new C2L_ReqRegistAuthCode(properties);
-        };
-
-        /**
-         * Encodes the specified C2L_ReqRegistAuthCode message. Does not implicitly {@link msg.C2L_ReqRegistAuthCode.verify|verify} messages.
-         * @function encode
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @static
-         * @param {msg.IC2L_ReqRegistAuthCode} message C2L_ReqRegistAuthCode message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        C2L_ReqRegistAuthCode.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.phone);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified C2L_ReqRegistAuthCode message, length delimited. Does not implicitly {@link msg.C2L_ReqRegistAuthCode.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @static
-         * @param {msg.IC2L_ReqRegistAuthCode} message C2L_ReqRegistAuthCode message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        C2L_ReqRegistAuthCode.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a C2L_ReqRegistAuthCode message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.C2L_ReqRegistAuthCode} C2L_ReqRegistAuthCode
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        C2L_ReqRegistAuthCode.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2L_ReqRegistAuthCode();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.phone = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a C2L_ReqRegistAuthCode message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.C2L_ReqRegistAuthCode} C2L_ReqRegistAuthCode
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        C2L_ReqRegistAuthCode.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a C2L_ReqRegistAuthCode message.
-         * @function verify
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        C2L_ReqRegistAuthCode.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                if (!$util.isString(message.phone))
-                    return "phone: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a C2L_ReqRegistAuthCode message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.C2L_ReqRegistAuthCode} C2L_ReqRegistAuthCode
-         */
-        C2L_ReqRegistAuthCode.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.C2L_ReqRegistAuthCode)
-                return object;
-            var message = new $root.msg.C2L_ReqRegistAuthCode();
-            if (object.phone != null)
-                message.phone = String(object.phone);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a C2L_ReqRegistAuthCode message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @static
-         * @param {msg.C2L_ReqRegistAuthCode} message C2L_ReqRegistAuthCode
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        C2L_ReqRegistAuthCode.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.phone = "";
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                object.phone = message.phone;
-            return object;
-        };
-
-        /**
-         * Converts this C2L_ReqRegistAuthCode to JSON.
-         * @function toJSON
-         * @memberof msg.C2L_ReqRegistAuthCode
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        C2L_ReqRegistAuthCode.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return C2L_ReqRegistAuthCode;
-    })();
-
     msg.C2L_ReqRegistAccount = (function() {
 
         /**
          * Properties of a C2L_ReqRegistAccount.
          * @memberof msg
          * @interface IC2L_ReqRegistAccount
-         * @property {string|null} [phone] C2L_ReqRegistAccount phone
+         * @property {string|null} [account] C2L_ReqRegistAccount account
          * @property {string|null} [passwd] C2L_ReqRegistAccount passwd
-         * @property {string|null} [authcode] C2L_ReqRegistAccount authcode
-         * @property {string|null} [invitationcode] C2L_ReqRegistAccount invitationcode
-         * @property {string|null} [nickname] C2L_ReqRegistAccount nickname
+         * @property {string|null} [name] C2L_ReqRegistAccount name
+         * @property {string|null} [face] C2L_ReqRegistAccount face
          */
 
         /**
@@ -9621,12 +9483,12 @@ $root.msg = (function() {
         }
 
         /**
-         * C2L_ReqRegistAccount phone.
-         * @member {string} phone
+         * C2L_ReqRegistAccount account.
+         * @member {string} account
          * @memberof msg.C2L_ReqRegistAccount
          * @instance
          */
-        C2L_ReqRegistAccount.prototype.phone = "";
+        C2L_ReqRegistAccount.prototype.account = "";
 
         /**
          * C2L_ReqRegistAccount passwd.
@@ -9637,28 +9499,20 @@ $root.msg = (function() {
         C2L_ReqRegistAccount.prototype.passwd = "";
 
         /**
-         * C2L_ReqRegistAccount authcode.
-         * @member {string} authcode
+         * C2L_ReqRegistAccount name.
+         * @member {string} name
          * @memberof msg.C2L_ReqRegistAccount
          * @instance
          */
-        C2L_ReqRegistAccount.prototype.authcode = "";
+        C2L_ReqRegistAccount.prototype.name = "";
 
         /**
-         * C2L_ReqRegistAccount invitationcode.
-         * @member {string} invitationcode
+         * C2L_ReqRegistAccount face.
+         * @member {string} face
          * @memberof msg.C2L_ReqRegistAccount
          * @instance
          */
-        C2L_ReqRegistAccount.prototype.invitationcode = "";
-
-        /**
-         * C2L_ReqRegistAccount nickname.
-         * @member {string} nickname
-         * @memberof msg.C2L_ReqRegistAccount
-         * @instance
-         */
-        C2L_ReqRegistAccount.prototype.nickname = "";
+        C2L_ReqRegistAccount.prototype.face = "";
 
         /**
          * Creates a new C2L_ReqRegistAccount instance using the specified properties.
@@ -9684,16 +9538,14 @@ $root.msg = (function() {
         C2L_ReqRegistAccount.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.phone);
+            if (message.account != null && message.hasOwnProperty("account"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.account);
             if (message.passwd != null && message.hasOwnProperty("passwd"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.passwd);
-            if (message.authcode != null && message.hasOwnProperty("authcode"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.authcode);
-            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.invitationcode);
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                writer.uint32(/* id 5, wireType 2 =*/42).string(message.nickname);
+            if (message.name != null && message.hasOwnProperty("name"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.name);
+            if (message.face != null && message.hasOwnProperty("face"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.face);
             return writer;
         };
 
@@ -9729,19 +9581,16 @@ $root.msg = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.phone = reader.string();
+                    message.account = reader.string();
                     break;
                 case 2:
                     message.passwd = reader.string();
                     break;
                 case 3:
-                    message.authcode = reader.string();
+                    message.name = reader.string();
                     break;
                 case 4:
-                    message.invitationcode = reader.string();
-                    break;
-                case 5:
-                    message.nickname = reader.string();
+                    message.face = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -9778,21 +9627,18 @@ $root.msg = (function() {
         C2L_ReqRegistAccount.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                if (!$util.isString(message.phone))
-                    return "phone: string expected";
+            if (message.account != null && message.hasOwnProperty("account"))
+                if (!$util.isString(message.account))
+                    return "account: string expected";
             if (message.passwd != null && message.hasOwnProperty("passwd"))
                 if (!$util.isString(message.passwd))
                     return "passwd: string expected";
-            if (message.authcode != null && message.hasOwnProperty("authcode"))
-                if (!$util.isString(message.authcode))
-                    return "authcode: string expected";
-            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
-                if (!$util.isString(message.invitationcode))
-                    return "invitationcode: string expected";
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                if (!$util.isString(message.nickname))
-                    return "nickname: string expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.face != null && message.hasOwnProperty("face"))
+                if (!$util.isString(message.face))
+                    return "face: string expected";
             return null;
         };
 
@@ -9808,16 +9654,14 @@ $root.msg = (function() {
             if (object instanceof $root.msg.C2L_ReqRegistAccount)
                 return object;
             var message = new $root.msg.C2L_ReqRegistAccount();
-            if (object.phone != null)
-                message.phone = String(object.phone);
+            if (object.account != null)
+                message.account = String(object.account);
             if (object.passwd != null)
                 message.passwd = String(object.passwd);
-            if (object.authcode != null)
-                message.authcode = String(object.authcode);
-            if (object.invitationcode != null)
-                message.invitationcode = String(object.invitationcode);
-            if (object.nickname != null)
-                message.nickname = String(object.nickname);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.face != null)
+                message.face = String(object.face);
             return message;
         };
 
@@ -9835,22 +9679,19 @@ $root.msg = (function() {
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.phone = "";
+                object.account = "";
                 object.passwd = "";
-                object.authcode = "";
-                object.invitationcode = "";
-                object.nickname = "";
+                object.name = "";
+                object.face = "";
             }
-            if (message.phone != null && message.hasOwnProperty("phone"))
-                object.phone = message.phone;
+            if (message.account != null && message.hasOwnProperty("account"))
+                object.account = message.account;
             if (message.passwd != null && message.hasOwnProperty("passwd"))
                 object.passwd = message.passwd;
-            if (message.authcode != null && message.hasOwnProperty("authcode"))
-                object.authcode = message.authcode;
-            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
-                object.invitationcode = message.invitationcode;
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                object.nickname = message.nickname;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.face != null && message.hasOwnProperty("face"))
+                object.face = message.face;
             return object;
         };
 
@@ -9874,6 +9715,7 @@ $root.msg = (function() {
          * Properties of a L2C_RetRegistAccount.
          * @memberof msg
          * @interface IL2C_RetRegistAccount
+         * @property {string|null} [account] L2C_RetRegistAccount account
          * @property {string|null} [errcode] L2C_RetRegistAccount errcode
          */
 
@@ -9891,6 +9733,14 @@ $root.msg = (function() {
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
+
+        /**
+         * L2C_RetRegistAccount account.
+         * @member {string} account
+         * @memberof msg.L2C_RetRegistAccount
+         * @instance
+         */
+        L2C_RetRegistAccount.prototype.account = "";
 
         /**
          * L2C_RetRegistAccount errcode.
@@ -9924,8 +9774,10 @@ $root.msg = (function() {
         L2C_RetRegistAccount.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.account != null && message.hasOwnProperty("account"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.account);
             if (message.errcode != null && message.hasOwnProperty("errcode"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.errcode);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.errcode);
             return writer;
         };
 
@@ -9961,6 +9813,9 @@ $root.msg = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
+                    message.account = reader.string();
+                    break;
+                case 2:
                     message.errcode = reader.string();
                     break;
                 default:
@@ -9998,6 +9853,9 @@ $root.msg = (function() {
         L2C_RetRegistAccount.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.account != null && message.hasOwnProperty("account"))
+                if (!$util.isString(message.account))
+                    return "account: string expected";
             if (message.errcode != null && message.hasOwnProperty("errcode"))
                 if (!$util.isString(message.errcode))
                     return "errcode: string expected";
@@ -10016,6 +9874,8 @@ $root.msg = (function() {
             if (object instanceof $root.msg.L2C_RetRegistAccount)
                 return object;
             var message = new $root.msg.L2C_RetRegistAccount();
+            if (object.account != null)
+                message.account = String(object.account);
             if (object.errcode != null)
                 message.errcode = String(object.errcode);
             return message;
@@ -10034,8 +9894,12 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
+                object.account = "";
                 object.errcode = "";
+            }
+            if (message.account != null && message.hasOwnProperty("account"))
+                object.account = message.account;
             if (message.errcode != null && message.hasOwnProperty("errcode"))
                 object.errcode = message.errcode;
             return object;
@@ -10527,20 +10391,1001 @@ $root.msg = (function() {
         return PairNumItem;
     })();
 
-    /**
-     * TaskId enum.
-     * @name msg.TaskId
-     * @enum {string}
-     * @property {number} RegistAccount=1001 RegistAccount value
-     * @property {number} RegisterTopScore=1002 RegisterTopScore value
-     * @property {number} InviteeTopScore=1003 InviteeTopScore value
-     */
-    msg.TaskId = (function() {
-        var valuesById = {}, values = Object.create(valuesById);
-        values[valuesById[1001] = "RegistAccount"] = 1001;
-        values[valuesById[1002] = "RegisterTopScore"] = 1002;
-        values[valuesById[1003] = "InviteeTopScore"] = 1003;
-        return values;
+    msg.C2GW_ReFreshItems = (function() {
+
+        /**
+         * Properties of a C2GW_ReFreshItems.
+         * @memberof msg
+         * @interface IC2GW_ReFreshItems
+         */
+
+        /**
+         * Constructs a new C2GW_ReFreshItems.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReFreshItems.
+         * @implements IC2GW_ReFreshItems
+         * @constructor
+         * @param {msg.IC2GW_ReFreshItems=} [properties] Properties to set
+         */
+        function C2GW_ReFreshItems(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new C2GW_ReFreshItems instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReFreshItems
+         * @static
+         * @param {msg.IC2GW_ReFreshItems=} [properties] Properties to set
+         * @returns {msg.C2GW_ReFreshItems} C2GW_ReFreshItems instance
+         */
+        C2GW_ReFreshItems.create = function create(properties) {
+            return new C2GW_ReFreshItems(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReFreshItems message. Does not implicitly {@link msg.C2GW_ReFreshItems.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReFreshItems
+         * @static
+         * @param {msg.IC2GW_ReFreshItems} message C2GW_ReFreshItems message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReFreshItems.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReFreshItems message, length delimited. Does not implicitly {@link msg.C2GW_ReFreshItems.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReFreshItems
+         * @static
+         * @param {msg.IC2GW_ReFreshItems} message C2GW_ReFreshItems message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReFreshItems.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReFreshItems message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReFreshItems
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReFreshItems} C2GW_ReFreshItems
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReFreshItems.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReFreshItems();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReFreshItems message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReFreshItems
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReFreshItems} C2GW_ReFreshItems
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReFreshItems.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReFreshItems message.
+         * @function verify
+         * @memberof msg.C2GW_ReFreshItems
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReFreshItems.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReFreshItems message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReFreshItems
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReFreshItems} C2GW_ReFreshItems
+         */
+        C2GW_ReFreshItems.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReFreshItems)
+                return object;
+            return new $root.msg.C2GW_ReFreshItems();
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReFreshItems message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReFreshItems
+         * @static
+         * @param {msg.C2GW_ReFreshItems} message C2GW_ReFreshItems
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReFreshItems.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this C2GW_ReFreshItems to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReFreshItems
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReFreshItems.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReFreshItems;
+    })();
+
+    msg.FootballItem = (function() {
+
+        /**
+         * Properties of a FootballItem.
+         * @memberof msg
+         * @interface IFootballItem
+         * @property {number|null} [uid] FootballItem uid
+         * @property {number|null} [itemid] FootballItem itemid
+         * @property {number|null} [itemnum] FootballItem itemnum
+         */
+
+        /**
+         * Constructs a new FootballItem.
+         * @memberof msg
+         * @classdesc Represents a FootballItem.
+         * @implements IFootballItem
+         * @constructor
+         * @param {msg.IFootballItem=} [properties] Properties to set
+         */
+        function FootballItem(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * FootballItem uid.
+         * @member {number} uid
+         * @memberof msg.FootballItem
+         * @instance
+         */
+        FootballItem.prototype.uid = 0;
+
+        /**
+         * FootballItem itemid.
+         * @member {number} itemid
+         * @memberof msg.FootballItem
+         * @instance
+         */
+        FootballItem.prototype.itemid = 0;
+
+        /**
+         * FootballItem itemnum.
+         * @member {number} itemnum
+         * @memberof msg.FootballItem
+         * @instance
+         */
+        FootballItem.prototype.itemnum = 0;
+
+        /**
+         * Creates a new FootballItem instance using the specified properties.
+         * @function create
+         * @memberof msg.FootballItem
+         * @static
+         * @param {msg.IFootballItem=} [properties] Properties to set
+         * @returns {msg.FootballItem} FootballItem instance
+         */
+        FootballItem.create = function create(properties) {
+            return new FootballItem(properties);
+        };
+
+        /**
+         * Encodes the specified FootballItem message. Does not implicitly {@link msg.FootballItem.verify|verify} messages.
+         * @function encode
+         * @memberof msg.FootballItem
+         * @static
+         * @param {msg.IFootballItem} message FootballItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FootballItem.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.uid);
+            if (message.itemid != null && message.hasOwnProperty("itemid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.itemid);
+            if (message.itemnum != null && message.hasOwnProperty("itemnum"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.itemnum);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified FootballItem message, length delimited. Does not implicitly {@link msg.FootballItem.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.FootballItem
+         * @static
+         * @param {msg.IFootballItem} message FootballItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FootballItem.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a FootballItem message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.FootballItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.FootballItem} FootballItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FootballItem.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.FootballItem();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.uid = reader.int32();
+                    break;
+                case 2:
+                    message.itemid = reader.int32();
+                    break;
+                case 3:
+                    message.itemnum = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a FootballItem message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.FootballItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.FootballItem} FootballItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FootballItem.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a FootballItem message.
+         * @function verify
+         * @memberof msg.FootballItem
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        FootballItem.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (!$util.isInteger(message.uid))
+                    return "uid: integer expected";
+            if (message.itemid != null && message.hasOwnProperty("itemid"))
+                if (!$util.isInteger(message.itemid))
+                    return "itemid: integer expected";
+            if (message.itemnum != null && message.hasOwnProperty("itemnum"))
+                if (!$util.isInteger(message.itemnum))
+                    return "itemnum: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a FootballItem message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.FootballItem
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.FootballItem} FootballItem
+         */
+        FootballItem.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.FootballItem)
+                return object;
+            var message = new $root.msg.FootballItem();
+            if (object.uid != null)
+                message.uid = object.uid | 0;
+            if (object.itemid != null)
+                message.itemid = object.itemid | 0;
+            if (object.itemnum != null)
+                message.itemnum = object.itemnum | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a FootballItem message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.FootballItem
+         * @static
+         * @param {msg.FootballItem} message FootballItem
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        FootballItem.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.uid = 0;
+                object.itemid = 0;
+                object.itemnum = 0;
+            }
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                object.uid = message.uid;
+            if (message.itemid != null && message.hasOwnProperty("itemid"))
+                object.itemid = message.itemid;
+            if (message.itemnum != null && message.hasOwnProperty("itemnum"))
+                object.itemnum = message.itemnum;
+            return object;
+        };
+
+        /**
+         * Converts this FootballItem to JSON.
+         * @function toJSON
+         * @memberof msg.FootballItem
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        FootballItem.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return FootballItem;
+    })();
+
+    msg.GW2C_RetReFreshItems = (function() {
+
+        /**
+         * Properties of a GW2C_RetReFreshItems.
+         * @memberof msg
+         * @interface IGW2C_RetReFreshItems
+         * @property {Array.<msg.IFootballItem>|null} [list] GW2C_RetReFreshItems list
+         */
+
+        /**
+         * Constructs a new GW2C_RetReFreshItems.
+         * @memberof msg
+         * @classdesc Represents a GW2C_RetReFreshItems.
+         * @implements IGW2C_RetReFreshItems
+         * @constructor
+         * @param {msg.IGW2C_RetReFreshItems=} [properties] Properties to set
+         */
+        function GW2C_RetReFreshItems(properties) {
+            this.list = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_RetReFreshItems list.
+         * @member {Array.<msg.IFootballItem>} list
+         * @memberof msg.GW2C_RetReFreshItems
+         * @instance
+         */
+        GW2C_RetReFreshItems.prototype.list = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_RetReFreshItems instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_RetReFreshItems
+         * @static
+         * @param {msg.IGW2C_RetReFreshItems=} [properties] Properties to set
+         * @returns {msg.GW2C_RetReFreshItems} GW2C_RetReFreshItems instance
+         */
+        GW2C_RetReFreshItems.create = function create(properties) {
+            return new GW2C_RetReFreshItems(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_RetReFreshItems message. Does not implicitly {@link msg.GW2C_RetReFreshItems.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_RetReFreshItems
+         * @static
+         * @param {msg.IGW2C_RetReFreshItems} message GW2C_RetReFreshItems message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_RetReFreshItems.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.list != null && message.list.length)
+                for (var i = 0; i < message.list.length; ++i)
+                    $root.msg.FootballItem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_RetReFreshItems message, length delimited. Does not implicitly {@link msg.GW2C_RetReFreshItems.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_RetReFreshItems
+         * @static
+         * @param {msg.IGW2C_RetReFreshItems} message GW2C_RetReFreshItems message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_RetReFreshItems.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_RetReFreshItems message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_RetReFreshItems
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_RetReFreshItems} GW2C_RetReFreshItems
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_RetReFreshItems.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_RetReFreshItems();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.list && message.list.length))
+                        message.list = [];
+                    message.list.push($root.msg.FootballItem.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_RetReFreshItems message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_RetReFreshItems
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_RetReFreshItems} GW2C_RetReFreshItems
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_RetReFreshItems.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_RetReFreshItems message.
+         * @function verify
+         * @memberof msg.GW2C_RetReFreshItems
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_RetReFreshItems.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.list != null && message.hasOwnProperty("list")) {
+                if (!Array.isArray(message.list))
+                    return "list: array expected";
+                for (var i = 0; i < message.list.length; ++i) {
+                    var error = $root.msg.FootballItem.verify(message.list[i]);
+                    if (error)
+                        return "list." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_RetReFreshItems message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_RetReFreshItems
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_RetReFreshItems} GW2C_RetReFreshItems
+         */
+        GW2C_RetReFreshItems.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_RetReFreshItems)
+                return object;
+            var message = new $root.msg.GW2C_RetReFreshItems();
+            if (object.list) {
+                if (!Array.isArray(object.list))
+                    throw TypeError(".msg.GW2C_RetReFreshItems.list: array expected");
+                message.list = [];
+                for (var i = 0; i < object.list.length; ++i) {
+                    if (typeof object.list[i] !== "object")
+                        throw TypeError(".msg.GW2C_RetReFreshItems.list: object expected");
+                    message.list[i] = $root.msg.FootballItem.fromObject(object.list[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_RetReFreshItems message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_RetReFreshItems
+         * @static
+         * @param {msg.GW2C_RetReFreshItems} message GW2C_RetReFreshItems
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_RetReFreshItems.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.list = [];
+            if (message.list && message.list.length) {
+                object.list = [];
+                for (var j = 0; j < message.list.length; ++j)
+                    object.list[j] = $root.msg.FootballItem.toObject(message.list[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_RetReFreshItems to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_RetReFreshItems
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_RetReFreshItems.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_RetReFreshItems;
+    })();
+
+    msg.C2GW_KickFootBall = (function() {
+
+        /**
+         * Properties of a C2GW_KickFootBall.
+         * @memberof msg
+         * @interface IC2GW_KickFootBall
+         * @property {number|null} [uid] C2GW_KickFootBall uid
+         * @property {string|null} [token] C2GW_KickFootBall token
+         */
+
+        /**
+         * Constructs a new C2GW_KickFootBall.
+         * @memberof msg
+         * @classdesc Represents a C2GW_KickFootBall.
+         * @implements IC2GW_KickFootBall
+         * @constructor
+         * @param {msg.IC2GW_KickFootBall=} [properties] Properties to set
+         */
+        function C2GW_KickFootBall(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_KickFootBall uid.
+         * @member {number} uid
+         * @memberof msg.C2GW_KickFootBall
+         * @instance
+         */
+        C2GW_KickFootBall.prototype.uid = 0;
+
+        /**
+         * C2GW_KickFootBall token.
+         * @member {string} token
+         * @memberof msg.C2GW_KickFootBall
+         * @instance
+         */
+        C2GW_KickFootBall.prototype.token = "";
+
+        /**
+         * Creates a new C2GW_KickFootBall instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_KickFootBall
+         * @static
+         * @param {msg.IC2GW_KickFootBall=} [properties] Properties to set
+         * @returns {msg.C2GW_KickFootBall} C2GW_KickFootBall instance
+         */
+        C2GW_KickFootBall.create = function create(properties) {
+            return new C2GW_KickFootBall(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_KickFootBall message. Does not implicitly {@link msg.C2GW_KickFootBall.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_KickFootBall
+         * @static
+         * @param {msg.IC2GW_KickFootBall} message C2GW_KickFootBall message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_KickFootBall.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.uid);
+            if (message.token != null && message.hasOwnProperty("token"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.token);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_KickFootBall message, length delimited. Does not implicitly {@link msg.C2GW_KickFootBall.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_KickFootBall
+         * @static
+         * @param {msg.IC2GW_KickFootBall} message C2GW_KickFootBall message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_KickFootBall.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_KickFootBall message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_KickFootBall
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_KickFootBall} C2GW_KickFootBall
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_KickFootBall.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_KickFootBall();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.uid = reader.int32();
+                    break;
+                case 2:
+                    message.token = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_KickFootBall message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_KickFootBall
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_KickFootBall} C2GW_KickFootBall
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_KickFootBall.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_KickFootBall message.
+         * @function verify
+         * @memberof msg.C2GW_KickFootBall
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_KickFootBall.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (!$util.isInteger(message.uid))
+                    return "uid: integer expected";
+            if (message.token != null && message.hasOwnProperty("token"))
+                if (!$util.isString(message.token))
+                    return "token: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_KickFootBall message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_KickFootBall
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_KickFootBall} C2GW_KickFootBall
+         */
+        C2GW_KickFootBall.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_KickFootBall)
+                return object;
+            var message = new $root.msg.C2GW_KickFootBall();
+            if (object.uid != null)
+                message.uid = object.uid | 0;
+            if (object.token != null)
+                message.token = String(object.token);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_KickFootBall message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_KickFootBall
+         * @static
+         * @param {msg.C2GW_KickFootBall} message C2GW_KickFootBall
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_KickFootBall.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.uid = 0;
+                object.token = "";
+            }
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                object.uid = message.uid;
+            if (message.token != null && message.hasOwnProperty("token"))
+                object.token = message.token;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_KickFootBall to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_KickFootBall
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_KickFootBall.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_KickFootBall;
+    })();
+
+    msg.GW2C_RetKickFootBall = (function() {
+
+        /**
+         * Properties of a GW2C_RetKickFootBall.
+         * @memberof msg
+         * @interface IGW2C_RetKickFootBall
+         * @property {number|null} [uid] GW2C_RetKickFootBall uid
+         */
+
+        /**
+         * Constructs a new GW2C_RetKickFootBall.
+         * @memberof msg
+         * @classdesc Represents a GW2C_RetKickFootBall.
+         * @implements IGW2C_RetKickFootBall
+         * @constructor
+         * @param {msg.IGW2C_RetKickFootBall=} [properties] Properties to set
+         */
+        function GW2C_RetKickFootBall(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_RetKickFootBall uid.
+         * @member {number} uid
+         * @memberof msg.GW2C_RetKickFootBall
+         * @instance
+         */
+        GW2C_RetKickFootBall.prototype.uid = 0;
+
+        /**
+         * Creates a new GW2C_RetKickFootBall instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_RetKickFootBall
+         * @static
+         * @param {msg.IGW2C_RetKickFootBall=} [properties] Properties to set
+         * @returns {msg.GW2C_RetKickFootBall} GW2C_RetKickFootBall instance
+         */
+        GW2C_RetKickFootBall.create = function create(properties) {
+            return new GW2C_RetKickFootBall(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_RetKickFootBall message. Does not implicitly {@link msg.GW2C_RetKickFootBall.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_RetKickFootBall
+         * @static
+         * @param {msg.IGW2C_RetKickFootBall} message GW2C_RetKickFootBall message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_RetKickFootBall.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.uid);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_RetKickFootBall message, length delimited. Does not implicitly {@link msg.GW2C_RetKickFootBall.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_RetKickFootBall
+         * @static
+         * @param {msg.IGW2C_RetKickFootBall} message GW2C_RetKickFootBall message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_RetKickFootBall.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_RetKickFootBall message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_RetKickFootBall
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_RetKickFootBall} GW2C_RetKickFootBall
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_RetKickFootBall.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_RetKickFootBall();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.uid = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_RetKickFootBall message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_RetKickFootBall
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_RetKickFootBall} GW2C_RetKickFootBall
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_RetKickFootBall.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_RetKickFootBall message.
+         * @function verify
+         * @memberof msg.GW2C_RetKickFootBall
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_RetKickFootBall.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                if (!$util.isInteger(message.uid))
+                    return "uid: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_RetKickFootBall message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_RetKickFootBall
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_RetKickFootBall} GW2C_RetKickFootBall
+         */
+        GW2C_RetKickFootBall.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_RetKickFootBall)
+                return object;
+            var message = new $root.msg.GW2C_RetKickFootBall();
+            if (object.uid != null)
+                message.uid = object.uid | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_RetKickFootBall message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_RetKickFootBall
+         * @static
+         * @param {msg.GW2C_RetKickFootBall} message GW2C_RetKickFootBall
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_RetKickFootBall.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.uid = 0;
+            if (message.uid != null && message.hasOwnProperty("uid"))
+                object.uid = message.uid;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_RetKickFootBall to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_RetKickFootBall
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_RetKickFootBall.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_RetKickFootBall;
     })();
 
     msg.GW2L_ReqRegist = (function() {
@@ -12741,6 +13586,7 @@ $root.msg = (function() {
          * @interface IGW2MS_ReqCreateRoom
          * @property {number|Long|null} [userid] GW2MS_ReqCreateRoom userid
          * @property {number|null} [gamekind] GW2MS_ReqCreateRoom gamekind
+         * @property {number|null} [gridnum] GW2MS_ReqCreateRoom gridnum
          */
 
         /**
@@ -12775,6 +13621,14 @@ $root.msg = (function() {
         GW2MS_ReqCreateRoom.prototype.gamekind = 0;
 
         /**
+         * GW2MS_ReqCreateRoom gridnum.
+         * @member {number} gridnum
+         * @memberof msg.GW2MS_ReqCreateRoom
+         * @instance
+         */
+        GW2MS_ReqCreateRoom.prototype.gridnum = 0;
+
+        /**
          * Creates a new GW2MS_ReqCreateRoom instance using the specified properties.
          * @function create
          * @memberof msg.GW2MS_ReqCreateRoom
@@ -12802,6 +13656,8 @@ $root.msg = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 writer.uint32(/* id 2, wireType 0 =*/16).int32(message.gamekind);
+            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.gridnum);
             return writer;
         };
 
@@ -12841,6 +13697,9 @@ $root.msg = (function() {
                     break;
                 case 2:
                     message.gamekind = reader.int32();
+                    break;
+                case 3:
+                    message.gridnum = reader.int32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -12883,6 +13742,9 @@ $root.msg = (function() {
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 if (!$util.isInteger(message.gamekind))
                     return "gamekind: integer expected";
+            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
+                if (!$util.isInteger(message.gridnum))
+                    return "gridnum: integer expected";
             return null;
         };
 
@@ -12909,6 +13771,8 @@ $root.msg = (function() {
                     message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
             if (object.gamekind != null)
                 message.gamekind = object.gamekind | 0;
+            if (object.gridnum != null)
+                message.gridnum = object.gridnum | 0;
             return message;
         };
 
@@ -12932,6 +13796,7 @@ $root.msg = (function() {
                 } else
                     object.userid = options.longs === String ? "0" : 0;
                 object.gamekind = 0;
+                object.gridnum = 0;
             }
             if (message.userid != null && message.hasOwnProperty("userid"))
                 if (typeof message.userid === "number")
@@ -12940,6 +13805,8 @@ $root.msg = (function() {
                     object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
             if (message.gamekind != null && message.hasOwnProperty("gamekind"))
                 object.gamekind = message.gamekind;
+            if (message.gridnum != null && message.hasOwnProperty("gridnum"))
+                object.gridnum = message.gridnum;
             return object;
         };
 
@@ -14179,504 +15046,6 @@ $root.msg = (function() {
         return RS2GW_RetUserDisconnect;
     })();
 
-    msg.GW2RS_MsgTransfer = (function() {
-
-        /**
-         * Properties of a GW2RS_MsgTransfer.
-         * @memberof msg
-         * @interface IGW2RS_MsgTransfer
-         * @property {number|Long|null} [uid] GW2RS_MsgTransfer uid
-         * @property {string|null} [name] GW2RS_MsgTransfer name
-         * @property {Uint8Array|null} [buf] GW2RS_MsgTransfer buf
-         */
-
-        /**
-         * Constructs a new GW2RS_MsgTransfer.
-         * @memberof msg
-         * @classdesc Represents a GW2RS_MsgTransfer.
-         * @implements IGW2RS_MsgTransfer
-         * @constructor
-         * @param {msg.IGW2RS_MsgTransfer=} [properties] Properties to set
-         */
-        function GW2RS_MsgTransfer(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * GW2RS_MsgTransfer uid.
-         * @member {number|Long} uid
-         * @memberof msg.GW2RS_MsgTransfer
-         * @instance
-         */
-        GW2RS_MsgTransfer.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * GW2RS_MsgTransfer name.
-         * @member {string} name
-         * @memberof msg.GW2RS_MsgTransfer
-         * @instance
-         */
-        GW2RS_MsgTransfer.prototype.name = "";
-
-        /**
-         * GW2RS_MsgTransfer buf.
-         * @member {Uint8Array} buf
-         * @memberof msg.GW2RS_MsgTransfer
-         * @instance
-         */
-        GW2RS_MsgTransfer.prototype.buf = $util.newBuffer([]);
-
-        /**
-         * Creates a new GW2RS_MsgTransfer instance using the specified properties.
-         * @function create
-         * @memberof msg.GW2RS_MsgTransfer
-         * @static
-         * @param {msg.IGW2RS_MsgTransfer=} [properties] Properties to set
-         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer instance
-         */
-        GW2RS_MsgTransfer.create = function create(properties) {
-            return new GW2RS_MsgTransfer(properties);
-        };
-
-        /**
-         * Encodes the specified GW2RS_MsgTransfer message. Does not implicitly {@link msg.GW2RS_MsgTransfer.verify|verify} messages.
-         * @function encode
-         * @memberof msg.GW2RS_MsgTransfer
-         * @static
-         * @param {msg.IGW2RS_MsgTransfer} message GW2RS_MsgTransfer message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2RS_MsgTransfer.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.uid != null && message.hasOwnProperty("uid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.uid);
-            if (message.name != null && message.hasOwnProperty("name"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
-            if (message.buf != null && message.hasOwnProperty("buf"))
-                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.buf);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified GW2RS_MsgTransfer message, length delimited. Does not implicitly {@link msg.GW2RS_MsgTransfer.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.GW2RS_MsgTransfer
-         * @static
-         * @param {msg.IGW2RS_MsgTransfer} message GW2RS_MsgTransfer message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2RS_MsgTransfer.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a GW2RS_MsgTransfer message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.GW2RS_MsgTransfer
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2RS_MsgTransfer.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2RS_MsgTransfer();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.uid = reader.uint64();
-                    break;
-                case 2:
-                    message.name = reader.string();
-                    break;
-                case 3:
-                    message.buf = reader.bytes();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a GW2RS_MsgTransfer message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.GW2RS_MsgTransfer
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2RS_MsgTransfer.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a GW2RS_MsgTransfer message.
-         * @function verify
-         * @memberof msg.GW2RS_MsgTransfer
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        GW2RS_MsgTransfer.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.uid != null && message.hasOwnProperty("uid"))
-                if (!$util.isInteger(message.uid) && !(message.uid && $util.isInteger(message.uid.low) && $util.isInteger(message.uid.high)))
-                    return "uid: integer|Long expected";
-            if (message.name != null && message.hasOwnProperty("name"))
-                if (!$util.isString(message.name))
-                    return "name: string expected";
-            if (message.buf != null && message.hasOwnProperty("buf"))
-                if (!(message.buf && typeof message.buf.length === "number" || $util.isString(message.buf)))
-                    return "buf: buffer expected";
-            return null;
-        };
-
-        /**
-         * Creates a GW2RS_MsgTransfer message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.GW2RS_MsgTransfer
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.GW2RS_MsgTransfer} GW2RS_MsgTransfer
-         */
-        GW2RS_MsgTransfer.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.GW2RS_MsgTransfer)
-                return object;
-            var message = new $root.msg.GW2RS_MsgTransfer();
-            if (object.uid != null)
-                if ($util.Long)
-                    (message.uid = $util.Long.fromValue(object.uid)).unsigned = true;
-                else if (typeof object.uid === "string")
-                    message.uid = parseInt(object.uid, 10);
-                else if (typeof object.uid === "number")
-                    message.uid = object.uid;
-                else if (typeof object.uid === "object")
-                    message.uid = new $util.LongBits(object.uid.low >>> 0, object.uid.high >>> 0).toNumber(true);
-            if (object.name != null)
-                message.name = String(object.name);
-            if (object.buf != null)
-                if (typeof object.buf === "string")
-                    $util.base64.decode(object.buf, message.buf = $util.newBuffer($util.base64.length(object.buf)), 0);
-                else if (object.buf.length)
-                    message.buf = object.buf;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a GW2RS_MsgTransfer message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.GW2RS_MsgTransfer
-         * @static
-         * @param {msg.GW2RS_MsgTransfer} message GW2RS_MsgTransfer
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        GW2RS_MsgTransfer.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.uid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.uid = options.longs === String ? "0" : 0;
-                object.name = "";
-                object.buf = options.bytes === String ? "" : [];
-            }
-            if (message.uid != null && message.hasOwnProperty("uid"))
-                if (typeof message.uid === "number")
-                    object.uid = options.longs === String ? String(message.uid) : message.uid;
-                else
-                    object.uid = options.longs === String ? $util.Long.prototype.toString.call(message.uid) : options.longs === Number ? new $util.LongBits(message.uid.low >>> 0, message.uid.high >>> 0).toNumber(true) : message.uid;
-            if (message.name != null && message.hasOwnProperty("name"))
-                object.name = message.name;
-            if (message.buf != null && message.hasOwnProperty("buf"))
-                object.buf = options.bytes === String ? $util.base64.encode(message.buf, 0, message.buf.length) : options.bytes === Array ? Array.prototype.slice.call(message.buf) : message.buf;
-            return object;
-        };
-
-        /**
-         * Converts this GW2RS_MsgTransfer to JSON.
-         * @function toJSON
-         * @memberof msg.GW2RS_MsgTransfer
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        GW2RS_MsgTransfer.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return GW2RS_MsgTransfer;
-    })();
-
-    msg.RS2GW_MsgTransfer = (function() {
-
-        /**
-         * Properties of a RS2GW_MsgTransfer.
-         * @memberof msg
-         * @interface IRS2GW_MsgTransfer
-         * @property {number|Long|null} [uid] RS2GW_MsgTransfer uid
-         * @property {string|null} [name] RS2GW_MsgTransfer name
-         * @property {Uint8Array|null} [buf] RS2GW_MsgTransfer buf
-         */
-
-        /**
-         * Constructs a new RS2GW_MsgTransfer.
-         * @memberof msg
-         * @classdesc Represents a RS2GW_MsgTransfer.
-         * @implements IRS2GW_MsgTransfer
-         * @constructor
-         * @param {msg.IRS2GW_MsgTransfer=} [properties] Properties to set
-         */
-        function RS2GW_MsgTransfer(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * RS2GW_MsgTransfer uid.
-         * @member {number|Long} uid
-         * @memberof msg.RS2GW_MsgTransfer
-         * @instance
-         */
-        RS2GW_MsgTransfer.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * RS2GW_MsgTransfer name.
-         * @member {string} name
-         * @memberof msg.RS2GW_MsgTransfer
-         * @instance
-         */
-        RS2GW_MsgTransfer.prototype.name = "";
-
-        /**
-         * RS2GW_MsgTransfer buf.
-         * @member {Uint8Array} buf
-         * @memberof msg.RS2GW_MsgTransfer
-         * @instance
-         */
-        RS2GW_MsgTransfer.prototype.buf = $util.newBuffer([]);
-
-        /**
-         * Creates a new RS2GW_MsgTransfer instance using the specified properties.
-         * @function create
-         * @memberof msg.RS2GW_MsgTransfer
-         * @static
-         * @param {msg.IRS2GW_MsgTransfer=} [properties] Properties to set
-         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer instance
-         */
-        RS2GW_MsgTransfer.create = function create(properties) {
-            return new RS2GW_MsgTransfer(properties);
-        };
-
-        /**
-         * Encodes the specified RS2GW_MsgTransfer message. Does not implicitly {@link msg.RS2GW_MsgTransfer.verify|verify} messages.
-         * @function encode
-         * @memberof msg.RS2GW_MsgTransfer
-         * @static
-         * @param {msg.IRS2GW_MsgTransfer} message RS2GW_MsgTransfer message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        RS2GW_MsgTransfer.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.uid != null && message.hasOwnProperty("uid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.uid);
-            if (message.name != null && message.hasOwnProperty("name"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
-            if (message.buf != null && message.hasOwnProperty("buf"))
-                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.buf);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified RS2GW_MsgTransfer message, length delimited. Does not implicitly {@link msg.RS2GW_MsgTransfer.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.RS2GW_MsgTransfer
-         * @static
-         * @param {msg.IRS2GW_MsgTransfer} message RS2GW_MsgTransfer message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        RS2GW_MsgTransfer.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a RS2GW_MsgTransfer message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.RS2GW_MsgTransfer
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        RS2GW_MsgTransfer.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.RS2GW_MsgTransfer();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.uid = reader.uint64();
-                    break;
-                case 2:
-                    message.name = reader.string();
-                    break;
-                case 3:
-                    message.buf = reader.bytes();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a RS2GW_MsgTransfer message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.RS2GW_MsgTransfer
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        RS2GW_MsgTransfer.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a RS2GW_MsgTransfer message.
-         * @function verify
-         * @memberof msg.RS2GW_MsgTransfer
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        RS2GW_MsgTransfer.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.uid != null && message.hasOwnProperty("uid"))
-                if (!$util.isInteger(message.uid) && !(message.uid && $util.isInteger(message.uid.low) && $util.isInteger(message.uid.high)))
-                    return "uid: integer|Long expected";
-            if (message.name != null && message.hasOwnProperty("name"))
-                if (!$util.isString(message.name))
-                    return "name: string expected";
-            if (message.buf != null && message.hasOwnProperty("buf"))
-                if (!(message.buf && typeof message.buf.length === "number" || $util.isString(message.buf)))
-                    return "buf: buffer expected";
-            return null;
-        };
-
-        /**
-         * Creates a RS2GW_MsgTransfer message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.RS2GW_MsgTransfer
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.RS2GW_MsgTransfer} RS2GW_MsgTransfer
-         */
-        RS2GW_MsgTransfer.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.RS2GW_MsgTransfer)
-                return object;
-            var message = new $root.msg.RS2GW_MsgTransfer();
-            if (object.uid != null)
-                if ($util.Long)
-                    (message.uid = $util.Long.fromValue(object.uid)).unsigned = true;
-                else if (typeof object.uid === "string")
-                    message.uid = parseInt(object.uid, 10);
-                else if (typeof object.uid === "number")
-                    message.uid = object.uid;
-                else if (typeof object.uid === "object")
-                    message.uid = new $util.LongBits(object.uid.low >>> 0, object.uid.high >>> 0).toNumber(true);
-            if (object.name != null)
-                message.name = String(object.name);
-            if (object.buf != null)
-                if (typeof object.buf === "string")
-                    $util.base64.decode(object.buf, message.buf = $util.newBuffer($util.base64.length(object.buf)), 0);
-                else if (object.buf.length)
-                    message.buf = object.buf;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a RS2GW_MsgTransfer message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.RS2GW_MsgTransfer
-         * @static
-         * @param {msg.RS2GW_MsgTransfer} message RS2GW_MsgTransfer
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        RS2GW_MsgTransfer.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.uid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.uid = options.longs === String ? "0" : 0;
-                object.name = "";
-                object.buf = options.bytes === String ? "" : [];
-            }
-            if (message.uid != null && message.hasOwnProperty("uid"))
-                if (typeof message.uid === "number")
-                    object.uid = options.longs === String ? String(message.uid) : message.uid;
-                else
-                    object.uid = options.longs === String ? $util.Long.prototype.toString.call(message.uid) : options.longs === Number ? new $util.LongBits(message.uid.low >>> 0, message.uid.high >>> 0).toNumber(true) : message.uid;
-            if (message.name != null && message.hasOwnProperty("name"))
-                object.name = message.name;
-            if (message.buf != null && message.hasOwnProperty("buf"))
-                object.buf = options.bytes === String ? $util.base64.encode(message.buf, 0, message.buf.length) : options.bytes === Array ? Array.prototype.slice.call(message.buf) : message.buf;
-            return object;
-        };
-
-        /**
-         * Converts this RS2GW_MsgTransfer to JSON.
-         * @function toJSON
-         * @memberof msg.RS2GW_MsgTransfer
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        RS2GW_MsgTransfer.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return RS2GW_MsgTransfer;
-    })();
-
     msg.C2GW_BuyItem = (function() {
 
         /**
@@ -15305,193 +15674,6 @@ $root.msg = (function() {
         };
 
         return GW2C_RemovePackageItem;
-    })();
-
-    msg.GW2C_UpdateGold = (function() {
-
-        /**
-         * Properties of a GW2C_UpdateGold.
-         * @memberof msg
-         * @interface IGW2C_UpdateGold
-         * @property {number|null} [num] GW2C_UpdateGold num
-         */
-
-        /**
-         * Constructs a new GW2C_UpdateGold.
-         * @memberof msg
-         * @classdesc Represents a GW2C_UpdateGold.
-         * @implements IGW2C_UpdateGold
-         * @constructor
-         * @param {msg.IGW2C_UpdateGold=} [properties] Properties to set
-         */
-        function GW2C_UpdateGold(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * GW2C_UpdateGold num.
-         * @member {number} num
-         * @memberof msg.GW2C_UpdateGold
-         * @instance
-         */
-        GW2C_UpdateGold.prototype.num = 0;
-
-        /**
-         * Creates a new GW2C_UpdateGold instance using the specified properties.
-         * @function create
-         * @memberof msg.GW2C_UpdateGold
-         * @static
-         * @param {msg.IGW2C_UpdateGold=} [properties] Properties to set
-         * @returns {msg.GW2C_UpdateGold} GW2C_UpdateGold instance
-         */
-        GW2C_UpdateGold.create = function create(properties) {
-            return new GW2C_UpdateGold(properties);
-        };
-
-        /**
-         * Encodes the specified GW2C_UpdateGold message. Does not implicitly {@link msg.GW2C_UpdateGold.verify|verify} messages.
-         * @function encode
-         * @memberof msg.GW2C_UpdateGold
-         * @static
-         * @param {msg.IGW2C_UpdateGold} message GW2C_UpdateGold message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_UpdateGold.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.num != null && message.hasOwnProperty("num"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.num);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified GW2C_UpdateGold message, length delimited. Does not implicitly {@link msg.GW2C_UpdateGold.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.GW2C_UpdateGold
-         * @static
-         * @param {msg.IGW2C_UpdateGold} message GW2C_UpdateGold message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_UpdateGold.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a GW2C_UpdateGold message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.GW2C_UpdateGold
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.GW2C_UpdateGold} GW2C_UpdateGold
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_UpdateGold.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_UpdateGold();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.num = reader.uint32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a GW2C_UpdateGold message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.GW2C_UpdateGold
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.GW2C_UpdateGold} GW2C_UpdateGold
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_UpdateGold.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a GW2C_UpdateGold message.
-         * @function verify
-         * @memberof msg.GW2C_UpdateGold
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        GW2C_UpdateGold.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.num != null && message.hasOwnProperty("num"))
-                if (!$util.isInteger(message.num))
-                    return "num: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a GW2C_UpdateGold message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.GW2C_UpdateGold
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.GW2C_UpdateGold} GW2C_UpdateGold
-         */
-        GW2C_UpdateGold.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.GW2C_UpdateGold)
-                return object;
-            var message = new $root.msg.GW2C_UpdateGold();
-            if (object.num != null)
-                message.num = object.num >>> 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a GW2C_UpdateGold message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.GW2C_UpdateGold
-         * @static
-         * @param {msg.GW2C_UpdateGold} message GW2C_UpdateGold
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        GW2C_UpdateGold.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.num = 0;
-            if (message.num != null && message.hasOwnProperty("num"))
-                object.num = message.num;
-            return object;
-        };
-
-        /**
-         * Converts this GW2C_UpdateGold to JSON.
-         * @function toJSON
-         * @memberof msg.GW2C_UpdateGold
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        GW2C_UpdateGold.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return GW2C_UpdateGold;
     })();
 
     msg.GW2C_UpdateYuanbao = (function() {
@@ -16273,6 +16455,7 @@ $root.msg = (function() {
          * @interface IC2GW_ReqDeliveryGoods
          * @property {Array.<msg.IDeliveryGoods>|null} [list] C2GW_ReqDeliveryGoods list
          * @property {string|null} [token] C2GW_ReqDeliveryGoods token
+         * @property {string|null} [phone] C2GW_ReqDeliveryGoods phone
          */
 
         /**
@@ -16308,6 +16491,14 @@ $root.msg = (function() {
         C2GW_ReqDeliveryGoods.prototype.token = "";
 
         /**
+         * C2GW_ReqDeliveryGoods phone.
+         * @member {string} phone
+         * @memberof msg.C2GW_ReqDeliveryGoods
+         * @instance
+         */
+        C2GW_ReqDeliveryGoods.prototype.phone = "";
+
+        /**
          * Creates a new C2GW_ReqDeliveryGoods instance using the specified properties.
          * @function create
          * @memberof msg.C2GW_ReqDeliveryGoods
@@ -16336,6 +16527,8 @@ $root.msg = (function() {
                     $root.msg.DeliveryGoods.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.token != null && message.hasOwnProperty("token"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.token);
+            if (message.phone != null && message.hasOwnProperty("phone"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.phone);
             return writer;
         };
 
@@ -16377,6 +16570,9 @@ $root.msg = (function() {
                     break;
                 case 2:
                     message.token = reader.string();
+                    break;
+                case 3:
+                    message.phone = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -16425,6 +16621,9 @@ $root.msg = (function() {
             if (message.token != null && message.hasOwnProperty("token"))
                 if (!$util.isString(message.token))
                     return "token: string expected";
+            if (message.phone != null && message.hasOwnProperty("phone"))
+                if (!$util.isString(message.phone))
+                    return "phone: string expected";
             return null;
         };
 
@@ -16452,6 +16651,8 @@ $root.msg = (function() {
             }
             if (object.token != null)
                 message.token = String(object.token);
+            if (object.phone != null)
+                message.phone = String(object.phone);
             return message;
         };
 
@@ -16470,8 +16671,10 @@ $root.msg = (function() {
             var object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
-            if (options.defaults)
+            if (options.defaults) {
                 object.token = "";
+                object.phone = "";
+            }
             if (message.list && message.list.length) {
                 object.list = [];
                 for (var j = 0; j < message.list.length; ++j)
@@ -16479,6 +16682,8 @@ $root.msg = (function() {
             }
             if (message.token != null && message.hasOwnProperty("token"))
                 object.token = message.token;
+            if (message.phone != null && message.hasOwnProperty("phone"))
+                object.phone = message.phone;
             return object;
         };
 
@@ -21267,6 +21472,796 @@ $root.msg = (function() {
         return MS2Server_BroadCast;
     })();
 
+    msg.C2GW_StartThrow = (function() {
+
+        /**
+         * Properties of a C2GW_StartThrow.
+         * @memberof msg
+         * @interface IC2GW_StartThrow
+         * @property {string|null} [token] C2GW_StartThrow token
+         */
+
+        /**
+         * Constructs a new C2GW_StartThrow.
+         * @memberof msg
+         * @classdesc Represents a C2GW_StartThrow.
+         * @implements IC2GW_StartThrow
+         * @constructor
+         * @param {msg.IC2GW_StartThrow=} [properties] Properties to set
+         */
+        function C2GW_StartThrow(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_StartThrow token.
+         * @member {string} token
+         * @memberof msg.C2GW_StartThrow
+         * @instance
+         */
+        C2GW_StartThrow.prototype.token = "";
+
+        /**
+         * Creates a new C2GW_StartThrow instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_StartThrow
+         * @static
+         * @param {msg.IC2GW_StartThrow=} [properties] Properties to set
+         * @returns {msg.C2GW_StartThrow} C2GW_StartThrow instance
+         */
+        C2GW_StartThrow.create = function create(properties) {
+            return new C2GW_StartThrow(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_StartThrow message. Does not implicitly {@link msg.C2GW_StartThrow.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_StartThrow
+         * @static
+         * @param {msg.IC2GW_StartThrow} message C2GW_StartThrow message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_StartThrow.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.token != null && message.hasOwnProperty("token"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.token);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_StartThrow message, length delimited. Does not implicitly {@link msg.C2GW_StartThrow.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_StartThrow
+         * @static
+         * @param {msg.IC2GW_StartThrow} message C2GW_StartThrow message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_StartThrow.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_StartThrow message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_StartThrow
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_StartThrow} C2GW_StartThrow
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_StartThrow.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_StartThrow();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.token = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_StartThrow message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_StartThrow
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_StartThrow} C2GW_StartThrow
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_StartThrow.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_StartThrow message.
+         * @function verify
+         * @memberof msg.C2GW_StartThrow
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_StartThrow.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.token != null && message.hasOwnProperty("token"))
+                if (!$util.isString(message.token))
+                    return "token: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_StartThrow message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_StartThrow
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_StartThrow} C2GW_StartThrow
+         */
+        C2GW_StartThrow.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_StartThrow)
+                return object;
+            var message = new $root.msg.C2GW_StartThrow();
+            if (object.token != null)
+                message.token = String(object.token);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_StartThrow message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_StartThrow
+         * @static
+         * @param {msg.C2GW_StartThrow} message C2GW_StartThrow
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_StartThrow.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.token = "";
+            if (message.token != null && message.hasOwnProperty("token"))
+                object.token = message.token;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_StartThrow to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_StartThrow
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_StartThrow.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_StartThrow;
+    })();
+
+    msg.C2GW_TargetItem = (function() {
+
+        /**
+         * Properties of a C2GW_TargetItem.
+         * @memberof msg
+         * @interface IC2GW_TargetItem
+         * @property {Array.<number>|null} [itemid] C2GW_TargetItem itemid
+         */
+
+        /**
+         * Constructs a new C2GW_TargetItem.
+         * @memberof msg
+         * @classdesc Represents a C2GW_TargetItem.
+         * @implements IC2GW_TargetItem
+         * @constructor
+         * @param {msg.IC2GW_TargetItem=} [properties] Properties to set
+         */
+        function C2GW_TargetItem(properties) {
+            this.itemid = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_TargetItem itemid.
+         * @member {Array.<number>} itemid
+         * @memberof msg.C2GW_TargetItem
+         * @instance
+         */
+        C2GW_TargetItem.prototype.itemid = $util.emptyArray;
+
+        /**
+         * Creates a new C2GW_TargetItem instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_TargetItem
+         * @static
+         * @param {msg.IC2GW_TargetItem=} [properties] Properties to set
+         * @returns {msg.C2GW_TargetItem} C2GW_TargetItem instance
+         */
+        C2GW_TargetItem.create = function create(properties) {
+            return new C2GW_TargetItem(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_TargetItem message. Does not implicitly {@link msg.C2GW_TargetItem.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_TargetItem
+         * @static
+         * @param {msg.IC2GW_TargetItem} message C2GW_TargetItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_TargetItem.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.itemid != null && message.itemid.length)
+                for (var i = 0; i < message.itemid.length; ++i)
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.itemid[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_TargetItem message, length delimited. Does not implicitly {@link msg.C2GW_TargetItem.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_TargetItem
+         * @static
+         * @param {msg.IC2GW_TargetItem} message C2GW_TargetItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_TargetItem.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_TargetItem message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_TargetItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_TargetItem} C2GW_TargetItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_TargetItem.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_TargetItem();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.itemid && message.itemid.length))
+                        message.itemid = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.itemid.push(reader.uint32());
+                    } else
+                        message.itemid.push(reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_TargetItem message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_TargetItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_TargetItem} C2GW_TargetItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_TargetItem.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_TargetItem message.
+         * @function verify
+         * @memberof msg.C2GW_TargetItem
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_TargetItem.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.itemid != null && message.hasOwnProperty("itemid")) {
+                if (!Array.isArray(message.itemid))
+                    return "itemid: array expected";
+                for (var i = 0; i < message.itemid.length; ++i)
+                    if (!$util.isInteger(message.itemid[i]))
+                        return "itemid: integer[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_TargetItem message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_TargetItem
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_TargetItem} C2GW_TargetItem
+         */
+        C2GW_TargetItem.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_TargetItem)
+                return object;
+            var message = new $root.msg.C2GW_TargetItem();
+            if (object.itemid) {
+                if (!Array.isArray(object.itemid))
+                    throw TypeError(".msg.C2GW_TargetItem.itemid: array expected");
+                message.itemid = [];
+                for (var i = 0; i < object.itemid.length; ++i)
+                    message.itemid[i] = object.itemid[i] >>> 0;
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_TargetItem message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_TargetItem
+         * @static
+         * @param {msg.C2GW_TargetItem} message C2GW_TargetItem
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_TargetItem.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.itemid = [];
+            if (message.itemid && message.itemid.length) {
+                object.itemid = [];
+                for (var j = 0; j < message.itemid.length; ++j)
+                    object.itemid[j] = message.itemid[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_TargetItem to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_TargetItem
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_TargetItem.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_TargetItem;
+    })();
+
+    msg.GW2C_HitTarget = (function() {
+
+        /**
+         * Properties of a GW2C_HitTarget.
+         * @memberof msg
+         * @interface IGW2C_HitTarget
+         * @property {Array.<number>|null} [itemid] GW2C_HitTarget itemid
+         */
+
+        /**
+         * Constructs a new GW2C_HitTarget.
+         * @memberof msg
+         * @classdesc Represents a GW2C_HitTarget.
+         * @implements IGW2C_HitTarget
+         * @constructor
+         * @param {msg.IGW2C_HitTarget=} [properties] Properties to set
+         */
+        function GW2C_HitTarget(properties) {
+            this.itemid = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_HitTarget itemid.
+         * @member {Array.<number>} itemid
+         * @memberof msg.GW2C_HitTarget
+         * @instance
+         */
+        GW2C_HitTarget.prototype.itemid = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_HitTarget instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_HitTarget
+         * @static
+         * @param {msg.IGW2C_HitTarget=} [properties] Properties to set
+         * @returns {msg.GW2C_HitTarget} GW2C_HitTarget instance
+         */
+        GW2C_HitTarget.create = function create(properties) {
+            return new GW2C_HitTarget(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_HitTarget message. Does not implicitly {@link msg.GW2C_HitTarget.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_HitTarget
+         * @static
+         * @param {msg.IGW2C_HitTarget} message GW2C_HitTarget message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_HitTarget.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.itemid != null && message.itemid.length)
+                for (var i = 0; i < message.itemid.length; ++i)
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.itemid[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_HitTarget message, length delimited. Does not implicitly {@link msg.GW2C_HitTarget.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_HitTarget
+         * @static
+         * @param {msg.IGW2C_HitTarget} message GW2C_HitTarget message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_HitTarget.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_HitTarget message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_HitTarget
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_HitTarget} GW2C_HitTarget
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_HitTarget.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_HitTarget();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.itemid && message.itemid.length))
+                        message.itemid = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.itemid.push(reader.uint32());
+                    } else
+                        message.itemid.push(reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_HitTarget message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_HitTarget
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_HitTarget} GW2C_HitTarget
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_HitTarget.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_HitTarget message.
+         * @function verify
+         * @memberof msg.GW2C_HitTarget
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_HitTarget.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.itemid != null && message.hasOwnProperty("itemid")) {
+                if (!Array.isArray(message.itemid))
+                    return "itemid: array expected";
+                for (var i = 0; i < message.itemid.length; ++i)
+                    if (!$util.isInteger(message.itemid[i]))
+                        return "itemid: integer[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_HitTarget message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_HitTarget
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_HitTarget} GW2C_HitTarget
+         */
+        GW2C_HitTarget.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_HitTarget)
+                return object;
+            var message = new $root.msg.GW2C_HitTarget();
+            if (object.itemid) {
+                if (!Array.isArray(object.itemid))
+                    throw TypeError(".msg.GW2C_HitTarget.itemid: array expected");
+                message.itemid = [];
+                for (var i = 0; i < object.itemid.length; ++i)
+                    message.itemid[i] = object.itemid[i] >>> 0;
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_HitTarget message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_HitTarget
+         * @static
+         * @param {msg.GW2C_HitTarget} message GW2C_HitTarget
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_HitTarget.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.itemid = [];
+            if (message.itemid && message.itemid.length) {
+                object.itemid = [];
+                for (var j = 0; j < message.itemid.length; ++j)
+                    object.itemid[j] = message.itemid[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_HitTarget to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_HitTarget
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_HitTarget.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_HitTarget;
+    })();
+
+    msg.GW2C_FreeThrow = (function() {
+
+        /**
+         * Properties of a GW2C_FreeThrow.
+         * @memberof msg
+         * @interface IGW2C_FreeThrow
+         * @property {number|null} [cost] GW2C_FreeThrow cost
+         */
+
+        /**
+         * Constructs a new GW2C_FreeThrow.
+         * @memberof msg
+         * @classdesc Represents a GW2C_FreeThrow.
+         * @implements IGW2C_FreeThrow
+         * @constructor
+         * @param {msg.IGW2C_FreeThrow=} [properties] Properties to set
+         */
+        function GW2C_FreeThrow(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_FreeThrow cost.
+         * @member {number} cost
+         * @memberof msg.GW2C_FreeThrow
+         * @instance
+         */
+        GW2C_FreeThrow.prototype.cost = 0;
+
+        /**
+         * Creates a new GW2C_FreeThrow instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_FreeThrow
+         * @static
+         * @param {msg.IGW2C_FreeThrow=} [properties] Properties to set
+         * @returns {msg.GW2C_FreeThrow} GW2C_FreeThrow instance
+         */
+        GW2C_FreeThrow.create = function create(properties) {
+            return new GW2C_FreeThrow(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_FreeThrow message. Does not implicitly {@link msg.GW2C_FreeThrow.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_FreeThrow
+         * @static
+         * @param {msg.IGW2C_FreeThrow} message GW2C_FreeThrow message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_FreeThrow.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.cost);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_FreeThrow message, length delimited. Does not implicitly {@link msg.GW2C_FreeThrow.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_FreeThrow
+         * @static
+         * @param {msg.IGW2C_FreeThrow} message GW2C_FreeThrow message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_FreeThrow.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_FreeThrow message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_FreeThrow
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_FreeThrow} GW2C_FreeThrow
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_FreeThrow.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_FreeThrow();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.cost = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_FreeThrow message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_FreeThrow
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_FreeThrow} GW2C_FreeThrow
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_FreeThrow.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_FreeThrow message.
+         * @function verify
+         * @memberof msg.GW2C_FreeThrow
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_FreeThrow.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                if (!$util.isInteger(message.cost))
+                    return "cost: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_FreeThrow message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_FreeThrow
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_FreeThrow} GW2C_FreeThrow
+         */
+        GW2C_FreeThrow.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_FreeThrow)
+                return object;
+            var message = new $root.msg.GW2C_FreeThrow();
+            if (object.cost != null)
+                message.cost = object.cost >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_FreeThrow message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_FreeThrow
+         * @static
+         * @param {msg.GW2C_FreeThrow} message GW2C_FreeThrow
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_FreeThrow.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.cost = 0;
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                object.cost = message.cost;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_FreeThrow to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_FreeThrow
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_FreeThrow.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_FreeThrow;
+    })();
+
     msg.C2GW_StartTiger = (function() {
 
         /**
@@ -23228,976 +24223,6 @@ $root.msg = (function() {
         };
 
         return C2GW_PlatformRechargeDone;
-    })();
-
-    msg.GW2C_SendWechatInfo = (function() {
-
-        /**
-         * Properties of a GW2C_SendWechatInfo.
-         * @memberof msg
-         * @interface IGW2C_SendWechatInfo
-         * @property {string|null} [openid] GW2C_SendWechatInfo openid
-         */
-
-        /**
-         * Constructs a new GW2C_SendWechatInfo.
-         * @memberof msg
-         * @classdesc Represents a GW2C_SendWechatInfo.
-         * @implements IGW2C_SendWechatInfo
-         * @constructor
-         * @param {msg.IGW2C_SendWechatInfo=} [properties] Properties to set
-         */
-        function GW2C_SendWechatInfo(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * GW2C_SendWechatInfo openid.
-         * @member {string} openid
-         * @memberof msg.GW2C_SendWechatInfo
-         * @instance
-         */
-        GW2C_SendWechatInfo.prototype.openid = "";
-
-        /**
-         * Creates a new GW2C_SendWechatInfo instance using the specified properties.
-         * @function create
-         * @memberof msg.GW2C_SendWechatInfo
-         * @static
-         * @param {msg.IGW2C_SendWechatInfo=} [properties] Properties to set
-         * @returns {msg.GW2C_SendWechatInfo} GW2C_SendWechatInfo instance
-         */
-        GW2C_SendWechatInfo.create = function create(properties) {
-            return new GW2C_SendWechatInfo(properties);
-        };
-
-        /**
-         * Encodes the specified GW2C_SendWechatInfo message. Does not implicitly {@link msg.GW2C_SendWechatInfo.verify|verify} messages.
-         * @function encode
-         * @memberof msg.GW2C_SendWechatInfo
-         * @static
-         * @param {msg.IGW2C_SendWechatInfo} message GW2C_SendWechatInfo message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_SendWechatInfo.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.openid != null && message.hasOwnProperty("openid"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.openid);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified GW2C_SendWechatInfo message, length delimited. Does not implicitly {@link msg.GW2C_SendWechatInfo.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.GW2C_SendWechatInfo
-         * @static
-         * @param {msg.IGW2C_SendWechatInfo} message GW2C_SendWechatInfo message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_SendWechatInfo.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a GW2C_SendWechatInfo message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.GW2C_SendWechatInfo
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.GW2C_SendWechatInfo} GW2C_SendWechatInfo
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_SendWechatInfo.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_SendWechatInfo();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.openid = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a GW2C_SendWechatInfo message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.GW2C_SendWechatInfo
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.GW2C_SendWechatInfo} GW2C_SendWechatInfo
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_SendWechatInfo.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a GW2C_SendWechatInfo message.
-         * @function verify
-         * @memberof msg.GW2C_SendWechatInfo
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        GW2C_SendWechatInfo.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.openid != null && message.hasOwnProperty("openid"))
-                if (!$util.isString(message.openid))
-                    return "openid: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a GW2C_SendWechatInfo message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.GW2C_SendWechatInfo
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.GW2C_SendWechatInfo} GW2C_SendWechatInfo
-         */
-        GW2C_SendWechatInfo.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.GW2C_SendWechatInfo)
-                return object;
-            var message = new $root.msg.GW2C_SendWechatInfo();
-            if (object.openid != null)
-                message.openid = String(object.openid);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a GW2C_SendWechatInfo message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.GW2C_SendWechatInfo
-         * @static
-         * @param {msg.GW2C_SendWechatInfo} message GW2C_SendWechatInfo
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        GW2C_SendWechatInfo.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.openid = "";
-            if (message.openid != null && message.hasOwnProperty("openid"))
-                object.openid = message.openid;
-            return object;
-        };
-
-        /**
-         * Converts this GW2C_SendWechatInfo to JSON.
-         * @function toJSON
-         * @memberof msg.GW2C_SendWechatInfo
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        GW2C_SendWechatInfo.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return GW2C_SendWechatInfo;
-    })();
-
-    msg.C2GW_StartLuckyDraw = (function() {
-
-        /**
-         * Properties of a C2GW_StartLuckyDraw.
-         * @memberof msg
-         * @interface IC2GW_StartLuckyDraw
-         * @property {number|Long|null} [userid] C2GW_StartLuckyDraw userid
-         */
-
-        /**
-         * Constructs a new C2GW_StartLuckyDraw.
-         * @memberof msg
-         * @classdesc Represents a C2GW_StartLuckyDraw.
-         * @implements IC2GW_StartLuckyDraw
-         * @constructor
-         * @param {msg.IC2GW_StartLuckyDraw=} [properties] Properties to set
-         */
-        function C2GW_StartLuckyDraw(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * C2GW_StartLuckyDraw userid.
-         * @member {number|Long} userid
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @instance
-         */
-        C2GW_StartLuckyDraw.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * Creates a new C2GW_StartLuckyDraw instance using the specified properties.
-         * @function create
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @static
-         * @param {msg.IC2GW_StartLuckyDraw=} [properties] Properties to set
-         * @returns {msg.C2GW_StartLuckyDraw} C2GW_StartLuckyDraw instance
-         */
-        C2GW_StartLuckyDraw.create = function create(properties) {
-            return new C2GW_StartLuckyDraw(properties);
-        };
-
-        /**
-         * Encodes the specified C2GW_StartLuckyDraw message. Does not implicitly {@link msg.C2GW_StartLuckyDraw.verify|verify} messages.
-         * @function encode
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @static
-         * @param {msg.IC2GW_StartLuckyDraw} message C2GW_StartLuckyDraw message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        C2GW_StartLuckyDraw.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified C2GW_StartLuckyDraw message, length delimited. Does not implicitly {@link msg.C2GW_StartLuckyDraw.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @static
-         * @param {msg.IC2GW_StartLuckyDraw} message C2GW_StartLuckyDraw message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        C2GW_StartLuckyDraw.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a C2GW_StartLuckyDraw message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.C2GW_StartLuckyDraw} C2GW_StartLuckyDraw
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        C2GW_StartLuckyDraw.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_StartLuckyDraw();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.userid = reader.uint64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a C2GW_StartLuckyDraw message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.C2GW_StartLuckyDraw} C2GW_StartLuckyDraw
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        C2GW_StartLuckyDraw.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a C2GW_StartLuckyDraw message.
-         * @function verify
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        C2GW_StartLuckyDraw.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a C2GW_StartLuckyDraw message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.C2GW_StartLuckyDraw} C2GW_StartLuckyDraw
-         */
-        C2GW_StartLuckyDraw.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.C2GW_StartLuckyDraw)
-                return object;
-            var message = new $root.msg.C2GW_StartLuckyDraw();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a C2GW_StartLuckyDraw message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @static
-         * @param {msg.C2GW_StartLuckyDraw} message C2GW_StartLuckyDraw
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        C2GW_StartLuckyDraw.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            return object;
-        };
-
-        /**
-         * Converts this C2GW_StartLuckyDraw to JSON.
-         * @function toJSON
-         * @memberof msg.C2GW_StartLuckyDraw
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        C2GW_StartLuckyDraw.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return C2GW_StartLuckyDraw;
-    })();
-
-    msg.GW2C_LuckyDrawHit = (function() {
-
-        /**
-         * Properties of a GW2C_LuckyDrawHit.
-         * @memberof msg
-         * @interface IGW2C_LuckyDrawHit
-         * @property {number|null} [id] GW2C_LuckyDrawHit id
-         */
-
-        /**
-         * Constructs a new GW2C_LuckyDrawHit.
-         * @memberof msg
-         * @classdesc Represents a GW2C_LuckyDrawHit.
-         * @implements IGW2C_LuckyDrawHit
-         * @constructor
-         * @param {msg.IGW2C_LuckyDrawHit=} [properties] Properties to set
-         */
-        function GW2C_LuckyDrawHit(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * GW2C_LuckyDrawHit id.
-         * @member {number} id
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @instance
-         */
-        GW2C_LuckyDrawHit.prototype.id = 0;
-
-        /**
-         * Creates a new GW2C_LuckyDrawHit instance using the specified properties.
-         * @function create
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @static
-         * @param {msg.IGW2C_LuckyDrawHit=} [properties] Properties to set
-         * @returns {msg.GW2C_LuckyDrawHit} GW2C_LuckyDrawHit instance
-         */
-        GW2C_LuckyDrawHit.create = function create(properties) {
-            return new GW2C_LuckyDrawHit(properties);
-        };
-
-        /**
-         * Encodes the specified GW2C_LuckyDrawHit message. Does not implicitly {@link msg.GW2C_LuckyDrawHit.verify|verify} messages.
-         * @function encode
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @static
-         * @param {msg.IGW2C_LuckyDrawHit} message GW2C_LuckyDrawHit message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_LuckyDrawHit.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.id != null && message.hasOwnProperty("id"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.id);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified GW2C_LuckyDrawHit message, length delimited. Does not implicitly {@link msg.GW2C_LuckyDrawHit.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @static
-         * @param {msg.IGW2C_LuckyDrawHit} message GW2C_LuckyDrawHit message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_LuckyDrawHit.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a GW2C_LuckyDrawHit message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.GW2C_LuckyDrawHit} GW2C_LuckyDrawHit
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_LuckyDrawHit.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_LuckyDrawHit();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.id = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a GW2C_LuckyDrawHit message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.GW2C_LuckyDrawHit} GW2C_LuckyDrawHit
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_LuckyDrawHit.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a GW2C_LuckyDrawHit message.
-         * @function verify
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        GW2C_LuckyDrawHit.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.id != null && message.hasOwnProperty("id"))
-                if (!$util.isInteger(message.id))
-                    return "id: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a GW2C_LuckyDrawHit message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.GW2C_LuckyDrawHit} GW2C_LuckyDrawHit
-         */
-        GW2C_LuckyDrawHit.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.GW2C_LuckyDrawHit)
-                return object;
-            var message = new $root.msg.GW2C_LuckyDrawHit();
-            if (object.id != null)
-                message.id = object.id | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a GW2C_LuckyDrawHit message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @static
-         * @param {msg.GW2C_LuckyDrawHit} message GW2C_LuckyDrawHit
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        GW2C_LuckyDrawHit.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.id = 0;
-            if (message.id != null && message.hasOwnProperty("id"))
-                object.id = message.id;
-            return object;
-        };
-
-        /**
-         * Converts this GW2C_LuckyDrawHit to JSON.
-         * @function toJSON
-         * @memberof msg.GW2C_LuckyDrawHit
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        GW2C_LuckyDrawHit.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return GW2C_LuckyDrawHit;
-    })();
-
-    msg.GW2C_FreePresentNotify = (function() {
-
-        /**
-         * Properties of a GW2C_FreePresentNotify.
-         * @memberof msg
-         * @interface IGW2C_FreePresentNotify
-         * @property {number|null} [money] GW2C_FreePresentNotify money
-         */
-
-        /**
-         * Constructs a new GW2C_FreePresentNotify.
-         * @memberof msg
-         * @classdesc Represents a GW2C_FreePresentNotify.
-         * @implements IGW2C_FreePresentNotify
-         * @constructor
-         * @param {msg.IGW2C_FreePresentNotify=} [properties] Properties to set
-         */
-        function GW2C_FreePresentNotify(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * GW2C_FreePresentNotify money.
-         * @member {number} money
-         * @memberof msg.GW2C_FreePresentNotify
-         * @instance
-         */
-        GW2C_FreePresentNotify.prototype.money = 0;
-
-        /**
-         * Creates a new GW2C_FreePresentNotify instance using the specified properties.
-         * @function create
-         * @memberof msg.GW2C_FreePresentNotify
-         * @static
-         * @param {msg.IGW2C_FreePresentNotify=} [properties] Properties to set
-         * @returns {msg.GW2C_FreePresentNotify} GW2C_FreePresentNotify instance
-         */
-        GW2C_FreePresentNotify.create = function create(properties) {
-            return new GW2C_FreePresentNotify(properties);
-        };
-
-        /**
-         * Encodes the specified GW2C_FreePresentNotify message. Does not implicitly {@link msg.GW2C_FreePresentNotify.verify|verify} messages.
-         * @function encode
-         * @memberof msg.GW2C_FreePresentNotify
-         * @static
-         * @param {msg.IGW2C_FreePresentNotify} message GW2C_FreePresentNotify message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_FreePresentNotify.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.money != null && message.hasOwnProperty("money"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.money);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified GW2C_FreePresentNotify message, length delimited. Does not implicitly {@link msg.GW2C_FreePresentNotify.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.GW2C_FreePresentNotify
-         * @static
-         * @param {msg.IGW2C_FreePresentNotify} message GW2C_FreePresentNotify message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_FreePresentNotify.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a GW2C_FreePresentNotify message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.GW2C_FreePresentNotify
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.GW2C_FreePresentNotify} GW2C_FreePresentNotify
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_FreePresentNotify.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_FreePresentNotify();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.money = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a GW2C_FreePresentNotify message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.GW2C_FreePresentNotify
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.GW2C_FreePresentNotify} GW2C_FreePresentNotify
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_FreePresentNotify.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a GW2C_FreePresentNotify message.
-         * @function verify
-         * @memberof msg.GW2C_FreePresentNotify
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        GW2C_FreePresentNotify.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.money != null && message.hasOwnProperty("money"))
-                if (!$util.isInteger(message.money))
-                    return "money: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a GW2C_FreePresentNotify message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.GW2C_FreePresentNotify
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.GW2C_FreePresentNotify} GW2C_FreePresentNotify
-         */
-        GW2C_FreePresentNotify.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.GW2C_FreePresentNotify)
-                return object;
-            var message = new $root.msg.GW2C_FreePresentNotify();
-            if (object.money != null)
-                message.money = object.money | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a GW2C_FreePresentNotify message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.GW2C_FreePresentNotify
-         * @static
-         * @param {msg.GW2C_FreePresentNotify} message GW2C_FreePresentNotify
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        GW2C_FreePresentNotify.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.money = 0;
-            if (message.money != null && message.hasOwnProperty("money"))
-                object.money = message.money;
-            return object;
-        };
-
-        /**
-         * Converts this GW2C_FreePresentNotify to JSON.
-         * @function toJSON
-         * @memberof msg.GW2C_FreePresentNotify
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        GW2C_FreePresentNotify.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return GW2C_FreePresentNotify;
-    })();
-
-    msg.GW2C_SendTaskList = (function() {
-
-        /**
-         * Properties of a GW2C_SendTaskList.
-         * @memberof msg
-         * @interface IGW2C_SendTaskList
-         * @property {Array.<msg.ITaskData>|null} [tasks] GW2C_SendTaskList tasks
-         */
-
-        /**
-         * Constructs a new GW2C_SendTaskList.
-         * @memberof msg
-         * @classdesc Represents a GW2C_SendTaskList.
-         * @implements IGW2C_SendTaskList
-         * @constructor
-         * @param {msg.IGW2C_SendTaskList=} [properties] Properties to set
-         */
-        function GW2C_SendTaskList(properties) {
-            this.tasks = [];
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * GW2C_SendTaskList tasks.
-         * @member {Array.<msg.ITaskData>} tasks
-         * @memberof msg.GW2C_SendTaskList
-         * @instance
-         */
-        GW2C_SendTaskList.prototype.tasks = $util.emptyArray;
-
-        /**
-         * Creates a new GW2C_SendTaskList instance using the specified properties.
-         * @function create
-         * @memberof msg.GW2C_SendTaskList
-         * @static
-         * @param {msg.IGW2C_SendTaskList=} [properties] Properties to set
-         * @returns {msg.GW2C_SendTaskList} GW2C_SendTaskList instance
-         */
-        GW2C_SendTaskList.create = function create(properties) {
-            return new GW2C_SendTaskList(properties);
-        };
-
-        /**
-         * Encodes the specified GW2C_SendTaskList message. Does not implicitly {@link msg.GW2C_SendTaskList.verify|verify} messages.
-         * @function encode
-         * @memberof msg.GW2C_SendTaskList
-         * @static
-         * @param {msg.IGW2C_SendTaskList} message GW2C_SendTaskList message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_SendTaskList.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.tasks != null && message.tasks.length)
-                for (var i = 0; i < message.tasks.length; ++i)
-                    $root.msg.TaskData.encode(message.tasks[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified GW2C_SendTaskList message, length delimited. Does not implicitly {@link msg.GW2C_SendTaskList.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.GW2C_SendTaskList
-         * @static
-         * @param {msg.IGW2C_SendTaskList} message GW2C_SendTaskList message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_SendTaskList.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a GW2C_SendTaskList message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.GW2C_SendTaskList
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.GW2C_SendTaskList} GW2C_SendTaskList
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_SendTaskList.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_SendTaskList();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    if (!(message.tasks && message.tasks.length))
-                        message.tasks = [];
-                    message.tasks.push($root.msg.TaskData.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a GW2C_SendTaskList message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.GW2C_SendTaskList
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.GW2C_SendTaskList} GW2C_SendTaskList
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_SendTaskList.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a GW2C_SendTaskList message.
-         * @function verify
-         * @memberof msg.GW2C_SendTaskList
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        GW2C_SendTaskList.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.tasks != null && message.hasOwnProperty("tasks")) {
-                if (!Array.isArray(message.tasks))
-                    return "tasks: array expected";
-                for (var i = 0; i < message.tasks.length; ++i) {
-                    var error = $root.msg.TaskData.verify(message.tasks[i]);
-                    if (error)
-                        return "tasks." + error;
-                }
-            }
-            return null;
-        };
-
-        /**
-         * Creates a GW2C_SendTaskList message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.GW2C_SendTaskList
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.GW2C_SendTaskList} GW2C_SendTaskList
-         */
-        GW2C_SendTaskList.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.GW2C_SendTaskList)
-                return object;
-            var message = new $root.msg.GW2C_SendTaskList();
-            if (object.tasks) {
-                if (!Array.isArray(object.tasks))
-                    throw TypeError(".msg.GW2C_SendTaskList.tasks: array expected");
-                message.tasks = [];
-                for (var i = 0; i < object.tasks.length; ++i) {
-                    if (typeof object.tasks[i] !== "object")
-                        throw TypeError(".msg.GW2C_SendTaskList.tasks: object expected");
-                    message.tasks[i] = $root.msg.TaskData.fromObject(object.tasks[i]);
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a GW2C_SendTaskList message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.GW2C_SendTaskList
-         * @static
-         * @param {msg.GW2C_SendTaskList} message GW2C_SendTaskList
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        GW2C_SendTaskList.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.arrays || options.defaults)
-                object.tasks = [];
-            if (message.tasks && message.tasks.length) {
-                object.tasks = [];
-                for (var j = 0; j < message.tasks.length; ++j)
-                    object.tasks[j] = $root.msg.TaskData.toObject(message.tasks[j], options);
-            }
-            return object;
-        };
-
-        /**
-         * Converts this GW2C_SendTaskList to JSON.
-         * @function toJSON
-         * @memberof msg.GW2C_SendTaskList
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        GW2C_SendTaskList.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return GW2C_SendTaskList;
     })();
 
     return msg;
