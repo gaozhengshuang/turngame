@@ -1,11 +1,13 @@
 import async from 'async';
 
 import NetWorkController from './NetWorkController';
+import NotificationController from './NotificationController';
 import Tools from "../Util/Tools";
 import moment from "moment/moment";
 import Define from "../Util/Define";
 import Platform from '../Util/Platform';
 
+import UserModel from '../Model/User';
 var LoginController = function () {
     this.sendHeartBeatTime = 0;
     this.revHeartBeat = 0;
@@ -18,11 +20,11 @@ var LoginController = function () {
 }
 
 LoginController.prototype.Init = function (cb) {
-    NetWorkController.AddListener('msg.GW2C_HeartBeat', this.onGW2C_HeartBeat.bind(this));
-    NetWorkController.AddListener('msg.L2C_RetLogin', this.onL2C_RetLogin.bind(this));
-    cc.systemEvent.on(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this.onLoginedToGate, this);
-    cc.systemEvent.on(Define.EVENT_KEY.NET_OPEN, this.onNetOpen, this);
-    cc.systemEvent.on(Define.EVENT_KEY.NET_CLOSE, this.onNetClose, this);
+    NetWorkController.AddListener('msg.GW2C_HeartBeat', this, this.onGW2C_HeartBeat);
+    NetWorkController.AddListener('msg.L2C_RetLogin', this, this.onL2C_RetLogin);
+    NotificationController.On(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onLoginedToGate);
+    NotificationController.On(Define.EVENT_KEY.NET_OPEN, this, this.onNetOpen);
+    NotificationController.On(Define.EVENT_KEY.NET_CLOSE, this, this.onNetClose);
     Tools.InvokeCallback(cb, null);
 }
 
@@ -40,7 +42,6 @@ LoginController.prototype.onGW2C_HeartBeat = function (msgid, data) {
 
 LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
     //连接gate server
-    let UserModel = require('../Model/User');
     let url = 'ws://' + data.gatehost.ip + ':' + data.gatehost.port + '/ws_handler';
     async.waterfall([
         function (anext) {
@@ -54,7 +55,7 @@ LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
         function (anext) {
             //第三步 发送登录消息
             NetWorkController.Send('msg.C2GW_ReqLogin', {
-                account: UserModel.getAccount(),
+                account: UserModel.GetAccount(),
                 verifykey: data.verifykey,
                 token: UserModel.loginInfo.token
             }, function (err) {
@@ -69,8 +70,7 @@ LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
 }
 
 LoginController.prototype.onLoginedToGate = function (event) {
-    let UserModel = require('../Model/User');
-    this.userid = UserModel.getUserId();
+    this.userid = UserModel.GetUserId();
     this.loginedToGate = true;
     this.reconnecting = false;
     this.revHeartBeat = moment().unix();
@@ -89,14 +89,13 @@ LoginController.prototype.onNetClose = function (event) {
 
 LoginController.prototype.update = function (dt) {
     let curTime = moment().unix();
-    let UserModel = require('../Model/User');
     if (this.loginedToGate) {
         //这个状态下需要检测心跳
         if ((NetWorkController.sock != null && NetWorkController.sock.readyState == WebSocket.OPEN)) {
             //发送心跳包了
             if (curTime - this.sendHeartBeatTime > Define.HEART_BEAT.INTERVAL) {
                 if (this.userid == null) {
-                    this.userid = UserModel.getUserId();
+                    this.userid = UserModel.GetUserId();
                 }
                 if (this.userid != null) {
                     console.log(new Date() + '[网络消息] 发送心跳包');
@@ -109,7 +108,7 @@ LoginController.prototype.update = function (dt) {
             }
             //检查心跳包
             if (this.userid == null) {
-                this.userid = UserModel.getUserId();
+                this.userid = UserModel.GetUserId();
             }
             if (this.userid != null) {
                 //说明登录gate成功了

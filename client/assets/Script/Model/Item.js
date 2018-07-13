@@ -28,9 +28,9 @@ ItemModel.prototype.Init = function (cb) {
             this.maxExchange = tcart.Exchange;
         }
     }
-    NetWorkController.AddListener('msg.GW2C_SendUserInfo', this.onGW2C_SendUserInfo.bind(this));
-    NetWorkController.AddListener('msg.GW2C_AddPackageItem', this.onGW2C_AddPackageItem.bind(this));
-    NetWorkController.AddListener('msg.GW2C_RemovePackageItem', this.onGW2C_RemovePackageItem.bind(this));
+    NetWorkController.AddListener('msg.GW2C_SendUserInfo', this, this.onGW2C_SendUserInfo);
+    NetWorkController.AddListener('msg.GW2C_AddPackageItem', this, this.onGW2C_AddPackageItem);
+    NetWorkController.AddListener('msg.GW2C_RemovePackageItem', this, this.onGW2C_RemovePackageItem);
     Tools.InvokeCallback(cb);
 }
 /**
@@ -121,7 +121,7 @@ ItemModel.prototype.GetItemType = function (id) {
 ItemModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
     this.items = Tools.GetValueInObj(data, 'item.items') || [];
     this.sortItem();
-    cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.CONNECT_TO_GATESERVER));
+    NotificationController.Emit(Define.EVENT_KEY.CONNECT_TO_GATESERVER);
 }
 
 ItemModel.prototype.onGW2C_AddPackageItem = function (msgid, data) {
@@ -133,7 +133,7 @@ ItemModel.prototype.onGW2C_AddPackageItem = function (msgid, data) {
         item.num += data.num;
     }
     this.sortItem();
-    NotificationController.postNotification(Define.EVENT_KEY.USERINFO_UPDATEITEMS);
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEITEMS);
 }
 ItemModel.prototype.onGW2C_RemovePackageItem = function (msgid, data) {
     let index = _.findIndex(this.items, { id: data.itemid });
@@ -147,7 +147,7 @@ ItemModel.prototype.onGW2C_RemovePackageItem = function (msgid, data) {
         }
     }
     this.sortItem();
-    NotificationController.postNotification(Define.EVENT_KEY.USERINFO_UPDATEITEMS);
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEITEMS);
 }
 
 ItemModel.prototype.sortItem = function () {

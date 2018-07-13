@@ -17,22 +17,14 @@ module.exports = {
         'genJson'() {
             // open entry panel registered in package.json
             Editor.log('开始生成JSON');
-            let sourcePath = __dirname + '\\..\\..\\..\\docs\\tbl\\*.json';
+            let sourcePath = __dirname + '\\..\\..\\..\\docs\\tbl\\proto_index.json';
             let targetFile = __dirname + '\\..\\..\\assets\\resources\\Json\\';
             let cmd = 'copy ' + sourcePath + ' ' + targetFile;
             process.exec(cmd, function (err, stdout, stderr) {
                 if (err) {
                     Editor.log('++++++ Json 错误 ++++++' + stderr);
                 } else {
-                    sourcePath = __dirname + '\\..\\..\\..\\docs\\json\\*.json';
-                    let cmd = 'copy ' + sourcePath + ' ' + targetFile;
-                    process.exec(cmd, function (err, stdout, stderr) {
-                        if (err) {
-                            Editor.log('++++++ Json 错误 ++++++' + stderr);
-                        } else {
-                            Editor.log('生成成功');
-                        }
-                    });
+                    Editor.log('生成成功');
                 }
             });
         },

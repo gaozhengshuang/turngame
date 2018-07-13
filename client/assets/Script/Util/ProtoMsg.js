@@ -4993,8 +4993,10 @@ $root.msg = (function() {
          * @property {msg.ISimpleCounter|null} [scounter] UserBase scounter
          * @property {Array.<msg.IFootBallItem>|null} [fbitem] UserBase fbitem
          * @property {number|null} [freetime] UserBase freetime
-         * @property {number|null} [sumvalue] UserBase sumvalue
-         * @property {Array.<string>|null} [historylist] UserBase historylist
+         * @property {number|null} [freetype] UserBase freetype
+         * @property {number|null} [sumget] UserBase sumget
+         * @property {Array.<msg.ICardData>|null} [card] UserBase card
+         * @property {number|null} [cardcost] UserBase cardcost
          */
 
         /**
@@ -5008,7 +5010,7 @@ $root.msg = (function() {
         function UserBase(properties) {
             this.addrlist = [];
             this.fbitem = [];
-            this.historylist = [];
+            this.card = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -5136,20 +5138,36 @@ $root.msg = (function() {
         UserBase.prototype.freetime = 0;
 
         /**
-         * UserBase sumvalue.
-         * @member {number} sumvalue
+         * UserBase freetype.
+         * @member {number} freetype
          * @memberof msg.UserBase
          * @instance
          */
-        UserBase.prototype.sumvalue = 0;
+        UserBase.prototype.freetype = 0;
 
         /**
-         * UserBase historylist.
-         * @member {Array.<string>} historylist
+         * UserBase sumget.
+         * @member {number} sumget
          * @memberof msg.UserBase
          * @instance
          */
-        UserBase.prototype.historylist = $util.emptyArray;
+        UserBase.prototype.sumget = 0;
+
+        /**
+         * UserBase card.
+         * @member {Array.<msg.ICardData>} card
+         * @memberof msg.UserBase
+         * @instance
+         */
+        UserBase.prototype.card = $util.emptyArray;
+
+        /**
+         * UserBase cardcost.
+         * @member {number} cardcost
+         * @memberof msg.UserBase
+         * @instance
+         */
+        UserBase.prototype.cardcost = 0;
 
         /**
          * Creates a new UserBase instance using the specified properties.
@@ -5207,11 +5225,15 @@ $root.msg = (function() {
                     $root.msg.FootBallItem.encode(message.fbitem[i], writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
             if (message.freetime != null && message.hasOwnProperty("freetime"))
                 writer.uint32(/* id 15, wireType 0 =*/120).uint32(message.freetime);
-            if (message.sumvalue != null && message.hasOwnProperty("sumvalue"))
-                writer.uint32(/* id 16, wireType 0 =*/128).uint32(message.sumvalue);
-            if (message.historylist != null && message.historylist.length)
-                for (var i = 0; i < message.historylist.length; ++i)
-                    writer.uint32(/* id 17, wireType 2 =*/138).string(message.historylist[i]);
+            if (message.freetype != null && message.hasOwnProperty("freetype"))
+                writer.uint32(/* id 16, wireType 0 =*/128).uint32(message.freetype);
+            if (message.sumget != null && message.hasOwnProperty("sumget"))
+                writer.uint32(/* id 17, wireType 0 =*/136).uint32(message.sumget);
+            if (message.card != null && message.card.length)
+                for (var i = 0; i < message.card.length; ++i)
+                    $root.msg.CardData.encode(message.card[i], writer.uint32(/* id 18, wireType 2 =*/146).fork()).ldelim();
+            if (message.cardcost != null && message.hasOwnProperty("cardcost"))
+                writer.uint32(/* id 19, wireType 0 =*/152).uint32(message.cardcost);
             return writer;
         };
 
@@ -5296,12 +5318,18 @@ $root.msg = (function() {
                     message.freetime = reader.uint32();
                     break;
                 case 16:
-                    message.sumvalue = reader.uint32();
+                    message.freetype = reader.uint32();
                     break;
                 case 17:
-                    if (!(message.historylist && message.historylist.length))
-                        message.historylist = [];
-                    message.historylist.push(reader.string());
+                    message.sumget = reader.uint32();
+                    break;
+                case 18:
+                    if (!(message.card && message.card.length))
+                        message.card = [];
+                    message.card.push($root.msg.CardData.decode(reader, reader.uint32()));
+                    break;
+                case 19:
+                    message.cardcost = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -5397,16 +5425,24 @@ $root.msg = (function() {
             if (message.freetime != null && message.hasOwnProperty("freetime"))
                 if (!$util.isInteger(message.freetime))
                     return "freetime: integer expected";
-            if (message.sumvalue != null && message.hasOwnProperty("sumvalue"))
-                if (!$util.isInteger(message.sumvalue))
-                    return "sumvalue: integer expected";
-            if (message.historylist != null && message.hasOwnProperty("historylist")) {
-                if (!Array.isArray(message.historylist))
-                    return "historylist: array expected";
-                for (var i = 0; i < message.historylist.length; ++i)
-                    if (!$util.isString(message.historylist[i]))
-                        return "historylist: string[] expected";
+            if (message.freetype != null && message.hasOwnProperty("freetype"))
+                if (!$util.isInteger(message.freetype))
+                    return "freetype: integer expected";
+            if (message.sumget != null && message.hasOwnProperty("sumget"))
+                if (!$util.isInteger(message.sumget))
+                    return "sumget: integer expected";
+            if (message.card != null && message.hasOwnProperty("card")) {
+                if (!Array.isArray(message.card))
+                    return "card: array expected";
+                for (var i = 0; i < message.card.length; ++i) {
+                    var error = $root.msg.CardData.verify(message.card[i]);
+                    if (error)
+                        return "card." + error;
+                }
             }
+            if (message.cardcost != null && message.hasOwnProperty("cardcost"))
+                if (!$util.isInteger(message.cardcost))
+                    return "cardcost: integer expected";
             return null;
         };
 
@@ -5485,15 +5521,22 @@ $root.msg = (function() {
             }
             if (object.freetime != null)
                 message.freetime = object.freetime >>> 0;
-            if (object.sumvalue != null)
-                message.sumvalue = object.sumvalue >>> 0;
-            if (object.historylist) {
-                if (!Array.isArray(object.historylist))
-                    throw TypeError(".msg.UserBase.historylist: array expected");
-                message.historylist = [];
-                for (var i = 0; i < object.historylist.length; ++i)
-                    message.historylist[i] = String(object.historylist[i]);
+            if (object.freetype != null)
+                message.freetype = object.freetype >>> 0;
+            if (object.sumget != null)
+                message.sumget = object.sumget >>> 0;
+            if (object.card) {
+                if (!Array.isArray(object.card))
+                    throw TypeError(".msg.UserBase.card: array expected");
+                message.card = [];
+                for (var i = 0; i < object.card.length; ++i) {
+                    if (typeof object.card[i] !== "object")
+                        throw TypeError(".msg.UserBase.card: object expected");
+                    message.card[i] = $root.msg.CardData.fromObject(object.card[i]);
+                }
             }
+            if (object.cardcost != null)
+                message.cardcost = object.cardcost >>> 0;
             return message;
         };
 
@@ -5513,7 +5556,7 @@ $root.msg = (function() {
             if (options.arrays || options.defaults) {
                 object.addrlist = [];
                 object.fbitem = [];
-                object.historylist = [];
+                object.card = [];
             }
             if (options.defaults) {
                 object.level = 0;
@@ -5537,7 +5580,9 @@ $root.msg = (function() {
                 object.signtime = 0;
                 object.scounter = null;
                 object.freetime = 0;
-                object.sumvalue = 0;
+                object.freetype = 0;
+                object.sumget = 0;
+                object.cardcost = 0;
             }
             if (message.level != null && message.hasOwnProperty("level"))
                 object.level = message.level;
@@ -5581,13 +5626,17 @@ $root.msg = (function() {
             }
             if (message.freetime != null && message.hasOwnProperty("freetime"))
                 object.freetime = message.freetime;
-            if (message.sumvalue != null && message.hasOwnProperty("sumvalue"))
-                object.sumvalue = message.sumvalue;
-            if (message.historylist && message.historylist.length) {
-                object.historylist = [];
-                for (var j = 0; j < message.historylist.length; ++j)
-                    object.historylist[j] = message.historylist[j];
+            if (message.freetype != null && message.hasOwnProperty("freetype"))
+                object.freetype = message.freetype;
+            if (message.sumget != null && message.hasOwnProperty("sumget"))
+                object.sumget = message.sumget;
+            if (message.card && message.card.length) {
+                object.card = [];
+                for (var j = 0; j < message.card.length; ++j)
+                    object.card[j] = $root.msg.CardData.toObject(message.card[j], options);
             }
+            if (message.cardcost != null && message.hasOwnProperty("cardcost"))
+                object.cardcost = message.cardcost;
             return object;
         };
 
@@ -6746,6 +6795,216 @@ $root.msg = (function() {
         };
 
         return Serialize;
+    })();
+
+    msg.CardData = (function() {
+
+        /**
+         * Properties of a CardData.
+         * @memberof msg
+         * @interface ICardData
+         * @property {number|null} [num] CardData num
+         * @property {number|null} [pos] CardData pos
+         */
+
+        /**
+         * Constructs a new CardData.
+         * @memberof msg
+         * @classdesc Represents a CardData.
+         * @implements ICardData
+         * @constructor
+         * @param {msg.ICardData=} [properties] Properties to set
+         */
+        function CardData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * CardData num.
+         * @member {number} num
+         * @memberof msg.CardData
+         * @instance
+         */
+        CardData.prototype.num = 0;
+
+        /**
+         * CardData pos.
+         * @member {number} pos
+         * @memberof msg.CardData
+         * @instance
+         */
+        CardData.prototype.pos = 0;
+
+        /**
+         * Creates a new CardData instance using the specified properties.
+         * @function create
+         * @memberof msg.CardData
+         * @static
+         * @param {msg.ICardData=} [properties] Properties to set
+         * @returns {msg.CardData} CardData instance
+         */
+        CardData.create = function create(properties) {
+            return new CardData(properties);
+        };
+
+        /**
+         * Encodes the specified CardData message. Does not implicitly {@link msg.CardData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.CardData
+         * @static
+         * @param {msg.ICardData} message CardData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CardData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.num != null && message.hasOwnProperty("num"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.num);
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.pos);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified CardData message, length delimited. Does not implicitly {@link msg.CardData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.CardData
+         * @static
+         * @param {msg.ICardData} message CardData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CardData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a CardData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.CardData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.CardData} CardData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CardData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.CardData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.num = reader.uint32();
+                    break;
+                case 2:
+                    message.pos = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a CardData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.CardData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.CardData} CardData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CardData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a CardData message.
+         * @function verify
+         * @memberof msg.CardData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        CardData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.num != null && message.hasOwnProperty("num"))
+                if (!$util.isInteger(message.num))
+                    return "num: integer expected";
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                if (!$util.isInteger(message.pos))
+                    return "pos: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a CardData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.CardData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.CardData} CardData
+         */
+        CardData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.CardData)
+                return object;
+            var message = new $root.msg.CardData();
+            if (object.num != null)
+                message.num = object.num >>> 0;
+            if (object.pos != null)
+                message.pos = object.pos >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a CardData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.CardData
+         * @static
+         * @param {msg.CardData} message CardData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        CardData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.num = 0;
+                object.pos = 0;
+            }
+            if (message.num != null && message.hasOwnProperty("num"))
+                object.num = message.num;
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                object.pos = message.pos;
+            return object;
+        };
+
+        /**
+         * Converts this CardData to JSON.
+         * @function toJSON
+         * @memberof msg.CardData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        CardData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return CardData;
     })();
 
     msg.C2GW_ReqLogin = (function() {
@@ -22278,23 +22537,24 @@ $root.msg = (function() {
         return GW2C_FreeThrow;
     })();
 
-    msg.C2GW_ReqUserInfo = (function() {
+    msg.C2GW_StartTiger = (function() {
 
         /**
-         * Properties of a C2GW_ReqUserInfo.
+         * Properties of a C2GW_StartTiger.
          * @memberof msg
-         * @interface IC2GW_ReqUserInfo
+         * @interface IC2GW_StartTiger
+         * @property {number|null} [type] C2GW_StartTiger type
          */
 
         /**
-         * Constructs a new C2GW_ReqUserInfo.
+         * Constructs a new C2GW_StartTiger.
          * @memberof msg
-         * @classdesc Represents a C2GW_ReqUserInfo.
-         * @implements IC2GW_ReqUserInfo
+         * @classdesc Represents a C2GW_StartTiger.
+         * @implements IC2GW_StartTiger
          * @constructor
-         * @param {msg.IC2GW_ReqUserInfo=} [properties] Properties to set
+         * @param {msg.IC2GW_StartTiger=} [properties] Properties to set
          */
-        function C2GW_ReqUserInfo(properties) {
+        function C2GW_StartTiger(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -22302,254 +22562,75 @@ $root.msg = (function() {
         }
 
         /**
-         * Creates a new C2GW_ReqUserInfo instance using the specified properties.
-         * @function create
-         * @memberof msg.C2GW_ReqUserInfo
-         * @static
-         * @param {msg.IC2GW_ReqUserInfo=} [properties] Properties to set
-         * @returns {msg.C2GW_ReqUserInfo} C2GW_ReqUserInfo instance
+         * C2GW_StartTiger type.
+         * @member {number} type
+         * @memberof msg.C2GW_StartTiger
+         * @instance
          */
-        C2GW_ReqUserInfo.create = function create(properties) {
-            return new C2GW_ReqUserInfo(properties);
+        C2GW_StartTiger.prototype.type = 0;
+
+        /**
+         * Creates a new C2GW_StartTiger instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_StartTiger
+         * @static
+         * @param {msg.IC2GW_StartTiger=} [properties] Properties to set
+         * @returns {msg.C2GW_StartTiger} C2GW_StartTiger instance
+         */
+        C2GW_StartTiger.create = function create(properties) {
+            return new C2GW_StartTiger(properties);
         };
 
         /**
-         * Encodes the specified C2GW_ReqUserInfo message. Does not implicitly {@link msg.C2GW_ReqUserInfo.verify|verify} messages.
+         * Encodes the specified C2GW_StartTiger message. Does not implicitly {@link msg.C2GW_StartTiger.verify|verify} messages.
          * @function encode
-         * @memberof msg.C2GW_ReqUserInfo
+         * @memberof msg.C2GW_StartTiger
          * @static
-         * @param {msg.IC2GW_ReqUserInfo} message C2GW_ReqUserInfo message or plain object to encode
+         * @param {msg.IC2GW_StartTiger} message C2GW_StartTiger message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        C2GW_ReqUserInfo.encode = function encode(message, writer) {
+        C2GW_StartTiger.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.type != null && message.hasOwnProperty("type"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.type);
             return writer;
         };
 
         /**
-         * Encodes the specified C2GW_ReqUserInfo message, length delimited. Does not implicitly {@link msg.C2GW_ReqUserInfo.verify|verify} messages.
+         * Encodes the specified C2GW_StartTiger message, length delimited. Does not implicitly {@link msg.C2GW_StartTiger.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof msg.C2GW_ReqUserInfo
+         * @memberof msg.C2GW_StartTiger
          * @static
-         * @param {msg.IC2GW_ReqUserInfo} message C2GW_ReqUserInfo message or plain object to encode
+         * @param {msg.IC2GW_StartTiger} message C2GW_StartTiger message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        C2GW_ReqUserInfo.encodeDelimited = function encodeDelimited(message, writer) {
+        C2GW_StartTiger.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a C2GW_ReqUserInfo message from the specified reader or buffer.
+         * Decodes a C2GW_StartTiger message from the specified reader or buffer.
          * @function decode
-         * @memberof msg.C2GW_ReqUserInfo
+         * @memberof msg.C2GW_StartTiger
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {msg.C2GW_ReqUserInfo} C2GW_ReqUserInfo
+         * @returns {msg.C2GW_StartTiger} C2GW_StartTiger
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        C2GW_ReqUserInfo.decode = function decode(reader, length) {
+        C2GW_StartTiger.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqUserInfo();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a C2GW_ReqUserInfo message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.C2GW_ReqUserInfo
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.C2GW_ReqUserInfo} C2GW_ReqUserInfo
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        C2GW_ReqUserInfo.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a C2GW_ReqUserInfo message.
-         * @function verify
-         * @memberof msg.C2GW_ReqUserInfo
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        C2GW_ReqUserInfo.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            return null;
-        };
-
-        /**
-         * Creates a C2GW_ReqUserInfo message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.C2GW_ReqUserInfo
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.C2GW_ReqUserInfo} C2GW_ReqUserInfo
-         */
-        C2GW_ReqUserInfo.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.C2GW_ReqUserInfo)
-                return object;
-            return new $root.msg.C2GW_ReqUserInfo();
-        };
-
-        /**
-         * Creates a plain object from a C2GW_ReqUserInfo message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.C2GW_ReqUserInfo
-         * @static
-         * @param {msg.C2GW_ReqUserInfo} message C2GW_ReqUserInfo
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        C2GW_ReqUserInfo.toObject = function toObject() {
-            return {};
-        };
-
-        /**
-         * Converts this C2GW_ReqUserInfo to JSON.
-         * @function toJSON
-         * @memberof msg.C2GW_ReqUserInfo
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        C2GW_ReqUserInfo.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return C2GW_ReqUserInfo;
-    })();
-
-    msg.GW2C_RetUserInfo = (function() {
-
-        /**
-         * Properties of a GW2C_RetUserInfo.
-         * @memberof msg
-         * @interface IGW2C_RetUserInfo
-         * @property {number|null} [sum] GW2C_RetUserInfo sum
-         * @property {Array.<string>|null} [list] GW2C_RetUserInfo list
-         */
-
-        /**
-         * Constructs a new GW2C_RetUserInfo.
-         * @memberof msg
-         * @classdesc Represents a GW2C_RetUserInfo.
-         * @implements IGW2C_RetUserInfo
-         * @constructor
-         * @param {msg.IGW2C_RetUserInfo=} [properties] Properties to set
-         */
-        function GW2C_RetUserInfo(properties) {
-            this.list = [];
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * GW2C_RetUserInfo sum.
-         * @member {number} sum
-         * @memberof msg.GW2C_RetUserInfo
-         * @instance
-         */
-        GW2C_RetUserInfo.prototype.sum = 0;
-
-        /**
-         * GW2C_RetUserInfo list.
-         * @member {Array.<string>} list
-         * @memberof msg.GW2C_RetUserInfo
-         * @instance
-         */
-        GW2C_RetUserInfo.prototype.list = $util.emptyArray;
-
-        /**
-         * Creates a new GW2C_RetUserInfo instance using the specified properties.
-         * @function create
-         * @memberof msg.GW2C_RetUserInfo
-         * @static
-         * @param {msg.IGW2C_RetUserInfo=} [properties] Properties to set
-         * @returns {msg.GW2C_RetUserInfo} GW2C_RetUserInfo instance
-         */
-        GW2C_RetUserInfo.create = function create(properties) {
-            return new GW2C_RetUserInfo(properties);
-        };
-
-        /**
-         * Encodes the specified GW2C_RetUserInfo message. Does not implicitly {@link msg.GW2C_RetUserInfo.verify|verify} messages.
-         * @function encode
-         * @memberof msg.GW2C_RetUserInfo
-         * @static
-         * @param {msg.IGW2C_RetUserInfo} message GW2C_RetUserInfo message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_RetUserInfo.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.sum != null && message.hasOwnProperty("sum"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.sum);
-            if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
-                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.list[i]);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified GW2C_RetUserInfo message, length delimited. Does not implicitly {@link msg.GW2C_RetUserInfo.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.GW2C_RetUserInfo
-         * @static
-         * @param {msg.IGW2C_RetUserInfo} message GW2C_RetUserInfo message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GW2C_RetUserInfo.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a GW2C_RetUserInfo message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.GW2C_RetUserInfo
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.GW2C_RetUserInfo} GW2C_RetUserInfo
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GW2C_RetUserInfo.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_RetUserInfo();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_StartTiger();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.sum = reader.uint32();
-                    break;
-                case 2:
-                    if (!(message.list && message.list.length))
-                        message.list = [];
-                    message.list.push(reader.string());
+                    message.type = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -22560,108 +22641,1089 @@ $root.msg = (function() {
         };
 
         /**
-         * Decodes a GW2C_RetUserInfo message from the specified reader or buffer, length delimited.
+         * Decodes a C2GW_StartTiger message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof msg.GW2C_RetUserInfo
+         * @memberof msg.C2GW_StartTiger
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.GW2C_RetUserInfo} GW2C_RetUserInfo
+         * @returns {msg.C2GW_StartTiger} C2GW_StartTiger
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        GW2C_RetUserInfo.decodeDelimited = function decodeDelimited(reader) {
+        C2GW_StartTiger.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a GW2C_RetUserInfo message.
+         * Verifies a C2GW_StartTiger message.
          * @function verify
-         * @memberof msg.GW2C_RetUserInfo
+         * @memberof msg.C2GW_StartTiger
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        GW2C_RetUserInfo.verify = function verify(message) {
+        C2GW_StartTiger.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.sum != null && message.hasOwnProperty("sum"))
-                if (!$util.isInteger(message.sum))
-                    return "sum: integer expected";
-            if (message.list != null && message.hasOwnProperty("list")) {
-                if (!Array.isArray(message.list))
-                    return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i)
-                    if (!$util.isString(message.list[i]))
-                        return "list: string[] expected";
-            }
+            if (message.type != null && message.hasOwnProperty("type"))
+                if (!$util.isInteger(message.type))
+                    return "type: integer expected";
             return null;
         };
 
         /**
-         * Creates a GW2C_RetUserInfo message from a plain object. Also converts values to their respective internal types.
+         * Creates a C2GW_StartTiger message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof msg.GW2C_RetUserInfo
+         * @memberof msg.C2GW_StartTiger
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {msg.GW2C_RetUserInfo} GW2C_RetUserInfo
+         * @returns {msg.C2GW_StartTiger} C2GW_StartTiger
          */
-        GW2C_RetUserInfo.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.GW2C_RetUserInfo)
+        C2GW_StartTiger.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_StartTiger)
                 return object;
-            var message = new $root.msg.GW2C_RetUserInfo();
-            if (object.sum != null)
-                message.sum = object.sum >>> 0;
-            if (object.list) {
-                if (!Array.isArray(object.list))
-                    throw TypeError(".msg.GW2C_RetUserInfo.list: array expected");
-                message.list = [];
-                for (var i = 0; i < object.list.length; ++i)
-                    message.list[i] = String(object.list[i]);
+            var message = new $root.msg.C2GW_StartTiger();
+            if (object.type != null)
+                message.type = object.type >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_StartTiger message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_StartTiger
+         * @static
+         * @param {msg.C2GW_StartTiger} message C2GW_StartTiger
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_StartTiger.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.type = 0;
+            if (message.type != null && message.hasOwnProperty("type"))
+                object.type = message.type;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_StartTiger to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_StartTiger
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_StartTiger.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_StartTiger;
+    })();
+
+    msg.GW2C_GameResult = (function() {
+
+        /**
+         * Properties of a GW2C_GameResult.
+         * @memberof msg
+         * @interface IGW2C_GameResult
+         * @property {number|null} [ret] GW2C_GameResult ret
+         */
+
+        /**
+         * Constructs a new GW2C_GameResult.
+         * @memberof msg
+         * @classdesc Represents a GW2C_GameResult.
+         * @implements IGW2C_GameResult
+         * @constructor
+         * @param {msg.IGW2C_GameResult=} [properties] Properties to set
+         */
+        function GW2C_GameResult(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_GameResult ret.
+         * @member {number} ret
+         * @memberof msg.GW2C_GameResult
+         * @instance
+         */
+        GW2C_GameResult.prototype.ret = 0;
+
+        /**
+         * Creates a new GW2C_GameResult instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_GameResult
+         * @static
+         * @param {msg.IGW2C_GameResult=} [properties] Properties to set
+         * @returns {msg.GW2C_GameResult} GW2C_GameResult instance
+         */
+        GW2C_GameResult.create = function create(properties) {
+            return new GW2C_GameResult(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_GameResult message. Does not implicitly {@link msg.GW2C_GameResult.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_GameResult
+         * @static
+         * @param {msg.IGW2C_GameResult} message GW2C_GameResult message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_GameResult.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.ret != null && message.hasOwnProperty("ret"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.ret);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_GameResult message, length delimited. Does not implicitly {@link msg.GW2C_GameResult.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_GameResult
+         * @static
+         * @param {msg.IGW2C_GameResult} message GW2C_GameResult message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_GameResult.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_GameResult message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_GameResult
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_GameResult} GW2C_GameResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_GameResult.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_GameResult();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.ret = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
             }
             return message;
         };
 
         /**
-         * Creates a plain object from a GW2C_RetUserInfo message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.GW2C_RetUserInfo
+         * Decodes a GW2C_GameResult message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_GameResult
          * @static
-         * @param {msg.GW2C_RetUserInfo} message GW2C_RetUserInfo
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_GameResult} GW2C_GameResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_GameResult.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_GameResult message.
+         * @function verify
+         * @memberof msg.GW2C_GameResult
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_GameResult.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.ret != null && message.hasOwnProperty("ret"))
+                if (!$util.isInteger(message.ret))
+                    return "ret: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_GameResult message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_GameResult
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_GameResult} GW2C_GameResult
+         */
+        GW2C_GameResult.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_GameResult)
+                return object;
+            var message = new $root.msg.GW2C_GameResult();
+            if (object.ret != null)
+                message.ret = object.ret >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_GameResult message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_GameResult
+         * @static
+         * @param {msg.GW2C_GameResult} message GW2C_GameResult
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        GW2C_RetUserInfo.toObject = function toObject(message, options) {
+        GW2C_GameResult.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.list = [];
             if (options.defaults)
-                object.sum = 0;
-            if (message.sum != null && message.hasOwnProperty("sum"))
-                object.sum = message.sum;
-            if (message.list && message.list.length) {
-                object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
-                    object.list[j] = message.list[j];
-            }
+                object.ret = 0;
+            if (message.ret != null && message.hasOwnProperty("ret"))
+                object.ret = message.ret;
             return object;
         };
 
         /**
-         * Converts this GW2C_RetUserInfo to JSON.
+         * Converts this GW2C_GameResult to JSON.
          * @function toJSON
-         * @memberof msg.GW2C_RetUserInfo
+         * @memberof msg.GW2C_GameResult
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        GW2C_RetUserInfo.prototype.toJSON = function toJSON() {
+        GW2C_GameResult.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return GW2C_RetUserInfo;
+        return GW2C_GameResult;
+    })();
+
+    msg.GW2C_SumGet = (function() {
+
+        /**
+         * Properties of a GW2C_SumGet.
+         * @memberof msg
+         * @interface IGW2C_SumGet
+         * @property {number|null} [num] GW2C_SumGet num
+         */
+
+        /**
+         * Constructs a new GW2C_SumGet.
+         * @memberof msg
+         * @classdesc Represents a GW2C_SumGet.
+         * @implements IGW2C_SumGet
+         * @constructor
+         * @param {msg.IGW2C_SumGet=} [properties] Properties to set
+         */
+        function GW2C_SumGet(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_SumGet num.
+         * @member {number} num
+         * @memberof msg.GW2C_SumGet
+         * @instance
+         */
+        GW2C_SumGet.prototype.num = 0;
+
+        /**
+         * Creates a new GW2C_SumGet instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_SumGet
+         * @static
+         * @param {msg.IGW2C_SumGet=} [properties] Properties to set
+         * @returns {msg.GW2C_SumGet} GW2C_SumGet instance
+         */
+        GW2C_SumGet.create = function create(properties) {
+            return new GW2C_SumGet(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_SumGet message. Does not implicitly {@link msg.GW2C_SumGet.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_SumGet
+         * @static
+         * @param {msg.IGW2C_SumGet} message GW2C_SumGet message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_SumGet.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.num != null && message.hasOwnProperty("num"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.num);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_SumGet message, length delimited. Does not implicitly {@link msg.GW2C_SumGet.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_SumGet
+         * @static
+         * @param {msg.IGW2C_SumGet} message GW2C_SumGet message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_SumGet.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_SumGet message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_SumGet
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_SumGet} GW2C_SumGet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_SumGet.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_SumGet();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.num = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_SumGet message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_SumGet
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_SumGet} GW2C_SumGet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_SumGet.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_SumGet message.
+         * @function verify
+         * @memberof msg.GW2C_SumGet
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_SumGet.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.num != null && message.hasOwnProperty("num"))
+                if (!$util.isInteger(message.num))
+                    return "num: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_SumGet message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_SumGet
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_SumGet} GW2C_SumGet
+         */
+        GW2C_SumGet.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_SumGet)
+                return object;
+            var message = new $root.msg.GW2C_SumGet();
+            if (object.num != null)
+                message.num = object.num >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_SumGet message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_SumGet
+         * @static
+         * @param {msg.GW2C_SumGet} message GW2C_SumGet
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_SumGet.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.num = 0;
+            if (message.num != null && message.hasOwnProperty("num"))
+                object.num = message.num;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_SumGet to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_SumGet
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_SumGet.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_SumGet;
+    })();
+
+    msg.GW2C_NotifyCardState = (function() {
+
+        /**
+         * Properties of a GW2C_NotifyCardState.
+         * @memberof msg
+         * @interface IGW2C_NotifyCardState
+         * @property {Array.<msg.ICardData>|null} [card] GW2C_NotifyCardState card
+         * @property {number|null} [cost] GW2C_NotifyCardState cost
+         */
+
+        /**
+         * Constructs a new GW2C_NotifyCardState.
+         * @memberof msg
+         * @classdesc Represents a GW2C_NotifyCardState.
+         * @implements IGW2C_NotifyCardState
+         * @constructor
+         * @param {msg.IGW2C_NotifyCardState=} [properties] Properties to set
+         */
+        function GW2C_NotifyCardState(properties) {
+            this.card = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_NotifyCardState card.
+         * @member {Array.<msg.ICardData>} card
+         * @memberof msg.GW2C_NotifyCardState
+         * @instance
+         */
+        GW2C_NotifyCardState.prototype.card = $util.emptyArray;
+
+        /**
+         * GW2C_NotifyCardState cost.
+         * @member {number} cost
+         * @memberof msg.GW2C_NotifyCardState
+         * @instance
+         */
+        GW2C_NotifyCardState.prototype.cost = 0;
+
+        /**
+         * Creates a new GW2C_NotifyCardState instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_NotifyCardState
+         * @static
+         * @param {msg.IGW2C_NotifyCardState=} [properties] Properties to set
+         * @returns {msg.GW2C_NotifyCardState} GW2C_NotifyCardState instance
+         */
+        GW2C_NotifyCardState.create = function create(properties) {
+            return new GW2C_NotifyCardState(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_NotifyCardState message. Does not implicitly {@link msg.GW2C_NotifyCardState.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_NotifyCardState
+         * @static
+         * @param {msg.IGW2C_NotifyCardState} message GW2C_NotifyCardState message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_NotifyCardState.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.card != null && message.card.length)
+                for (var i = 0; i < message.card.length; ++i)
+                    $root.msg.CardData.encode(message.card[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.cost);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_NotifyCardState message, length delimited. Does not implicitly {@link msg.GW2C_NotifyCardState.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_NotifyCardState
+         * @static
+         * @param {msg.IGW2C_NotifyCardState} message GW2C_NotifyCardState message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_NotifyCardState.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_NotifyCardState message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_NotifyCardState
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_NotifyCardState} GW2C_NotifyCardState
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_NotifyCardState.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_NotifyCardState();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.card && message.card.length))
+                        message.card = [];
+                    message.card.push($root.msg.CardData.decode(reader, reader.uint32()));
+                    break;
+                case 2:
+                    message.cost = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_NotifyCardState message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_NotifyCardState
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_NotifyCardState} GW2C_NotifyCardState
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_NotifyCardState.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_NotifyCardState message.
+         * @function verify
+         * @memberof msg.GW2C_NotifyCardState
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_NotifyCardState.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.card != null && message.hasOwnProperty("card")) {
+                if (!Array.isArray(message.card))
+                    return "card: array expected";
+                for (var i = 0; i < message.card.length; ++i) {
+                    var error = $root.msg.CardData.verify(message.card[i]);
+                    if (error)
+                        return "card." + error;
+                }
+            }
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                if (!$util.isInteger(message.cost))
+                    return "cost: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_NotifyCardState message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_NotifyCardState
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_NotifyCardState} GW2C_NotifyCardState
+         */
+        GW2C_NotifyCardState.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_NotifyCardState)
+                return object;
+            var message = new $root.msg.GW2C_NotifyCardState();
+            if (object.card) {
+                if (!Array.isArray(object.card))
+                    throw TypeError(".msg.GW2C_NotifyCardState.card: array expected");
+                message.card = [];
+                for (var i = 0; i < object.card.length; ++i) {
+                    if (typeof object.card[i] !== "object")
+                        throw TypeError(".msg.GW2C_NotifyCardState.card: object expected");
+                    message.card[i] = $root.msg.CardData.fromObject(object.card[i]);
+                }
+            }
+            if (object.cost != null)
+                message.cost = object.cost >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_NotifyCardState message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_NotifyCardState
+         * @static
+         * @param {msg.GW2C_NotifyCardState} message GW2C_NotifyCardState
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_NotifyCardState.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.card = [];
+            if (options.defaults)
+                object.cost = 0;
+            if (message.card && message.card.length) {
+                object.card = [];
+                for (var j = 0; j < message.card.length; ++j)
+                    object.card[j] = $root.msg.CardData.toObject(message.card[j], options);
+            }
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                object.cost = message.cost;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_NotifyCardState to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_NotifyCardState
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_NotifyCardState.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_NotifyCardState;
+    })();
+
+    msg.C2GW_ReqTakeCard = (function() {
+
+        /**
+         * Properties of a C2GW_ReqTakeCard.
+         * @memberof msg
+         * @interface IC2GW_ReqTakeCard
+         * @property {number|null} [pos] C2GW_ReqTakeCard pos
+         */
+
+        /**
+         * Constructs a new C2GW_ReqTakeCard.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqTakeCard.
+         * @implements IC2GW_ReqTakeCard
+         * @constructor
+         * @param {msg.IC2GW_ReqTakeCard=} [properties] Properties to set
+         */
+        function C2GW_ReqTakeCard(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_ReqTakeCard pos.
+         * @member {number} pos
+         * @memberof msg.C2GW_ReqTakeCard
+         * @instance
+         */
+        C2GW_ReqTakeCard.prototype.pos = 0;
+
+        /**
+         * Creates a new C2GW_ReqTakeCard instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqTakeCard
+         * @static
+         * @param {msg.IC2GW_ReqTakeCard=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqTakeCard} C2GW_ReqTakeCard instance
+         */
+        C2GW_ReqTakeCard.create = function create(properties) {
+            return new C2GW_ReqTakeCard(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqTakeCard message. Does not implicitly {@link msg.C2GW_ReqTakeCard.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqTakeCard
+         * @static
+         * @param {msg.IC2GW_ReqTakeCard} message C2GW_ReqTakeCard message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqTakeCard.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.pos);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqTakeCard message, length delimited. Does not implicitly {@link msg.C2GW_ReqTakeCard.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqTakeCard
+         * @static
+         * @param {msg.IC2GW_ReqTakeCard} message C2GW_ReqTakeCard message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqTakeCard.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqTakeCard message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqTakeCard
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqTakeCard} C2GW_ReqTakeCard
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqTakeCard.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqTakeCard();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.pos = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqTakeCard message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqTakeCard
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqTakeCard} C2GW_ReqTakeCard
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqTakeCard.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqTakeCard message.
+         * @function verify
+         * @memberof msg.C2GW_ReqTakeCard
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqTakeCard.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                if (!$util.isInteger(message.pos))
+                    return "pos: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqTakeCard message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqTakeCard
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqTakeCard} C2GW_ReqTakeCard
+         */
+        C2GW_ReqTakeCard.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqTakeCard)
+                return object;
+            var message = new $root.msg.C2GW_ReqTakeCard();
+            if (object.pos != null)
+                message.pos = object.pos >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqTakeCard message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqTakeCard
+         * @static
+         * @param {msg.C2GW_ReqTakeCard} message C2GW_ReqTakeCard
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqTakeCard.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.pos = 0;
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                object.pos = message.pos;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_ReqTakeCard to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqTakeCard
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqTakeCard.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqTakeCard;
+    })();
+
+    msg.GW2C_AckTakeCardRet = (function() {
+
+        /**
+         * Properties of a GW2C_AckTakeCardRet.
+         * @memberof msg
+         * @interface IGW2C_AckTakeCardRet
+         * @property {number|null} [num] GW2C_AckTakeCardRet num
+         * @property {number|null} [pos] GW2C_AckTakeCardRet pos
+         */
+
+        /**
+         * Constructs a new GW2C_AckTakeCardRet.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckTakeCardRet.
+         * @implements IGW2C_AckTakeCardRet
+         * @constructor
+         * @param {msg.IGW2C_AckTakeCardRet=} [properties] Properties to set
+         */
+        function GW2C_AckTakeCardRet(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckTakeCardRet num.
+         * @member {number} num
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @instance
+         */
+        GW2C_AckTakeCardRet.prototype.num = 0;
+
+        /**
+         * GW2C_AckTakeCardRet pos.
+         * @member {number} pos
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @instance
+         */
+        GW2C_AckTakeCardRet.prototype.pos = 0;
+
+        /**
+         * Creates a new GW2C_AckTakeCardRet instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @static
+         * @param {msg.IGW2C_AckTakeCardRet=} [properties] Properties to set
+         * @returns {msg.GW2C_AckTakeCardRet} GW2C_AckTakeCardRet instance
+         */
+        GW2C_AckTakeCardRet.create = function create(properties) {
+            return new GW2C_AckTakeCardRet(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckTakeCardRet message. Does not implicitly {@link msg.GW2C_AckTakeCardRet.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @static
+         * @param {msg.IGW2C_AckTakeCardRet} message GW2C_AckTakeCardRet message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckTakeCardRet.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.num != null && message.hasOwnProperty("num"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.num);
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.pos);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckTakeCardRet message, length delimited. Does not implicitly {@link msg.GW2C_AckTakeCardRet.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @static
+         * @param {msg.IGW2C_AckTakeCardRet} message GW2C_AckTakeCardRet message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckTakeCardRet.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckTakeCardRet message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckTakeCardRet} GW2C_AckTakeCardRet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckTakeCardRet.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckTakeCardRet();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.num = reader.uint32();
+                    break;
+                case 2:
+                    message.pos = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckTakeCardRet message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckTakeCardRet} GW2C_AckTakeCardRet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckTakeCardRet.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckTakeCardRet message.
+         * @function verify
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckTakeCardRet.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.num != null && message.hasOwnProperty("num"))
+                if (!$util.isInteger(message.num))
+                    return "num: integer expected";
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                if (!$util.isInteger(message.pos))
+                    return "pos: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckTakeCardRet message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckTakeCardRet} GW2C_AckTakeCardRet
+         */
+        GW2C_AckTakeCardRet.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckTakeCardRet)
+                return object;
+            var message = new $root.msg.GW2C_AckTakeCardRet();
+            if (object.num != null)
+                message.num = object.num >>> 0;
+            if (object.pos != null)
+                message.pos = object.pos >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckTakeCardRet message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @static
+         * @param {msg.GW2C_AckTakeCardRet} message GW2C_AckTakeCardRet
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckTakeCardRet.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.num = 0;
+                object.pos = 0;
+            }
+            if (message.num != null && message.hasOwnProperty("num"))
+                object.num = message.num;
+            if (message.pos != null && message.hasOwnProperty("pos"))
+                object.pos = message.pos;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckTakeCardRet to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckTakeCardRet
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckTakeCardRet.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckTakeCardRet;
     })();
 
     msg.C2GW_AddDeliveryAddress = (function() {
