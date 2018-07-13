@@ -33,6 +33,9 @@ func (this *GateUser) InitTiger() {
 	}
 	send.Cost = pb.Uint32(this.cardcost)
 	this.SendMsg(send)
+	sendsumget := &msg.GW2C_SumGet{}
+	sendsumget.Num = pb.Uint32(this.sumget)
+	this.SendMsg(sendsumget)
 
 }
 
