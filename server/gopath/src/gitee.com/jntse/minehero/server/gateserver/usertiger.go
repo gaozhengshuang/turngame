@@ -21,6 +21,9 @@ func (this *GateUser) InitTiger() {
 		send.Num = pb.Uint32(this.sumget)
 		this.SendMsg(send)
 	*/
+	for _, v := range tbl.Tiger.TTigerById {
+		this.sumvaluemap[v.Id/uint32(10)] += v.Weight
+	}
 	send := &msg.GW2C_NotifyCardState{}
 	userCard := this.GetCardState()
 	for _, v := range userCard {
@@ -28,7 +31,11 @@ func (this *GateUser) InitTiger() {
 			send.Card = append(send.Card, v)
 		}
 	}
+	send.Cost = pb.Uint32(this.cardcost)
 	this.SendMsg(send)
+	sendsumget := &msg.GW2C_SumGet{}
+	sendsumget.Num = pb.Uint32(this.sumget)
+	this.SendMsg(sendsumget)
 
 }
 
@@ -196,7 +203,7 @@ func (this *GateUser) StartTiger(tmptype uint32) {
 		this.SendMsg(send)
 		return
 	}
-	cardNums := make([]uint32, 3)
+	cardNums := make([]uint32, 0)
 	if this.freetime <= 2 {
 		tmpnum := this.GetNumByCount(this.freetime)
 		for _, numv := range tmpnum {
@@ -241,12 +248,23 @@ func (this *GateUser) CheckUserCardCanStart() bool {
 //开启新的一轮抽卡 初始化 玩家抽卡数据
 func (this *GateUser) InitUserCardStateByNewRoundStart(nums []uint32, cost uint32) {
 	Nums := nums[:3]
+	//如果前两个数字都是0 那么让第一个数字非0
+	if Nums[0] == 0 && Nums[1] == 0 {
+		Nums[0] = uint32(util.RandBetween(1, 3))
+	}
+	if Nums[1] == 0 && Nums[2] == 0 {
+		Nums[1] = uint32(util.RandBetween(1, 3))
+	}
+
 	this.ClearCardState()
 	for _, v := range Nums {
 		temp := &msg.CardData{}
 		temp.Num = pb.Uint32(v)
 		temp.Pos = pb.Uint32(0)
 		this.cardstate = append(this.cardstate, temp)
+	}
+	for _, k := range this.cardstate {
+		log.Info("玩家[%d]翻牌新一轮卡牌 位置:%d 数字:%d", this.Id(), k.GetPos(), k.GetNum())
 	}
 	this.cardcost = cost
 }
@@ -274,15 +292,18 @@ func (this *GateUser) UserTakeCard(pos uint32) {
 	}
 
 	if find {
-		log.Info("玩家[%d]翻牌第 %d 张牌成功 位置%d", this.Id(), index+1, pos)
+		log.Info("玩家[%d]翻牌第 %d 张牌成功 位置%d  数字%d", this.Id(), index+1, pos, numfind)
 		send := &msg.GW2C_AckTakeCardRet{}
 		send.Num = pb.Uint32(numfind)
 		send.Pos = pb.Uint32(pos)
 		this.SendMsg(send)
 		roundend := true
-		for _, v := range userCard {
-			if v.GetPos() == 0 {
-				roundend = false
+
+		if numfind > 0 {
+			for _, v := range userCard {
+				if v.GetPos() == 0 {
+					roundend = false
+				}
 			}
 		}
 		if roundend {
