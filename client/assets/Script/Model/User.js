@@ -12,7 +12,7 @@ var UserModel = function () {
     this.userInfo = {};
     this.platformCoins = 0;
     this.curGainCount = 0;
-    this.totalGainCount = 0;
+    this.totalGainCount = null;
     this.historyData = null;
 }
 
@@ -72,10 +72,6 @@ UserModel.prototype.GetPlayerGoods = function (cb) {
     });
 }
 
-UserModel.prototype.AddCurGainCount = function (count) {
-    this.curGainCount += count;
-    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECURGAIN, this.curGainCount);
-}
 /**
  * 消息处理接口
  */
@@ -98,14 +94,21 @@ UserModel.prototype.onGW2C_SendUserPlatformMoney = function (msgid, data) {
 }
 UserModel.prototype.onGW2C_UpdateYuanbao = function (msgid, data) {
     this.userInfo.base.yuanbao = data.num;
+    let info = this._calculateCoupon();
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECOINS, info.num, info.suffix);
 }
 
 UserModel.prototype.onGW2C_SumGet = function (msgid, data) {
+    if (this.totalGainCount != null) {
+        this.curGainCount += (data.num == null ? 0 : data.num - this.totalGainCount);
+        NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECURGAIN, this.curGainCount);
+    }
     this.totalGainCount = data.num || 0;
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATETOTALGAIN, this.totalGainCount);
 }
 UserModel.prototype.onGW2C_NotifyCardState = function (msgid, data) {
     this.historyData = data;
+    console.log(data);
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_HISTORYINFO, this.historyData);
 }
 
@@ -113,12 +116,15 @@ UserModel.prototype._calculateCoupon = function () {
     let aaa = Tools.GetValueInObj(this.userInfo, 'base.yuanbao') || 0;
     // let aaa = this.platformCoins;
     let coupon = _.isString(aaa) ? parseInt(aaa) : aaa;
+    let info = null;
     if (coupon > 9999) {
         let ret = (coupon / 1000).toFixed(2);
         ret = ret == Math.floor(ret) ? Math.floor(ret) : ret;
-        return { num: ret, suffix: 'k' };
+        info = { num: ret, suffix: 'k' };
+    } else {
+        info = { num: coupon, suffix: '' };
     }
-    return { num: coupon, suffix: '' };;
+    return info;
 }
 
 module.exports = new UserModel();

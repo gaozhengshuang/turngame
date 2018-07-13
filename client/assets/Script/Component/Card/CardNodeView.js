@@ -11,6 +11,7 @@ cc.Class({
         value: { default: 0, type: cc.Integer },
         index: { default: 0, type: cc.Integer },
         isFront: { default: [], type: cc.Boolean },
+        boomAnimation: { default: null, type: cc.Animation },
     },
 
     onLoad() {
@@ -91,7 +92,7 @@ cc.Class({
                 cc.moveTo(0.5, 0, 0),
                 cc.moveTo(0.5, oldPos),
                 cc.callFunc(function () {
-                    if (Game.GameController.numbers.length >= 3) {
+                    if (Game.GameController.startComplete) {
                         //可以停了
                         this.node.stopAllActions();
                         Game.Tools.InvokeCallback(cb);
@@ -105,6 +106,7 @@ cc.Class({
     },
     InitHistoryInfo(value) {
         this.value = value;
+        this.numberSpriteView.Init(value);
         Game.GameController.InsertArrayValue(this.index, this.value, this.node.parent.convertToWorldSpaceAR(this.node.position));
         this.TurnFront(function () { });
     },
@@ -114,10 +116,11 @@ cc.Class({
             return;
         }
         Game.NetWorkController.Send('msg.C2GW_ReqTakeCard', { pos: this.index + 1 });
+        Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_WAITTINGRESULT);
     },
 
     onGW2C_AckTakeCardRet(msgid, data) {
-        if (Game.GameController.state != Game.TurnDefine.GAME_STATE.STATE_READY) {
+        if (Game.GameController.state != Game.TurnDefine.GAME_STATE.STATE_WAITTINGRESULT) {
             return;
         }
         if (this.index + 1 == data.pos) {
@@ -133,9 +136,21 @@ cc.Class({
 
     _turnFrontEndWhenClick() {
         if (this.value == 0) {
-            Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDING);
+            Game.AudioController.SetMusicVolume(0);
+            Game.AudioController.PlayEffect('Audio/Fail', function () {
+                Game.AudioController.SetMusicVolume(1);
+            });
+            this.boomAnimation.play();
+            this.boomAnimation.on('stop', function () {
+                Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDING);
+            }.bind(this));
+            return;
         }
         if (Game.GameController.turnCount >= 3) {
+            Game.AudioController.SetMusicVolume(0);
+            Game.AudioController.PlayEffect('Audio/Win', function () {
+                Game.AudioController.SetMusicVolume(1);
+            });
             Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDING);
         } else {
             Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_READY);

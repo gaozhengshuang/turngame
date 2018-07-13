@@ -29,16 +29,25 @@ cc.Class({
         Game.ResController.DestoryAllChildren(this.secondNode);
         Game.ResController.DestoryAllChildren(this.thirdNode);
     },
+    InitHistoryInfo(index, value) {
+        let node = cc.instantiate(this.numSpritePrefab);
+        let parent = this._getParentByIndex(index);
+        parent.addChild(node);
+        let numSpriteView = node.getComponent('NumberSpriteView');
+        numSpriteView.Init(value);
+    },
     onGameStateChange(state) {
         if (state == Game.TurnDefine.GAME_STATE.STATE_TURNFRONT) {
             let info = Game.GameController.clickInfo[Game.GameController.turnCount];
-            let node = cc.instantiate(this.numSpritePrefab);
-            let parent = this._getParentByIndex(Game.GameController.turnCount);
-            node.position = parent.convertToNodeSpaceAR(info.pos);
-            parent.addChild(node);
-            let numSpriteView = node.getComponent('NumberSpriteView');
-            numSpriteView.Init(info.value);
-            node.runAction(cc.moveTo(0.5, 0, 0).easing(new cc.easeOut(3)));
+            if (info.value != 0) {
+                let node = cc.instantiate(this.numSpritePrefab);
+                let parent = this._getParentByIndex(Game.GameController.turnCount);
+                node.position = parent.convertToNodeSpaceAR(info.pos);
+                parent.addChild(node);
+                let numSpriteView = node.getComponent('NumberSpriteView');
+                numSpriteView.Init(info.value);
+                node.runAction(cc.moveTo(0.5, 0, 0).easing(new cc.easeOut(3)));
+            }
         }
     },
 

@@ -6,9 +6,10 @@ var Define = {
         STATE_STARTING: 3,
         STATE_SHUFFLE: 4,
         STATE_READY: 5,
-        STATE_TURNFRONT: 6,
-        STATE_ENDING: 7,
-        STATE_ENDED: 8
+        STATE_WAITTINGRESULT:6,
+        STATE_TURNFRONT: 7,
+        STATE_ENDING: 8,
+        STATE_ENDED: 9
     },
 }
 

@@ -1,0 +1,71 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "CardBomb",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.6833333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "c447027a-ede5-4703-b77f-51a2a508a28f"
+            }
+          },
+          {
+            "frame": 0.08333333333333333,
+            "value": {
+              "__uuid__": "f62b82ca-0c6f-4ec1-8633-256a61378e97"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "fa2715f5-c8e1-4ecf-bee0-a94a3c18f1ac"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "f3e54f68-dcfe-4408-9c10-f19248c650d1"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "cad80b39-2efe-402b-8a74-e3006ec672d1"
+            }
+          },
+          {
+            "frame": 0.4166666666666667,
+            "value": {
+              "__uuid__": "c1dfe6c9-ce67-4bde-a8ba-3adf5954350c"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "f795dfa1-8090-4836-ba71-8be97d15bab4"
+            }
+          },
+          {
+            "frame": 0.5833333333333334,
+            "value": {
+              "__uuid__": "e35e35f8-cf44-4720-b38e-2f79b751659d"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": null
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

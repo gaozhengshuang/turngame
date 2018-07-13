@@ -16,7 +16,6 @@ cc.Class({
         shuffleEndCount: { default: 0, type: cc.Integer },
         turnFrontEndCount: { default: 0, type: cc.Integer },
         gameResult: { default: null, type: GameResult },
-        playButton: { default: null, type: cc.Button },
         timesTipPrefab: { default: null, type: cc.Prefab },
         gameCoupon: { default: null, type: GameCoupon },
         gameInfo: { default: null, type: GameInfo }
@@ -47,11 +46,10 @@ cc.Class({
                 this.onUpdateHistoryInfo(Game.UserModel.historyData);
             }, this)
         ]));
-        this.playButton.interactable = false;
     },
 
     start() {
-        // Game.AudioController.PlayMusic('Bg');
+        Game.AudioController.PlayMusic('Audio/Bg');
     },
 
     update(dt) {
@@ -63,11 +61,6 @@ cc.Class({
     },
 
     onGameStateChange(state) {
-        if (state == Game.TurnDefine.GAME_STATE.STATE_IDLE) {
-            this.playButton.interactable = true;
-        } else {
-            this.playButton.interactable = false;
-        }
         switch (state) {
             case Game.TurnDefine.GAME_STATE.STATE_PREPARED: {
                 this.waittingHistory = setTimeout(function () {
@@ -101,10 +94,9 @@ cc.Class({
                     }
                 }
                 //加数值咯
-                this.gameCoupon.UpdateCoupon();
+                // this.gameCoupon.UpdateCoupon();
                 let totalTime = Game.GameController.GetTotalTimes();
                 if (totalTime > 0) {
-                    Game.UserModel.AddCurGainCount(Game.GameController.GetTotalGain());
                     let node = cc.instantiate(this.timesTipPrefab);
                     let timesTip = node.getComponent('TimesTip');
                     this.node.addChild(node);
@@ -131,7 +123,7 @@ cc.Class({
         Game.NetWorkController.Send('msg.C2GW_StartTiger', { type: Game.GameController.selectIndex });
     },
     onUpdateHistoryInfo(info) {
-        if (info == null || info == {}) {
+        if (info == null || info.cost == null || info.cost == 0) {
             return;
         }
         if (Game.GameController.state == Game.TurnDefine.GAME_STATE.STATE_PREPARED) {
@@ -149,6 +141,13 @@ cc.Class({
                     cardNode.TurnBack(function () { });
                 }
             }
+            if (Game._.isArray(info.card)) {
+                for (let i = 0; i < info.card.length; i++) {
+                    this.gameResult.InitHistoryInfo(i, info.card[i].num);
+                }
+                Game.GameController.turnCount = info.card.length;
+            }
+
             Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_READY);
             if (this.waittingHistory != null) {
                 clearTimeout(this.waittingHistory);

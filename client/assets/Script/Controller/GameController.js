@@ -16,6 +16,7 @@ var GameController = function () {
     this.clickInfo = [];
     this.allNumbers = null;
     this.selectIndex = 0;
+    this.startComplete = false;
 }
 
 GameController.prototype.Init = function (cb) {
@@ -27,6 +28,7 @@ GameController.prototype.RestartRound = function () {
     this.turnCount = 0;
     this.clickInfo = [];
     this.allNumbers = _.cloneDeep(AllNumbers);
+    this.startComplete = false;
 }
 GameController.prototype.ChangeState = function (state) {
     if (this.state == state) {
@@ -60,16 +62,13 @@ GameController.prototype.GetTotalTimes = function () {
     }
     return result;
 }
-GameController.prototype.GetTotalGain = function () {
-    let times = this.GetTotalTimes();
-    let baseBet = BaseBet[this.selectIndex];
-    return baseBet * times;
-}
 GameController.prototype.GetIndexByCost = function (cost) {
     return _.indexOf(BaseBet, cost);
 }
 
 GameController.prototype.onGW2C_GameResult = function (msgid, data) {
+    this.startComplete = true;
+
     // for (let i = 0; i < data.nums.length; i++) {
     //     this.numbers.push(data.nums[i]);
     // }
