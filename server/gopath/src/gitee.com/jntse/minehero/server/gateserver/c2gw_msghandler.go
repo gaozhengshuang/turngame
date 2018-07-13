@@ -101,8 +101,6 @@ func (this *C2GWMsgHandler) Init() {
 	//超市游戏
 	//this.msgparser.RegistSendProto(msg.GW2C_HitTarget{})
 	//this.msgparser.RegistSendProto(msg.GW2C_FreeThrow{})
-	this.msgparser.RegistSendProto(msg.GW2C_GameResult{})
-	this.msgparser.RegistSendProto(msg.GW2C_SumGet{})
 
 	// Room
 	this.msgparser.RegistSendProto(msg.BT_GameInit{})
@@ -116,6 +114,7 @@ func (this *C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_SumGet{})
 	this.msgparser.RegistSendProto(msg.GW2C_NotifyCardState{})
 	this.msgparser.RegistSendProto(msg.GW2C_AckTakeCardRet{})
+	this.msgparser.RegistSendProto(msg.GW2C_GameResult{})
 }
 
 // 客户端心跳

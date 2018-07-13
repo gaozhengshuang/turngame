@@ -7,7 +7,8 @@ message C2GW_StartTiger
 
 message GW2C_GameResult
 {
-    repeated uint32 nums = 1;       //3个数字
+    //repeated uint32 nums = 1;       //3个数字
+	optional uint32 ret = 1;  		//开启新一轮的返回结果 0成功
 }
 
 message GW2C_SumGet

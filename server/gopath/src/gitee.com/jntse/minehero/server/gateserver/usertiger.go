@@ -162,7 +162,7 @@ func (this *GateUser) StartTiger(removeok bool, tmpcost int32, uid int32) {
 
 func (this *GateUser) StartTiger(tmptype uint32) {
 	var cost uint32
-
+	send := &msg.GW2C_GameResult{}
 	switch tmptype {
 	case 1:
 		cost = 1000
@@ -174,6 +174,9 @@ func (this *GateUser) StartTiger(tmptype uint32) {
 		cost = 0
 	}
 	if cost == 0 {
+		send.Ret = pb.Uint32(1)
+		this.SendMsg(send)
+		log.Info("玩家[%d]开启新一轮失败, 花费类型错误 type:%d", this.Id(), tmptype)
 		return
 	}
 
@@ -183,10 +186,14 @@ func (this *GateUser) StartTiger(tmptype uint32) {
 	//	return
 	//}
 	if !this.CheckUserCardCanStart() {
+		send.Ret = pb.Uint32(2)
+		this.SendMsg(send)
 		log.Info("玩家[%d]开启新一轮失败，存在翻牌数据, 上一轮未结束", this.Id())
 		return
 	}
 	if !this.RemoveYuanbao(cost, "翻卡牌扣除") {
+		send.Ret = pb.Uint32(3)
+		this.SendMsg(send)
 		return
 	}
 	cardNums := make([]uint32, 3)
@@ -218,7 +225,8 @@ func (this *GateUser) StartTiger(tmptype uint32) {
 	key := fmt.Sprintf("tigerinput_%d", this.Id())
 	personin := Redis().IncrBy(key, int64(cost))
 	globalin := Redis().IncrBy("tigersuminput", int64(cost))
-
+	send.Ret = pb.Uint32(0)
+	this.SendMsg(send)
 	log.Info("玩家[%d] 本局投入:%d 个人总投入:%d 全局总投入:%d", this.Id(), cost, personin.Val(), globalin.Val())
 }
 
