@@ -28,6 +28,7 @@ func (this *GateUser) InitTiger() {
 			send.Card = append(send.Card, v)
 		}
 	}
+	send.Cost = pb.Uint32(this.cardcost)
 	this.SendMsg(send)
 
 }
@@ -280,9 +281,12 @@ func (this *GateUser) UserTakeCard(pos uint32) {
 		send.Pos = pb.Uint32(pos)
 		this.SendMsg(send)
 		roundend := true
-		for _, v := range userCard {
-			if v.GetPos() == 0 {
-				roundend = false
+
+		if numfind > 0 {
+			for _, v := range userCard {
+				if v.GetPos() == 0 {
+					roundend = false
+				}
 			}
 		}
 		if roundend {
