@@ -1,5 +1,5 @@
 package msg;
-
+import "serialize.proto";
 message C2GW_StartTiger
 {
     optional uint32 type = 1;       //参加消耗 1 1000金 2 2000金 3 3000金
@@ -14,3 +14,27 @@ message GW2C_SumGet
 {
     optional uint32 num = 1;        //累计总获得
 }
+
+//-------------------翻牌begin----------------
+
+//同步本轮已经翻开的卡牌状态
+message GW2C_NotifyCardState
+{
+	repeated CardData card = 1;
+	optional uint32 cost = 2;
+}
+
+//请求翻牌 pos 位置
+message C2GW_ReqTakeCard
+{
+	optional uint32 pos = 1;
+}
+
+//返回翻牌结果 
+message GW2C_AckTakeCardRet
+{
+	optional uint32 num = 1;	//数字 
+	optional uint32 pos = 2;	//位置
+}
+
+//-------------------翻牌end------------------
