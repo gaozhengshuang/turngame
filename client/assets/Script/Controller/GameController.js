@@ -37,6 +37,9 @@ GameController.prototype.ChangeState = function (state) {
 }
 GameController.prototype.InsertArrayValue = function (index, value, pos) {
     this.clickInfo.push({ index, value, pos });
+    this.numbers.push(value);
+    //将被命运选中的数字移出所有数字的数组
+    _.pullAt(this.allNumbers, [_.indexOf(this.allNumbers, value)]);
 }
 GameController.prototype.FillAllNumbers = function () {
     //都选完了，填充好整个数组吧
@@ -62,15 +65,18 @@ GameController.prototype.GetTotalGain = function () {
     let baseBet = BaseBet[this.selectIndex];
     return baseBet * times;
 }
+GameController.prototype.GetIndexByCost = function (cost) {
+    return _.indexOf(BaseBet, cost);
+}
 
 GameController.prototype.onGW2C_GameResult = function (msgid, data) {
-    for (let i = 0; i < data.nums.length; i++) {
-        this.numbers.push(data.nums[i]);
-    }
-    //将被命运选中的数字移出所有数字的数组
-    for (let i = 0; i < this.numbers.length; i++) {
-        _.pullAt(this.allNumbers, [_.indexOf(this.allNumbers, this.numbers[i])]);
-    }
+    // for (let i = 0; i < data.nums.length; i++) {
+    //     this.numbers.push(data.nums[i]);
+    // }
+    // //将被命运选中的数字移出所有数字的数组
+    // for (let i = 0; i < this.numbers.length; i++) {
+    //     _.pullAt(this.allNumbers, [_.indexOf(this.allNumbers, this.numbers[i])]);
+    // }
 }
 
 module.exports = new GameController();

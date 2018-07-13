@@ -3,6 +3,7 @@ import Game from '../../Game';
 import CardNodeView from '../Card/CardNodeView';
 import GameResult from '../GameResult';
 import GameCoupon from '../GameCoupon';
+import GameInfo from '../GameInfo';
 cc.Class({
     extends: cc.Component,
 
@@ -18,6 +19,7 @@ cc.Class({
         playButton: { default: null, type: cc.Button },
         timesTipPrefab: { default: null, type: cc.Prefab },
         gameCoupon: { default: null, type: GameCoupon },
+        gameInfo: { default: null, type: GameInfo }
     },
 
     onLoad() {
@@ -36,11 +38,13 @@ cc.Class({
         this._createCards();
 
         Game.NotificationController.On(Game.Define.EVENT_KEY.CHANGE_GAMESTATE, this, this.onGameStateChange);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_HISTORYINFO, this, this.onUpdateHistoryInfo);
         this.node.runAction(cc.sequence([
             cc.delayTime(0.5),
             cc.callFunc(function () {
                 this.cardNodeParent.removeComponent(cc.Layout);
-                Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_IDLE);
+                Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_PREPARED);
+                this.onUpdateHistoryInfo(Game.UserModel.historyData);
             }, this)
         ]));
         this.playButton.interactable = false;
@@ -55,6 +59,7 @@ cc.Class({
 
     onDestroy() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.CHANGE_GAMESTATE, this, this.onGameStateChange);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_HISTORYINFO, this, this.onUpdateHistoryInfo);
     },
 
     onGameStateChange(state) {
@@ -64,6 +69,11 @@ cc.Class({
             this.playButton.interactable = false;
         }
         switch (state) {
+            case Game.TurnDefine.GAME_STATE.STATE_PREPARED: {
+                this.waittingHistory = setTimeout(function () {
+                    Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_IDLE);
+                }, 1000);
+            }
             case Game.TurnDefine.GAME_STATE.STATE_IDLE: {
                 Game.GameController.RestartRound();
                 this.gameResult.RestartRound();
@@ -119,6 +129,31 @@ cc.Class({
             cardNodeView.TurnBack(this._turnBackEndWhenIdle.bind(this), true, i * 0.1);
         }
         Game.NetWorkController.Send('msg.C2GW_StartTiger', { type: Game.GameController.selectIndex });
+    },
+    onUpdateHistoryInfo(info) {
+        if (info == null || info == {}) {
+            return;
+        }
+        if (Game.GameController.state == Game.TurnDefine.GAME_STATE.STATE_PREPARED) {
+            //在准备阶段才相应
+            let index = Game.GameController.GetIndexByCost(info.cost || 0);
+            this.gameInfo.Init(index);
+            //卡牌状态
+            for (let i = 0; i < this.cardNodes.length; i++) {
+                let cardNode = this.cardNodes[i];
+                let findInfo = Game._.find(info.card, { pos: i + 1 });
+                if (findInfo != null && findInfo.num > 0) {
+                    cardNode.InitHistoryInfo(findInfo.num);
+                }
+                else {
+                    cardNode.TurnBack(function () { });
+                }
+            }
+            Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_READY);
+            if (this.waittingHistory != null) {
+                clearTimeout(this.waittingHistory);
+            }
+        }
     },
     _createCards() {
         for (let i = 0; i < 12; i++) {

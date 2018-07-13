@@ -10,16 +10,21 @@ cc.Class({
         frontNode: { default: null, type: cc.Node },
         value: { default: 0, type: cc.Integer },
         index: { default: 0, type: cc.Integer },
-        isFront: { default: [], type: cc.Boolean }
+        isFront: { default: [], type: cc.Boolean },
     },
 
     onLoad() {
+        Game.NetWorkController.AddListener('msg.GW2C_AckTakeCardRet', this, this.onGW2C_AckTakeCardRet);
     },
 
     start() {
     },
 
     update(dt) {
+    },
+
+    onDestroy() {
+        Game.NetWorkController.RemoveListener('msg.GW2C_AckTakeCardRet', this, this.onGW2C_AckTakeCardRet);
     },
 
     Init(index, value) {
@@ -98,21 +103,38 @@ cc.Class({
     IsFront() {
         return this.isFront;
     },
+    InitHistoryInfo(value) {
+        this.value = value;
+        Game.GameController.InsertArrayValue(this.index, this.value, this.node.parent.convertToWorldSpaceAR(this.node.position));
+        this.TurnFront(function () { });
+    },
 
     onClickCard(event) {
         if (Game.GameController.state != Game.TurnDefine.GAME_STATE.STATE_READY) {
             return;
         }
-        let value = Game.GameController.numbers[Game.GameController.turnCount];
-        this.value = value;
-        this.numberSpriteView.Init(value);
-        Game.GameController.InsertArrayValue(this.index, value, this.node.parent.convertToWorldSpaceAR(this.node.position));
-        this.TurnFront(this._turnFrontEndWhenClick.bind(this), true);
-        Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_TURNFRONT);
-        Game.GameController.turnCount++;
+        Game.NetWorkController.Send('msg.C2GW_ReqTakeCard', { pos: this.index + 1 });
+    },
+
+    onGW2C_AckTakeCardRet(msgid, data) {
+        if (Game.GameController.state != Game.TurnDefine.GAME_STATE.STATE_READY) {
+            return;
+        }
+        if (this.index + 1 == data.pos) {
+            //就是我自己
+            this.value = data.num;
+            this.numberSpriteView.Init(this.value);
+            Game.GameController.InsertArrayValue(this.index, this.value, this.node.parent.convertToWorldSpaceAR(this.node.position));
+            this.TurnFront(this._turnFrontEndWhenClick.bind(this), true);
+            Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_TURNFRONT);
+            Game.GameController.turnCount++;
+        }
     },
 
     _turnFrontEndWhenClick() {
+        if (this.value == 0) {
+            Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDING);
+        }
         if (Game.GameController.turnCount >= 3) {
             Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDING);
         } else {

@@ -13,6 +13,7 @@ var UserModel = function () {
     this.platformCoins = 0;
     this.curGainCount = 0;
     this.totalGainCount = 0;
+    this.historyData = null;
 }
 
 UserModel.prototype.Init = function (cb) {
@@ -21,6 +22,7 @@ UserModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_SendUserPlatformMoney', this, this.onGW2C_SendUserPlatformMoney);
     NetWorkController.AddListener('msg.GW2C_SumGet', this, this.onGW2C_SumGet);
     NetWorkController.AddListener('msg.GW2C_UpdateYuanbao', this, this.onGW2C_UpdateYuanbao);
+    NetWorkController.AddListener('msg.GW2C_NotifyCardState', this, this.onGW2C_NotifyCardState);
 
     Tools.InvokeCallback(cb);
 }
@@ -101,6 +103,10 @@ UserModel.prototype.onGW2C_UpdateYuanbao = function (msgid, data) {
 UserModel.prototype.onGW2C_SumGet = function (msgid, data) {
     this.totalGainCount = data.num || 0;
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATETOTALGAIN, this.totalGainCount);
+}
+UserModel.prototype.onGW2C_NotifyCardState = function (msgid, data) {
+    this.historyData = data;
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_HISTORYINFO, this.historyData);
 }
 
 UserModel.prototype._calculateCoupon = function () {

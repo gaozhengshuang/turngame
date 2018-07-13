@@ -71,5 +71,11 @@ cc.Class({
                 }
             }
         }
+    },
+    Init(index) {
+        if (index == 0) {
+            index = 1;
+        }
+        this.onBetClick(null, index);
     }
 });
