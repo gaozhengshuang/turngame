@@ -1,18 +1,18 @@
 package main
+
 import (
 	"fmt"
-	_"reflect"
-	_"strconv"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
-	pb "github.com/gogo/protobuf/proto"
-	_"github.com/go-redis/redis"
+	_ "gitee.com/jntse/minehero/server/def"
 	"gitee.com/jntse/minehero/server/tbl"
-	_"gitee.com/jntse/minehero/server/def"
+	_ "github.com/go-redis/redis"
+	pb "github.com/gogo/protobuf/proto"
+	_ "reflect"
+	_ "strconv"
 )
-
 
 //func init() {
 //	log.Info("msg_msghandler.init")
@@ -39,7 +39,7 @@ func NewC2GWMsgHandler() *C2GWMsgHandler {
 	return handler
 }
 
-func (this* C2GWMsgHandler) Init() {
+func (this *C2GWMsgHandler) Init() {
 
 	this.msgparser = network.NewProtoParser("C2GW_MsgParser", tbl.ProtoMsgIndexGenerator)
 	if this.msgparser == nil {
@@ -64,13 +64,16 @@ func (this* C2GWMsgHandler) Init() {
 	//this.msgparser.RegistProtoMsg(msg.C2GW_ReFreshItems{}, on_C2GW_ReFreshItems)
 	//this.msgparser.RegistProtoMsg(msg.C2GW_StartThrow{}, on_C2GW_StartThrow)
 	//this.msgparser.RegistProtoMsg(msg.C2GW_TargetItem{}, on_C2GW_TargetItem)
-	this.msgparser.RegistProtoMsg(msg.C2GW_StartTiger{}, on_C2GW_StartTiger)
 
 	// 收战场消息
 	this.msgparser.RegistProtoMsg(msg.BT_ReqEnterRoom{}, on_BT_ReqEnterRoom)
 	this.msgparser.RegistProtoMsg(msg.BT_ReqJumpStep{}, on_BT_ReqJumpStep)
 	this.msgparser.RegistProtoMsg(msg.BT_ReqQuitGameRoom{}, on_BT_ReqQuitGameRoom)
 	this.msgparser.RegistProtoMsg(msg.BT_JumpPreCheck{}, on_BT_JumpPreCheck)
+
+	// 收翻卡牌
+	this.msgparser.RegistProtoMsg(msg.C2GW_StartTiger{}, on_C2GW_StartTiger)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTakeCard{}, on_C2GW_ReqTakeCard)
 
 	// 发
 	this.msgparser.RegistSendProto(msg.GW2C_HeartBeat{})
@@ -98,8 +101,6 @@ func (this* C2GWMsgHandler) Init() {
 	//超市游戏
 	//this.msgparser.RegistSendProto(msg.GW2C_HitTarget{})
 	//this.msgparser.RegistSendProto(msg.GW2C_FreeThrow{})
-	this.msgparser.RegistSendProto(msg.GW2C_GameResult{})
-	this.msgparser.RegistSendProto(msg.GW2C_SumGet{})
 
 	// Room
 	this.msgparser.RegistSendProto(msg.BT_GameInit{})
@@ -109,6 +110,11 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_RetJumpStep{})
 	this.msgparser.RegistSendProto(msg.BT_PickItem{})
 	this.msgparser.RegistSendProto(msg.BT_RetJumpPreCheck{})
+	//发 卡牌相关
+	this.msgparser.RegistSendProto(msg.GW2C_SumGet{})
+	this.msgparser.RegistSendProto(msg.GW2C_NotifyCardState{})
+	this.msgparser.RegistSendProto(msg.GW2C_AckTakeCardRet{})
+	this.msgparser.RegistSendProto(msg.GW2C_GameResult{})
 }
 
 // 客户端心跳
@@ -119,7 +125,7 @@ func on_C2GW_HeartBeat(session network.IBaseNetSession, message interface{}) {
 	//curtime := util.CURTIMEUS()
 	//log.Info("receive heart beat msg interval=%d", curtime - tmsg.GetTime())
 	session.SendCmd(&msg.GW2C_HeartBeat{
-		Uid: tmsg.Uid,
+		Uid:  tmsg.Uid,
 		Time: pb.Int64(util.CURTIMEUS()),
 		Test: tmsg.Test,
 	})
@@ -139,7 +145,7 @@ func on_C2GW_HeartBeat(session network.IBaseNetSession, message interface{}) {
 	//	log.Info("账户[%s] 玩家[%s %d] 更新token[%s] 老token[%s]", account, user.Name(), user.Id(), token, user.Token())
 	//	key := fmt.Sprintf("charid_%d_token", user.Id())
 	//	Redis().Set(key, token, 0)
-	//	user.SetToken(token)	
+	//	user.SetToken(token)
 	//}
 }
 
@@ -184,7 +190,7 @@ func on_BT_ReqEnterRoom(session network.IBaseNetSession, message interface{}) {
 
 	// 进入游戏房间
 	log.Info("玩家[%d] 开始进入房间[%d] ts[%d]", user.Id(), user.RoomId(), util.CURTIMEMS())
-	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
+	tmsg.Roomid, tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
 	user.SendRoomMsg(tmsg)
 }
 
@@ -199,7 +205,7 @@ func on_BT_JumpPreCheck(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 
-	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
+	tmsg.Roomid, tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
 	user.SendRoomMsg(tmsg)
 }
 
@@ -214,14 +220,13 @@ func on_BT_ReqJumpStep(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 
-	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
+	tmsg.Roomid, tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
 	user.SendRoomMsg(tmsg)
 }
 
 func on_BT_ReqQuitGameRoom(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.BT_ReqQuitGameRoom)
 	//log.Info(reflect.TypeOf(tmsg).String())
-
 
 	user := ExtractSessionUser(session)
 	if user == nil {
@@ -230,15 +235,14 @@ func on_BT_ReqQuitGameRoom(session network.IBaseNetSession, message interface{})
 		return
 	}
 
-
 	// 离开游戏房间
-	tmsg.Roomid , tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
+	tmsg.Roomid, tmsg.Userid = pb.Int64(user.RoomId()), pb.Uint64(user.Id())
 	user.SendRoomMsg(tmsg)
 }
 
 func on_C2GW_ReqLogin(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_ReqLogin)
-	reason, account, verifykey, token , face := "", tmsg.GetAccount(), tmsg.GetVerifykey(), tmsg.GetToken(), tmsg.GetFace()
+	reason, account, verifykey, token, face := "", tmsg.GetAccount(), tmsg.GetVerifykey(), tmsg.GetToken(), tmsg.GetFace()
 	islogin := false
 
 	switch {
@@ -270,7 +274,6 @@ func on_C2GW_ReqLogin(session network.IBaseNetSession, message interface{}) {
 			break
 		}
 
-
 		// TODO: 登陆成功才绑定账户到会话
 		session.SetUserDefData(user)
 		return
@@ -278,14 +281,15 @@ func on_C2GW_ReqLogin(session network.IBaseNetSession, message interface{}) {
 
 	// 返回给客户端，失败才回
 	if reason != "" {
-		if !islogin { UnBindingAccountGateWay(account) }
+		if !islogin {
+			UnBindingAccountGateWay(account)
+		}
 		log.Error("sid[%d] 账户[%s] 登陆网关失败 reason[%s]", session.Id(), account, reason)
-		send := &msg.GW2C_RetLogin{ Errcode : pb.String(reason) }
+		send := &msg.GW2C_RetLogin{Errcode: pb.String(reason)}
 		session.SendCmd(send)
-		session.Close() 
+		session.Close()
 	}
 }
-
 
 //func on_C2GW_ReqUserInfo(session network.IBaseNetSession, message interface{}) {
 //	tmsg := message.(*msg.C2GW_ReqUserInfo)
@@ -348,12 +352,12 @@ func on_C2GW_ReqDeliveryGoods(session network.IBaseNetSession, message interface
 	if tbl.Global.IntranetFlag {
 		user.SendNotify("本版本暂不可用")
 		return
-	}else {
-		if user.DeliveryState() == true  {
+	} else {
+		if user.DeliveryState() == true {
 			user.SendNotify("发货请求太频繁了")
 			return
 		}
-		
+
 		user.SetDeliveryState(true)
 		event := NewDeliveryGoodsEvent(tmsg.GetList(), tmsg.GetToken(), tmsg.GetPhone(), user.DeliveryGoods)
 		user.AsynEventInsert(event)
@@ -380,8 +384,8 @@ func on_C2GW_ReqDeliveryDiamond(session network.IBaseNetSession, message interfa
 	if tbl.Global.IntranetFlag {
 		user.SendNotify("本版本暂不可用")
 		return
-	}else {
-		if user.DeliveryState() == true  {
+	} else {
+		if user.DeliveryState() == true {
 			user.SendNotify("发货请求太频繁了")
 			return
 		}
@@ -404,7 +408,6 @@ func on_C2GW_UseBagItem(session network.IBaseNetSession, message interface{}) {
 
 	user.UseItem(tmsg.GetItemid(), tmsg.GetNum())
 }
-
 
 func on_C2GW_ReqRechargeMoney(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_ReqRechargeMoney)
@@ -432,8 +435,8 @@ func on_C2GW_SellBagItem(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 
-	for _ , v  := range tmsg.GetList() {
-		itemid , num := v.GetItemid(), v.GetNum()
+	for _, v := range tmsg.GetList() {
+		itemid, num := v.GetItemid(), v.GetNum()
 		user.SellBagItem(itemid, num)
 	}
 }
@@ -452,6 +455,7 @@ func on_C2GW_PlatformRechargeDone(session network.IBaseNetSession, message inter
 	user.QueryPlatformCoins()
 }
 
+//开启一轮新的翻牌
 func on_C2GW_StartTiger(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_StartTiger)
 
@@ -461,7 +465,19 @@ func on_C2GW_StartTiger(session network.IBaseNetSession, message interface{}) {
 		session.Close()
 		return
 	}
-
-	user.RemoveCoins("123",tmsg.GetType())
+	//user.RemoveCoins("123",tmsg.GetType())
+	user.StartTiger(tmsg.GetType())
 }
 
+//翻开一张牌
+func on_C2GW_ReqTakeCard(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqTakeCard)
+
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+	user.UserTakeCard(tmsg.GetPos())
+}

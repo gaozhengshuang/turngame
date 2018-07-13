@@ -16,6 +16,7 @@ message SimpleCounter {
     optional int64 diamond_room_step = 5;       // 钻石场计数
 }
 
+
 message UserBase {
     optional uint32     level   = 1;
     optional uint32     exp     = 2;
@@ -34,6 +35,8 @@ message UserBase {
     optional uint32     freetime    = 15;   // 每天免费标示
     optional uint32     freetype    = 16;   // 引导类型
     optional uint32     sumget      = 17;   // 总获得
+	repeated CardData	card		= 18; 	// 翻牌状态
+	optional uint32		cardcost	= 19; 	// 本轮翻牌花费
 }
 
 message UserAddress {
@@ -69,4 +72,8 @@ message Serialize {
     optional ItemBin    item    = 3;
 }
 
-
+//翻牌信息
+message CardData{
+	optional uint32 num = 1;	//数字
+	optional uint32 pos = 2;	//位置 位置为0 代表未翻开 >0为已翻开
+}
