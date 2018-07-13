@@ -32,39 +32,23 @@ tar -czvf pack/$filename ./release/
 today=`date +%Y%m%d`
 
 ## 测试环境版本
-wainum=$(ssh brickcrush@210.73.214.68 "ls -d -l /home/brickcrush/version/${today}R* | wc -l")
+wainum=$(ssh wbturn@210.73.214.68 "ls -d -l /home/wbturn/version/${today}R* | wc -l")
 wainum=$((wainum + 1))
 waibuildDirName=${today}R${wainum}_PP
 echo $waibuildDirName
 
-ssh brickcrush@210.73.214.68 "mkdir -p /home/brickcrush/version/${waibuildDirName}"
-scp pack/$filename brickcrush@210.73.214.68:/home/brickcrush/version/${waibuildDirName}
-ssh brickcrush@210.73.214.68 "cd /home/brickcrush/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
-ssh brickcrush@210.73.214.68 "rm /home/brickcrush/version/${waibuildDirName}/release/conf -rf"
-ssh brickcrush@210.73.214.68 "cp /home/brickcrush/version/config/conf /home/brickcrush/version/${waibuildDirName}/release/ -rvf"
-ssh brickcrush@210.73.214.68 "cp /home/brickcrush/version/config/runserver.sh /home/brickcrush/version/${waibuildDirName}/release/ -rvf"
-ssh brickcrush@210.73.214.68 "cp /home/brickcrush/version/config/watch.sh /home/brickcrush/version/${waibuildDirName}/release/ -rvf"
+ssh wbturn@210.73.214.68 "mkdir -p /home/wbturn/version/${waibuildDirName}"
+scp pack/$filename wbturn@210.73.214.68:/home/wbturn/version/${waibuildDirName}
+ssh wbturn@210.73.214.68 "cd /home/wbturn/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
+ssh wbturn@210.73.214.68 "rm /home/wbturn/version/${waibuildDirName}/release/conf -rf"
+ssh wbturn@210.73.214.68 "cp /home/wbturn/version/config/conf /home/wbturn/version/${waibuildDirName}/release/ -rvf"
+ssh wbturn@210.73.214.68 "cp /home/wbturn/version/config/runserver.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
+ssh wbturn@210.73.214.68 "cp /home/wbturn/version/config/watch.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
 
-## 正式环境版本
-#ssh webgame@210.73.214.68 "scp -r /home/webgame/version/${waibuildDirName} webgame@210.73.214.75:/home/webgame/version/"
-#ssh webgame@210.73.214.68 "scp -r /home/webgame/version/${waibuildDirName} webgame@210.73.214.76:/home/webgame/version/"
-#ssh webgame@210.73.214.68 "scp -r /home/webgame/version/${waibuildDirName} webgame@210.73.214.77:/home/webgame/version/"
-
-#ssh webgame@210.73.214.75 "cd /home/webgame/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
-#ssh webgame@210.73.214.75 "rm /home/webgame/version/${waibuildDirName}/release/conf -rf"
-#ssh webgame@210.73.214.75 "cp /home/webgame/version/config/conf /home/webgame/version/${waibuildDirName}/release/ -rvf"
-#ssh webgame@210.73.214.75 "cp /home/webgame/version/config/runserver.sh /home/webgame/version/${waibuildDirName}/release/ -rvf"
-#ssh webgame@210.73.214.75 "cp /home/webgame/version/config/watch.sh /home/webgame/version/${waibuildDirName}/release/ -rvf"
-
-#ssh webgame@210.73.214.76 "cd /home/webgame/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
-#ssh webgame@210.73.214.76 "rm /home/webgame/version/${waibuildDirName}/release/conf -rf"
-#ssh webgame@210.73.214.76 "cp /home/webgame/version/config/conf /home/webgame/version/${waibuildDirName}/release/ -rvf"
-#ssh webgame@210.73.214.76 "cp /home/webgame/version/config/runserver.sh /home/webgame/version/${waibuildDirName}/release/ -rvf"
-#ssh webgame@210.73.214.76 "cp /home/webgame/version/config/watch.sh /home/webgame/version/${waibuildDirName}/release/ -rvf"
-#
-#ssh webgame@210.73.214.77 "cd /home/webgame/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
-#ssh webgame@210.73.214.77 "rm /home/webgame/version/${waibuildDirName}/release/conf -rf"
-#ssh webgame@210.73.214.77 "cp /home/webgame/version/config/conf /home/webgame/version/${waibuildDirName}/release/ -rvf"
-#ssh webgame@210.73.214.77 "cp /home/webgame/version/config/runserver.sh /home/webgame/version/${waibuildDirName}/release/ -rvf"
-#ssh webgame@210.73.214.77 "cp /home/webgame/version/config/watch.sh /home/webgame/version/${waibuildDirName}/release/ -rvf"
-
+#ssh wbturn@210.73.214.69 "mkdir -p /home/wbturn/version/${waibuildDirName}"
+#scp pack/$filename wbturn@210.73.214.69:/home/wbturn/version/${waibuildDirName}
+#ssh wbturn@210.73.214.69 "cd /home/wbturn/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
+#ssh wbturn@210.73.214.69 "rm /home/wbturn/version/${waibuildDirName}/release/conf -rf"
+#ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/conf /home/wbturn/version/${waibuildDirName}/release/ -rvf"
+#ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/runserver.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
+#ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/watch.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
