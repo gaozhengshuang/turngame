@@ -176,6 +176,12 @@ func (this *GateUser) PreStartTiger(cost uint32, token string) {
 		log.Info("玩家[%d]开启新一轮失败, 下注超过上限 cost:%d", this.Id(), cost)
 		return
 	}
+	if cost < 1000 {
+		send.Ret = pb.Uint32(1)
+		this.SendMsg(send)
+		log.Info("玩家[%d]开启新一轮失败, 下注低于下限 cost:%d", this.Id(), cost)
+		return
+	}
 
 	if !this.CheckUserCardCanStart() {
 		send.Ret = pb.Uint32(2)
@@ -331,8 +337,8 @@ func (this *GateUser) GiveUserCardAward() {
 
 	this.sumget += cost * reward
 
-	if reward > 1 {
-		txt := fmt.Sprintf("%d倍奖励 %d金币", reward, cost*reward)
+	if reward >= 1 {
+		txt := fmt.Sprintf("%d倍奖励 %dk金币", reward, cost*reward/1000)
 		GateSvr().SendNotice(this.Face(), msg.NoticeType_Suspension, def.MakeNoticeText("恭喜", "#FFFFFF", 26), def.MakeNoticeText(this.Name(), "#A6E5FF", 26), def.MakeNoticeText("获得", "#FFFFFF", 26), def.MakeNoticeText(txt, "#ECFF94", 26))
 	}
 
