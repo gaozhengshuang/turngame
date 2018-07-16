@@ -466,7 +466,9 @@ func on_C2GW_StartTiger(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 	//user.RemoveCoins("123",tmsg.GetType())
-	user.StartTiger(tmsg.GetType())
+	//user.StartTiger(tmsg.GetType())
+
+	user.PreStartTiger(tmsg.GetCost(), tmsg.GetToken())
 }
 
 //翻开一张牌

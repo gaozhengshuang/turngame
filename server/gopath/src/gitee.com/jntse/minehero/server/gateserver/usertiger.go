@@ -41,32 +41,33 @@ func (this *GateUser) InitTiger() {
 
 func (this *GateUser) GetNumByCount(count uint32) []int32 {
 	if this.freetype == 0 {
-		this.freetype = uint32(util.RandBetween(1, 2))
+		this.freetype = uint32(util.RandBetween(1, 3))
 	}
 	if this.freetype == 1 {
 		if count == 0 {
-			tmpslice := []int32{1, 1, 1}
+			tmpslice := []int32{2, 1, 1}
+			util.Shuffle(tmpslice)
 			return tmpslice
 		} else if count == 1 {
 			tmpslice := []int32{0, int32(util.RandBetween(0, 3)), int32(util.RandBetween(0, 3))}
 			util.Shuffle(tmpslice)
 			return tmpslice
 		} else if count == 2 {
-			tmpslice := []int32{2, 1, 1}
-			util.Shuffle(tmpslice)
+			tmpslice := []int32{1, 1, 1}
 			return tmpslice
 		}
+
 	} else {
 		if count == 0 {
-			tmpslice := []int32{2, 1, 1}
-			util.Shuffle(tmpslice)
+			tmpslice := []int32{1, 1, 1}
 			return tmpslice
 		} else if count == 1 {
 			tmpslice := []int32{0, int32(util.RandBetween(0, 3)), int32(util.RandBetween(0, 3))}
 			util.Shuffle(tmpslice)
 			return tmpslice
 		} else if count == 2 {
-			tmpslice := []int32{1, 1, 1}
+			tmpslice := []int32{2, 1, 1}
+			util.Shuffle(tmpslice)
 			return tmpslice
 		}
 	}
@@ -167,42 +168,39 @@ func (this *GateUser) StartTiger(removeok bool, tmpcost int32, uid int32) {
 }
 */
 
-func (this *GateUser) StartTiger(tmptype uint32) {
-	var cost uint32
+func (this *GateUser) PreStartTiger(cost uint32, token string) {
 	send := &msg.GW2C_GameResult{}
-	switch tmptype {
-	case 1:
-		cost = 1000
-	case 2:
-		cost = 2000
-	case 3:
-		cost = 5000
-	default:
-		cost = 0
-	}
-	if cost == 0 {
+	if cost > 100000 {
 		send.Ret = pb.Uint32(1)
 		this.SendMsg(send)
-		log.Info("玩家[%d]开启新一轮失败, 花费类型错误 type:%d", this.Id(), tmptype)
+		log.Info("玩家[%d]开启新一轮失败, 下注超过上限 cost:%d", this.Id(), cost)
 		return
 	}
 
-	//if removeok == false {
-	//	this.SendNotify("金币不足")
-	//	log.Info("玩家[%d]游戏失败，扣除金子%d失败", this.Id(), cost)
-	//	return
-	//}
 	if !this.CheckUserCardCanStart() {
 		send.Ret = pb.Uint32(2)
 		this.SendMsg(send)
 		log.Info("玩家[%d]开启新一轮失败，存在翻牌数据, 上一轮未结束", this.Id())
 		return
 	}
-	if !this.RemoveYuanbao(cost, "翻卡牌扣除") {
+	this.SetToken(token)
+	log.Info("玩家[%d]开始新一轮翻牌游戏 付费", this.Id())
+	event := NewRemovePlatformCoinsEvent(int32(cost), 0, "数字翻翻乐扣除金币", this.RemovePlatformCoins, this.StartTiger)
+	this.AsynEventInsert(event)
+
+}
+
+func (this *GateUser) StartTiger(removeok bool, cost int32, uid int32) {
+
+	send := &msg.GW2C_GameResult{}
+	if removeok == false {
+		this.SendNotify("金币不足")
+		log.Info("玩家[%d]游戏失败，扣除金子%d失败", this.Id(), cost)
 		send.Ret = pb.Uint32(3)
 		this.SendMsg(send)
 		return
 	}
+
 	cardNums := make([]uint32, 0)
 	if this.freetime <= 2 {
 		tmpnum := this.GetNumByCount(this.freetime)
@@ -226,9 +224,9 @@ func (this *GateUser) StartTiger(tmptype uint32) {
 			}
 		}
 	}
-
+	this.QueryPlatformCoins()
 	this.freetime += 1
-	this.InitUserCardStateByNewRoundStart(cardNums, cost)
+	this.InitUserCardStateByNewRoundStart(cardNums, uint32(cost))
 	key := fmt.Sprintf("tigerinput_%d", this.Id())
 	personin := Redis().IncrBy(key, int64(cost))
 	globalin := Redis().IncrBy("tigersuminput", int64(cost))
@@ -254,6 +252,11 @@ func (this *GateUser) InitUserCardStateByNewRoundStart(nums []uint32, cost uint3
 	}
 	if Nums[1] == 0 && Nums[2] == 0 {
 		Nums[1] = uint32(util.RandBetween(1, 3))
+	}
+	if Nums[0] == 0 && Nums[1] > 0 && Nums[2] > 0 {
+		temp := Nums[0]
+		Nums[0] = Nums[2]
+		Nums[2] = temp
 	}
 
 	this.ClearCardState()
@@ -324,7 +327,7 @@ func (this *GateUser) GiveUserCardAward() {
 	for _, v := range userCard {
 		reward *= v.GetNum()
 	}
-	this.AddYuanbao(cost*reward, "翻卡奖励")
+	//this.AddYuanbao(cost*reward, "翻卡奖励")
 
 	this.sumget += cost * reward
 
@@ -334,13 +337,14 @@ func (this *GateUser) GiveUserCardAward() {
 	}
 
 	if reward >= 1 {
-		//	event := NewAddPlatformCoinsEvent(int32(cost * reward), "翻卡牌", this.AddPlatformCoins)
-		//	this.AsynEventInsert(event)
+		event := NewAddPlatformCoinsEvent(int32(cost*reward), "数字翻翻乐", this.AddPlatformCoins)
+		this.AsynEventInsert(event)
+
 		sendsum := &msg.GW2C_SumGet{}
 		sendsum.Num = pb.Uint32(this.sumget)
 		this.SendMsg(sendsum)
 	}
-
+	this.QueryPlatformCoins()
 	key := fmt.Sprintf("tigeroutput_%d", this.Id())
 	personout := Redis().IncrBy(key, int64(cost*reward))
 	globalout := Redis().IncrBy("tigersumoutput", int64(cost*reward))
