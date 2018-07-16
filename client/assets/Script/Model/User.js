@@ -99,12 +99,13 @@ UserModel.prototype.onGW2C_UpdateYuanbao = function (msgid, data) {
 }
 
 UserModel.prototype.onGW2C_SumGet = function (msgid, data) {
+    let immediately = this.totalGainCount == null;
     if (this.totalGainCount != null) {
         this.curGainCount += (data.num == null ? 0 : data.num - this.totalGainCount);
-        NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECURGAIN, this.curGainCount);
+        NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECURGAIN, this.curGainCount, immediately);
     }
     this.totalGainCount = data.num || 0;
-    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATETOTALGAIN, this.totalGainCount);
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATETOTALGAIN, this.totalGainCount, immediately);
 }
 UserModel.prototype.onGW2C_NotifyCardState = function (msgid, data) {
     this.historyData = data;

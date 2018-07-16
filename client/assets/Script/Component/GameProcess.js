@@ -45,11 +45,11 @@ cc.Class({
                         node.runAction(cc.repeatForever(
                             cc.sequence([
                                 cc.spawn([
-                                    cc.scaleTo(0.5, 1.2, 1.2).easing(new cc.easeOut(2)),
+                                    cc.scaleTo(0.5, 1.4, 1.4).easing(new cc.easeOut(2)),
                                     cc.fadeTo(0.5, 200).easing(new cc.easeOut(2))
                                 ]),
                                 cc.spawn([
-                                    cc.scaleTo(0.5, 1, 1).easing(new cc.easeIn(2)),
+                                    cc.scaleTo(0.5, 1.2, 1.2).easing(new cc.easeIn(2)),
                                     cc.fadeTo(0.5, 255).easing(new cc.easeIn(2))
                                 ])
                             ])
