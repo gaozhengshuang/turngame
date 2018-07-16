@@ -2,7 +2,9 @@ package msg;
 import "serialize.proto";
 message C2GW_StartTiger
 {
-    optional uint32 type = 1;       //参加消耗 1 1000金 2 2000金 3 3000金
+    //optional uint32 type = 1;       //参加消耗 1 1000金 2 2000金 3 3000金
+	optional uint32 cost = 1;		//下注钱数
+	optional string token = 2; 		//token
 }
 
 message GW2C_GameResult
