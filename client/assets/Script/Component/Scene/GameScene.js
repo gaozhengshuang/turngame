@@ -4,6 +4,7 @@ import CardNodeView from '../Card/CardNodeView';
 import GameResult from '../GameResult';
 import GameCoupon from '../GameCoupon';
 import GameInfo from '../GameInfo';
+import GameReward from '../GameReward';
 cc.Class({
     extends: cc.Component,
 
@@ -17,8 +18,10 @@ cc.Class({
         turnFrontEndCount: { default: 0, type: cc.Integer },
         gameResult: { default: null, type: GameResult },
         timesTipPrefab: { default: null, type: cc.Prefab },
+        failTipPrefab: { default: null, type: cc.Prefab },
         gameCoupon: { default: null, type: GameCoupon },
-        gameInfo: { default: null, type: GameInfo }
+        gameInfo: { default: null, type: GameInfo },
+        gameReward: { default: null, type: GameReward }
     },
 
     onLoad() {
@@ -100,7 +103,18 @@ cc.Class({
                     let node = cc.instantiate(this.timesTipPrefab);
                     let timesTip = node.getComponent('TimesTip');
                     this.node.addChild(node);
-                    timesTip.Init(totalTime);
+                    timesTip.Init(totalTime, function () {
+                        this.gameReward.PlayDropGold(totalTime, function () {
+                            Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ADDGOLD);
+                        }.bind(this));
+                    }.bind(this));
+                } else {
+                    let node = cc.instantiate(this.failTipPrefab);
+                    let failTip = node.getComponent('FailTip');
+                    this.node.addChild(node);
+                    failTip.Init(function () {
+                        Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDED);
+                    }.bind(this));
                 }
                 break;
             }
@@ -120,7 +134,9 @@ cc.Class({
             let cardNodeView = this.cardNodes[i];
             cardNodeView.TurnBack(this._turnBackEndWhenIdle.bind(this), true, i * 0.1);
         }
-        Game.NetWorkController.Send('msg.C2GW_StartTiger', { type: Game.GameController.selectIndex });
+        Game.UserModel.GetTvToken(function (token) {
+            Game.NetWorkController.Send('msg.C2GW_StartTiger', { type: this.gameInfo.betNumber, token: token });
+        }.bind(this));
     },
     onUpdateHistoryInfo(info) {
         if (info == null || info.cost == null || info.cost == 0) {
@@ -128,8 +144,7 @@ cc.Class({
         }
         if (Game.GameController.state == Game.TurnDefine.GAME_STATE.STATE_PREPARED) {
             //在准备阶段才相应
-            let index = Game.GameController.GetIndexByCost(info.cost || 0);
-            this.gameInfo.Init(index);
+            this.gameInfo.Init(info.cost || 1000);
             //卡牌状态
             for (let i = 0; i < this.cardNodes.length; i++) {
                 let cardNode = this.cardNodes[i];
@@ -179,7 +194,7 @@ cc.Class({
     _turnFrontEndWhenEnding() {
         this.turnFrontEndCount++;
         if (this.turnFrontEndCount >= this.cardNodes.length) {
-            Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDED);
+            // Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_ENDED);
         }
     }
 });

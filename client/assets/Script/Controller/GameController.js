@@ -7,7 +7,6 @@ import Tools from '../Util/Tools';
 import NotificationController from '../Controller/NotificationController';
 import NetWorkController from '../Controller/NetWorkController';
 const AllNumbers = [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3];
-const BaseBet = [0, 1000, 2000, 5000];
 
 var GameController = function () {
     this.state = TurnGameDefine.GAME_STATE.STATE_PREPARING;
@@ -15,12 +14,13 @@ var GameController = function () {
     this.turnCount = 0;
     this.clickInfo = [];
     this.allNumbers = null;
-    this.selectIndex = 0;
     this.startComplete = false;
 }
 
 GameController.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_GameResult', this, this.onGW2C_GameResult);
+    NetWorkController.AddListener('msg.GW2C_MsgNotice', this, this.onGW2C_MsgNotice);
+    NetWorkController.AddListener('msg.GW2C_MsgNotify', this, this.onGW2C_MsgNotify);
     Tools.InvokeCallback(cb, null);
 }
 GameController.prototype.RestartRound = function () {
@@ -62,9 +62,6 @@ GameController.prototype.GetTotalTimes = function () {
     }
     return result;
 }
-GameController.prototype.GetIndexByCost = function (cost) {
-    return _.indexOf(BaseBet, cost);
-}
 
 GameController.prototype.onGW2C_GameResult = function (msgid, data) {
     this.startComplete = true;
@@ -76,6 +73,13 @@ GameController.prototype.onGW2C_GameResult = function (msgid, data) {
     // for (let i = 0; i < this.numbers.length; i++) {
     //     _.pullAt(this.allNumbers, [_.indexOf(this.allNumbers, this.numbers[i])]);
     // }
+}
+GameController.prototype.onGW2C_MsgNotice = function (msgid, data) {
+    NotificationController.Emit(Define.EVENT_KEY.TIP_BARRAGE, data);
+}
+
+GameController.prototype.onGW2C_MsgNotify = function (msgid, data) {
+    NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, data);
 }
 
 module.exports = new GameController();

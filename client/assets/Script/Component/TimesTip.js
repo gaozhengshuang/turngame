@@ -14,7 +14,7 @@ cc.Class({
 
     update(dt) {
     },
-    Init(value) {
+    Init(value, cb) {
         this.timesLabel.string = value;
         this.node.scale = 0;
         //开始播动画吧
@@ -28,6 +28,9 @@ cc.Class({
                     cc.fadeOut(0.4)
                 ])
             ]),
+            cc.callFunc(function () {
+                Game.Tools.InvokeCallback(cb);
+            }),
             cc.removeSelf(),
         ]));
     }
