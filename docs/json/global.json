@@ -110,6 +110,6 @@
     "//":"补偿道具",
     "compensateitem":10002,
 
-    "//":"红包测试金币",
-    "Tvmtestmoney":1000
+    "//":"红包测试金币比例",
+    "Tvmtestmoney":1
 }
