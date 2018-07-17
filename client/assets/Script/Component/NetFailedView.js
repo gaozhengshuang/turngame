@@ -26,11 +26,11 @@ cc.Class({
                 Game.NetWorkController.Send('msg.C2L_ReqLogin', Game.UserModel.loginInfo);
             }.bind(this));
         } else {
-            Game.UserModel.getUser(function (usr) {
+            Game.UserModel.GetUser(function (usr) {
                 let loginInfo = { token: usr.token, account: usr.tvmid, face: usr.avatar, nickname: usr.nickname }
-                UserModel.loginInfo = loginInfo;
-                LoginController.connectToLoginServer(function () {
-                    NetWorkController.Send('msg.C2L_ReqLogin', loginInfo);
+                Game.UserModel.loginInfo = loginInfo;
+                Game.LoginController.ConnectToLoginServer(function () {
+                    Game.NetWorkController.Send('msg.C2L_ReqLogin', loginInfo);
                 }.bind(this));
             });
         }

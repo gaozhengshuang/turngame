@@ -9,8 +9,7 @@ cc.Class({
 
     onLoad() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATECOINS, this, this.onUpdateCoin);
-        let info = Game.UserModel._calculateCoupon();
-        this.onUpdateCoin(info.num, info.suffix);
+        this.onUpdateCoin();
     },
 
     start() {
@@ -25,8 +24,10 @@ cc.Class({
     onRechargeClick(event) {
         Game.Tools.InvokeCallback(window.OpenSystemRecharge)
     },
-    onUpdateCoin(num, suffix) {
-        this.couponLabel.string = num;
-        this.kSprite.active = (suffix != '');
+    onUpdateCoin() {
+        let currency = Game.UserModel.GetCostCurrency();
+        let info = Game.Tools.CalculateCouponStr(currency);
+        this.couponLabel.string = info.num;
+        this.kSprite.active = (info.suffix != '');
     }
 });

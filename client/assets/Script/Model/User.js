@@ -41,12 +41,12 @@ UserModel.prototype.GetAccount = function () {
 
 UserModel.prototype.GetTvToken = function (cb) {
     if (Platform.PLATFORM == 'Normal') {
-        Tools.InvokeCallback(cb, '');
+        Tools.InvokeCallback(cb, '123');
     } else {
         if (!Tools.InvokeCallback(window.GetCurrentUser, function (usr) {
             Tools.InvokeCallback(cb, usr.token);
         })) {
-            Tools.InvokeCallback(cb, null);
+            Tools.InvokeCallback(cb, '123');
         }
     }
 }
@@ -72,6 +72,14 @@ UserModel.prototype.GetPlayerGoods = function (cb) {
     });
 }
 
+UserModel.prototype.GetCostCurrency = function () {
+    if (Platform.PLATFORM == 'Normal') {
+        return Tools.GetValueInObj(this.userInfo, 'base.yuanbao') || 0;
+    } else {
+        return this.platformCoins || 0;
+    }
+}
+
 /**
  * 消息处理接口
  */
@@ -90,12 +98,11 @@ UserModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
 
 UserModel.prototype.onGW2C_SendUserPlatformMoney = function (msgid, data) {
     this.platformCoins = data.coins || 0;
-    // NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECOINS, this._calculateCoupon());
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECOINS);
 }
 UserModel.prototype.onGW2C_UpdateYuanbao = function (msgid, data) {
     this.userInfo.base.yuanbao = data.num;
-    let info = this._calculateCoupon();
-    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECOINS, info.num, info.suffix);
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATECOINS);
 }
 
 UserModel.prototype.onGW2C_SumGet = function (msgid, data) {
@@ -111,21 +118,6 @@ UserModel.prototype.onGW2C_NotifyCardState = function (msgid, data) {
     this.historyData = data;
     console.log(data);
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_HISTORYINFO, this.historyData);
-}
-
-UserModel.prototype._calculateCoupon = function () {
-    let aaa = Tools.GetValueInObj(this.userInfo, 'base.yuanbao') || 0;
-    // let aaa = this.platformCoins;
-    let coupon = _.isString(aaa) ? parseInt(aaa) : aaa;
-    let info = null;
-    if (coupon > 9999) {
-        let ret = (coupon / 1000).toFixed(2);
-        ret = ret == Math.floor(ret) ? Math.floor(ret) : ret;
-        info = { num: ret, suffix: 'k' };
-    } else {
-        info = { num: coupon, suffix: '' };
-    }
-    return info;
 }
 
 module.exports = new UserModel();

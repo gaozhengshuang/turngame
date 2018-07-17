@@ -128,6 +128,10 @@ cc.Class({
         }
     },
     onPlayClick(event) {
+        if (Game.UserModel.GetCostCurrency() < this.gameInfo.betNumber) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '您的货币不足,请先充值' });
+            return;
+        }
         this.turnBackEndCount = 0;
         Game.GameController.ChangeState(Game.TurnDefine.GAME_STATE.STATE_STARTING);
         for (let i = 0; i < this.cardNodes.length; i++) {
@@ -135,7 +139,7 @@ cc.Class({
             cardNodeView.TurnBack(this._turnBackEndWhenIdle.bind(this), true, i * 0.1);
         }
         Game.UserModel.GetTvToken(function (token) {
-            Game.NetWorkController.Send('msg.C2GW_StartTiger', { type: this.gameInfo.betNumber, token: token });
+            Game.NetWorkController.Send('msg.C2GW_StartTiger', { cost: this.gameInfo.betNumber, token: token });
         }.bind(this));
     },
     onUpdateHistoryInfo(info) {
@@ -144,7 +148,7 @@ cc.Class({
         }
         if (Game.GameController.state == Game.TurnDefine.GAME_STATE.STATE_PREPARED) {
             //在准备阶段才相应
-            this.gameInfo.Init(info.cost || 1000);
+            this.gameInfo.SetBetNumber(info.cost || 1000);
             //卡牌状态
             for (let i = 0; i < this.cardNodes.length; i++) {
                 let cardNode = this.cardNodes[i];
