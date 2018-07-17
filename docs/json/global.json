@@ -59,7 +59,7 @@
     "RechargeCallback":"http://210.73.214.67:19000",
 
     "//":"红包对接",
-    "HongBaoAPI": {
+    "HongBaoAPITest": {
         "secret":"fd63645925af6f78cf455271fdc0eff2f188fe58009f83af3835770d529bc632",
         "key":"top59faf6315ef6625708c2056b81e3a",
         "getaddress":"https://open.yx.tvyouxuan.com/public/user/GetDeliveryAddresses",
@@ -79,9 +79,9 @@
     },
 
     "//":"红包对接测试线",
-    "HongBaoAPITest": {
-        "secret":"topxysm",
-        "key":"topxysm",
+    "HongBaoAPI": {
+        "secret":"topszffl",
+        "key":"topszffl",
         "getaddress":"http://open.std.tvmopt.com/public/user/GetDeliveryAddresses",
         "recharge":"http://open.std.tvmopt.com/public/finance/MultiRecharge",
         "CharacterCreation":"http://open.std.tvmopt.com/public/event/CharacterCreation",
@@ -95,6 +95,7 @@
         "DecrCoins":"http://open.std.tvmopt.com/public/finance/DecrCoins",
         "IncrDiamonds":"http://open.std.tvmopt.com/public/finance/IncrDiamonds",
         "CheckWechatBound":"http://open.std.tvmopt.com/public/user/CheckWechatBound"
+		"IncrGolds":"https://open.yx.tvyouxuan.com/public/finance/IncrCoins"
     },
 
     "//":"内网标记",
