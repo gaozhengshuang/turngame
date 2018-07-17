@@ -189,6 +189,7 @@ func (this *GateUser) PreStartTiger(cost uint32, token string) {
 		log.Info("玩家[%d]开启新一轮失败，存在翻牌数据, 上一轮未结束", this.Id())
 		return
 	}
+	cost = cost / uint32(tbl.Global.Tvmtestmoney)
 	this.SetToken(token)
 	log.Info("玩家[%d]开始新一轮翻牌游戏 付费", this.Id())
 	event := NewRemovePlatformCoinsEvent(int32(cost), 0, "数字翻翻乐扣除金币", this.RemovePlatformCoins, this.StartTiger)
@@ -199,15 +200,13 @@ func (this *GateUser) PreStartTiger(cost uint32, token string) {
 func (this *GateUser) StartTiger(removeok bool, cost int32, uid int32) {
 
 	send := &msg.GW2C_GameResult{}
-	/*
-		if removeok == false {
-			this.SendNotify("金币不足")
-			log.Info("玩家[%d]游戏失败，扣除金子%d失败", this.Id(), cost)
-			send.Ret = pb.Uint32(3)
-			this.SendMsg(send)
-			return
-		}
-	*/
+	if removeok == false {
+		this.SendNotify("金币不足")
+		log.Info("玩家[%d]游戏失败，扣除金子%d失败", this.Id(), cost)
+		send.Ret = pb.Uint32(3)
+		this.SendMsg(send)
+		return
+	}
 	cardNums := make([]uint32, 0)
 	if this.freetime <= 2 {
 		tmpnum := this.GetNumByCount(this.freetime)

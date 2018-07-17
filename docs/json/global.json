@@ -94,7 +94,7 @@
         "FinanceQuery":"http://open.std.tvmopt.com/public/finance/Query",
         "DecrCoins":"http://open.std.tvmopt.com/public/finance/DecrCoins",
         "IncrDiamonds":"http://open.std.tvmopt.com/public/finance/IncrDiamonds",
-        "CheckWechatBound":"http://open.std.tvmopt.com/public/user/CheckWechatBound"
+        "CheckWechatBound":"http://open.std.tvmopt.com/public/user/CheckWechatBound",
 		"IncrGolds":"https://open.yx.tvyouxuan.com/public/finance/IncrCoins"
     },
 
@@ -108,5 +108,8 @@
 	"footballvalue":200,
 
     "//":"补偿道具",
-    "compensateitem":10002
+    "compensateitem":10002,
+
+    "//":"红包测试金币",
+    "Tvmtestmoney":1000
 }
