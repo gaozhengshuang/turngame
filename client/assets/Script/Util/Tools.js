@@ -60,6 +60,18 @@ let Tools = {
     },
     GetMilliSecond: function () {
         return moment().unix() * 1000 + moment().milliseconds();
+    },
+    CalculateCouponStr: function (value) {
+        let coupon = _.isString(value) ? parseInt(value) : value;
+        let info = null;
+        if (coupon > 9999) {
+            let ret = (coupon / 1000).toFixed(2);
+            ret = ret == Math.floor(ret) ? Math.floor(ret) : ret;
+            info = { num: ret, suffix: 'k' };
+        } else {
+            info = { num: coupon, suffix: '' };
+        }
+        return info;
     }
 }
 

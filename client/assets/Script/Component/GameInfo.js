@@ -19,7 +19,9 @@ cc.Class({
         betNumber: { default: Game.TurnDefine.BET_CONFIG.BET_INIT, type: cc.Integer },
     },
 
+    
     onLoad() {
+        this.SetBetNumber(Game.TurnDefine.BET_CONFIG.BET_INIT);
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATECURGAIN, this, this.onUpdateCurGain);
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATETOTALGAIN, this, this.onUpdateTotalGain);
         Game.NotificationController.On(Game.Define.EVENT_KEY.CHANGE_GAMESTATE, this, this.onGameStateChange);
@@ -61,15 +63,13 @@ cc.Class({
 
     onAddButtonClick(event) {
         let newVal = this.betNumber + Game.TurnDefine.BET_CONFIG.BET_ADDITION;
-        newVal = Math.min(newVal, Game.TurnDefine.BET_CONFIG.BET_MAX);
-        this.betNumber = newVal;
-        this.betLabel.string = this._getBetNumberString();
+        newVal = Math.max(Math.min(newVal, Game.TurnDefine.BET_CONFIG.BET_MAX, Math.floor(Game.UserModel.GetCostCurrency() / 1000) * 1000), Game.TurnDefine.BET_CONFIG.BET_INIT);
+        this.SetBetNumber(newVal);
     },
     onReduceButtonClick(event) {
         let newVal = this.betNumber - Game.TurnDefine.BET_CONFIG.BET_ADDITION;
         newVal = Math.max(newVal, Game.TurnDefine.BET_CONFIG.BET_INIT);
-        this.betNumber = newVal;
-        this.betLabel.string = this._getBetNumberString();
+        this.SetBetNumber(newVal);
     },
     onUpdateCurGain(count, immediately) {
         if (immediately) {
@@ -89,6 +89,8 @@ cc.Class({
         if (state == Game.TurnDefine.GAME_STATE.STATE_IDLE) {
             this.addButton.interactable = true;
             this.reduceButton.interactable = true;
+            let newValue = Math.max(Math.min(this.betNumber, Game.TurnDefine.BET_CONFIG.BET_MAX, Math.floor(Game.UserModel.GetCostCurrency() / 1000) * 1000), Game.TurnDefine.BET_CONFIG.BET_INIT);
+            this.SetBetNumber(newValue);
         } else {
             this.addButton.interactable = false;
             this.reduceButton.interactable = false;
@@ -103,14 +105,9 @@ cc.Class({
             this.totalGainLabel.node.runAction(cc.scaleTo(0.3, 1.2, 1.2));
         }
     },
-    Init(value) {
-        this.betLabel.string = value;
+    SetBetNumber(value) {
         this.betNumber = value;
+        let info = Game.Tools.CalculateCouponStr(value);
+        this.betLabel.string = info.num + info.suffix;
     },
-    _getBetNumberString() {
-        if (this.betNumber > 10000) {
-            return (this.betNumber / 1000) + 'k';
-        }
-        return this.betNumber;
-    }
 });

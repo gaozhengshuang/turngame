@@ -22543,7 +22543,8 @@ $root.msg = (function() {
          * Properties of a C2GW_StartTiger.
          * @memberof msg
          * @interface IC2GW_StartTiger
-         * @property {number|null} [type] C2GW_StartTiger type
+         * @property {number|null} [cost] C2GW_StartTiger cost
+         * @property {string|null} [token] C2GW_StartTiger token
          */
 
         /**
@@ -22562,12 +22563,20 @@ $root.msg = (function() {
         }
 
         /**
-         * C2GW_StartTiger type.
-         * @member {number} type
+         * C2GW_StartTiger cost.
+         * @member {number} cost
          * @memberof msg.C2GW_StartTiger
          * @instance
          */
-        C2GW_StartTiger.prototype.type = 0;
+        C2GW_StartTiger.prototype.cost = 0;
+
+        /**
+         * C2GW_StartTiger token.
+         * @member {string} token
+         * @memberof msg.C2GW_StartTiger
+         * @instance
+         */
+        C2GW_StartTiger.prototype.token = "";
 
         /**
          * Creates a new C2GW_StartTiger instance using the specified properties.
@@ -22593,8 +22602,10 @@ $root.msg = (function() {
         C2GW_StartTiger.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.type != null && message.hasOwnProperty("type"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.type);
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.cost);
+            if (message.token != null && message.hasOwnProperty("token"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.token);
             return writer;
         };
 
@@ -22630,7 +22641,10 @@ $root.msg = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.type = reader.uint32();
+                    message.cost = reader.uint32();
+                    break;
+                case 2:
+                    message.token = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -22667,9 +22681,12 @@ $root.msg = (function() {
         C2GW_StartTiger.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.type != null && message.hasOwnProperty("type"))
-                if (!$util.isInteger(message.type))
-                    return "type: integer expected";
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                if (!$util.isInteger(message.cost))
+                    return "cost: integer expected";
+            if (message.token != null && message.hasOwnProperty("token"))
+                if (!$util.isString(message.token))
+                    return "token: string expected";
             return null;
         };
 
@@ -22685,8 +22702,10 @@ $root.msg = (function() {
             if (object instanceof $root.msg.C2GW_StartTiger)
                 return object;
             var message = new $root.msg.C2GW_StartTiger();
-            if (object.type != null)
-                message.type = object.type >>> 0;
+            if (object.cost != null)
+                message.cost = object.cost >>> 0;
+            if (object.token != null)
+                message.token = String(object.token);
             return message;
         };
 
@@ -22703,10 +22722,14 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
-                object.type = 0;
-            if (message.type != null && message.hasOwnProperty("type"))
-                object.type = message.type;
+            if (options.defaults) {
+                object.cost = 0;
+                object.token = "";
+            }
+            if (message.cost != null && message.hasOwnProperty("cost"))
+                object.cost = message.cost;
+            if (message.token != null && message.hasOwnProperty("token"))
+                object.token = message.token;
             return object;
         };
 
