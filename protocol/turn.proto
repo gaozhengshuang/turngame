@@ -41,3 +41,18 @@ message GW2C_AckTakeCardRet
 }
 
 //-------------------翻牌end------------------
+
+
+//用元宝 兑换钻石
+message C2GW_ReqExChangeToDiamond
+{
+	optional uint32 count = 1; //请求兑换钻石的数量 暂时用不上 现在是一次换掉 身上能换的所有元宝
+	optional string token = 2; //token
+}
+
+//兑换钻石 结果返回
+message GW2C_AckExChangeToDiamondRet
+{
+	optional uint32 ret = 1;		//对换结果
+	optional uint32 diamond = 2;	//获得钻石数量
+}

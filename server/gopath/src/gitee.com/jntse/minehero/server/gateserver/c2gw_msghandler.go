@@ -74,6 +74,7 @@ func (this *C2GWMsgHandler) Init() {
 	// 收翻卡牌
 	this.msgparser.RegistProtoMsg(msg.C2GW_StartTiger{}, on_C2GW_StartTiger)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTakeCard{}, on_C2GW_ReqTakeCard)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqExChangeToDiamond{}, on_C2GW_ReqExChangeToDiamond)
 
 	// 发
 	this.msgparser.RegistSendProto(msg.GW2C_HeartBeat{})
@@ -115,6 +116,7 @@ func (this *C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_NotifyCardState{})
 	this.msgparser.RegistSendProto(msg.GW2C_AckTakeCardRet{})
 	this.msgparser.RegistSendProto(msg.GW2C_GameResult{})
+	this.msgparser.RegistSendProto(msg.GW2C_AckExChangeToDiamondRet{})
 }
 
 // 客户端心跳
@@ -482,4 +484,16 @@ func on_C2GW_ReqTakeCard(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 	user.UserTakeCard(tmsg.GetPos())
+}
+
+func on_C2GW_ReqExChangeToDiamond(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqExChangeToDiamond)
+
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+	user.ExChangeDiamondByYuanbao(tmsg.GetToken())
 }

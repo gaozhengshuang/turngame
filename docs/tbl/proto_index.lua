@@ -106,13 +106,15 @@ export var ProtoId : table.IProtoIdDefine[] = [
 		{ Id : 101, Name : "msg.GW2C_NotifyCardState" 	},
 		{ Id : 102, Name : "msg.C2GW_ReqTakeCard" 	},
 		{ Id : 103, Name : "msg.GW2C_AckTakeCardRet" 	},
-		{ Id : 104, Name : "msg.C2GW_AddDeliveryAddress" 	},
-		{ Id : 105, Name : "msg.C2GW_DelDeliveryAddress" 	},
-		{ Id : 106, Name : "msg.C2GW_ChangeDeliveryAddress" 	},
-		{ Id : 107, Name : "msg.GW2C_SendDeliveryAddressList" 	},
-		{ Id : 108, Name : "msg.C2GW_ReqRechargeMoney" 	},
-		{ Id : 109, Name : "msg.GW2C_RetRechargeMoney" 	},
-		{ Id : 110, Name : "msg.C2GW_PlatformRechargeDone" 	}
+		{ Id : 104, Name : "msg.C2GW_ReqExChangeToDiamond" 	},
+		{ Id : 105, Name : "msg.GW2C_AckExChangeToDiamondRet" 	},
+		{ Id : 106, Name : "msg.C2GW_AddDeliveryAddress" 	},
+		{ Id : 107, Name : "msg.C2GW_DelDeliveryAddress" 	},
+		{ Id : 108, Name : "msg.C2GW_ChangeDeliveryAddress" 	},
+		{ Id : 109, Name : "msg.GW2C_SendDeliveryAddressList" 	},
+		{ Id : 110, Name : "msg.C2GW_ReqRechargeMoney" 	},
+		{ Id : 111, Name : "msg.GW2C_RetRechargeMoney" 	},
+		{ Id : 112, Name : "msg.C2GW_PlatformRechargeDone" 	}
 	]
 
 

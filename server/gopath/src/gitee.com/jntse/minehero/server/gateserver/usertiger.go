@@ -333,18 +333,18 @@ func (this *GateUser) GiveUserCardAward() {
 	for _, v := range userCard {
 		reward *= v.GetNum()
 	}
-	//this.AddYuanbao(cost*reward, "翻卡奖励")
+	this.AddYuanbao(cost*reward, "翻卡奖励")
 
 	this.sumget += cost * reward
 
 	if reward >= 1 {
-		txt := fmt.Sprintf("%d倍奖励 %dk金币", reward, cost*reward/1000)
+		txt := fmt.Sprintf("%d倍奖励 %dk元宝", reward, cost*reward/1000)
 		GateSvr().SendNotice(this.Face(), msg.NoticeType_Suspension, def.MakeNoticeText("恭喜", "#FFFFFF", 26), def.MakeNoticeText(this.Name(), "#A6E5FF", 26), def.MakeNoticeText("获得", "#FFFFFF", 26), def.MakeNoticeText(txt, "#ECFF94", 26))
 	}
 
 	if reward >= 1 {
-		event := NewAddPlatformCoinsEvent(int32(cost*reward), "数字翻翻乐", this.AddPlatformCoins)
-		this.AsynEventInsert(event)
+		//event := NewAddPlatformCoinsEvent(int32(cost*reward), "数字翻翻乐", this.AddPlatformCoins)
+		//this.AsynEventInsert(event)
 
 		sendsum := &msg.GW2C_SumGet{}
 		sendsum.Num = pb.Uint32(this.sumget)
@@ -356,4 +356,35 @@ func (this *GateUser) GiveUserCardAward() {
 	globalout := Redis().IncrBy("tigersumoutput", int64(cost*reward))
 	log.Info("玩家[%d]  本局获得:%d 个人总获得:%d 全局总支出:%d", this.Id(), cost*reward, personout.Val(), globalout.Val())
 	this.ClearCardState()
+}
+
+//将身上的元宝全部兑换钻石
+func (this *GateUser) ExChangeDiamondByYuanbao(token string) {
+	yuanbaoNum := this.GetYuanbao()
+	var exChangeDiamondNum uint32 = yuanbaoNum / 10000
+	if exChangeDiamondNum <= 1 {
+		send := &msg.GW2C_AckExChangeToDiamondRet{}
+		send.Ret = pb.Uint32(1)
+		send.Diamond = pb.Uint32(0)
+		this.SendMsg(send)
+		return
+	}
+	// Http请求
+	if def.HttpRequestIncrDiamonds(this.Id(), token, this.Account(), int32(exChangeDiamondNum), "元宝兑换钻石") == true {
+		log.Info("玩家[%d] 添加钻石[%d] 原因[%s]", this.Id(), exChangeDiamondNum, "元宝兑换钻石")
+		yuanbaoSub := exChangeDiamondNum * 10000
+		this.RemoveYuanbao(uint32(yuanbaoSub), "兑换钻石扣除")
+		send := &msg.GW2C_AckExChangeToDiamondRet{}
+		send.Ret = pb.Uint32(0)
+		send.Diamond = pb.Uint32(exChangeDiamondNum)
+		this.SendMsg(send)
+	} else {
+		log.Info("玩家[%s %d] 元宝兑换钻石异常，请求兑换钻石数量 %d", this.Name(), this.Id(), exChangeDiamondNum)
+		this.SendNotify("今日可兑换钻石额度已达上线，明日再来兑换")
+		send := &msg.GW2C_AckExChangeToDiamondRet{}
+		send.Ret = pb.Uint32(1)
+		send.Diamond = pb.Uint32(0)
+		this.SendMsg(send)
+	}
+
 }
