@@ -445,7 +445,7 @@ func (this *RoomServer) TickCacheNotice(now int64) {
 		num := util.RandBetween(0, 7)
 		cost := util.RandBetween(0, 9)
 		reward := this.rewardnum[num] * this.costnum[cost]
-		txt := fmt.Sprintf("%d倍奖励 %dk元宝", this.rewardnum[num], reward)
+		txt := fmt.Sprintf("%d倍奖励 %dK元宝", this.rewardnum[num], reward)
 
 		subtext := []string{
 			def.MakeNoticeText("恭喜", "#FFFFFF", 26), def.MakeNoticeText(username, "#A6E5FF", 26),

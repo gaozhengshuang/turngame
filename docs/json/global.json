@@ -111,5 +111,9 @@
     "compensateitem":10002,
 
     "//":"红包测试金币比例",
-    "Tvmtestmoney":1
+    "Tvmtestmoney":1,
+	
+	"//":"红包兑换1钻石花费的元宝数",
+	"TvmExChangeDiamondCost":12000
+
 }

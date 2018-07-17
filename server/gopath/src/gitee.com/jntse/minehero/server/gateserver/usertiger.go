@@ -338,7 +338,7 @@ func (this *GateUser) GiveUserCardAward() {
 	this.sumget += cost * reward
 
 	if reward >= 1 {
-		txt := fmt.Sprintf("%d倍奖励 %dk元宝", reward, cost*reward/1000)
+		txt := fmt.Sprintf("%d倍奖励 %dK元宝", reward, cost*reward/1000)
 		GateSvr().SendNotice(this.Face(), msg.NoticeType_Suspension, def.MakeNoticeText("恭喜", "#FFFFFF", 26), def.MakeNoticeText(this.Name(), "#A6E5FF", 26), def.MakeNoticeText("获得", "#FFFFFF", 26), def.MakeNoticeText(txt, "#ECFF94", 26))
 	}
 
@@ -361,7 +361,7 @@ func (this *GateUser) GiveUserCardAward() {
 //将身上的元宝全部兑换钻石
 func (this *GateUser) ExChangeDiamondByYuanbao(token string) {
 	yuanbaoNum := this.GetYuanbao()
-	var exChangeDiamondNum uint32 = yuanbaoNum / 10000
+	var exChangeDiamondNum uint32 = yuanbaoNum / uint32(tbl.Global.TvmExChangeDiamondCost)
 	if exChangeDiamondNum <= 1 {
 		send := &msg.GW2C_AckExChangeToDiamondRet{}
 		send.Ret = pb.Uint32(1)
@@ -372,7 +372,7 @@ func (this *GateUser) ExChangeDiamondByYuanbao(token string) {
 	// Http请求
 	if def.HttpRequestIncrDiamonds(this.Id(), token, this.Account(), int32(exChangeDiamondNum), "元宝兑换钻石") == true {
 		log.Info("玩家[%d] 添加钻石[%d] 原因[%s]", this.Id(), exChangeDiamondNum, "元宝兑换钻石")
-		yuanbaoSub := exChangeDiamondNum * 10000
+		yuanbaoSub := exChangeDiamondNum * uint32(tbl.Global.TvmExChangeDiamondCost)
 		this.RemoveYuanbao(uint32(yuanbaoSub), "兑换钻石扣除")
 		send := &msg.GW2C_AckExChangeToDiamondRet{}
 		send.Ret = pb.Uint32(0)
