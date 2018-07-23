@@ -671,7 +671,7 @@ func HttpRequestIncrDiamonds(charid uint64, token, tvmid string, count int32, de
 	url := tbl.Global.HongBaoAPI.IncrDiamonds
 	secret := tbl.Global.HongBaoAPI.Secret
 	key := tbl.Global.HongBaoAPI.Key
-	order_id := strconv.FormatInt(int64(charid),10) + "_incrdiamonds_" + strconv.FormatInt(util.CURTIMEUS(), 10)
+	order_id := strconv.FormatInt(int64(charid),10) + "_incdian_" + strconv.FormatInt(util.CURTIME(), 10)
 	mapset := make(map[string]interface{})
 	mapset["token"] = token
 	mapset["tvmid"] = tvmid

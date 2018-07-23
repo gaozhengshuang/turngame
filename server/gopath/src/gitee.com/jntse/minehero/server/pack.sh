@@ -45,10 +45,10 @@ ssh wbturn@210.73.214.68 "cp /home/wbturn/version/config/conf /home/wbturn/versi
 ssh wbturn@210.73.214.68 "cp /home/wbturn/version/config/runserver.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
 ssh wbturn@210.73.214.68 "cp /home/wbturn/version/config/watch.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
 
-#ssh wbturn@210.73.214.69 "mkdir -p /home/wbturn/version/${waibuildDirName}"
-#scp pack/$filename wbturn@210.73.214.69:/home/wbturn/version/${waibuildDirName}
-#ssh wbturn@210.73.214.69 "cd /home/wbturn/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
-#ssh wbturn@210.73.214.69 "rm /home/wbturn/version/${waibuildDirName}/release/conf -rf"
-#ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/conf /home/wbturn/version/${waibuildDirName}/release/ -rvf"
-#ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/runserver.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
-#ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/watch.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
+ssh wbturn@210.73.214.69 "mkdir -p /home/wbturn/version/${waibuildDirName}"
+scp pack/$filename wbturn@210.73.214.69:/home/wbturn/version/${waibuildDirName}
+ssh wbturn@210.73.214.69 "cd /home/wbturn/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
+ssh wbturn@210.73.214.69 "rm /home/wbturn/version/${waibuildDirName}/release/conf -rf"
+ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/conf /home/wbturn/version/${waibuildDirName}/release/ -rvf"
+ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/runserver.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
+ssh wbturn@210.73.214.69 "cp /home/wbturn/version/config/watch.sh /home/wbturn/version/${waibuildDirName}/release/ -rvf"
