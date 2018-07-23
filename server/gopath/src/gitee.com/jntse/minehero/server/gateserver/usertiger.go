@@ -362,7 +362,7 @@ func (this *GateUser) GiveUserCardAward() {
 func (this *GateUser) ExChangeDiamondByYuanbao(token string) {
 	yuanbaoNum := this.GetYuanbao()
 	var exChangeDiamondNum uint32 = yuanbaoNum / uint32(tbl.Global.TvmExChangeDiamondCost)
-	if exChangeDiamondNum <= 1 {
+	if exChangeDiamondNum < 1 {
 		send := &msg.GW2C_AckExChangeToDiamondRet{}
 		send.Ret = pb.Uint32(1)
 		send.Diamond = pb.Uint32(0)
