@@ -176,7 +176,7 @@ func (this *GateUser) PreStartTiger(cost uint32, token string) {
 		log.Info("玩家[%d]开启新一轮失败, 下注超过上限 cost:%d", this.Id(), cost)
 		return
 	}
-	if cost < 1000 {
+	if cost < 100 {
 		send.Ret = pb.Uint32(1)
 		this.SendMsg(send)
 		log.Info("玩家[%d]开启新一轮失败, 下注低于下限 cost:%d", this.Id(), cost)
