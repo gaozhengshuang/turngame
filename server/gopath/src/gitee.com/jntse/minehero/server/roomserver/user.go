@@ -240,7 +240,7 @@ func (this *RoomUser) RemoveMoney(gold uint32, reason string) bool {
 		userbase.Money = pb.Uint32(this.GetMoney() - gold)
 		log.Info("玩家[%d] 扣除金币[%d] 剩余[%d] 原因[%s]", this.Id(), gold, this.GetMoney(), reason)
 
-		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Gold), gold)
+		RCounter().IncrByDate("item_remove", int32(msg.ItemId_Gold), int32(gold))
 		return true
 	}
 	log.Info("玩家[%d] 扣除金币失败[%d] 原因[%s]", this.Id(), gold, reason)
@@ -261,7 +261,7 @@ func (this *RoomUser) GetYuanbao() uint32 {
 func (this *RoomUser) AddYuanbao(yuanbao uint32, reason string) {
 	userbase := this.bin.GetBase()
 	userbase.Yuanbao = pb.Uint32(userbase.GetYuanbao() + yuanbao)
-	RCounter().IncrByDate("room_output", uint32(this.roomkind), yuanbao)
+	RCounter().IncrByDate("room_output", int32(this.roomkind), int32(yuanbao))
 	this.PlatformPushLootMoney(float32(yuanbao))
 	log.Info("玩家[%d] 添加元宝[%d] 剩余[%d] 原因[%s]", this.Id(), yuanbao, userbase.GetYuanbao(), reason) 
 }
@@ -270,8 +270,8 @@ func (this *RoomUser) RemoveYuanbao(yuanbao uint32, reason string) bool {
 	if this.GetYuanbao() >= yuanbao {
 		userbase := this.bin.GetBase()
 		userbase.Yuanbao = pb.Uint32(this.GetYuanbao() - yuanbao)
-		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_YuanBao), yuanbao)
-		RCounter().IncrByDate("room_income", uint32(this.roomkind), yuanbao)
+		RCounter().IncrByDate("item_remove", int32(msg.ItemId_YuanBao), int32(yuanbao))
+		RCounter().IncrByDate("room_income", int32(this.roomkind), int32(yuanbao))
 		this.PlatformPushConsumeMoney(float32(yuanbao))
 		log.Info("玩家[%d] 扣除元宝[%d] 库存[%d] 原因[%s]", this.Id(), yuanbao, this.GetYuanbao(), reason)
 		return true
@@ -290,7 +290,7 @@ func (this *RoomUser) RemoveCoupon(num uint32, reason string) bool {
 	if ( userbase.GetCoupon() >= num ) {
 		userbase.Coupon = pb.Uint32(userbase.GetCoupon() - num)
 		log.Info("玩家[%d] 扣除金卷[%d] 剩余[%d] 原因[%s]", this.Id(), num, userbase.GetCoupon(), reason)
-		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Coupon), num)
+		RCounter().IncrByDate("item_remove", int32(msg.ItemId_Coupon), int32(num))
 		return true
 	}
 	log.Info("玩家[%d] 扣除金卷[%d]失败 剩余[%d] 原因[%s]", this.Id(), num, userbase.GetCoupon(), reason)
@@ -321,7 +321,7 @@ func (this *RoomUser) AddItem(item uint32, num uint32, reason string) {
 			this.PlatformPushLootMoney(float32(base.RealPrice) * float32(num))
 		}
 	}
-	RCounter().IncrByDate("item_add", item, num)
+	RCounter().IncrByDate("item_add", int32(item), int32(num))
 
 }
 

@@ -39,39 +39,39 @@ func (this *GateUser) InitTiger() {
 
 }
 
-func (this *GateUser) GetNumByCount(count uint32) []int32 {
+func (this *GateUser) GetNumByCount(count uint32) []int {
 	if this.freetype == 0 {
 		this.freetype = uint32(util.RandBetween(1, 3))
 	}
 	if this.freetype == 1 {
 		if count == 0 {
-			tmpslice := []int32{2, 1, 1}
+			tmpslice := []int{2, 1, 1}
 			util.Shuffle(tmpslice)
 			return tmpslice
 		} else if count == 1 {
-			tmpslice := []int32{0, int32(util.RandBetween(0, 3)), int32(util.RandBetween(0, 3))}
+			tmpslice := []int{0, int(util.RandBetween(0, 3)), int(util.RandBetween(0, 3))}
 			util.Shuffle(tmpslice)
 			return tmpslice
 		} else if count == 2 {
-			tmpslice := []int32{1, 1, 1}
+			tmpslice := []int{1, 1, 1}
 			return tmpslice
 		}
 
 	} else {
 		if count == 0 {
-			tmpslice := []int32{1, 1, 1}
+			tmpslice := []int{1, 1, 1}
 			return tmpslice
 		} else if count == 1 {
-			tmpslice := []int32{0, int32(util.RandBetween(0, 3)), int32(util.RandBetween(0, 3))}
+			tmpslice := []int{0, int(util.RandBetween(0, 3)), int(util.RandBetween(0, 3))}
 			util.Shuffle(tmpslice)
 			return tmpslice
 		} else if count == 2 {
-			tmpslice := []int32{2, 1, 1}
+			tmpslice := []int{2, 1, 1}
 			util.Shuffle(tmpslice)
 			return tmpslice
 		}
 	}
-	return []int32{0, 0, 0}
+	return []int{0, 0, 0}
 }
 
 func (this *GateUser) RemoveCoins(token string, ctype uint32) {

@@ -230,149 +230,149 @@ func (this *GameRoom) Init() (errcode string) {
 // 初始化格子道具
 func (this *GameRoom) InitGridItem() (errcode string) {
 
-	//tmfun := make([]int64,10)
-	//tmfun[0] = util.CURTIMEUS()
+	////tmfun := make([]int64,10)
+	////tmfun[0] = util.CURTIMEUS()
 
-	// 钻石场
-	if this.IsDiamondMode() { 
-		return this.InitDiamondRoom()
-	}
-	
-	// 打乱所有空格子(剔除起点，终点 2格子)
-	gridlist, maxindex := make([]int32, 0, this.gridsum), this.gridsum - 1
-	for i := int32(1); i < this.gridsum - 1; i++ {  gridlist = append(gridlist, i)  }
-	util.Shuffle(gridlist)		// TODO: Shuffle有点耗时
-	//tmfun[1] = util.CURTIMEUS()
+	//// 钻石场
+	//if this.IsDiamondMode() { 
+	//	return this.InitDiamondRoom()
+	//}
+	//
+	//// 打乱所有空格子(剔除起点，终点 2格子)
+	//gridlist, maxindex := make([]int, 0, this.gridsum), this.gridsum - 1
+	//for i := int(1); i < int(this.gridsum - 1); i++ {  gridlist = append(gridlist, i)  }
+	//util.Shuffle(gridlist)		// TODO: Shuffle有点耗时
+	////tmfun[1] = util.CURTIMEUS()
 
-	// 解析高级元宝限制
-	errcode = this.ParseHighGradeYuanBaoLimit(this.dungeon.YuanbaoLimit)
-	if errcode != "" {
-		return
-	}
-	fake_gridnum := this.yb_middle.num + this.yb_large.num	// 作假格子数
+	//// 解析高级元宝限制
+	//errcode = this.ParseHighGradeYuanBaoLimit(this.dungeon.YuanbaoLimit)
+	//if errcode != "" {
+	//	return
+	//}
+	//fake_gridnum := this.yb_middle.num + this.yb_large.num	// 作假格子数
 
-	// 初始大奖
-	fakegrids := make(map[int32]int32)
-	if this.dungeon.Rewardid != 0 {
-		fake_gridnum += 1
-		this.griditems[maxindex] = NewGridItem(maxindex, int32(this.dungeon.Rewardid), 1, kGridTypeBigReward, true)
-		fakegrids[maxindex] = kGridTypeBigReward
-	}
-
-	// 获取不连续的随机索引
-	var count int32 = 0
-	for _ , index := range gridlist {
-		if int32(len(fakegrids)) == fake_gridnum { break }
-		leftindex := int32(index) - 1;
-		_, ok := fakegrids[leftindex]
-		if ok == true { continue }
-
-		rightindex := int32(index) + 1;
-		_, ok = fakegrids[rightindex]
-		if ok == true { continue }
-
-		count += 1
-		if count <= this.yb_middle.num {
-			fakegrids[index] = kGridTypeMiddleYuanbao
-		}else if count <= (this.yb_middle.num + this.yb_large.num) {
-			fakegrids[index] = kGridTypeBigYuanbao
-		}
-	}
-	//tmfun[2] = util.CURTIMEUS()
-
-
-	// 初始化中元宝和大元宝
-	randnum := int32(0)
-	for index, ty := range fakegrids {
-		gridlist = util.IntSliceRemove(gridlist, index)
-		if ty == kGridTypeMiddleYuanbao {
-			randnum, errcode = this.ParseProbItem(this.dungeon.MiddleYuanbao)
-		}else if ty == kGridTypeBigYuanbao {
-			randnum, errcode = this.ParseProbItem(this.dungeon.BigYuanbao)
-		}else {
-			continue
-		}
-		if errcode != "" || randnum == 0 { 
-			return 
-		}
-		this.griditems[index] = NewGridItem(index, int32(msg.ItemId_YuanBao), randnum, ty, true)
-	}
-
-
-	// 初始化普通元宝
-	yuanbaonum := this.gridsum * int32(tbl.Room.Griditem.YuanbaoRate) / 100
-	if this.dungeon.FreeMark == 1 { yuanbaonum = this.gridsum * int32(tbl.Room.Griditem.FreeYuanbaoRate) / 100 }	// 免费场
-	if yuanbaonum > this.gridsum { yuanbaonum = this.gridsum }	// 要小于 this.gridsum
-	if yuanbaonum != 0 && len(this.dungeon.Scorenum) != 0 {
-		randnum , goldgrids := int32(0), gridlist[0:yuanbaonum]
-		gridlist = gridlist[yuanbaonum:]
-		for _, index := range goldgrids {
-			randnum, errcode = this.ParseProbItem(this.dungeon.Scorenum)	// 解析元宝
-			if errcode != "" { return }
-			if randnum == 0 { continue }
-			this.griditems[index] = NewGridItem(index, int32(msg.ItemId_YuanBao), randnum, kGridTypeDefault, false)
-		}
-	}
-	//tmfun[3] = util.CURTIMEUS()
-
-
-	// 初始小礼品
-	if count := len(this.dungeon.Item); count != 0 {
-		i := util.RandBetween(0, int32(count) - 1)
-		stritems := this.dungeon.Item[i]
-		itempair := strings.Split(stritems, "-")
-		if len(itempair) != 2 { return }
-		itemid, ierr := strconv.Atoi(itempair[0])
-		num, nerr := strconv.Atoi(itempair[1])
-		if ierr != nil || nerr != nil { return }
-		itemgrids := gridlist[0:num]
-		gridlist = gridlist[num:]
-		for _, index := range itemgrids {
-			this.griditems[index] = NewGridItem(index, int32(itemid), 1, kGridTypeDefault, false)
-		}
-	}
-
-
-	// 初始广告
-	if count := len(this.dungeon.Adv); count != 0 {
-		i := util.RandBetween(0, int32(count) - 1)
-		stritems := this.dungeon.Adv[i]
-		itempair := strings.Split(stritems, "-")
-		if len(itempair) != 2 { return }
-		itemid, ierr := strconv.Atoi(itempair[0])
-		num, nerr := strconv.Atoi(itempair[1])
-		if ierr != nil || nerr != nil { return }
-		itemgrids := gridlist[0:num]
-		gridlist = gridlist[num:]
-		for _, index := range itemgrids {
-			this.griditems[index] = NewGridItem(index, int32(itemid), 1, kGridTypeDefault, false)
-		}
-	}
-
-	//tmfun[4] = util.CURTIMEUS()
-
-	// 函数耗时分析
-	//for k,v := range tmfun {
-	//	if k == len(tmfun)-1 || tmfun[k+1] == 0 { break }
-	//	log.Trace("函数耗时分析: tmfun[%d]-tmfun[%d] = %d", k+1, k, tmfun[k+1] - v)
+	//// 初始大奖
+	//fakegrids := make(map[int32]int32)
+	//if this.dungeon.Rewardid != 0 {
+	//	fake_gridnum += 1
+	//	this.griditems[maxindex] = NewGridItem(maxindex, int32(this.dungeon.Rewardid), 1, kGridTypeBigReward, true)
+	//	fakegrids[maxindex] = kGridTypeBigReward
 	//}
 
+	//// 获取不连续的随机索引
+	//var count int32 = 0
+	//for _ , index := range gridlist {
+	//	if int32(len(fakegrids)) == fake_gridnum { break }
+	//	leftindex := int32(index) - 1;
+	//	_, ok := fakegrids[leftindex]
+	//	if ok == true { continue }
 
-	//var itemnum , emptygird int32 = 1, int32(len(gridlist))
-	//if tbl.Room.Griditem.Itemrate != 0 && emptygird > 0 {
-	//	itemnum = this.gridsum * int32(tbl.Room.Griditem.Itemrate) / 100
-	//	if itemnum > emptygird { itemnum = emptygird }		// 不要大于剩余空格子数
-	//}
-	//if count := len(this.dungeon.Item); itemnum != 0 && count != 0 {
-	//	itemgrids := gridlist[0:itemnum]
-	//	for _, index := range itemgrids {
-	//		i := util.RandBetween(0, int32(count) - 1)
-	//		itemid, _ := strconv.Atoi(this.dungeon.Item[i])
-	//		if itemid != 0 {
-	//			this.griditems[index] = NewGridItem(index, int32(itemid), 1, kGridTypeDefault, false)
-	//		}
+	//	rightindex := int32(index) + 1;
+	//	_, ok = fakegrids[rightindex]
+	//	if ok == true { continue }
+
+	//	count += 1
+	//	if count <= this.yb_middle.num {
+	//		fakegrids[int32(index)] = kGridTypeMiddleYuanbao
+	//	}else if count <= (this.yb_middle.num + this.yb_large.num) {
+	//		fakegrids[int32(index)] = kGridTypeBigYuanbao
 	//	}
 	//}
+	////tmfun[2] = util.CURTIMEUS()
+
+
+	//// 初始化中元宝和大元宝
+	//randnum := int32(0)
+	//for index, ty := range fakegrids {
+	//	gridlist = util.IntSliceRemove(gridlist, index)
+	//	if ty == kGridTypeMiddleYuanbao {
+	//		randnum, errcode = this.ParseProbItem(this.dungeon.MiddleYuanbao)
+	//	}else if ty == kGridTypeBigYuanbao {
+	//		randnum, errcode = this.ParseProbItem(this.dungeon.BigYuanbao)
+	//	}else {
+	//		continue
+	//	}
+	//	if errcode != "" || randnum == 0 { 
+	//		return 
+	//	}
+	//	this.griditems[index] = NewGridItem(index, int32(msg.ItemId_YuanBao), randnum, ty, true)
+	//}
+
+
+	//// 初始化普通元宝
+	//yuanbaonum := this.gridsum * int32(tbl.Room.Griditem.YuanbaoRate) / 100
+	//if this.dungeon.FreeMark == 1 { yuanbaonum = this.gridsum * int32(tbl.Room.Griditem.FreeYuanbaoRate) / 100 }	// 免费场
+	//if yuanbaonum > this.gridsum { yuanbaonum = this.gridsum }	// 要小于 this.gridsum
+	//if yuanbaonum != 0 && len(this.dungeon.Scorenum) != 0 {
+	//	randnum , goldgrids := int32(0), gridlist[0:yuanbaonum]
+	//	gridlist = gridlist[yuanbaonum:]
+	//	for _, index := range goldgrids {
+	//		randnum, errcode = this.ParseProbItem(this.dungeon.Scorenum)	// 解析元宝
+	//		if errcode != "" { return }
+	//		if randnum == 0 { continue }
+	//		this.griditems[index] = NewGridItem(index, int32(msg.ItemId_YuanBao), randnum, kGridTypeDefault, false)
+	//	}
+	//}
+	////tmfun[3] = util.CURTIMEUS()
+
+
+	//// 初始小礼品
+	//if count := len(this.dungeon.Item); count != 0 {
+	//	i := util.RandBetween(0, int32(count) - 1)
+	//	stritems := this.dungeon.Item[i]
+	//	itempair := strings.Split(stritems, "-")
+	//	if len(itempair) != 2 { return }
+	//	itemid, ierr := strconv.Atoi(itempair[0])
+	//	num, nerr := strconv.Atoi(itempair[1])
+	//	if ierr != nil || nerr != nil { return }
+	//	itemgrids := gridlist[0:num]
+	//	gridlist = gridlist[num:]
+	//	for _, index := range itemgrids {
+	//		this.griditems[index] = NewGridItem(index, int32(itemid), 1, kGridTypeDefault, false)
+	//	}
+	//}
+
+
+	//// 初始广告
+	//if count := len(this.dungeon.Adv); count != 0 {
+	//	i := util.RandBetween(0, int32(count) - 1)
+	//	stritems := this.dungeon.Adv[i]
+	//	itempair := strings.Split(stritems, "-")
+	//	if len(itempair) != 2 { return }
+	//	itemid, ierr := strconv.Atoi(itempair[0])
+	//	num, nerr := strconv.Atoi(itempair[1])
+	//	if ierr != nil || nerr != nil { return }
+	//	itemgrids := gridlist[0:num]
+	//	gridlist = gridlist[num:]
+	//	for _, index := range itemgrids {
+	//		this.griditems[index] = NewGridItem(index, int32(itemid), 1, kGridTypeDefault, false)
+	//	}
+	//}
+
+	////tmfun[4] = util.CURTIMEUS()
+
+	//// 函数耗时分析
+	////for k,v := range tmfun {
+	////	if k == len(tmfun)-1 || tmfun[k+1] == 0 { break }
+	////	log.Trace("函数耗时分析: tmfun[%d]-tmfun[%d] = %d", k+1, k, tmfun[k+1] - v)
+	////}
+
+
+	////var itemnum , emptygird int32 = 1, int32(len(gridlist))
+	////if tbl.Room.Griditem.Itemrate != 0 && emptygird > 0 {
+	////	itemnum = this.gridsum * int32(tbl.Room.Griditem.Itemrate) / 100
+	////	if itemnum > emptygird { itemnum = emptygird }		// 不要大于剩余空格子数
+	////}
+	////if count := len(this.dungeon.Item); itemnum != 0 && count != 0 {
+	////	itemgrids := gridlist[0:itemnum]
+	////	for _, index := range itemgrids {
+	////		i := util.RandBetween(0, int32(count) - 1)
+	////		itemid, _ := strconv.Atoi(this.dungeon.Item[i])
+	////		if itemid != 0 {
+	////			this.griditems[index] = NewGridItem(index, int32(itemid), 1, kGridTypeDefault, false)
+	////		}
+	////	}
+	////}
 
 	return
 }

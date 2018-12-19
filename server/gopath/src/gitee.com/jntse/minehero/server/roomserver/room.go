@@ -296,7 +296,7 @@ func (this* GameRoom) JumpPreCheck(token string) {
 //	this.SendMsg(send)
 //
 //	// 统计
-//	RCounter().IncrByDate("jumpcount", uint32(this.dungeon.Rewardid), 1)
+//	RCounter().IncrByDate("jumpcount", int32(this.dungeon.Rewardid), 1)
 //}
 
 // 服务器向前跳
@@ -325,7 +325,7 @@ func (this *GameRoom) JumpForwardByServer(stepnum int32) {
 	//this.SendMsg(send)
 
 	// 统计
-	RCounter().IncrByDate("jumpcount", uint32(this.dungeon.Rewardid), 1)
+	RCounter().IncrByDate("jumpcount", int32(this.dungeon.Rewardid), 1)
 }
 
 func (this *GameRoom) IsBigRewardIndex(index int32) bool {
@@ -517,8 +517,8 @@ func (this *GameRoom) RemovePlatformCoinsOk(removeok bool, costnum int32) {
 		}
 
 		//
-		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Gold), uint32(costnum))
-		RCounter().IncrByDate("room_income", uint32(this.roomkind), uint32(costnum))
+		RCounter().IncrByDate("item_remove", int32(msg.ItemId_Gold), int32(costnum))
+		RCounter().IncrByDate("room_income", int32(this.roomkind), int32(costnum))
 
 		// 全局奖池更新
 		if this.dungeon.Rewardid != 0 {
