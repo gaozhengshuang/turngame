@@ -27,3 +27,6 @@
 在cocos creator中的扩展->创建新插件,会在当前路径下生成packages文件夹，并生成对应的文件。修改代码可完成自定义的流程。这里可以使用绝大部分的npm管理的工具，目前有的工具有:拷贝服务器生成的json文件，解析proto文件。具体细节请查看
 
     http://docs.cocos.com/creator/manual/zh/extension/?h=%E6%89%A9%E5%B1%95
+    
+####cocos creater版本
+1.8.2
